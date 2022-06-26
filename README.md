@@ -2,7 +2,9 @@
 
 Get your RegenScore [Here](https://regenscore.vercel.app).
 
-"Regen": Short for “regenerative”. A meme-ified term created in response to the mainstream “degen” culture in web3. Refers to the people/culture of using blockchain technology for social/environmental good. "Score": well.. you get it. 
+_Regen_: Short for “regenerative”. A meme-ified term created in response to the mainstream “degen” culture in web3. Refers to the people/culture of using blockchain technology for social/environmental good. 
+
+_Score_: well.. you get it. 
 
 When you connect your wallet to RegenScore it scans the activity of your address to see, calculate and score your on-chain regen activities; and if you're regen enough, you might even get placed on the leaderboard! 
 
