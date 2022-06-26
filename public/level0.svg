@@ -4,7 +4,6 @@
      width="250px"
      height="250px" viewBox="0 0 250 250" style="enable-background:new 0 0 250 250;" xml:space="preserve">
 <style type="text/css">
-	.small { font: 12px sans-serif; }
 	.st0{fill:#703F1A;}
 	.st1{fill:#C7824E;}
 	.st2{fill:#734C2E;}
@@ -5459,15 +5458,18 @@
 		</g>
 	</g>
 </g>
+    <style type="text/css">
+		.small { font: 12px sans-serif; }
+	</style>
     <rect x="0" y="0" width="250" height="15" fill="white"/>
-    <text text-anchor="middle" x="50%" y="12" class="small">2300 RS</text>
+    <text text-anchor="middle" x="50%" y="12" class="small">SCORE</text>
 
-	<rect x="0" y="0" width="15" height="250" fill="white"/>
-	<text text-anchor="middle" x="0" y="50%" class="small" transform="rotate(270, 7, 120)">season 1</text>
+    <rect x="0" y="0" width="15" height="250" fill="white"/>
+    <text text-anchor="middle" x="0" y="50%" class="small" transform="rotate(270, 7, 120)">season 1</text>
 
-	<rect x="235" y="0" width="15" height="250" fill="white"/>
-	<text text-anchor="middle" x="257" y="50%" class="small" transform="rotate(90, 245, 120)">regenscore.eth</text>
+    <rect x="235" y="0" width="15" height="250" fill="white"/>
+    <text text-anchor="middle" x="257" y="50%" class="small" transform="rotate(90, 245, 120)">regenscore.eth</text>
 
-	<rect x="0" y="235" width="250" height="15" fill="white"/>
-	<text text-anchor="middle" x="50%" y="247" class="small">atris.eth</text>
+    <rect x="0" y="235" width="250" height="15" fill="white"/>
+    <text text-anchor="middle" x="50%" y="247" class="small">ADDRESS</text>
 </svg>

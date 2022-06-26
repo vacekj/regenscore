@@ -1,3 +1,4 @@
+import { createSvg } from "@/createSvg";
 import {
   Box,
   Button,
@@ -16,7 +17,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { ConnectButton, useAddRecentTransaction } from "@rainbow-me/rainbowkit";
 import { ethers } from "ethers";
 import { parseTransaction } from "ethers/lib/utils";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useAccount, useNetwork, useSendTransaction } from "wagmi";
 import z from "zod";
@@ -38,6 +39,11 @@ const responseBodySchema = z.object({
 export default function Card() {
   const toast = useToast();
 
+  const [svg, setSvg] = useState<string>();
+  useEffect(() => {
+    createSvg(500, account?.address!).then(res => setSvg(res));
+  });
+
   const [loading, setLoading] = useState(false);
   const { data: account } = useAccount();
   const { data: activeChain } = useNetwork();
@@ -46,9 +52,6 @@ export default function Card() {
     <Center py={12} flexDirection={"column"}>
       <Box
         role={"group"}
-        p={6}
-        maxW={"330px"}
-        w={"full"}
         bg={useColorModeValue("white", "gray.800")}
         boxShadow={"2xl"}
         rounded={"lg"}
@@ -56,6 +59,11 @@ export default function Card() {
         zIndex={1}
         mb={8}
       >
+        <div
+          dangerouslySetInnerHTML={{
+            __html: svg!,
+          }}
+        />
       </Box>
       {!account && <ConnectButton label={"Reveal your RegenScore"} accountStatus={"full"} chainStatus={"full"} />}
       {account && (
