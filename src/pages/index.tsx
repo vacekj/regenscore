@@ -34,7 +34,7 @@ export default function Index(props: {
         playStatus={badgerMode ? "PLAYING" : "STOPPED"}
       />
       <HStack p={4} justifyContent={"space-between"}>
-        <Link>Leaderboard</Link>
+        <Link href={"#leaderboard"}>Leaderboard</Link>
         <FormControl display="flex" alignItems="center" width={"initial"}>
           <FormLabel htmlFor="badger" mb="0">
             🦡 Badger mode
@@ -49,24 +49,27 @@ export default function Index(props: {
       <VStack
         alignItems={"center"}
         maxW={"7xl"}
-        spacing={{ base: 10, lg: 32 }}
+        spacing={{ base: 10, lg: 16 }}
         py={{ base: 10, sm: 20, lg: 36 }}
         mt={16}
       >
-        <Stack spacing={{ base: 10 }}>
+        <Stack textAlign={"center"} spacing={{ base: 4 }}>
           <Heading
             lineHeight={1.1}
             fontSize={{ base: "3xl", sm: "4xl", md: "5xl", lg: "6xl" }}
           >
             Welcome Regen.
           </Heading>
+          <Text textAlign={"center"}>
+            We are celebrating all regens who contribute to the greater good. Discover your score below.
+          </Text>
         </Stack>
         <Card />
-        <Text px={16}>
+        <Text fontSize={"20px"} px={16}>
           We are celebrating all the regens by rewarding them with an NFT to showcase their regen score. Set it as your
           PFP or use it to gain access to regen-only communities and events. Oh, and the NFTs are soul-bound.
         </Text>
-        <Text px={16}>
+        <Text fontSize={"20px"} px={16}>
           We calculate your regen score by looking at your contributions towards impact projects like Gitcoin, Giveth,
           World of Women and more. The more you donate and the more diverse your contributions, the better your regen
           score.
@@ -81,7 +84,7 @@ export default function Index(props: {
       >
         Leaderboard
       </Heading>
-      <VStack w={"100%"}>
+      <VStack id={"leaderboard"} w={"100%"}>
         {props.leaderboard.slice(0, 10).sort((a, b) => b.score - a.score).map((l, index) => {
           return (
             <HStack key={index} w={"100%"} justifyContent={"space-between"}>
@@ -110,7 +113,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   });
   const data = batch.users.map(d => {
     return { user_id: d.user_id, score: parseInt(d.data[0]?.text() ?? "0") };
-  });
+  }).filter(r => r.score > 0);
   return {
     props: {
       leaderboard: data,

@@ -1,14 +1,12 @@
-import { ChakraProvider } from "@chakra-ui/react";
+import { isDevelopmentEnvironment } from "@/pages/api/claim";
+import { ChakraProvider, extendTheme } from "@chakra-ui/react";
+import { getDefaultWallets, RainbowKitProvider } from "@rainbow-me/rainbowkit";
 import "@rainbow-me/rainbowkit/styles.css";
 import { AppProps } from "next/app";
 import Head from "next/head";
-import { MoralisProvider } from "react-moralis";
-
-/* Ensure env vars are set */
-import { isDevelopmentEnvironment } from "@/pages/api/claim";
-import { getDefaultWallets, RainbowKitProvider } from "@rainbow-me/rainbowkit";
 import { chain, configureChains, createClient, WagmiProvider } from "wagmi";
 import { infuraProvider } from "wagmi/providers/infura";
+import "./styles.css";
 
 const { provider, chains } = configureChains(
   isDevelopmentEnvironment ? [chain.polygonMumbai] : [chain.polygon],
@@ -26,6 +24,12 @@ const wagmiClient = createClient({
   autoConnect: true,
   connectors,
   provider,
+});
+
+const theme = extendTheme({
+  layerStyles: {
+    base: {},
+  },
 });
 
 function MyApp({ Component, pageProps }: AppProps) {
