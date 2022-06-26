@@ -1,5 +1,4 @@
 import { createSvg } from "@/createSvg";
-import nftContractAbi from "@/nftContractAbi.json";
 import { ethers, Wallet } from "ethers";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { Blob, NFTStorage } from "nft.storage";
@@ -49,26 +48,21 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
   const image = new Blob([await createSvg(score, body.address)], { type: "image/svg+xml" });
 
-  const contract = new ethers.Contract(
-    process.env.NEXT_PUBLIC_NFT_CONTRACT!,
-    nftContractAbi.abi,
-  );
-  const metadata = await storeNft(image, score, body.address);
-  const provider = ethers.getDefaultProvider("polygon");
-  const minterWallet = new Wallet(PRIVATE_KEY!, provider);
-  const nftContract = new ethers.Contract(
-    CONTRACT_ADDRESS!,
-    new Interface(abi.abi),
-    minterWallet,
-  );
-  const transaction = await nftContract.safeMint(
-    body.address,
-    metadata.ipnft,
-  );
-
-  return res.status(201).json({ metadata, hash: transaction.hash });
-
   try {
+    const metadata = await storeNft(image, score, body.address);
+    const provider = ethers.getDefaultProvider("polygon");
+    const minterWallet = new Wallet(PRIVATE_KEY!, provider);
+    const nftContract = new ethers.Contract(
+      CONTRACT_ADDRESS!,
+      new Interface(abi.abi),
+      minterWallet,
+    );
+    const transaction = await nftContract.safeMint(
+      body.address,
+      metadata.ipnft,
+    );
+
+    return res.status(201).json({ metadata, hash: transaction.hash });
   } catch (e) {
     console.error(e);
     return res.status(500).json(e);
