@@ -9,7 +9,7 @@ import { infuraProvider } from "wagmi/providers/infura";
 import "./styles.css";
 
 const { provider, chains } = configureChains(
-  isDevelopmentEnvironment ? [chain.polygonMumbai] : [chain.polygon],
+  [chain.polygonMumbai],
   [infuraProvider({
     infuraId: process.env.NEXT_PUBLIC_INFURA_PROJECT_ID!,
   })],
