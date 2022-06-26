@@ -37,7 +37,7 @@ export default function Card() {
           }}
         />
       </Box>
-      {!account && <ConnectButton label={"Reveal your RegenScore"} accountStatus={"full"} chainStatus={"full"} />}
+      {<ConnectButton label={"Reveal your RegenScore"} accountStatus={"full"} chainStatus={"full"} />}
       {!claimed && account && (
         <Button
           type={"submit"}
@@ -64,12 +64,15 @@ export default function Card() {
               body: JSON.stringify({
                 address: account?.address,
               }),
-            }).then(r => setClaimed(true)).then(r =>
+            }).then(async r => {
+              const response = await r.json();
+              setClaimed(true);
               toast({
                 title: "Claimed RegenScore Card",
+                description: response.hash,
                 status: "success",
-              })
-            );
+              });
+            });
           }}
         >
           Claim your RegenScore Card
