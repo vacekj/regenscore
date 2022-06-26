@@ -13,6 +13,7 @@ import {
 import dynamic from "next/dynamic";
 import { useState } from "react";
 const Card = dynamic(() => import("@/components/Card"));
+import { server } from "@/pages/api/claim";
 import { PrivyClient } from "@privy-io/privy-node";
 import { GetServerSideProps } from "next";
 import Sound from "react-sound";
@@ -26,7 +27,7 @@ export default function Index(props: {
   const [badgerMode, setBadgerMode] = useState(false);
 
   return (
-    <Container position={"relative"} backgroundImage={badgerMode ? "http://localhost:3000/badgers.gif" : ""}>
+    <Container position={"relative"} backgroundImage={badgerMode ? `${server}/badgers.gif` : ""}>
       <Sound
         playFromPosition={3000}
         url="/badgers.mp3"

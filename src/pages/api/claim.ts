@@ -43,7 +43,7 @@ type Request = {
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const body = req.body as Request;
 
-  /* TODO: fetch score here */
+  /* TODO: fetch real score here */
   const score = 1283;
 
   const image = new Blob([await createSvg(score, body.address)], { type: "image/svg+xml" });
