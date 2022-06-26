@@ -1,15 +1,10 @@
-import { useTotalCards } from "@/hooks";
 import {
-  Box,
-  Button,
   Container,
   FormControl,
   FormLabel,
   Heading,
   HStack,
-  IconButton,
   Link,
-  SimpleGrid,
   Stack,
   Switch,
   Text,
@@ -18,9 +13,17 @@ import {
 import dynamic from "next/dynamic";
 import { useState } from "react";
 const Card = dynamic(() => import("@/components/Card"));
+import { PrivyClient } from "@privy-io/privy-node";
+import { GetServerSideProps } from "next";
 import Sound from "react-sound";
 
-export default function Index() {
+export default function Index(props: {
+  leaderboard: {
+    user_id: string;
+    score: string;
+  }[];
+}) {
+  console.log(props.leaderboard);
   const [badgerMode, setBadgerMode] = useState(false);
 
   return (
@@ -73,12 +76,45 @@ export default function Index() {
         textAlign={"center"}
         lineHeight={1.1}
         p={2}
+        mb={2}
         fontSize={{ base: "3xl", sm: "4xl", md: "5xl", lg: "6xl" }}
       >
         Leaderboard
       </Heading>
+      <VStack w={"100%"}>
+        {props.leaderboard.slice(0, 10).map((l, index) => {
+          return (
+            <HStack w={"100%"} justifyContent={"space-between"}>
+              <Text>
+                {index + 1}. &nbsp;<b>{l.user_id}</b>
+              </Text>
+              <Text>{l.score}</Text>
+            </HStack>
+          );
+        })}
+      </VStack>
       <VStack>
       </VStack>
     </Container>
   );
 }
+
+const client = new PrivyClient(
+  process.env.PRIVY_API_KEY!,
+  process.env.PRIVY_API_SECRET!,
+);
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const batch = await client.getBatch("score", {
+    limit: 100,
+  });
+
+  const data = batch.users.map(d => {
+    return { user_id: d.user_id, score: d.data[0]?.text() };
+  });
+  return {
+    props: {
+      leaderboard: data,
+    },
+  };
+};

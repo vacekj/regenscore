@@ -16,7 +16,7 @@ type Request = {
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const body = req.body as Request;
 
-  /* TODO: get score here*/
+  /* TODO: get actual score here*/
   const score = 1932;
 
   try {

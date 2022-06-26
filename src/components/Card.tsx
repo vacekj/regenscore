@@ -1,12 +1,14 @@
 import { createSvg } from "@/createSvg";
 import { useScore } from "@/hooks";
-import { Box, Button, Center, useColorModeValue, useToast } from "@chakra-ui/react";
+import { Box, Button, Center, useColorModeValue, useMediaQuery, useToast } from "@chakra-ui/react";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { useEffect, useState } from "react";
 import { useAccount } from "wagmi";
 
 export default function Card() {
   const toast = useToast();
+  const [isDesktop] = useMediaQuery("(min-width: 960px)");
+  const [claimed, setClaimed] = useState(true);
   const [loading, setLoading] = useState(false);
 
   const { data: account } = useAccount();
@@ -36,7 +38,7 @@ export default function Card() {
         />
       </Box>
       {!account && <ConnectButton label={"Reveal your RegenScore"} accountStatus={"full"} chainStatus={"full"} />}
-      {account && (
+      {!claimed && account && (
         <Button
           type={"submit"}
           isLoading={loading}
@@ -66,6 +68,36 @@ export default function Card() {
           }}
         >
           Claim your RegenScore Card
+        </Button>
+      )}
+      {claimed && isDesktop && account && account.address && (
+        <Button
+          colorScheme={"green"}
+          variant={"link"}
+          onClick={() => {
+            fetch("/api/publish", {
+              method: "post",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                address: account.address,
+              }),
+            }).then(r =>
+              toast({
+                title: "Score posted",
+                status: "success",
+              })
+            ).catch(e =>
+              toast({
+                title: "There was an error posting your score",
+                description: e,
+                status: "error",
+              })
+            );
+          }}
+        >
+          Publish your score on the leaderboard
         </Button>
       )}
     </Center>

@@ -26,6 +26,7 @@
     "@ethersproject/bytes": "^5.0.0",
     "@ethersproject/providers": "^5.0.0",
     "@hookform/resolvers": "^2.8.8",
+    "@privy-io/privy-browser": "^0.0.1",
     "@privy-io/privy-node": "^0.0.1",
     "@rainbow-me/rainbowkit": "^0.3.4",
     "@walletconnect/web3-provider": "^1.7.8",
