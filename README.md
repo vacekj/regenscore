@@ -1,6 +1,6 @@
 # RegenScore
 
-Get your RegeScore here.
+Get your RegenScore [Here](https://regenscore.vercel.app).
 
 "Regen": Short for “regenerative”. A meme-ified term created in response to the mainstream “degen” culture in web3. Refers to the people/culture of using blockchain technology for social/environmental good. "Score": well.. you get it. 
 
