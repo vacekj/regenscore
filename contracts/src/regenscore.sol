@@ -23,11 +23,11 @@ contract RegenScore is ERC721, ERC721Enumerable, ERC721URIStorage, Ownable, ERC7
     }
 
     // The following functions are overrides required by Solidity.
-    function _beforeTokenTransfer(address from, address to, uint256 tokenId)
-        internal
-        override(ERC721, ERC721Enumerable, ERC721Pausable)
+    function _beforeTokenTransfer(address from, address to, uint256 tokenId) onlyOwner
+    internal
+    override(ERC721, ERC721Enumerable, ERC721Pausable)
     {
-        super._beforeTokenTransfer(from, to, tokenId);
+
     }
 
     function _burn(uint256 tokenId) internal override(ERC721, ERC721URIStorage) {
@@ -35,19 +35,19 @@ contract RegenScore is ERC721, ERC721Enumerable, ERC721URIStorage, Ownable, ERC7
     }
 
     function tokenURI(uint256 tokenId)
-        public
-        view
-        override(ERC721, ERC721URIStorage)
-        returns (string memory)
+    public
+    view
+    override(ERC721, ERC721URIStorage)
+    returns (string memory)
     {
         return super.tokenURI(tokenId);
     }
 
     function supportsInterface(bytes4 interfaceId)
-        public
-        view
-        override(ERC721, ERC721Enumerable)
-        returns (bool)
+    public
+    view
+    override(ERC721, ERC721Enumerable)
+    returns (bool)
     {
         return super.supportsInterface(interfaceId);
     }
