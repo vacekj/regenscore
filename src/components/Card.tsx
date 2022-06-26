@@ -105,12 +105,13 @@ export default function Card() {
               body: JSON.stringify({
                 address: account.address,
               }),
-            }).then(r =>
+            }).then(r => {
               toast({
                 title: "Score posted",
                 status: "success",
-              })
-            ).catch(e =>
+              });
+              window.location.reload();
+            }).catch(e =>
               toast({
                 title: "There was an error posting your score",
                 description: e,
