@@ -23,7 +23,6 @@ export default function Index(props: {
     score: string;
   }[];
 }) {
-  console.log(props.leaderboard);
   const [badgerMode, setBadgerMode] = useState(false);
 
   return (
