@@ -16,18 +16,31 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import dynamic from "next/dynamic";
+import { useState } from "react";
 const Card = dynamic(() => import("@/components/Card"));
+import Sound from "react-sound";
 
 export default function Index() {
+  const [badgerMode, setBadgerMode] = useState(false);
+
   return (
-    <Container position={"relative"}>
+    <Container position={"relative"} backgroundImage={badgerMode ? "http://localhost:3000/badgers.gif" : ""}>
+      <Sound
+        playFromPosition={3000}
+        url="/badgers.mp3"
+        playStatus={badgerMode ? "PLAYING" : "STOPPED"}
+      />
       <HStack p={4} justifyContent={"space-between"}>
         <Link>Leaderboard</Link>
         <FormControl display="flex" alignItems="center" width={"initial"}>
-          <FormLabel htmlFor="beaver" mb="0">
-            🦫 Beaver mode
+          <FormLabel htmlFor="badger" mb="0">
+            🦡 Badger mode
           </FormLabel>
-          <Switch id="beaver" />
+          <Switch
+            isChecked={badgerMode}
+            onChange={(e) => setBadgerMode(e.target.checked)}
+            id="badger"
+          />
         </FormControl>
       </HStack>
       <VStack

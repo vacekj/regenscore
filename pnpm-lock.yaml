@@ -18,6 +18,7 @@ specifiers:
   '@testing-library/react': ^13.3.0
   '@types/react': ^18.0.14
   '@types/react-canvas-draw': ^1.1.1
+  '@types/react-sound': ^1.2.3
   '@typescript-eslint/eslint-plugin': ^5.22.0
   '@typescript-eslint/parser': ^5.22.0
   '@walletconnect/web3-provider': ^1.7.8
@@ -53,6 +54,7 @@ specifiers:
   react-icons: ^4.4.0
   react-moralis: ^1.4.0
   react-sketch-canvas: ^6.1.0
+  react-sound: ^1.2.0
   react-test-renderer: ^17.0.2
   sinon: ^14.0.0
   standard-version: ^9.5.0
@@ -91,6 +93,7 @@ dependencies:
   react-icons: 4.4.0_react@18.2.0
   react-moralis: 1.4.0_63nvvkffkv7yotc6qt4lr43hbi
   react-sketch-canvas: 6.1.5_react@18.2.0
+  react-sound: 1.2.0_react@18.2.0
   sinon: 14.0.0
   wagmi: 0.4.12_2pvqx3wni2imkaucnfdtyrjuiq
   zod: 3.17.3
@@ -103,6 +106,7 @@ devDependencies:
   '@testing-library/react': 13.3.0_biqbaboplfbrettd7655fr4n2y
   '@types/react': 18.0.14
   '@types/react-canvas-draw': 1.1.1
+  '@types/react-sound': 1.2.3
   '@typescript-eslint/eslint-plugin': 5.22.0_oaqhgdaqcfyejx4blfvetkodaq
   '@typescript-eslint/parser': 5.22.0_b5e7v2qnwxfo6hmiq56u52mz3e
   autoprefixer: 10.4.7_postcss@8.4.13
@@ -4640,6 +4644,12 @@ packages:
 
   /@types/react-dom/18.0.5:
     resolution: {integrity: sha512-OWPWTUrY/NIrjsAPkAk1wW9LZeIjSvkXRhclsFO8CZcZGCOg2G0YZy4ft+rOyYxy8B7ui5iZzi9OkDebZ7/QSA==}
+    dependencies:
+      '@types/react': 18.0.14
+    dev: true
+
+  /@types/react-sound/1.2.3:
+    resolution: {integrity: sha512-PfeO57BIvocJe5Gwj/EicTu1XTYuliXBNzz8Uj9qm3LglnqP+X0zb2FUKZUIVISZ8L/e8PrCjciAix2ZsdKhzw==}
     dependencies:
       '@types/react': 18.0.14
     dev: true
@@ -11454,6 +11464,16 @@ packages:
       react: 18.2.0
     dev: false
 
+  /react-sound/1.2.0_react@18.2.0:
+    resolution: {integrity: sha512-pc2l8f7Oy3VePRRVesBwSSJ0mrCeD/lE5GVCT1RPdEQ7lgbZTDyWI8HokXHmS1v79aiLnd3WTRhfsBAY0NTb8g==}
+    peerDependencies:
+      react: ^15.3.0 || ^16.0.0-0
+    dependencies:
+      prop-types: 15.8.1
+      react: 18.2.0
+      soundmanager2: 2.97.20170602
+    dev: false
+
   /react-style-singleton/2.2.0_luyos4mouogwq6z3wafb3re4ce:
     resolution: {integrity: sha512-nK7mN92DMYZEu3cQcAhfwE48NpzO5RpxjG4okbSqRRbfal9Pk+fG2RdQXTMp+f6all1hB9LIJSt+j7dCYrU11g==}
     engines: {node: '>=10'}
@@ -12041,6 +12061,10 @@ packages:
       debug: 4.3.4
     transitivePeerDependencies:
       - supports-color
+    dev: false
+
+  /soundmanager2/2.97.20170602:
+    resolution: {integrity: sha512-2ee7ES9SJ++WkD7PGHMeT4QUuJr7uC3wacD6RoCDlKjdSp9lpEOaKm3lKWKld119DLILjS2l9U6xpXJN6U0KPQ==}
     dev: false
 
   /source-map-js/1.0.2:

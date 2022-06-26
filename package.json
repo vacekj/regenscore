@@ -47,6 +47,7 @@
     "react-icons": "^4.4.0",
     "react-moralis": "^1.4.0",
     "react-sketch-canvas": "^6.1.0",
+    "react-sound": "^1.2.0",
     "sinon": "^14.0.0",
     "wagmi": "^0.4.12",
     "zod": "^3.17.3"
@@ -59,6 +60,7 @@
     "@testing-library/react": "^13.3.0",
     "@types/react": "^18.0.14",
     "@types/react-canvas-draw": "^1.1.1",
+    "@types/react-sound": "^1.2.3",
     "@typescript-eslint/eslint-plugin": "^5.22.0",
     "@typescript-eslint/parser": "^5.22.0",
     "autoprefixer": "^10.4.7",
