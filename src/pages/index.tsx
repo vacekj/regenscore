@@ -20,7 +20,7 @@ import Sound from "react-sound";
 export default function Index(props: {
   leaderboard: {
     user_id: string;
-    score: string;
+    score: number;
   }[];
 }) {
   const [badgerMode, setBadgerMode] = useState(false);
@@ -81,9 +81,9 @@ export default function Index(props: {
         Leaderboard
       </Heading>
       <VStack w={"100%"}>
-        {props.leaderboard.slice(0, 10).map((l, index) => {
+        {props.leaderboard.slice(0, 10).sort((a, b) => b.score - a.score).map((l, index) => {
           return (
-            <HStack w={"100%"} justifyContent={"space-between"}>
+            <HStack key={index} w={"100%"} justifyContent={"space-between"}>
               <Text>
                 {index + 1}. &nbsp;<b>{l.user_id}</b>
               </Text>
@@ -103,13 +103,12 @@ const client = new PrivyClient(
   process.env.PRIVY_API_SECRET!,
 );
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
+export const getServerSideProps: GetServerSideFProps = async (context) => {
   const batch = await client.getBatch("score", {
     limit: 100,
   });
-
   const data = batch.users.map(d => {
-    return { user_id: d.user_id, score: d.data[0]?.text() };
+    return { user_id: d.user_id, score: parseInt(d.data[0]?.text() ?? "0") };
   });
   return {
     props: {
