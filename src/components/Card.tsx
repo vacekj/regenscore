@@ -1,52 +1,22 @@
 import { createSvg } from "@/createSvg";
-import {
-  Box,
-  Button,
-  Center,
-  FormControl,
-  FormErrorMessage,
-  Image,
-  Input,
-  Stack,
-  Text,
-  useBoolean,
-  useColorModeValue,
-  useToast,
-} from "@chakra-ui/react";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { ConnectButton, useAddRecentTransaction } from "@rainbow-me/rainbowkit";
-import { ethers } from "ethers";
-import { parseTransaction } from "ethers/lib/utils";
-import { useCallback, useEffect, useState } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { useAccount, useNetwork, useSendTransaction } from "wagmi";
-import z from "zod";
-
-const responseBodySchema = z.object({
-  success: z.boolean(),
-  serializedTransaction: z.string(),
-  metadata: z.object({
-    data: z.object({
-      name: z.string(),
-      description: z.string(),
-      properties: z.object({ recipient: z.string(), message: z.string(), type: z.string() }),
-    }),
-    url: z.string(),
-    ipnft: z.string(),
-  }),
-});
+import { useScore } from "@/hooks";
+import { Box, Button, Center, useColorModeValue, useToast } from "@chakra-ui/react";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
+import { useEffect, useState } from "react";
+import { useAccount } from "wagmi";
 
 export default function Card() {
   const toast = useToast();
+  const [loading, setLoading] = useState(false);
+
+  const { data: account } = useAccount();
+
+  const score = useScore(account?.address!);
 
   const [svg, setSvg] = useState<string>();
   useEffect(() => {
-    createSvg(500, account?.address!).then(res => setSvg(res));
-  });
-
-  const [loading, setLoading] = useState(false);
-  const { data: account } = useAccount();
-  const { data: activeChain } = useNetwork();
+    createSvg(score, account?.address!).then(res => setSvg(res));
+  }, [score, account?.address!]);
 
   return (
     <Center py={12} flexDirection={"column"}>
