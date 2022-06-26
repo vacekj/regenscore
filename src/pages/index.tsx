@@ -58,7 +58,7 @@ export default function Index(props: {
             lineHeight={1.1}
             fontSize={{ base: "3xl", sm: "4xl", md: "5xl", lg: "6xl" }}
           >
-            Welcome Regen.
+            Welcome Regen 🌱.
           </Heading>
           <Text textAlign={"center"}>
             We are celebrating all regens who contribute to the greater good. Discover your score below.

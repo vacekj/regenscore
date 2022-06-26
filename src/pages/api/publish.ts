@@ -2,7 +2,7 @@ import nftContractAbi from "@/nftContractAbi.json";
 import { PrivyClient } from "@privy-io/privy-node";
 import { ethers } from "ethers";
 import { NextApiRequest, NextApiResponse } from "next";
-import { createScore} from "./score";
+import { createScore } from "./score";
 
 const client = new PrivyClient(
   process.env.PRIVY_API_KEY!,
@@ -17,7 +17,6 @@ type Request = {
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const body = req.body as Request;
 
-  /* TODO: get actual score here*/
   const score = await createScore(body.address);
 
   try {
