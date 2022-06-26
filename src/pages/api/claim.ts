@@ -50,7 +50,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
   try {
     const metadata = await storeNft(image, score, body.address);
-    const provider = ethers.getDefaultProvider("polygon");
+    const provider = ethers.getDefaultProvider(isDevelopmentEnvironment ? "mumbai" : "polygon");
     const minterWallet = new Wallet(PRIVATE_KEY!, provider);
     const nftContract = new ethers.Contract(
       CONTRACT_ADDRESS!,

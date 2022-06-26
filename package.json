@@ -14,7 +14,7 @@
     "test": "jest",
     "format": "dprint fmt",
     "prepare": "husky install",
-    "forge:deploy": "source .env.local && cd ./contracts && forge create --rpc-url $ETH_RPC_URL --private-key $FORGE_PRIVATE_KEY src/regenscore.sol:RegenScore"
+    "forge:deploy": "source .env && cd ./contracts && forge create --rpc-url $ETH_RPC_URL --private-key $FORGE_PRIVATE_KEY src/regenscore.sol:RegenScore"
   },
   "dependencies": {
     "@babel/core": "^7.18.5",

@@ -8,7 +8,7 @@ import { useAccount } from "wagmi";
 export default function Card() {
   const toast = useToast();
   const [isDesktop] = useMediaQuery("(min-width: 960px)");
-  const [claimed, setClaimed] = useState(true);
+  const [claimed, setClaimed] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const { data: account } = useAccount();
@@ -64,7 +64,12 @@ export default function Card() {
               body: JSON.stringify({
                 address: account?.address,
               }),
-            });
+            }).then(r => setClaimed(true)).then(r =>
+              toast({
+                title: "Claimed RegenScore Card",
+                status: "success",
+              })
+            );
           }}
         >
           Claim your RegenScore Card
