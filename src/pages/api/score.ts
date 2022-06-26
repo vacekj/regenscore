@@ -140,15 +140,11 @@ async function getERC20Transactions(address: string) {
 
     const result = (await response.json()) as GetERC20TransactionsResponse;
 
-    console.log("result is: ", JSON.stringify(result, null, 4));
-
     return result;
   } catch (error) {
     if (error instanceof Error) {
-      console.log("error message: ", error.message);
       return error.message;
     } else {
-      console.log("unexpected error: ", error);
       return "An unexpected error occurred";
     }
   }
@@ -173,15 +169,11 @@ async function getNormalTransactions(address: string) {
 
     const result = (await response.json()) as GetNormalTransactionsResponse;
 
-    console.log("result is: ", JSON.stringify(result, null, 4));
-
     return result;
   } catch (error) {
     if (error instanceof Error) {
-      console.log("error message: ", error.message);
       return error.message;
     } else {
-      console.log("unexpected error: ", error);
       return "An unexpected error occurred";
     }
   }
@@ -206,15 +198,11 @@ async function getERC721Transactions(address: string) {
 
     const result = (await response.json()) as GetERC721TransactionsResponse;
 
-    console.log("result is: ", JSON.stringify(result, null, 4));
-
     return result;
   } catch (error) {
     if (error instanceof Error) {
-      console.log("error message: ", error.message);
       return error.message;
     } else {
-      console.log("unexpected error: ", error);
       return "An unexpected error occurred";
     }
   }
@@ -240,15 +228,11 @@ async function getTokenBalance(contractAddress: string, address: string) {
 
     const result = (await response.json()) as GetTokenBalanceResponse;
 
-    console.log("result is: ", JSON.stringify(result, null, 4));
-
     return result;
   } catch (error) {
     if (error instanceof Error) {
-      console.log("error message: ", error.message);
       return error.message;
     } else {
-      console.log("unexpected error: ", error);
       return "An unexpected error occurred";
     }
   }

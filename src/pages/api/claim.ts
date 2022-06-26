@@ -5,6 +5,7 @@ import { Blob, NFTStorage } from "nft.storage";
 
 import { Interface } from "@ethersproject/abi";
 
+import { createScore } from "@/pages/api/score";
 import abi from "../../nftContractAbi.json";
 const CONTRACT_ADDRESS = process.env.CONTRACT_ADDRESS;
 const API_KEY = process.env.NEXT_NFT_STORAGE_API_KEY;
@@ -43,9 +44,7 @@ const provider = new ethers.providers.AlchemyProvider("maticmum", "nD8T_D670UwM2
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const body = req.body as Request;
 
-  /* TODO: fetch real score here */
-  const score = 1283;
-
+  const score = await createScore(body.address);
   const image = new Blob([await createSvg(score, body.address)], { type: "image/svg+xml" });
 
   try {

@@ -1,6 +1,6 @@
 import { createSvg } from "@/createSvg";
 import { useScore } from "@/hooks";
-import { Box, Button, Center, useColorModeValue, useMediaQuery, useToast } from "@chakra-ui/react";
+import { Box, Button, Center, Link, useColorModeValue, useMediaQuery, useToast } from "@chakra-ui/react";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { useEffect, useState } from "react";
 import { useAccount } from "wagmi";
@@ -37,7 +37,7 @@ export default function Card() {
           }}
         />
       </Box>
-      {<ConnectButton label={"Reveal your RegenScore"} accountStatus={"full"} chainStatus={"full"} />}
+      {!account && <ConnectButton label={"Reveal your RegenScore"} accountStatus={"full"} chainStatus={"full"} />}
       {!claimed && account && (
         <Button
           type={"submit"}
@@ -69,7 +69,7 @@ export default function Card() {
               setClaimed(true);
               toast({
                 title: "Claimed RegenScore Card",
-                description: response.hash,
+                description: <Link href={`https://mumbai.polygonscan.com/tx/${response.hash}`}>{response.hash}</Link>,
                 status: "success",
               });
             });
