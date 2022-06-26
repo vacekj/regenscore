@@ -103,7 +103,7 @@ const client = new PrivyClient(
   process.env.PRIVY_API_SECRET!,
 );
 
-export const getServerSideProps: GetServerSideFProps = async (context) => {
+export const getServerSideProps: GetServerSideProps = async (context) => {
   const batch = await client.getBatch("score", {
     limit: 100,
   });
