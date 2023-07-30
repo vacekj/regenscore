@@ -1,13 +1,6 @@
 import nftContractAbi from "@/nftContractAbi.json";
-import { PrivyClient } from "@privy-io/privy-node";
-import { ethers } from "ethers";
 import { NextApiRequest, NextApiResponse } from "next";
 import { createScore } from "./score";
-
-const client = new PrivyClient(
-  process.env.PRIVY_API_KEY!,
-  process.env.PRIVY_API_SECRET!,
-);
 
 type Request = {
   address: string;

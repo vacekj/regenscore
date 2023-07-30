@@ -11,7 +11,7 @@
     "lint:strict": "eslint --max-warnings=0 src",
     "typecheck": "tsc --noEmit --incremental false",
     "test:watch": "jest --watch",
-    "test": "jest",
+    "test": "vitest",
     "format": "dprint fmt",
     "prepare": "husky install",
     "forge:deploy": "source .env && cd ./contracts && forge create --gas-limit 1000000000000000000 --gas-price 10 --rpc-url $ETH_RPC_URL --private-key $FORGE_PRIVATE_KEY src/regenscore.sol:RegenScore"
@@ -44,16 +44,13 @@
     "@types/react-sound": "^1.2.3",
     "@typescript-eslint/eslint-plugin": "^6.2.0",
     "@typescript-eslint/parser": "^6.2.0",
-    "babel-jest": "^29.6.2",
     "dprint": "^0.39.1",
     "eslint": "^8.46.0",
     "eslint-config-next": "^13.4.12",
     "eslint-plugin-simple-import-sort": "^10.0.0",
     "eslint-plugin-unused-imports": "^3.0.0",
-    "husky": "^7.0.4",
     "identity-obj-proxy": "^3.0.0",
-    "jest": "^28.1.1",
-    "lint-staged": "^12.4.1",
+    "lefthook": "^1.4.7",
     "react-test-renderer": "^18.2.0",
     "typescript": "^5.1.6"
   }

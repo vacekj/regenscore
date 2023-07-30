@@ -14,7 +14,6 @@ import dynamic from "next/dynamic";
 import { useState } from "react";
 const Card = dynamic(() => import("@/components/Card"));
 import { server } from "@/pages/api/claim";
-import { PrivyClient } from "@privy-io/privy-node";
 import { GetServerSideProps } from "next";
 import Sound from "react-sound";
 
@@ -102,18 +101,15 @@ export default function Index(props: {
   );
 }
 
-const client = new PrivyClient(
-  process.env.PRIVY_API_KEY!,
-  process.env.PRIVY_API_SECRET!,
-);
-
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const batch = await client.getBatch("score", {
     limit: 100,
   });
+
   const data = batch.users.map(d => {
     return { user_id: d.user_id, score: parseInt(d.data[0]?.text() ?? "0") };
   }).filter(r => r.score > 0);
+
   return {
     props: {
       leaderboard: data,
