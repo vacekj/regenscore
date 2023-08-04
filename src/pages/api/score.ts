@@ -157,6 +157,7 @@ type GetERC721TransactionsResponse = {
 
 type GetTokenBalanceResponse = {
   result: string;
+  status: string;
 };
 
 async function getERC20Transactions(address: string) {
@@ -356,6 +357,7 @@ export async function createScore(address: string) {
       key,
       address
     )) as GetTokenBalanceResponse;
+    if (balance?.status === '0') continue; // if the rate was exceeded, skip this contract
     let balanceInWei = BigInt(balance.result); // Using BigInt for accurate arithmetic
     let balanceInEth = Number(balanceInWei) / 10 ** 18; // Converting to ETH
     if (isNaN(balanceInEth)) {

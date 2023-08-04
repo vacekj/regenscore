@@ -12,7 +12,7 @@ import {
 } from '@chakra-ui/react';
 import dynamic from 'next/dynamic';
 import { useState } from 'react';
-const Card = dynamic(() => import('@/components/Card'));
+const Card = dynamic(() => import('@/components/Card'), { ssr: false });
 import { server } from '@/pages/api/claim';
 import { GetServerSideProps } from 'next';
 import Sound from 'react-sound';
