@@ -17,7 +17,11 @@ export const server = isDevelopmentEnvironment
   ? 'http://localhost:3000'
   : 'https://regenscore.vercel.app';
 
-async function storeNft(image: Blob, score: number, address: string) {
+async function storeNft(
+  image: Blob,
+  score: number | '????????',
+  address: string
+) {
   const nft = {
     image,
     name: 'RegenScore Card',
@@ -43,7 +47,7 @@ const provider = new ethers.AlchemyProvider(
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const body = req.body as Request;
 
-  const score = await createScore(body.address);
+  const { score } = await createScore(body.address);
   const image = new Blob([await createSvg(score, body.address)], {
     type: 'image/svg+xml',
   });
@@ -54,7 +58,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     const minterWallet = new Wallet(PRIVATE_KEY!, provider);
     const nftContract = new ethers.Contract(
       CONTRACT_ADDRESS!,
-      new Interface(abi.abi),
+      abi.abi,
       minterWallet
     );
     const transaction = await nftContract.safeMint(
