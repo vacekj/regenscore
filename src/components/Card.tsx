@@ -5,6 +5,8 @@ import {
   Button,
   Center,
   Link,
+  Text,
+  Heading,
   useColorModeValue,
   useMediaQuery,
   useToast,
@@ -19,14 +21,18 @@ export default function Card() {
   const [isDesktop] = useMediaQuery('(min-width: 960px)');
   const [claimed, setClaimed] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [showDebug, setShowDebug] = useState(false);
+
   const { address, isConnected } = useAccount();
 
-  const { score, debug } = useScore(address!);
+  const { score, debug } = useScore(address || '');
+
   const [svg, setSvg] = useState<string>();
   useEffect(() => {
-    createSvg(address ? score : '????????', address ?? '0x1234...abcd').then(
-      (res) => setSvg(res)
-    );
+    createSvg(
+      address ? score || 0 : '????????',
+      address ?? '0x1234...abcd'
+    ).then((res) => setSvg(res));
   }, [score, address!]);
 
   return (
@@ -34,12 +40,12 @@ export default function Card() {
       <Box
         as={motion.div}
         role={'group'}
-        bg={useColorModeValue('white', 'gray.800')}
+        bg={'gray.500'}
         boxShadow={'2xl'}
         rounded={'lg'}
         pos={'relative'}
         zIndex={1}
-        mb={24}
+        mb={16}
         animate={{ scale: 1.2 }}
         whileHover={{
           scale: 1.3,
@@ -53,6 +59,7 @@ export default function Card() {
           }}
         />
       </Box>
+      <Heading>{Number(score) > 0 && `${score} RS`} </Heading>
       <ConnectButton
         label={'Reveal your RegenScore'}
         accountStatus={'full'}
@@ -107,7 +114,7 @@ export default function Card() {
           Claim your RegenScore Card
         </Button>
       )} */}
-      {claimed && isDesktop && isConnected && address && (
+      {/* {claimed && isDesktop && isConnected && address && (
         <Button
           mt={12}
           colorScheme={'green'}
@@ -140,6 +147,46 @@ export default function Card() {
         >
           Publish your score on the leaderboard
         </Button>
+      )} */}
+      {isConnected && (
+        <Button
+          mt={6}
+          onClick={() => setShowDebug(!showDebug)} // Toggle debug content
+        >
+          {showDebug ? 'Hide Debug Info' : 'Show Debug Info'}
+        </Button>
+      )}
+      {showDebug && debug && (
+        <Box
+          mt={6}
+          p={4}
+          rounded={'lg'}
+          bg={'gray.100'}
+          boxShadow={'md'}
+          bottom={0}
+          right={0}
+          height={'300px'}
+          overflowY={'auto'}
+        >
+          <Heading size='md' mb={2}>
+            Debug Information:
+          </Heading>
+          <pre style={{ whiteSpace: 'pre-wrap', wordWrap: 'break-word' }}>
+            <code>
+              {Object.keys(debug).map((key) => (
+                <Box key={key} mb={2}>
+                  <Text fontWeight='bold'>{key}:</Text>
+                  <Text
+                    as='span'
+                    color={useColorModeValue('gray.600', 'gray.400')}
+                  >
+                    {JSON.stringify(debug[key], null, 2)}
+                  </Text>
+                </Box>
+              ))}
+            </code>
+          </pre>
+        </Box>
       )}
     </Center>
   );

@@ -1,10 +1,24 @@
 import { useEffect, useState } from 'react';
 
+export type DebugInfo = any; // Define the type structure for debug information here.
+
 export function useScore(address: string) {
-  const [score, setScore] = useState(0);
-  const [debug, setDebug] = useState(null);
+  const [score, setScore] = useState<number | null>(null);
+  const [debug, setDebug] = useState<DebugInfo | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    // If the address is not provided, we don't make the request.
+    if (!address) {
+      setScore(null);
+      setDebug(null);
+      return;
+    }
+
+    setLoading(true);
+    setError(null);
+
     fetch('/api/score', {
       method: 'POST',
       headers: {
@@ -16,10 +30,17 @@ export function useScore(address: string) {
     })
       .then((res) => res.json())
       .then((res) => {
-        setScore(parseInt(res.score));
+        setScore(res.score ? parseInt(res.score) : null);
         setDebug(res.debug);
+      })
+      .catch((err) => {
+        console.error(err);
+        setError('Failed to fetch score.');
+      })
+      .finally(() => {
+        setLoading(false);
       });
   }, [address]);
 
-  return { score, debug };
+  return { score, debug, loading, error };
 }
