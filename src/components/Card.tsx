@@ -19,11 +19,9 @@ export default function Card() {
   const [isDesktop] = useMediaQuery('(min-width: 960px)');
   const [claimed, setClaimed] = useState(false);
   const [loading, setLoading] = useState(false);
-
   const { address, isConnected } = useAccount();
 
   const { score, debug } = useScore(address!);
-  console.log({ score, debug });
   const [svg, setSvg] = useState<string>();
   useEffect(() => {
     createSvg(address ? score : '????????', address ?? '0x1234...abcd').then(
@@ -55,14 +53,12 @@ export default function Card() {
           }}
         />
       </Box>
-      {(!isConnected || claimed) && (
-        <ConnectButton
-          label={'Reveal your RegenScore'}
-          accountStatus={'full'}
-          chainStatus={'full'}
-        />
-      )}
-      {!claimed && isConnected && (
+      <ConnectButton
+        label={'Reveal your RegenScore'}
+        accountStatus={'full'}
+        chainStatus={'full'}
+      />
+      {/* {!claimed && isConnected && (
         <Button
           type={'submit'}
           disabled={claimed}
@@ -110,7 +106,7 @@ export default function Card() {
         >
           Claim your RegenScore Card
         </Button>
-      )}
+      )} */}
       {claimed && isDesktop && isConnected && address && (
         <Button
           mt={12}
