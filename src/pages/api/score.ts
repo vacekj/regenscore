@@ -3,10 +3,6 @@ import { NextApiRequest, NextApiResponse } from 'next';
 const ETHERSCAN_API_KEY = 'GB821FZCS37WSXM8GJCCUUD3ZQUTZZY9RX';
 const apikey = '&apikey=' + ETHERSCAN_API_KEY;
 
-type ContractsList = {
-  [key: string]: number;
-};
-
 type ContractDetails = {
   name: string;
   weight: number;

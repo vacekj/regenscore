@@ -20,7 +20,7 @@ import Sound from 'react-sound';
 export default function Index(props: {
   leaderboard: {
     user_id: string;
-    score: number;
+    score: number | '????????';
   }[];
 }) {
   const [badgerMode, setBadgerMode] = useState(false);

@@ -7,7 +7,6 @@ import {
   Link,
   Text,
   Heading,
-  useColorModeValue,
   useMediaQuery,
   useToast,
 } from '@chakra-ui/react';
@@ -176,10 +175,7 @@ export default function Card() {
               {Object.keys(debug).map((key) => (
                 <Box key={key} mb={2}>
                   <Text fontWeight='bold'>{key}:</Text>
-                  <Text
-                    as='span'
-                    color={useColorModeValue('gray.600', 'gray.400')}
-                  >
+                  <Text as='span' color={'gray.600'}>
                     {JSON.stringify(debug[key], null, 2)}
                   </Text>
                 </Box>
