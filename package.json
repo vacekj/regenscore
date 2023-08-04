@@ -22,7 +22,9 @@
     "@chakra-ui/react": "^2.8.0",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
+    "@ethersproject/abi": "^5.7.0",
     "@rainbow-me/rainbowkit": "^1.0.7",
+    "ethers": "^6.7.0",
     "framer-motion": "^10.15.0",
     "next": "^13.4.12",
     "nft.storage": "^7.1.1",
@@ -31,7 +33,7 @@
     "react-dom": "^18.2.0",
     "react-icons": "^4.10.1",
     "react-sound": "^1.2.0",
-    "viem": "^1.4.2",
+    "viem": "^1.5.3",
     "vitest": "^0.33.0",
     "wagmi": "^1.3.9"
   },
@@ -53,5 +55,10 @@
     "lefthook": "^1.4.7",
     "react-test-renderer": "^18.2.0",
     "typescript": "^5.1.6"
+  },
+  "browser": {
+    "fs": false,
+    "net": false,
+    "tls": false
   }
 }
