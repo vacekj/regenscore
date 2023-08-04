@@ -371,8 +371,7 @@ export async function createScore(address: string) {
     }
   }
 
-  console.log({ score, address, debug }); // log the debug object
-  return { score, debug }; // return the debug object along with the score
+  return { score, debug };
 }
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
