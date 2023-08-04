@@ -15,7 +15,7 @@ const { chains, publicClient } = configureChains(
 
 const { connectors } = getDefaultWallets({
   appName: 'RegenScore',
-  projectId: 'YOUR_PROJECT_ID',
+  projectId: '4bcc84e6f6102d46a4774324f3697fcf',
   chains,
 });
 
