@@ -9,8 +9,10 @@ export function useScore(address: string) {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    const addressPattern = /^0x[a-fA-F0-9]{40}$/;
+
     // If the address is not provided, we don't make the request.
-    if (!address) {
+    if (!address || !addressPattern.test(address)) {
       setScore(null);
       setDebug(null);
       return;
