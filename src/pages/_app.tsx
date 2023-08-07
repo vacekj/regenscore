@@ -4,18 +4,18 @@ import '@rainbow-me/rainbowkit/styles.css';
 import { AppProps } from 'next/app';
 import Head from 'next/head';
 import { configureChains, createConfig, WagmiConfig } from 'wagmi';
-import { polygonMumbai } from 'wagmi/chains';
+import { mainnet, arbitrum, optimism, gnosis, polygon } from 'wagmi/chains';
 import { publicProvider } from 'wagmi/providers/public';
 import './styles.css';
 
 const { chains, publicClient } = configureChains(
-  [polygonMumbai],
+  [mainnet, optimism, arbitrum, gnosis, polygon],
   [publicProvider()]
 );
 
 const { connectors } = getDefaultWallets({
   appName: 'RegenScore',
-  projectId: '4bcc84e6f6102d46a4774324f3697fcf',
+  projectId: 'df4f5f1b03670ef123bd5ee18401d0de',
   chains,
 });
 

@@ -14,6 +14,15 @@ type ITransaction = {
   scoreAdded: number;
 };
 
+type IGRDonation = {
+  id: string;
+  amountUSD: number;
+  scoreAdded: number;
+  transaction: string;
+  roundName: string;
+  projectTitle: string;
+};
+
 const list_of_contracts: { [key: string]: ContractDetails } = {
   '0x900db999074d9277c5da2a43f252d74366230da0': { name: 'Giveth', weight: 1 },
   '0xD56daC73A4d6766464b38ec6D91eB45Ce7457c44': { name: 'Panvala', weight: 1 },
@@ -282,6 +291,19 @@ async function getTokenBalance(contractAddress: string, address: string) {
   }
 }
 
+async function fetchGRDonations(address: string) {
+  const addressParts = address.match(/.{1,6}/g) ?? [];
+  if (!addressParts) {
+    throw new Error('Invalid address');
+  }
+  const url = `https://indexer-production.fly.dev/data/1/contributors/${addressParts.join(
+    '/'
+  )}.json`;
+  const response = await fetch(url);
+  const donations = await response.json();
+  return donations;
+}
+
 export async function createScore(address: string) {
   let score = 0;
   var debug = {
@@ -289,6 +311,7 @@ export async function createScore(address: string) {
     erc20Transactions: [] as ITransaction[],
     erc721Transactions: [] as ITransaction[],
     tokenBalances: [] as ITransaction[],
+    grDonations: [] as IGRDonation[],
   };
   const normaltxs = (await getNormalTransactions(
     address
@@ -371,6 +394,24 @@ export async function createScore(address: string) {
     }
   }
 
+  // Fetch GR donations and calculate score from donations
+  try {
+    const grDonations = await fetchGRDonations(address);
+    for (const donation of grDonations) {
+      const donationScore = donation.amountUSD; // Calculate score from donation amount in USD
+      score += donationScore;
+      debug.grDonations.push({
+        id: donation.id,
+        amountUSD: donation.amountUSD,
+        scoreAdded: donationScore,
+        transaction: donation.transaction,
+        roundName: donation.roundName,
+        projectTitle: donation.projectTitle,
+      });
+    }
+  } catch (error) {
+    console.error('Error fetching GR donations:', error);
+  }
   return { score, debug };
 }
 
