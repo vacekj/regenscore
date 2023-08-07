@@ -5,6 +5,7 @@ import {
   Button,
   Center,
   Link,
+  Input,
   Text,
   Heading,
   useMediaQuery,
@@ -21,21 +22,25 @@ export default function Card() {
   const [claimed, setClaimed] = useState(false);
   const [loading, setLoading] = useState(false);
   const [showDebug, setShowDebug] = useState(false);
+  const [inputAddress, setInputAddress] = useState('');
 
   const { address, isConnected } = useAccount();
 
-  const { score, debug } = useScore(address || '');
+  const effectiveAddress = inputAddress || address || '';
+
+  const { score, debug } = useScore(effectiveAddress);
 
   const [svg, setSvg] = useState<string>();
   useEffect(() => {
     createSvg(
-      address ? score || 0 : '????????',
-      address ?? '0x1234...abcd'
+      effectiveAddress ? score || 0 : '????????',
+      effectiveAddress ?? '0x1234...abcd'
     ).then((res) => setSvg(res));
-  }, [score, address!]);
+  }, [score, effectiveAddress!]);
 
   return (
     <Center py={12} flexDirection={'column'}>
+      <Heading mb={12}>{Number(score) > 0 && `${score} RS`} </Heading>
       <Box
         as={motion.div}
         role={'group'}
@@ -58,11 +63,17 @@ export default function Card() {
           }}
         />
       </Box>
-      <Heading>{Number(score) > 0 && `${score} RS`} </Heading>
       <ConnectButton
         label={'Reveal your RegenScore'}
         accountStatus={'full'}
         chainStatus={'full'}
+      />
+      <Text my={2}>or</Text>
+      <Input
+        value={inputAddress}
+        onChange={(e) => setInputAddress(e.target.value)} // Update inputAddress state on change
+        placeholder='Enter Ethereum Address'
+        mt={0}
       />
       {/* {!claimed && isConnected && (
         <Button
