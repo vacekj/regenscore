@@ -158,14 +158,12 @@ export default function Card() {
           Publish your score on the leaderboard
         </Button>
       )} */}
-      {isConnected && (
-        <Button
-          mt={6}
-          onClick={() => setShowDebug(!showDebug)} // Toggle debug content
-        >
-          {showDebug ? 'Hide Debug Info' : 'Show Debug Info'}
-        </Button>
-      )}
+      <Button
+        mt={6}
+        onClick={() => setShowDebug(!showDebug)} // Toggle debug content
+      >
+        {showDebug ? 'Hide Debug Info' : 'Show Debug Info'}
+      </Button>
       {showDebug && debug && (
         <Box
           mt={6}
