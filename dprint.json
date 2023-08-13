@@ -1,14 +1,10 @@
 {
-  "typescript": {
-  },
-  "json": {
-  },
-  "markdown": {
-  },
-  "toml": {
-  },
+  "typescript": {},
+  "json": {},
+  "markdown": {},
+  "toml": {},
   "includes": [
-    "**/*.{ts,tsx,js,jsx,cjs,mjs,json,md,toml}"®
+    "**/*.{ts,tsx,js,jsx,cjs,mjs,json,md,toml}"
   ],
   "excludes": [
     "**/node_modules",

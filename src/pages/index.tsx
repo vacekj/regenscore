@@ -1,4 +1,5 @@
 import {
+  Button,
   Container,
   FormControl,
   FormLabel,
@@ -9,33 +10,35 @@ import {
   Switch,
   Text,
   VStack,
-} from '@chakra-ui/react';
-import dynamic from 'next/dynamic';
-import { useState } from 'react';
-const Card = dynamic(() => import('@/components/Card'), { ssr: false });
-import { server } from '@/pages/api/claim';
-import { GetServerSideProps } from 'next';
-import Sound from 'react-sound';
+} from "@chakra-ui/react";
+import dynamic from "next/dynamic";
+import { useState } from "react";
+const Card = dynamic(() => import("@/components/Card"), { ssr: false });
+import { Check } from "@/components/Check";
+import { server } from "@/pages/api/claim";
+import { GetServerSideProps } from "next";
+import Sound from "react-sound";
 
 export default function Index(props: {
   leaderboard: {
     user_id: string;
-    score: number | '????????';
+    score: number | "????????";
   }[];
 }) {
   const [badgerMode, setBadgerMode] = useState(false);
 
   return (
     <Container
-      position={'relative'}
-      backgroundImage={badgerMode ? `${server}/badgers.gif` : ''}
+      position={"relative"}
+      backgroundImage={badgerMode ? `${server}/badgers.gif` : ""}
     >
       <Sound
         playFromPosition={3000}
-        url='/badgers.mp3'
-        playStatus={badgerMode ? 'PLAYING' : 'STOPPED'}
+        url="/badgers.mp3"
+        playStatus={badgerMode ? "PLAYING" : "STOPPED"}
       />
-      {/* <HStack p={4} justifyContent={'space-between'}>
+      {
+        /* <HStack p={4} justifyContent={'space-between'}>
         <Link href={'#leaderboard'}>Leaderboard</Link>
         <FormControl display='flex' alignItems='center' width={'initial'}>
           <FormLabel htmlFor='badger' mb='0'>
@@ -47,29 +50,39 @@ export default function Index(props: {
             id='badger'
           />
         </FormControl>
-      </HStack> */}
+      </HStack> */
+      }
       <VStack
-        alignItems={'center'}
-        maxW={'7xl'}
+        alignItems={"center"}
+        maxW={"7xl"}
         spacing={{ base: 10, lg: 16 }}
         py={{ base: 10, sm: 20, lg: 36 }}
         mt={16}
       >
-        <Stack textAlign={'center'} spacing={{ base: 4 }}>
+        <Stack textAlign={"center"} spacing={{ base: 4 }}>
           <Heading
             mt={-20}
             lineHeight={1.1}
-            fontSize={{ base: '3xl', sm: '4xl', md: '5xl', lg: '6xl' }}
+            fontSize={{ base: "3xl", sm: "4xl", md: "5xl", lg: "6xl" }}
           >
             Welcome Regen 🌱.
           </Heading>
-          <Text textAlign={'center'}>
-            We are celebrating all regens who contribute to the greater good.
-            Discover your score below.
+          <Text textAlign={"center"}>
+            We are celebrating all regens who contribute to the greater good. Discover your score below.
           </Text>
+          <Button variant="brand">connect wallet</Button>
+          <Button variant="variant1">connect wallet</Button>
+          <Heading as="h1" variant="h1">Heading H1</Heading>
+          <Heading as="h2" variant="h2">Heading H2</Heading>
+          <Heading as="h3" variant="h3">Heading H3</Heading>
+          <p>
+            Here is our <a href="https://example.com">link!</a>.
+          </p>
+          <Check />
         </Stack>
         <Card />
-        {/* <Text fontSize={'20px'} px={16}>
+        {
+          /* <Text fontSize={'20px'} px={16}>
           We are celebrating all the regens by rewarding them with an NFT to
           showcase their regen score. Set it as your PFP or use it to gain
           access to regen-only communities and events. Oh, and the NFTs are
@@ -80,9 +93,11 @@ export default function Index(props: {
           impact projects like Gitcoin, Giveth, World of Women and more. The
           more you donate and the more diverse your contributions, the better
           your regen score.
-        </Text> */}
+        </Text> */
+        }
       </VStack>
-      {/* <Heading
+      {
+        /* <Heading
         textAlign={"center"}
         lineHeight={1.1}
         p={2}
@@ -102,7 +117,8 @@ export default function Index(props: {
             </HStack>
           );
         })}
-      </VStack> */}
+      </VStack> */
+      }
       <VStack></VStack>
     </Container>
   );
