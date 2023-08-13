@@ -34,12 +34,6 @@
     font-weight: normal;
   }
 
-  a { /* links */
-    color: #01966B;
-    text-decoration: none;
-  }
-
-  a:hover {
-    text-decoration: none;
+.my-link {
     color: #01966B;
   }
