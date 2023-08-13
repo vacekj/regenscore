@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
 export type DebugInfo = any; // Define the type structure for debug information here.
 
@@ -21,10 +21,10 @@ export function useScore(address: string) {
     setLoading(true);
     setError(null);
 
-    fetch('/api/score', {
-      method: 'POST',
+    fetch("/api/score", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         address,
@@ -37,7 +37,7 @@ export function useScore(address: string) {
       })
       .catch((err) => {
         console.error(err);
-        setError('Failed to fetch score.');
+        setError("Failed to fetch score.");
       })
       .finally(() => {
         setLoading(false);
