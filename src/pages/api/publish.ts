@@ -1,6 +1,6 @@
-import nftContractAbi from '@/nftContractAbi.json';
-import { NextApiRequest, NextApiResponse } from 'next';
-import { createScore } from './score';
+import nftContractAbi from "@/nftContractAbi.json";
+import { NextApiRequest, NextApiResponse } from "next";
+import { createScore } from "./score";
 
 type Request = {
   address: string;
