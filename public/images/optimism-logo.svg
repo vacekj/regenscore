@@ -1,0 +1,28 @@
+<svg width="225" height="225" viewBox="0 0 225 225" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Optimism Logo">
+<g id="Rectangle 62" filter="url(#filter0_bd_325_600)">
+<rect x="4" width="217" height="217" rx="108.5" fill="url(#paint0_linear_325_600)" fill-opacity="0.2" shape-rendering="crispEdges"/>
+<rect x="4.5" y="0.5" width="216" height="216" rx="108" stroke="white" stroke-opacity="0.2" shape-rendering="crispEdges"/>
+</g>
+<path id="Vector" d="M82.2131 140C74.8173 139.714 68.3672 138.754 63.2018 134.038C58.2772 129.539 57.287 123.793 58.4289 117.771C59.6957 111.082 61.1767 104.385 63.3088 97.9213C66.8417 87.2178 76.0217 80.8233 87.5748 80.1225C93.5699 79.7591 99.4223 80.0879 104.909 82.7183C112.01 86.1189 116.06 92.7815 114.758 100.379C113.473 107.863 111.894 115.374 109.485 122.573C106.176 132.455 98.5837 137.993 87.9495 139.464C85.8262 139.758 83.6762 139.87 82.2131 140ZM74.4337 118.731C74.398 123.845 75.6827 126.104 78.5197 127.159C83.6583 129.08 90.9381 126.562 93.2755 121.708C96.7013 114.595 97.9056 106.894 98.6193 99.1673C98.9494 95.6024 96.6923 93.1882 93.3201 92.4268C88.235 91.276 82.8286 93.145 80.2415 97.5839C76.2269 104.48 75.7362 112.346 74.4426 118.731H74.4337Z" fill="white"/>
+<path id="Vector_2" d="M143.77 118.554C141.591 118.554 139.42 118.606 137.241 118.536C136.012 118.493 135.481 118.886 135.228 120.171C134.199 125.434 132.996 130.662 131.95 135.925C131.506 138.189 130.294 139.089 128.011 138.993C125.038 138.871 122.066 138.967 119.094 138.958C116.165 138.958 115.616 138.311 116.217 135.435C117.691 128.406 119.207 121.386 120.689 114.366C122.833 104.217 124.969 94.0757 127.095 83.926C127.784 80.6302 128.438 79.9745 131.715 80.0007C139.9 80.0619 148.102 79.9833 156.269 80.3679C161.795 80.6302 166.964 82.2562 170.52 87.047C172.569 89.8095 173.257 92.9654 172.917 96.2962C172.08 104.601 168.89 111.56 161.115 115.564C156.164 118.108 150.743 118.554 145.278 118.563C144.772 118.563 144.267 118.563 143.752 118.563L143.77 118.554ZM137.878 106.56C141.643 106.56 145.042 106.682 148.424 106.533C152.765 106.341 156.06 103.377 156.931 99.1549C157.873 94.6002 156.199 92.2223 151.649 91.9776C148.538 91.8114 145.417 91.8901 142.305 91.9863C141.774 92.0038 140.92 92.6157 140.806 93.0966C139.778 97.4589 138.88 101.856 137.878 106.568V106.56Z" fill="white"/>
+</g>
+<defs>
+<filter id="filter0_bd_325_600" x="-6" y="-10" width="237" height="237" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feGaussianBlur in="BackgroundImageFix" stdDeviation="5"/>
+<feComposite in2="SourceAlpha" operator="in" result="effect1_backgroundBlur_325_600"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dy="4"/>
+<feGaussianBlur stdDeviation="2"/>
+<feComposite in2="hardAlpha" operator="out"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.1 0"/>
+<feBlend mode="normal" in2="effect1_backgroundBlur_325_600" result="effect2_dropShadow_325_600"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect2_dropShadow_325_600" result="shape"/>
+</filter>
+<linearGradient id="paint0_linear_325_600" x1="112.5" y1="0" x2="112.5" y2="217" gradientUnits="userSpaceOnUse">
+<stop stop-color="white"/>
+<stop offset="1" stop-color="white" stop-opacity="0"/>
+</linearGradient>
+</defs>
+</svg>
