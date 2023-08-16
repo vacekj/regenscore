@@ -1,12 +1,10 @@
-import { Box, Container } from '@chakra-ui/react';
+import { Flex } from '@chakra-ui/react';
 import Hero from './Hero';
 
 export default function Landing() {
   return (
-    <Box bg={'brand.deepGreen.400'} pt='200'>
-      <Container>
-        <Hero />
-      </Container>
-    </Box>
+    <Flex bg={'brand.deepGreen.400'} pt='180' justifyContent='flex-end'>
+      <Hero />
+    </Flex>
   );
 }
