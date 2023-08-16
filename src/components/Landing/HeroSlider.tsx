@@ -1,53 +1,107 @@
-import { Box, Flex, VStack, HStack, Heading, Text } from '@chakra-ui/react';
+import {
+  Box,
+  Flex,
+  VStack,
+  HStack,
+  Heading,
+  Image,
+  Text,
+} from '@chakra-ui/react';
 import { useState } from 'react';
 
-const Slide1 = () => (
-  <Flex
-    flexDirection='column'
-    w='full'
-    h='616px'
-    border='1px solid rgba(255, 255, 255, 0.2)'
-    borderRadius={{ base: 0, md: '32px 0 0 0' }}
-    bg='url(/images/leaf-bg.jpeg)'
-    bgPos='center'
-    pl={{ base: '4', md: '82' }}
-    justifyContent='center'
-    position='relative'
-  >
-    <Box
-      position='absolute'
-      top='0'
-      left='0'
-      right='0'
-      bottom='0'
-      borderRadius='32px 0 0 0'
-      filter='brightness(40%)'
-      bgColor='rgba(255, 255, 255, 0.2)'
-    />
-    <Heading
-      as='h1'
-      variant='h1'
-      color='brand.primaryOrange.300'
-      maxWidth={'1100px'}
-      textAlign='left'
-      zIndex={2}
-      mb={'48px'}
-      w={'100%'}
-      fontSize={{ base: '44px', md: '56px', lg: '79px', xl: '92px' }}
+const Slide1 = () => {
+  const images = [
+    {
+      src: '/images/trusted-seed-logo.svg',
+      alt: 'trustedseed',
+      top: '10%',
+      left: '22%',
+      width: { base: 93 },
+      height: { base: 93 },
+    },
+    {
+      src: '/images/giveth-logo.svg',
+      alt: 'giveth',
+      top: '10%',
+      right: '5%',
+      width: { base: 141 },
+      height: { base: 141 },
+    },
+    {
+      src: '/images/optimism-logo.svg',
+      alt: 'optimism',
+      right: { base: '2%', xl: '15%' },
+      bottom: { base: 0, xl: '10%' },
+      width: { base: 151, xl: 217 },
+      height: { base: 151, xl: 217 },
+    },
+    {
+      src: '/images/gitcoin-logo.svg',
+      alt: 'gitcoin',
+      bottom: '-10',
+      right: '50%',
+      width: { base: 115, lg: 161 },
+      height: { base: 115, lg: 161 },
+    },
+  ];
+  return (
+    <Flex
+      flexDirection='column'
+      w='full'
+      h='616px'
+      border='1px solid rgba(255, 255, 255, 0.2)'
+      borderRadius={{ base: 0, md: '32px 0 0 0' }}
+      bg='url(/images/leaf-bg.jpeg)'
+      bgPos='center'
+      pl={{ base: '4', md: '82' }}
+      justifyContent='center'
+      position='relative'
     >
-      On-chain reputation layer for regens in public goods
-    </Heading>
-    <Text
-      variant='xLarge'
-      color='white'
-      width={{ base: '100%', md: '100%', lg: '800px' }}
-      textAlign='initial'
-      fontSize={{ base: '18px', md: '32px', lg: '44px' }}
-    >
-      Qualify for Optimism’s Citizen’s House based on your blockchain activity
-    </Text>
-  </Flex>
-);
+      {images.map((image, index) => (
+        <Box key={index} position='absolute' blur={10} {...image}>
+          <Image
+            src={image.src}
+            alt={image.alt}
+            width={image.width}
+            height={image.height}
+          />
+        </Box>
+      ))}
+      <Box
+        position='absolute'
+        top='0'
+        left='0'
+        right='0'
+        bottom='0'
+        borderRadius='32px 0 0 0'
+        filter='brightness(40%)'
+        bgColor='rgba(255, 255, 255, 0.2)'
+      />
+      <Heading
+        as='h1'
+        variant='h1'
+        color='brand.primaryOrange.300'
+        maxWidth={'1100px'}
+        textAlign='left'
+        zIndex={2}
+        mb={'48px'}
+        w={'100%'}
+        fontSize={{ base: '44px', md: '56px', lg: '79px', xl: '92px' }}
+      >
+        On-chain reputation layer for regens in public goods
+      </Heading>
+      <Text
+        variant='xLarge'
+        color='white'
+        width={{ base: '100%', md: '100%', lg: '800px' }}
+        textAlign='initial'
+        fontSize={{ base: '18px', md: '32px', lg: '44px' }}
+      >
+        Qualify for Optimism’s Citizen’s House based on your blockchain activity
+      </Text>
+    </Flex>
+  );
+};
 
 const slides = [
   {
