@@ -9,7 +9,7 @@ type LayoutProps = {
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
     <Flex
-      minHeight='200vh'
+      minHeight='100vh'
       width='100%'
       minWidth={'100vw'}
       flexDirection='column'
