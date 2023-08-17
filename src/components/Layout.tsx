@@ -1,6 +1,6 @@
 import React from 'react';
 import { Flex, Box } from '@chakra-ui/react';
-import Footer from '@/pages/footer';
+import Footer from './Footer';
 import Header from './Header';
 
 type LayoutProps = {
