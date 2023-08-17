@@ -91,3 +91,57 @@
 .my-link {
   color: #01966b;
 }
+
+@keyframes levitation1 {
+  0% {
+    transform: translateY(0) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-5px) rotate(1deg);
+  }
+  50% {
+    transform: translateY(-8px) rotate(-1deg);
+  }
+  75% {
+    transform: translateY(-4px) rotate(0.5deg);
+  }
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+}
+
+@keyframes levitation2 {
+  0% {
+    transform: translateY(0) rotate(0deg);
+  }
+  30% {
+    transform: translateY(-6px) rotate(-2deg);
+  }
+  60% {
+    transform: translateY(-3px) rotate(2deg);
+  }
+  90% {
+    transform: translateY(-7px) rotate(-1deg);
+  }
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+}
+
+@keyframes levitation3 {
+  0% {
+    transform: translateY(0) rotate(0deg);
+  }
+  15% {
+    transform: translateY(-5px) rotate(2deg);
+  }
+  45% {
+    transform: translateY(-9px) rotate(-2deg);
+  }
+  70% {
+    transform: translateY(-6px) rotate(1deg);
+  }
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+}
