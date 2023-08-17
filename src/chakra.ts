@@ -20,6 +20,9 @@ export const theme = extendTheme({
       backgroundOrange: {
         400: '#F2EFE5',
       },
+      beige: {
+        400: 'rgba(248, 246, 240,1)',
+      },
     },
   },
 
