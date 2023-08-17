@@ -51,14 +51,15 @@ const Slide1 = () => {
       h='616px'
       border='1px solid rgba(255, 255, 255, 0.2)'
       borderRadius={{ base: 0, md: '32px 0 0 0' }}
-      bg='url(/images/leaf-bg.jpeg)'
-      bgPos='center'
+      bg={`url(/images/leaf-bg.png)`}
+      bgRepeat='no-repeat'
+      bgSize='cover'
       pl={{ base: '4', md: '82' }}
       justifyContent='center'
       position='relative'
     >
       {images.map((image, index) => (
-        <Box key={index} position='absolute' blur={10} {...image}>
+        <Box key={index} position='absolute' blur={10} {...image} zIndex={4}>
           <Image
             src={image.src}
             alt={image.alt}
@@ -74,8 +75,7 @@ const Slide1 = () => {
         right='0'
         bottom='0'
         borderRadius='32px 0 0 0'
-        filter='brightness(40%)'
-        bgColor='rgba(255, 255, 255, 0.2)'
+        bgColor='rgba(53,71,40, 0.8)'
       />
       <Heading
         as='h1'
@@ -95,6 +95,7 @@ const Slide1 = () => {
         color='white'
         width={{ base: '100%', md: '100%', lg: '800px' }}
         textAlign='initial'
+        zIndex={2}
         fontSize={{ base: '18px', md: '32px', lg: '44px' }}
       >
         Qualify for Optimism’s Citizen’s House based on your blockchain activity
