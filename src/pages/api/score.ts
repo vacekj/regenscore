@@ -73,17 +73,16 @@ const list_of_balance_contracts: { [key: string]: ContractDetails } = {
   "0xb0C22d8D350C67420f06F48936654f567C73E8C8": { name: "sKLIMA", weight: 1 },
   "0xde30da39c46104798bb5aa3fe8b9e0e1f348163f": { name: "GTC", weight: 1 },
 };
-async function fetchRequest(url: string) {
-  let req = await fetch(url, {
+export async function fetchRequest(url: string) {
+  return await fetch(url, {
     method: "GET",
     headers: {
       Accept: "application/json",
     },
   });
-  return req;
 }
 
-type ERC20Transaction = {
+export type ERC20Transaction = {
   blockNumber: string;
   timeStamp: string;
   hash: string;
@@ -105,7 +104,7 @@ type ERC20Transaction = {
   confirmations: string;
 };
 
-type GetERC20TransactionsResponse = {
+export type GetERC20TransactionsResponse = {
   result: ERC20Transaction[];
 };
 
