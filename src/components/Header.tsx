@@ -1,10 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Flex, Text, Spacer, Button, Image } from '@chakra-ui/react';
+import styled from '@emotion/styled';
+import { Web3Button, Web3NetworkSwitch, useWeb3Modal } from '@web3modal/react';
+import { useAccount } from 'wagmi';
+import { Box, Button, Flex, Text, Spacer, Image } from '@chakra-ui/react';
 import Link from 'next/link';
+
+const StyledWeb3NetworkSwitch = styled(Web3NetworkSwitch)`
+  --w3m-accent-color: rgba(0, 0, 0, 0.5);
+`;
 
 const Header: React.FC = () => {
   const [currPos, setCurrPos] = useState(0);
   const [visible, setVisible] = useState(true);
+
+  const { isConnected } = useAccount();
+  const { open } = useWeb3Modal();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -59,7 +69,16 @@ const Header: React.FC = () => {
           </Link>
         </Flex>
         <Spacer />
-        <Button variant='variant1'>Connect Wallet</Button>
+        <Flex gap='4'>
+          {isConnected && <StyledWeb3NetworkSwitch />}
+          {isConnected ? (
+            <Web3Button />
+          ) : (
+            <Button onClick={() => open()} variant='variant1'>
+              Connect Wallet
+            </Button>
+          )}
+        </Flex>
       </Flex>
     </Box>
   );
