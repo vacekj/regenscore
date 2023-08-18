@@ -17,28 +17,28 @@ const Slide1 = () => {
     {
       src: '/images/trusted-seed-logo.svg',
       alt: 'trustedseed',
-      top: '13%',
-      left: '24%',
-      width: { base: 33 },
-      height: { base: 33 },
-      dropSize: { base: 93 },
+      top: { base: '5%', sm: '13%' },
+      left: { base: '15%', sm: '24%' },
+      width: { base: 16.5, sm: 33 },
+      height: { base: 16.5, sm: 33 },
+      dropSize: { base: 46.5, sm: 93 },
       content: 'Some more content for Trustedseed',
     },
     {
       src: '/images/giveth-logo.svg',
       alt: 'giveth',
-      top: '10%',
-      right: '5%',
-      width: { base: 42, lg: 67 },
-      height: { base: 42, lg: 67 },
-      dropSize: { base: 100, lg: 141 },
+      top: { base: '70%', sm: '10%' },
+      right: { base: '70%', sm: '5%' },
+      width: { base: 31.5, sm: 42, lg: 67 },
+      height: { base: 31.5, sm: 42, lg: 67 },
+      dropSize: { base: 75, sm: 100, lg: 141 },
       content: 'Some more content for Giveth',
     },
     {
       src: '/images/optimism-logo.svg',
       alt: 'optimism',
       right: { base: '2%', xl: '15%' },
-      bottom: { base: 0, xl: '10%' },
+      bottom: { base: '20%', sm: 0, xl: '10%' },
       width: { base: 62, xl: 115 },
       height: { base: 62, xl: 115 },
       dropSize: { base: 32, xl: 217 },
@@ -47,11 +47,11 @@ const Slide1 = () => {
     {
       src: '/images/gitcoin-logo.svg',
       alt: 'gitcoin',
-      bottom: '-6',
-      right: '50%',
-      width: { base: 54, lg: 62 },
-      height: { base: 54, lg: 62 },
-      dropSize: { base: 100, lg: 120 },
+      bottom: { base: '80% ', sm: '-6' },
+      right: { base: '10%', sm: '50%' },
+      width: { base: 40.5, sm: 54, lg: 62 },
+      height: { base: 40.5, sm: 54, lg: 62 },
+      dropSize: { base: 75, sm: 100, lg: 120 },
       content: 'Some more content for Gitcoin',
     },
   ];
@@ -59,7 +59,7 @@ const Slide1 = () => {
     <Flex
       flexDirection='column'
       w='full'
-      h='616px'
+      h={{ base: '416px', sm: '616px' }}
       border='1px solid rgba(255, 255, 255, 0.2)'
       borderRadius={{ base: 0, md: '32px 0 0 0' }}
       bg={`url(/images/leaf-bg.png)`}
@@ -73,7 +73,7 @@ const Slide1 = () => {
         <Flex
           key={index}
           position='absolute'
-          zIndex={4}
+          zIndex={{ base: 1, sm: 4 }}
           {...image}
           width={image.dropSize}
           height={image.dropSize}
@@ -81,6 +81,7 @@ const Slide1 = () => {
           onMouseEnter={() => setCurrentDrop(index)}
           onMouseLeave={() => setCurrentDrop(null)}
           _hover={{ transform: 'scale(1.1)' }}
+          filter={{ base: 'brightness(70%)', sm: 'none' }}
         >
           <Flex
             justifyContent='center'
@@ -119,7 +120,7 @@ const Slide1 = () => {
         as='h1'
         variant='h1'
         color='brand.primaryOrange.300'
-        maxWidth={'1100px'}
+        maxWidth={{ base: '342px', sm: '647px', md: '1100px' }}
         minHeight='92px'
         textAlign='left'
         zIndex={2}
@@ -132,11 +133,13 @@ const Slide1 = () => {
       <Text
         variant='xLarge'
         color='white'
-        width={{ base: '100%', md: '100%', lg: '800px' }}
-        minHeight='115px'
+        width={{ base: '100%', xl: '900px' }}
+        maxWidth={{ base: '100%', sm: '800px' }}
+        minHeight={'115px'}
+        lineHeight={{ base: '32px', sm: '57px' }}
         textAlign='initial'
         zIndex={2}
-        fontSize={{ base: '18px', md: '32px', lg: '44px' }}
+        fontSize={{ base: '18px', sm: '32px', lg: '44px' }}
       >
         {currentDrop !== null
           ? dropsImages[currentDrop].content
