@@ -27,6 +27,7 @@ const Benefits: React.FC = () => {
         pb='32px'
         display='inline-block'
         position='relative'
+        color='brand.deepGreen.400'
       >
         {title}
         <Box

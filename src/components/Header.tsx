@@ -2,17 +2,41 @@ import React, { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
 import { Web3Button, Web3NetworkSwitch, useWeb3Modal } from '@web3modal/react';
 import { useAccount } from 'wagmi';
-import { Box, Button, Flex, Text, Spacer, Image } from '@chakra-ui/react';
+import {
+  Box,
+  Button,
+  Flex,
+  Text,
+  Spacer,
+  Image,
+  Drawer,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerCloseButton,
+  DrawerHeader,
+  DrawerBody,
+  VStack,
+  useDisclosure,
+  useBreakpointValue,
+} from '@chakra-ui/react';
 import Link from 'next/link';
 
-const StyledWeb3NetworkSwitch = styled(Web3NetworkSwitch)`
-  --w3m-accent-color: rgba(0, 0, 0, 0.5);
+const StyledWeb3NetworkSwitch = styled.div`
+  --w3m-accent-color: rgba(0, 0, 0, 0.5); !important;
 `;
 
 const Header: React.FC = () => {
   const [currPos, setCurrPos] = useState(0);
   const [visible, setVisible] = useState(true);
-
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const isDrawerMenu = useBreakpointValue({
+    base: true,
+    lg: false,
+  });
+  const isMobile = useBreakpointValue({
+    base: true,
+    md: false,
+  });
   const { isConnected } = useAccount();
   const { open } = useWeb3Modal();
 
@@ -50,33 +74,67 @@ const Header: React.FC = () => {
         <Link href='/'>
           <Image src={'/images/logo-h.svg'} alt='Logo' minW='223' />
         </Link>
+        {!isDrawerMenu && (
+          <Flex ml='4' gap={{ base: 4, md: 4, xl: 54 }}>
+            <Link href='/'>
+              <Text variant={'boldLink'} textTransform={'uppercase'}>
+                Opportunities
+              </Text>
+            </Link>
+            <Link href='/leaderboard'>
+              <Text variant={'boldLink'} textTransform={'uppercase'}>
+                Leaderboard
+              </Text>
+            </Link>
+            <Link href='/docs'>
+              <Text variant={'boldLink'} textTransform={'uppercase'}>
+                Docs
+              </Text>
+            </Link>
+          </Flex>
+        )}
 
-        <Flex ml='4' gap={54}>
-          <Link href='/'>
-            <Text variant={'boldLink'} textTransform={'uppercase'}>
-              Opportunities
-            </Text>
-          </Link>
-          <Link href='/leaderboard'>
-            <Text variant={'boldLink'} textTransform={'uppercase'}>
-              Leaderboard
-            </Text>
-          </Link>
-          <Link href='/docs'>
-            <Text variant={'boldLink'} textTransform={'uppercase'}>
-              Docs
-            </Text>
-          </Link>
-        </Flex>
         <Spacer />
-        <Flex gap='4'>
-          {isConnected && <StyledWeb3NetworkSwitch />}
-          {isConnected ? (
-            <Web3Button />
-          ) : (
-            <Button onClick={() => open()} variant='variant1'>
-              Connect Wallet
-            </Button>
+        <Flex gap={{ base: 4, xl: 4 }} alignItems='center'>
+          <Drawer placement='right' onClose={onClose} isOpen={isOpen}>
+            <DrawerOverlay>
+              <DrawerContent>
+                <DrawerCloseButton />
+                <DrawerHeader>Menu</DrawerHeader>
+                <DrawerBody>
+                  <VStack align='start' spacing={4}>
+                    <Link href='/'>
+                      <Text variant={'boldLink'}>Opportunities</Text>
+                    </Link>
+                    <Link href='/leaderboard'>
+                      <Text variant={'boldLink'}>Leaderboard</Text>
+                    </Link>
+                    <Link href='/docs'>
+                      <Text variant={'boldLink'}>Docs</Text>
+                    </Link>
+                  </VStack>
+                </DrawerBody>
+              </DrawerContent>
+            </DrawerOverlay>
+          </Drawer>
+          {!isMobile && isConnected && (
+            <StyledWeb3NetworkSwitch>
+              <Web3NetworkSwitch />
+            </StyledWeb3NetworkSwitch>
+          )}
+          {!isMobile ? (
+            isConnected ? (
+              <Web3Button />
+            ) : (
+              <Button onClick={() => open()} variant='variant1'>
+                Connect Wallet
+              </Button>
+            )
+          ) : null}
+          {isDrawerMenu && (
+            <a onClick={onOpen}>
+              <Image src='/icons/drawer.svg' alt='Drawer' />
+            </a>
           )}
         </Flex>
       </Flex>

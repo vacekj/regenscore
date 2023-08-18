@@ -13,15 +13,14 @@ const HowItWorks: React.FC = () => {
     last?: boolean;
   }) => (
     <Flex
-      minHeight='380px'
+      minHeight={{ base: '320px', sm: '380px' }}
       flexDir='column'
-      p='32px'
-      pb='48px'
+      p={{ base: 0, sm: '32px' }}
       borderRadius='25px'
       textAlign='start'
       justifyContent='center'
       gap='32px'
-      mb={{ base: '4', md: '0' }}
+      mb={{ base: 0, sm: '4', md: '0' }}
       position='relative'
     >
       <Image
@@ -45,7 +44,9 @@ const HowItWorks: React.FC = () => {
         _before={{
           content: '""',
           position: 'absolute',
-          width: last ? '0' : { base: '190px', md: '314px', xl: '266px' },
+          width: last
+            ? '0'
+            : { base: 0, sm: '190px', md: '314px', xl: '266px' },
           height: '2px',
           backgroundColor: 'brand.primaryOrange.200',
           top: '50%',
@@ -56,6 +57,7 @@ const HowItWorks: React.FC = () => {
       </Text>
 
       <Text
+        color='brand.deepGreen.400'
         variant='bold'
         fontSize='24px'
         display='inline-block'
