@@ -1,4 +1,4 @@
-import { Box, Flex, Heading, Text, Grid } from '@chakra-ui/react';
+import { Box, Flex, Heading, Image, Text, Grid } from '@chakra-ui/react';
 
 const HowItWorks: React.FC = () => {
   const BoxContent = ({
@@ -24,25 +24,37 @@ const HowItWorks: React.FC = () => {
       mb={{ base: '4', md: '0' }}
       position='relative'
     >
+      <Image
+        src='/icons/right-arrow-container.svg'
+        alt='Step Arrow'
+        position='absolute'
+        w='62px'
+        h='42px'
+        top={0}
+        left={0}
+        zIndex={1}
+      />
       <Text
-        fontSize='32px'
+        fontSize='16px'
         fontWeight='bold'
         position='absolute'
-        top='0'
+        top='8px'
         left='16px'
-        color='brand.primaryOrange.200'
+        color='black'
+        zIndex={2}
         _before={{
           content: '""',
           position: 'absolute',
-          width: last ? '0' : '310px',
+          width: last ? '0' : { base: '190px', md: '314px', xl: '266px' },
           height: '2px',
           backgroundColor: 'brand.primaryOrange.200',
           top: '50%',
-          left: '100%',
+          left: '46px',
         }}
       >
         {step}
       </Text>
+
       <Text
         variant='bold'
         fontSize='24px'
@@ -79,7 +91,7 @@ const HowItWorks: React.FC = () => {
         templateColumns={{
           base: 'repeat(1, minmax(0, 375px))',
           sm: 'repeat(2, minmax(0, 375px))',
-          md: 'repeat(4, minmax(0, 375px))',
+          xl: 'repeat(4, minmax(0, 375px))',
         }}
         mt='48px'
       >
