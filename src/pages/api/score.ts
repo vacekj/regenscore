@@ -1,5 +1,6 @@
+import { getAddressesPaidByOpTreasury, getAdressesAirdroppedOP } from "@/api";
 import { NextApiRequest, NextApiResponse } from "next";
-import { getAddress } from "viem";
+import { formatEther, parseUnits, getAddress } from "viem";
 
 const ETHERSCAN_API_KEY = "GB821FZCS37WSXM8GJCCUUD3ZQUTZZY9RX";
 const apikey = "&apikey=" + ETHERSCAN_API_KEY;
@@ -317,9 +318,29 @@ async function fetchGRDonations(address: string) {
   return scores.flat();
 }
 
-export async function createScore(address: string) {
+export async function createScore(
+  address: string,
+  opAirdropAddresses: [string[], string[]],
+  treasuryTxs: ERC20Transaction[],
+) {
   address = getAddress(address);
   let score = 0;
+
+  if (opAirdropAddresses[0].includes(address)) {
+    score += 100;
+  }
+
+  if (opAirdropAddresses[1].includes(address)) {
+    score += 50;
+  }
+
+  const treasuryPayouts = treasuryTxs.filter(tx => tx.to === address).map(tx => {
+    const value = parseUnits(tx.value, parseInt(tx.tokenDecimal));
+    return Number(formatEther(value));
+  }).reduce((acc, a) => acc + a, 0);
+
+  score += treasuryPayouts;
+
   var debug = {
     normalTransactions: [] as ITransaction[],
     erc20Transactions: [] as ITransaction[],
@@ -430,9 +451,11 @@ export async function createScore(address: string) {
 }
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
+  const opAirdropAddresses = await getAdressesAirdroppedOP();
+  const treasuryAddresses = await getAddressesPaidByOpTreasury();
   const body = req.body as Request;
   // @ts-ignore
-  const result = await createScore(body.address);
+  const result = await createScore(body.address, opAirdropAddresses, treasuryAddresses);
   try {
     return res.status(200).json(result); // send the entire result object as JSON
   } catch (e) {
