@@ -1,12 +1,30 @@
-import { fetchRequest, GetERC20TransactionsResponse } from "@/pages/api/score";
+import { ERC20Transaction, fetchRequest, GetERC20TransactionsResponse } from "@/pages/api/score";
+import { formatENS } from "@rainbow-me/rainbowkit/dist/components/ConnectButton/formatENS";
+import { parse } from "csv-parse";
+import fs from "fs";
+import { dirname } from "path";
+import { fileURLToPath } from "url";
+import { formatEther, parseUnits } from "viem";
 
-const ETHERSCAN_API_KEY = "GB821FZCS37WSXM8GJCCUUD3ZQUTZZY9RX";
+async function loadCSV(path: string): Promise<string[][]> {
+  const __dirname = dirname(fileURLToPath(import.meta.url));
+  const records = [];
+  const parser = fs
+    .createReadStream(`${__dirname}/${path}`)
+    .pipe(parse({}));
+  for await (const record of parser) {
+    records.push(record);
+  }
+  return records as string[][];
+}
+
+const ETHERSCAN_API_KEY = process.env.ETHERSCAN_API_KEY;
 const apikey = "&apikey=" + ETHERSCAN_API_KEY;
 
 /** Gets all addresses that have received a payout from the OP treasury */
-async function getAddressesPaidByOpTreasury() {
+export async function getAddressesPaidByOpTreasury() {
   const response = await fetchRequest(
-    "https://api.etherscan.io/api?module=account&action=tokentx&address=0x2501c477D0A35545a387Aa4A3EEe4292A9a8B3F0"
+    "https://api-optimistic.etherscan.io/api?module=account&action=tokentx&address=0x2501c477D0A35545a387Aa4A3EEe4292A9a8B3F0"
       + apikey,
   );
 
@@ -14,5 +32,15 @@ async function getAddressesPaidByOpTreasury() {
     throw new Error(`Error! status: ${response.status}`);
   }
 
-  return response.json();
+  const json: GetERC20TransactionsResponse = await response.json();
+
+  return json.result;
+}
+
+/** Gets all addresses that have received a payout from the OP treasury */
+export async function getAdressesAirdroppedOP(): Promise<[string[], string[]]> {
+  /* First record is a header, so we drop it */
+  const [, ...op1] = await loadCSV("../data/op_airdrop_1.csv");
+  const [, ...op2] = await loadCSV("../data/op_airdrop_2.csv");
+  return [op1.map(records => records[0]), op2.map(records => records[0])];
 }
