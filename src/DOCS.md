@@ -54,10 +54,24 @@ TODO: where?
 https://etherscan.io/address/0xbfb731cd36d26c2a7287716de857e4380c73a64a watch for events here
 
 - #21 Made txs on Optimism
+
+check nonce for that account
+
 - #22 Interacted with a contract
+
+check all txs, check the to field, check whether it's a contract (it's code is not 0)
+
 - #23 Deployed a contract
-- #21 Deployed a Gnosis safe
-- #21 Executed a tx with a gnosis safe
+
+check txs to 0 address, check if the data is a deploy tx
+
+- #24 Deployed a Gnosis safe
+
+interacted with ???
+
+- #25 Executed a tx with a gnosis safe
+
+interacted with ???
 
 ## Off-chain
 
