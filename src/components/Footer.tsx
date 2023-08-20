@@ -1,4 +1,4 @@
-import { Container, Grid, GridItem } from '@chakra-ui/react';
+import { Container, Grid, GridItem, Image } from '@chakra-ui/react';
 
 export default function footer() {
   return (
@@ -15,20 +15,15 @@ export default function footer() {
           <div style={{ marginTop: '60px', marginLeft: '54px' }}>
             <div>
               <div>
-                <img
-                  src='/icons/leaf.jpg'
-                  alt='leaf'
-                  style={{
+              <Image src={'/icons/leaf.svg'} alt='leaf' style={{
                     display: 'inline-block',
                     marginRight: '10px',
                     marginLeft: '-20px',
-                  }}
-                />
-                <img
-                  src='/icons/regenscore.jpg'
-                  alt='logo'
-                  style={{ display: 'inline-block', marginBottom: '40px' }}
-                />
+                  }}/>
+              <Image src={'/icons/regenscore.svg'} alt='leaf' style={{ 
+                    display: 'inline-block', 
+                    marginBottom: '40px' 
+                    }}/>
               </div>
             </div>
             <div style={{ marginTop: '10px' }}>
@@ -38,7 +33,7 @@ export default function footer() {
               <div style={{ marginBottom: '30px' }}>REGEN Score</div>
               <Twitter />
               <div style={{ marginBottom: '10px', marginTop: '30px' }}>
-                All rights reserved@2023
+                All rights reserved @2023
               </div>
             </div>
           </div>
