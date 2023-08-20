@@ -20,11 +20,44 @@ This data is static and will not ever change or be updated.
 This is data that can be queried directly from the chain, either OP or Ethereum
 
 - #1 did they sell the airdrop? How many % did they sell? Only count first TX after airdrop
+
 - #4 Being Paid from treasury
+
+Fetch and update all txs from the treasury to different addresses, save the individual txs.
+
 - #5 Contributor POAPs
+
+https://documentation.poap.tech/reference/getactionsscan-5, check against known POAPs
+
 - #8 OP Delegate
+
+https://optimistic.etherscan.io/address/0x4200000000000000000000000000000000000042 watch the DelegateVotesChanged event and update the newBalance amount.
+
 - #14 GTC Holder
+
+Etherscan api for gtc holding
+
 - #15 OP Holder
+
+Etherscan api for OP holdings (on Optimism chain)
+
+- #18 ETH Staker
+
+DepositProcessed event on 0x00000000219ab540356cbb839cbe05303d7705fa
+
+- #19 OP Liq provider
+
+TODO: where?
+
+- #20 Bridged to OP from Mainnet
+
+https://etherscan.io/address/0xbfb731cd36d26c2a7287716de857e4380c73a64a watch for events here
+
+- #21 Made txs on Optimism
+- #22 Interacted with a contract
+- #23 Deployed a contract
+- #21 Deployed a Gnosis safe
+- #21 Executed a tx with a gnosis safe
 
 ## Off-chain
 
