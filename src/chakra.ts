@@ -86,6 +86,7 @@ export const theme = extendTheme({
         },
         h3: {
           fontSize: '24px',
+          fontFamily: 'Remixa-Bold',
         },
       },
     },
