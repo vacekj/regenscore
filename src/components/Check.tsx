@@ -19,13 +19,12 @@ const InProgressIcon = (props: React.HTMLProps<SVGSVGElement>) => (
 
 const NotStarted = () => (
   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect width="24" height="24" fill="white" />
-    <circle cx="12" cy="12" r="11" stroke="#B4B4B4" strokeWidth="2" />
+    <circle cx="12" cy="12" r="11" stroke="#B4B4B4" stroke-width="2"/>
   </svg>
 );
 
 const ExclamationIcon = () => (
-  <svg width="16" height="22" viewBox="0 0 16 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg width="24" height="24" viewBox="0 0 16 22" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path
       d="M7.99967 8.33301V10.9997M7.99967 13.6663H8.00634M14.6663 10.9997C14.6663 14.6816 11.6816 17.6663 7.99967 17.6663C4.31778 17.6663 1.33301 14.6816 1.33301 10.9997C1.33301 7.31778 4.31778 4.33301 7.99967 4.33301C11.6816 4.33301 14.6663 7.31778 14.6663 10.9997Z"
       stroke="#354728"

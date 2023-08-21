@@ -1,4 +1,4 @@
-import { Container, Grid, GridItem, Image } from '@chakra-ui/react';
+import { Container, Grid, GridItem, Image, Link } from '@chakra-ui/react';
 
 export default function footer() {
   return (
@@ -49,10 +49,10 @@ export default function footer() {
               About Us
             </div>
             <div style={{ marginTop: '10px' }}>
-              <div style={{ marginBottom: '10px' }}>Docs</div>
-              <div style={{ marginBottom: '10px' }}>Scores</div>
-              <div style={{ marginBottom: '10px' }}>Resources</div>
-              <div style={{ marginBottom: '10px' }}>Activity</div>
+              <div style={{ marginBottom: '10px' }}><Link href='#' _hover={{ textDecoration: 'none' }}>Docs</Link></div>
+              <div style={{ marginBottom: '10px' }}><Link href='#' _hover={{ textDecoration: 'none' }}>Scores</Link></div>
+              <div style={{ marginBottom: '10px' }}><Link href='#' _hover={{ textDecoration: 'none' }}>Resources</Link></div>
+              <div style={{ marginBottom: '10px' }}><Link href='#' _hover={{ textDecoration: 'none' }}>Activity</Link></div>
             </div>
           </div>
         </GridItem>
@@ -67,9 +67,9 @@ export default function footer() {
               Help & Support
             </div>
             <div style={{ marginTop: '10px' }}>
-              <div style={{ marginBottom: '10px' }}>Leaderboard</div>
-              <div style={{ marginBottom: '10px' }}>Opportunities</div>
-              <div style={{ marginBottom: '10px' }}>Privacy - Terms</div>
+              <div style={{ marginBottom: '10px' }}><Link href='#' _hover={{ textDecoration: 'none' }}>Leaderboard</Link></div>
+              <div style={{ marginBottom: '10px' }}><Link href='#' _hover={{ textDecoration: 'none' }}>Opportunities</Link></div>
+              <div style={{ marginBottom: '10px' }}><Link href='#' _hover={{ textDecoration: 'none' }}>Privacy - Terms</Link></div>
             </div>
           </div>
         </GridItem>
