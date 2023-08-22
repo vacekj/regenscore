@@ -1,5 +1,3 @@
-import { Box, chakra } from "@chakra-ui/react";
-import { isValidMotionProp, motion } from "framer-motion";
 import React from "react";
 
 const CheckedIcon = () => (
