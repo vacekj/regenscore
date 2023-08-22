@@ -4,7 +4,7 @@ export default function footer() {
   return (
     <Container
       fontSize='16px'
-      /*fontFamily={"Remixa-Regular"}*/ maxW='none'
+     maxW='none'
       p={0}
       m={0}
       paddingRight={'55px'}
