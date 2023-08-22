@@ -1,11 +1,11 @@
 import {
   Box,
   Flex,
-  VStack,
-  HStack,
   Heading,
+  HStack,
   Image,
   Text,
+  VStack,
 } from "@chakra-ui/react";
 import { useState } from "react";
 
@@ -85,11 +85,11 @@ const Slide1 = () => {
         >
           <Flex
             justifyContent="center"
-            bg="rgba(255, 255, 255, 0.2)"
+            bg="rgba(255, 255, 255, 0.1)"
             boxShadow={"0 4px 30px rgba(0, 0, 0, 0.1)"}
             border="1px solid rgba(255, 255, 255, 0.3)"
             borderRadius="50%"
-            backdropFilter={"blur(4px)"}
+            backdropFilter={"blur(5px)"}
             alignItems="center"
             width={image.dropSize}
             height={image.dropSize}
@@ -182,7 +182,7 @@ const HeroSlider: React.FC = () => {
         </VStack>
       ))}
       <HStack position="absolute" bottom="80px" left="53px" spacing={2}>
-        {/* 
+        {/*
         // TODO: Waiting for more content to bring this
         {slides.map((_, index) => (
           <Box
