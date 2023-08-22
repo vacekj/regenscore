@@ -12,8 +12,7 @@
     "typecheck": "tsc --noEmit --incremental false",
     "test:watch": "jest --watch",
     "test": "vitest",
-    "format": "dprint fmt",
-    "forge:deploy": "source .env && cd ./contracts && forge create --gas-limit 1000000000000000000 --gas-price 10 --rpc-url $ETH_RPC_URL --private-key $FORGE_PRIVATE_KEY src/regenscore.sol:RegenScore"
+    "format": "prettier . --write"
   },
   "dependencies": {
     "@babel/core": "^7.22.10",
@@ -21,18 +20,14 @@
     "@chakra-ui/react": "^2.8.0",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
-    "@ethersproject/abi": "^5.7.0",
     "@web3modal/ethereum": "^2.7.1",
     "@web3modal/react": "^2.7.1",
-    "ethers": "^6.7.0",
     "framer-motion": "^10.15.2",
     "next": "^13.4.13",
-    "nft.storage": "^7.1.1",
     "node-fetch": "^3.3.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.10.1",
-    "react-sound": "^1.2.0",
     "viem": "^1.6.0",
     "vitest": "^0.34.1",
     "wagmi": "^1.3.10"
@@ -46,13 +41,13 @@
     "@types/react-sound": "^1.2.3",
     "@typescript-eslint/eslint-plugin": "^6.3.0",
     "@typescript-eslint/parser": "^6.3.0",
-    "dprint": "^0.40.2",
     "eslint": "^8.47.0",
     "eslint-config-next": "^13.4.13",
     "eslint-plugin-simple-import-sort": "^10.0.0",
     "eslint-plugin-unused-imports": "^3.0.0",
     "identity-obj-proxy": "^3.0.0",
     "lefthook": "^1.4.8",
+    "prettier": "^3.0.2",
     "react-test-renderer": "^18.2.0",
     "typescript": "^5.1.6"
   },
