@@ -73,8 +73,8 @@ export const theme = extendTheme({
     },
     Heading: {
       baseStyle: {
-        fontFamily: "Remixa-Semibold",
-        fontWeight: "300",
+        fontFamily: "Remixa-Medium",
+        fontWeight: "500",
         lineHeight: "106px",
       },
       variants: {
