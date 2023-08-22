@@ -1,6 +1,6 @@
-import { Container, Grid, GridItem, Image, Link } from "@chakra-ui/react";
+import { Box, Container, Grid, GridItem, Image, Link } from "@chakra-ui/react";
 
-export default function footer() {
+export default function Footer() {
   return (
     <Container
       fontSize="16px"
@@ -8,32 +8,30 @@ export default function footer() {
       p={0}
       m={0}
       paddingRight={"55px"}
-      bg="#F2EFE5"
+      bg="backgroundOrange.400"
     >
       <Grid gridTemplateColumns={"6fr 3fr 3fr"} h="408px">
         <GridItem bg="white">
-          <div style={{ marginTop: "60px", marginLeft: "54px" }}>
-            <div>
-              <div>
-                <Image
-                  src={"/icons/leaf.svg"}
-                  alt="leaf"
-                  style={{
-                    display: "inline-block",
-                    marginRight: "10px",
-                    marginLeft: "-20px",
-                  }}
-                />
-                <Image
-                  src={"/icons/regenscore.svg"}
-                  alt="leaf"
-                  style={{
-                    display: "inline-block",
-                    marginBottom: "40px",
-                  }}
-                />
-              </div>
-            </div>
+          <Box mt={"60px"} ml={"54px"}>
+            <Box>
+              <Image
+                src={"/icons/leaf.svg"}
+                alt="leaf"
+                style={{
+                  display: "inline-block",
+                  marginRight: "10px",
+                  marginLeft: "-20px",
+                }}
+              />
+              <Image
+                src={"/icons/regenscore.svg"}
+                alt="leaf"
+                style={{
+                  display: "inline-block",
+                  marginBottom: "40px",
+                }}
+              />
+            </Box>
             <div style={{ marginTop: "10px" }}>
               <div style={{ marginBottom: "10px" }}>
                 Empower your credibility. Elevate your potential.
@@ -44,14 +42,14 @@ export default function footer() {
                 All rights reserved @2023
               </div>
             </div>
-          </div>
+          </Box>
         </GridItem>
         <GridItem bg="white">
           <div style={{ marginTop: "100px", marginLeft: "30px" }}>
             <div
               style={{
                 marginBottom: "20px",
-                fontWeight: "bold" /*fontFamily: "Remixa-Bold"*/,
+                fontWeight: "bold",
               }}
             >
               About Us
@@ -85,7 +83,7 @@ export default function footer() {
             <div
               style={{
                 marginBottom: "20px",
-                fontWeight: "bold" /*fontFamily: "Remixa-Bold"*/,
+                fontWeight: "bold",
               }}
             >
               Help & Support

@@ -1,37 +1,37 @@
 @font-face {
   font-family: "Remixa-Black";
   src: url("/fonts/Remixa-Black.otf") format("opentype");
-  font-weight: normal;
+  font-weight: 900;
 }
 
 @font-face {
   font-family: "Remixa-Bold";
   src: url("/fonts/Remixa-Bold.otf") format("opentype");
-  font-weight: normal;
+  font-weight: 700;
 }
 
 @font-face {
   font-family: "Remixa-Light";
   src: url("/fonts/Remixa-Light.otf") format("opentype");
-  font-weight: normal;
+  font-weight: 300;
 }
 
 @font-face {
   font-family: "Remixa-Medium";
   src: url("/fonts/Remixa-Medium.otf") format("opentype");
-  font-weight: normal;
+  font-weight: 500;
 }
 
 @font-face {
   font-family: "Remixa-Regular";
   src: url("/fonts/Remixa-Regular.otf") format("opentype");
-  font-weight: normal;
+  font-weight: 400;
 }
 
 @font-face {
   font-family: "Remixa-Semibold";
   src: url("/fonts/Remixa-Semibold.otf") format("opentype");
-  font-weight: normal;
+  font-weight: 600;
 }
 
 @font-face {

@@ -122,15 +122,14 @@ const Header: React.FC = () => {
               <Web3NetworkSwitch />
             </StyledWeb3NetworkSwitch>
           )}
-          {!isMobile ? (
-            isConnected ? (
+          {!isMobile &&
+            (isConnected ? (
               <Web3Button />
             ) : (
               <Button onClick={() => open()} variant="variant1">
                 Connect Wallet
               </Button>
-            )
-          ) : null}
+            ))}
           {isDrawerMenu && (
             <a onClick={onOpen}>
               <Image src="/icons/drawer.svg" alt="Drawer" />

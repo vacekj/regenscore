@@ -58,7 +58,7 @@ const NotStarted = () => (
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
   >
-    <circle cx="12" cy="12" r="11" stroke="#B4B4B4" stroke-width="2" />
+    <circle cx="12" cy="12" r="11" stroke="#B4B4B4" strokeWidth="2" />
   </svg>
 );
 
@@ -73,8 +73,8 @@ const ExclamationIcon = () => (
     <path
       d="M7.99967 8.33301V10.9997M7.99967 13.6663H8.00634M14.6663 10.9997C14.6663 14.6816 11.6816 17.6663 7.99967 17.6663C4.31778 17.6663 1.33301 14.6816 1.33301 10.9997C1.33301 7.31778 4.31778 4.33301 7.99967 4.33301C11.6816 4.33301 14.6663 7.31778 14.6663 10.9997Z"
       stroke="#354728"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     />
   </svg>
 );
@@ -90,9 +90,9 @@ const CrossIcon = () => (
     <path
       d="M15 9L9 15M9 9L15 15M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12Z"
       stroke="#B4B4B4"
-      stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     />
   </svg>
 );
@@ -116,7 +116,3 @@ export function Check(props: CheckProps) {
     return <ExclamationIcon />;
   }
 }
-
-export const ChakraBox = chakra(motion.div, {
-  shouldForwardProp: isValidMotionProp,
-});
