@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import styled from '@emotion/styled';
-import { Web3Button, Web3NetworkSwitch, useWeb3Modal } from '@web3modal/react';
-import { useAccount } from 'wagmi';
+import React, { useState, useEffect } from "react";
+import styled from "@emotion/styled";
+import { Web3Button, Web3NetworkSwitch, useWeb3Modal } from "@web3modal/react";
+import { useAccount } from "wagmi";
 import {
   Box,
   Button,
@@ -18,8 +18,8 @@ import {
   VStack,
   useDisclosure,
   useBreakpointValue,
-} from '@chakra-ui/react';
-import Link from 'next/link';
+} from "@chakra-ui/react";
+import Link from "next/link";
 
 const StyledWeb3NetworkSwitch = styled.div`
   --w3m-accent-color: rgba(0, 0, 0, 0.5); !important;
@@ -48,46 +48,46 @@ const Header: React.FC = () => {
       setVisible(isVisible);
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, [currPos]);
 
   return (
     <Box
-      as='header'
-      bg='brand.deepGreen.400'
-      color='white'
-      boxShadow='sm'
-      position='fixed'
-      top='0'
-      left='0'
-      right='0'
-      zIndex='10'
-      py='8'
-      transition='all 0.3s ease-in-out'
-      transform={visible ? 'translateY(0)' : 'translateY(-100%)'}
+      as="header"
+      bg="brand.deepGreen.400"
+      color="white"
+      boxShadow="sm"
+      position="fixed"
+      top="0"
+      left="0"
+      right="0"
+      zIndex="10"
+      py="8"
+      transition="all 0.3s ease-in-out"
+      transform={visible ? "translateY(0)" : "translateY(-100%)"}
     >
-      <Flex p='4' gap={54} alignItems='center'>
-        <Link href='/'>
-          <Image src={'/images/logo-h.svg'} alt='Logo' minW='223' />
+      <Flex p="4" gap={54} alignItems="center">
+        <Link href="/">
+          <Image src={"/images/logo-h.svg"} alt="Logo" minW="223" />
         </Link>
         {!isDrawerMenu && (
-          <Flex ml='4' gap={{ base: 4, md: 4, xl: 54 }}>
-            <Link href='/'>
-              <Text variant={'boldLink'} textTransform={'uppercase'}>
+          <Flex ml="4" gap={{ base: 4, md: 4, xl: 54 }}>
+            <Link href="/">
+              <Text variant={"boldLink"} textTransform={"uppercase"}>
                 Opportunities
               </Text>
             </Link>
-            <Link href='/leaderboard'>
-              <Text variant={'boldLink'} textTransform={'uppercase'}>
+            <Link href="/leaderboard">
+              <Text variant={"boldLink"} textTransform={"uppercase"}>
                 Leaderboard
               </Text>
             </Link>
-            <Link href='/docs'>
-              <Text variant={'boldLink'} textTransform={'uppercase'}>
+            <Link href="/docs">
+              <Text variant={"boldLink"} textTransform={"uppercase"}>
                 Docs
               </Text>
             </Link>
@@ -95,22 +95,22 @@ const Header: React.FC = () => {
         )}
 
         <Spacer />
-        <Flex gap={{ base: 4, xl: 4 }} alignItems='center'>
-          <Drawer placement='right' onClose={onClose} isOpen={isOpen}>
+        <Flex gap={{ base: 4, xl: 4 }} alignItems="center">
+          <Drawer placement="right" onClose={onClose} isOpen={isOpen}>
             <DrawerOverlay>
               <DrawerContent>
                 <DrawerCloseButton />
                 <DrawerHeader>Menu</DrawerHeader>
                 <DrawerBody>
-                  <VStack align='start' spacing={4}>
-                    <Link href='/'>
-                      <Text variant={'boldLink'}>Opportunities</Text>
+                  <VStack align="start" spacing={4}>
+                    <Link href="/">
+                      <Text variant={"boldLink"}>Opportunities</Text>
                     </Link>
-                    <Link href='/leaderboard'>
-                      <Text variant={'boldLink'}>Leaderboard</Text>
+                    <Link href="/leaderboard">
+                      <Text variant={"boldLink"}>Leaderboard</Text>
                     </Link>
-                    <Link href='/docs'>
-                      <Text variant={'boldLink'}>Docs</Text>
+                    <Link href="/docs">
+                      <Text variant={"boldLink"}>Docs</Text>
                     </Link>
                   </VStack>
                 </DrawerBody>
@@ -126,14 +126,14 @@ const Header: React.FC = () => {
             isConnected ? (
               <Web3Button />
             ) : (
-              <Button onClick={() => open()} variant='variant1'>
+              <Button onClick={() => open()} variant="variant1">
                 Connect Wallet
               </Button>
             )
           ) : null}
           {isDrawerMenu && (
             <a onClick={onOpen}>
-              <Image src='/icons/drawer.svg' alt='Drawer' />
+              <Image src="/icons/drawer.svg" alt="Drawer" />
             </a>
           )}
         </Flex>

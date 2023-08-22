@@ -6,91 +6,91 @@ import {
   Heading,
   Image,
   Text,
-} from '@chakra-ui/react';
-import { useState } from 'react';
+} from "@chakra-ui/react";
+import { useState } from "react";
 
 const Slide1 = () => {
   const [currentDrop, setCurrentDrop] = useState<number | null>(null);
-  const levitationStyles = ['levitation1', 'levitation2', 'levitation3'];
+  const levitationStyles = ["levitation1", "levitation2", "levitation3"];
 
   const dropsImages = [
     {
-      src: '/images/trusted-seed-logo.svg',
-      alt: 'trustedseed',
-      top: { base: '5%', sm: '13%' },
-      left: { base: '15%', sm: '24%' },
+      src: "/images/trusted-seed-logo.svg",
+      alt: "trustedseed",
+      top: { base: "5%", sm: "13%" },
+      left: { base: "15%", sm: "24%" },
       width: { base: 16.5, sm: 33 },
       height: { base: 16.5, sm: 33 },
       dropSize: { base: 46.5, sm: 93 },
-      content: 'Some more content for Trustedseed',
+      content: "Some more content for Trustedseed",
     },
     {
-      src: '/images/giveth-logo.svg',
-      alt: 'giveth',
-      top: { base: '70%', sm: '10%' },
-      right: { base: '70%', sm: '5%' },
+      src: "/images/giveth-logo.svg",
+      alt: "giveth",
+      top: { base: "70%", sm: "10%" },
+      right: { base: "70%", sm: "5%" },
       width: { base: 31.5, sm: 42, lg: 67 },
       height: { base: 31.5, sm: 42, lg: 67 },
       dropSize: { base: 75, sm: 100, lg: 141 },
-      content: 'Some more content for Giveth',
+      content: "Some more content for Giveth",
     },
     {
-      src: '/images/optimism-logo.svg',
-      alt: 'optimism',
-      right: { base: '2%', xl: '15%' },
-      bottom: { base: '20%', sm: 0, xl: '10%' },
+      src: "/images/optimism-logo.svg",
+      alt: "optimism",
+      right: { base: "2%", xl: "15%" },
+      bottom: { base: "20%", sm: 0, xl: "10%" },
       width: { base: 62, xl: 115 },
       height: { base: 62, xl: 115 },
       dropSize: { base: 32, xl: 217 },
-      content: 'Some more content for Optimism',
+      content: "Some more content for Optimism",
     },
     {
-      src: '/images/gitcoin-logo.svg',
-      alt: 'gitcoin',
-      bottom: { base: '80% ', sm: '-6' },
-      right: { base: '10%', sm: '50%' },
+      src: "/images/gitcoin-logo.svg",
+      alt: "gitcoin",
+      bottom: { base: "80% ", sm: "-6" },
+      right: { base: "10%", sm: "50%" },
       width: { base: 40.5, sm: 54, lg: 62 },
       height: { base: 40.5, sm: 54, lg: 62 },
       dropSize: { base: 75, sm: 100, lg: 120 },
-      content: 'Some more content for Gitcoin',
+      content: "Some more content for Gitcoin",
     },
   ];
   return (
     <Flex
-      flexDirection='column'
-      w='full'
-      h={{ base: '416px', sm: '616px' }}
-      border='1px solid rgba(255, 255, 255, 0.2)'
-      borderRadius={{ base: 0, md: '32px 0 0 0' }}
+      flexDirection="column"
+      w="full"
+      h={{ base: "416px", sm: "616px" }}
+      border="1px solid rgba(255, 255, 255, 0.2)"
+      borderRadius={{ base: 0, md: "32px 0 0 0" }}
       bg={`url(/images/leaf-bg.png)`}
-      bgRepeat='no-repeat'
-      bgSize='cover'
-      pl={{ base: '4', md: '82' }}
-      justifyContent='center'
-      position='relative'
+      bgRepeat="no-repeat"
+      bgSize="cover"
+      pl={{ base: "4", md: "82" }}
+      justifyContent="center"
+      position="relative"
     >
       {dropsImages.map((image, index) => (
         <Flex
           key={index}
-          position='absolute'
+          position="absolute"
           zIndex={{ base: 1, sm: 4 }}
           {...image}
           width={image.dropSize}
           height={image.dropSize}
-          transition={'all 0.4s ease'}
+          transition={"all 0.4s ease"}
           onMouseEnter={() => setCurrentDrop(index)}
           onMouseLeave={() => setCurrentDrop(null)}
-          _hover={{ transform: 'scale(1.1)' }}
-          filter={{ base: 'brightness(70%)', sm: 'none' }}
+          _hover={{ transform: "scale(1.1)" }}
+          filter={{ base: "brightness(70%)", sm: "none" }}
         >
           <Flex
-            justifyContent='center'
-            bg='rgba(255, 255, 255, 0.2)'
-            boxShadow={'0 4px 30px rgba(0, 0, 0, 0.1)'}
-            border='1px solid rgba(255, 255, 255, 0.3)'
-            borderRadius='50%'
-            backdropFilter={'blur(4px)'}
-            alignItems='center'
+            justifyContent="center"
+            bg="rgba(255, 255, 255, 0.2)"
+            boxShadow={"0 4px 30px rgba(0, 0, 0, 0.1)"}
+            border="1px solid rgba(255, 255, 255, 0.3)"
+            borderRadius="50%"
+            backdropFilter={"blur(4px)"}
+            alignItems="center"
             width={image.dropSize}
             height={image.dropSize}
             animation={`${
@@ -108,42 +108,42 @@ const Slide1 = () => {
       ))}
 
       <Box
-        position='absolute'
-        top='0'
-        left='0'
-        right='0'
-        bottom='0'
-        borderRadius='32px 0 0 0'
-        bgColor='rgba(53,71,40, 0.8)'
+        position="absolute"
+        top="0"
+        left="0"
+        right="0"
+        bottom="0"
+        borderRadius="32px 0 0 0"
+        bgColor="rgba(53,71,40, 0.8)"
       />
       <Heading
-        as='h1'
-        variant='h1'
-        color='brand.primaryOrange.300'
-        maxWidth={{ base: '342px', sm: '647px', md: '1100px' }}
-        minHeight='92px'
-        textAlign='left'
+        as="h1"
+        variant="h1"
+        color="brand.primaryOrange.300"
+        maxWidth={{ base: "342px", sm: "647px", md: "1100px" }}
+        minHeight="92px"
+        textAlign="left"
         zIndex={2}
-        mb={'48px'}
-        w={'100%'}
-        fontSize={{ base: '44px', md: '56px', lg: '79px', xl: '92px' }}
+        mb={"48px"}
+        w={"100%"}
+        fontSize={{ base: "44px", md: "56px", lg: "79px", xl: "92px" }}
       >
         On-chain reputation layer for regens in public goods
       </Heading>
       <Text
-        variant='xLarge'
-        color='white'
-        width={{ base: '100%', xl: '900px' }}
-        maxWidth={{ base: '100%', sm: '800px' }}
-        minHeight={'115px'}
-        lineHeight={{ base: '32px', sm: '57px' }}
-        textAlign='initial'
+        variant="xLarge"
+        color="white"
+        width={{ base: "100%", xl: "900px" }}
+        maxWidth={{ base: "100%", sm: "800px" }}
+        minHeight={"115px"}
+        lineHeight={{ base: "32px", sm: "57px" }}
+        textAlign="initial"
         zIndex={2}
-        fontSize={{ base: '18px', sm: '32px', lg: '44px' }}
+        fontSize={{ base: "18px", sm: "32px", lg: "44px" }}
       >
         {currentDrop !== null
           ? dropsImages[currentDrop].content
-          : 'Qualify for Optimism’s Citizen’s House based on your blockchain activity'}{' '}
+          : "Qualify for Optimism’s Citizen’s House based on your blockchain activity"}{" "}
       </Text>
     </Flex>
   );
@@ -151,8 +151,8 @@ const Slide1 = () => {
 
 const slides = [
   {
-    title: 'Slide 1',
-    description: 'Description for slide 1.',
+    title: "Slide 1",
+    description: "Description for slide 1.",
     content: Slide1,
   },
 ];
@@ -162,26 +162,26 @@ const HeroSlider: React.FC = () => {
 
   return (
     <Flex
-      w='full'
-      h='full'
-      flexDir='column'
-      pos='relative'
-      align='center'
-      justify='center'
-      direction='column'
+      w="full"
+      h="full"
+      flexDir="column"
+      pos="relative"
+      align="center"
+      justify="center"
+      direction="column"
     >
       {slides.map((slide, index) => (
         <VStack
           key={index}
-          display={index === currentSlide ? 'flex' : 'none'}
-          w='full'
-          align='center'
-          justify='center'
+          display={index === currentSlide ? "flex" : "none"}
+          w="full"
+          align="center"
+          justify="center"
         >
           {slide.content()}
         </VStack>
       ))}
-      <HStack position='absolute' bottom='80px' left='53px' spacing={2}>
+      <HStack position="absolute" bottom="80px" left="53px" spacing={2}>
         {/* 
         // TODO: Waiting for more content to bring this
         {slides.map((_, index) => (

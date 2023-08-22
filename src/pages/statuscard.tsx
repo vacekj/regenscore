@@ -1,5 +1,14 @@
 import { Check } from "@/components/Check";
-import { Box, Card, CardBody, CardHeader, Divider, Flex, Heading, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Card,
+  CardBody,
+  CardHeader,
+  Divider,
+  Flex,
+  Heading,
+  Text,
+} from "@chakra-ui/react";
 import React from "react";
 
 const MyCard = () => {
@@ -17,7 +26,13 @@ const MyCard = () => {
       >
         <CardHeader padding="0px" marginLeft="24px" marginRight="24px">
           <Box>
-            <Heading as="h3" variant="h3" fontWeight="bold" fontSize="24px" marginTop="56px">
+            <Heading
+              as="h3"
+              variant="h3"
+              fontWeight="bold"
+              fontSize="24px"
+              marginTop="56px"
+            >
               Searching for Stamps
             </Heading>
           </Box>
@@ -34,36 +49,101 @@ const MyCard = () => {
           <Text marginBottom="24px" fontFamily="Remixa-Regular" fontSize="16">
             Give us a moment while we check your account for existing stamps
           </Text>
-          <Divider width="auto" color="EBECF2" borderWidth="0.5px" borderRadius="100px" />
+          <Divider
+            width="auto"
+            color="EBECF2"
+            borderWidth="0.5px"
+            borderRadius="100px"
+          />
 
           <Flex flexDirection="column" marginTop="30px">
-            <div style={{ display: "flex", alignItems: "center", marginBottom: "30px" }}>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                marginBottom: "30px",
+              }}
+            >
               <Check status={"SUCCESS"} />
-              <Text marginLeft="16px" fontFamily="Remixa-Regular">Scanning...</Text>
+              <Text marginLeft="16px" fontFamily="Remixa-Regular">
+                Scanning...
+              </Text>
             </div>
-            <div style={{ display: "flex", alignItems: "center", marginBottom: "30px" }}>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                marginBottom: "30px",
+              }}
+            >
               <Check status={"SUCCESS"} />
-              <Text marginLeft="16px" fontFamily="Remixa-Regular">Double checking</Text>
+              <Text marginLeft="16px" fontFamily="Remixa-Regular">
+                Double checking
+              </Text>
             </div>
-            <div style={{ display: "flex", alignItems: "center", marginBottom: "30px" }}>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                marginBottom: "30px",
+              }}
+            >
               <Check status={"SUCCESS"} />
-              <Text marginLeft="16px" fontFamily="Remixa-Regular">Validation</Text>
+              <Text marginLeft="16px" fontFamily="Remixa-Regular">
+                Validation
+              </Text>
             </div>
-            <div style={{ display: "flex", alignItems: "center", marginBottom: "30px" }}>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                marginBottom: "30px",
+              }}
+            >
               <Check status={"SUCCESS"} />
-              <Text marginLeft="16px" fontFamily="Remixa-Regular">Brewing coffee</Text>
+              <Text marginLeft="16px" fontFamily="Remixa-Regular">
+                Brewing coffee
+              </Text>
             </div>
-            <div style={{ display: "flex", alignItems: "center", marginBottom: "30px" }}>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                marginBottom: "30px",
+              }}
+            >
               <Check status={"IN_PROGRESS"} />
-              <Text marginLeft="16px" fontFamily="Remixa-Regular">Almost there</Text>
+              <Text marginLeft="16px" fontFamily="Remixa-Regular">
+                Almost there
+              </Text>
             </div>
-            <div style={{ display: "flex", alignItems: "center", marginBottom: "30px" }}>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                marginBottom: "30px",
+              }}
+            >
               <Check status={"NOT_STARTED"} />
-              <Text marginLeft="16px" fontFamily="Remixa-Regular">Ready for review</Text>
+              <Text marginLeft="16px" fontFamily="Remixa-Regular">
+                Ready for review
+              </Text>
             </div>
-            <div style={{ display: "flex", alignItems: "center", marginBottom: "30px" }}>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                marginBottom: "30px",
+              }}
+            >
               <Check status={"WARNING"} />
-              <Text marginLeft="16px" fontFamily="Remixa-Regular" color="#354728">Please do not close the window</Text>
+              <Text
+                marginLeft="16px"
+                fontFamily="Remixa-Regular"
+                color="#354728"
+              >
+                Please do not close the window
+              </Text>
             </div>
           </Flex>
         </CardBody>
