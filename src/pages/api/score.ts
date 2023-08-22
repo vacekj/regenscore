@@ -175,9 +175,9 @@ async function getERC20Transactions(address: string) {
   */
   try {
     const response = await fetchRequest(
-      "https://api.etherscan.io/api?module=account&action=tokentx&address="
-        + address
-        + apikey,
+      "https://api.etherscan.io/api?module=account&action=tokentx&address=" +
+        address +
+        apikey,
     );
 
     if (!response.ok) {
@@ -206,9 +206,9 @@ async function getNormalTransactions(address: string) {
   */
   try {
     const response = await fetchRequest(
-      "https://api.etherscan.io/api?module=account&action=txlist&address="
-        + address
-        + apikey,
+      "https://api.etherscan.io/api?module=account&action=txlist&address=" +
+        address +
+        apikey,
     );
 
     if (!response.ok) {
@@ -237,9 +237,9 @@ async function getERC721Transactions(address: string) {
   */
   try {
     const response = await fetchRequest(
-      "https://api.etherscan.io/api?module=account&action=tokennfttx&address="
-        + address
-        + apikey,
+      "https://api.etherscan.io/api?module=account&action=tokennfttx&address=" +
+        address +
+        apikey,
     );
 
     if (!response.ok) {
@@ -268,11 +268,11 @@ async function getTokenBalance(contractAddress: string, address: string) {
   */
   try {
     const response = await fetchRequest(
-      "https://api.etherscan.io/api?module=account&action=tokenbalance&contractaddress="
-        + contractAddress
-        + "&address="
-        + address
-        + apikey,
+      "https://api.etherscan.io/api?module=account&action=tokenbalance&contractaddress=" +
+        contractAddress +
+        "&address=" +
+        address +
+        apikey,
     );
 
     if (!response.ok) {
@@ -296,11 +296,9 @@ async function fetchGRDonations(address: string) {
   if (!addressParts) {
     throw new Error("Invalid address");
   }
-  const url = `https://indexer-production.fly.dev/data/1/contributors/${
-    addressParts.join(
-      "/",
-    )
-  }.json`;
+  const url = `https://indexer-production.fly.dev/data/1/contributors/${addressParts.join(
+    "/",
+  )}.json`;
   const response = await fetch(url);
   const donations = await response.json();
   return donations;
