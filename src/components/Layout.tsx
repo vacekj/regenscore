@@ -1,7 +1,8 @@
-import React from "react";
-import { Flex, Box } from "@chakra-ui/react";
-import Footer from "./Footer";
-import Header from "./Header";
+import React from 'react';
+import { Flex, Box } from '@chakra-ui/react';
+import Footer from './Footer';
+import Header from './Header';
+import PageTransition from './PageTransition';
 
 type LayoutProps = {
   children: React.ReactNode;
@@ -9,18 +10,21 @@ type LayoutProps = {
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
-    <Flex
-      as="main"
-      minHeight="100vh"
-      width="100%"
-      minWidth={"100vw"}
-      flexDirection="column"
-      backgroundColor={"brand.backgroundOrange.400"}
-    >
-      <Header />
-      <Box as="main">{children}</Box>
-      <Footer />
-    </Flex>
+    <PageTransition>
+      <Flex
+        as='main'
+        width='100%'
+        minWidth={'100vw'}
+        flexDirection='column'
+        backgroundColor={'brand.backgroundOrange.400'}
+      >
+        <Header />
+        <Box as='main' minHeight='100vh' flexGrow={1}>
+          {children}
+        </Box>
+        <Footer />
+      </Flex>
+    </PageTransition>
   );
 };
 
