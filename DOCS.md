@@ -29,7 +29,7 @@ Fetch and update all txs from the treasury to different addresses, save the indi
 
 https://documentation.poap.tech/reference/getactionsscan-5, check against known POAPs
 
-- #8 OP Delegate
+- #8 OP Delegate 
 
 https://optimistic.etherscan.io/address/0x4200000000000000000000000000000000000042 watch the DelegateVotesChanged event and update the newBalance amount.
 
@@ -54,12 +54,12 @@ TODO: where?
 https://etherscan.io/address/0xbfb731cd36d26c2a7287716de857e4380c73a64a watch for events here
 
 - #21 Made txs on Optimism
-
+  https://viem.sh/docs/actions/public/getTransactionCount.html
 check nonce for that account
 
 - #22 Interacted with a contract
 
-check all txs, check the to field, check whether it's a contract (it's code is not 0)
+check all txs, check the to field, check whether it's a contract (it's code is not 0 https://viem.sh/docs/contract/getBytecode.html)
 
 - #23 Deployed a contract
 
@@ -76,8 +76,8 @@ interacted with ???
 ## Off-chain
 
 - #7 OP Agora voting - TODO
-- #11 Gitcoin Project owner - supermodular grants data ETL
-- #12 Gitcoin Donator - ^
+- #11 Gitcoin Project owner - https://github.com/supermodularxyz/grants-etl OR https://indexer-production.fly.dev/data/1/projects.json
+- #12 Gitcoin Donator - ✅
 - #13 Gitcoin Passport Score - Passport API
 
 ## Unknown
