@@ -84,37 +84,37 @@ const Header: React.FC = () => {
 
   return (
     <Box
-      as='header'
-      bg='brand.deepGreen.400'
-      color='white'
-      boxShadow='sm'
-      position='fixed'
-      top='0'
-      left='0'
-      right='0'
-      zIndex='10'
-      py='8'
-      transition='all 0.3s ease-in-out'
-      transform={visible ? 'translateY(0)' : 'translateY(-100%)'}
+      as="header"
+      bg="brand.deepGreen.400"
+      color="white"
+      position="fixed"
+      top="0"
+      left="0"
+      right="0"
+      zIndex="10"
+      paddingLeft="38px"
+      paddingRight="38px"
+      transition="all 0.3s ease-in-out"
+      transform={visible ? "translateY(0)" : "translateY(-100%)"}
     >
-      <Flex p='4' gap={54} alignItems='center'>
-        <Link href='/'>
-          <Image src={'/images/logo-h.svg'} alt='Logo' minW='223' />
+      <Flex p="4" gap={54} alignItems="center">
+        <Link href="/">
+          <Image src={"/images/logo-h.svg"} alt="Logo" minW="223" />
         </Link>
         {!isDrawerMenu && (
-          <Flex ml='4' gap={{ base: 4, md: 4, xl: 54 }}>
-            <Link href='/'>
-              <Text variant={'boldLink'} textTransform={'uppercase'}>
+          <Flex ml="4" gap={{ base: 4, md: 4, xl: 54 }}>
+            <Link href="/">
+              <Text variant={"boldLink"} textTransform={"uppercase"}>
                 Opportunities
               </Text>
             </Link>
-            <Link href='/leaderboard'>
-              <Text variant={'boldLink'} textTransform={'uppercase'}>
+            <Link href="/leaderboard">
+              <Text variant={"boldLink"} textTransform={"uppercase"}>
                 Leaderboard
               </Text>
             </Link>
-            <Link href='/docs'>
-              <Text variant={'boldLink'} textTransform={'uppercase'}>
+            <Link href="/docs">
+              <Text variant={"boldLink"} textTransform={"uppercase"}>
                 Docs
               </Text>
             </Link>
@@ -122,24 +122,22 @@ const Header: React.FC = () => {
         )}
 
         <Spacer />
-        <Flex gap={{ base: 4, xl: 4 }} alignItems='center'>
-          <Drawer placement='right' onClose={onClose} isOpen={isOpen}>
+        <Flex gap={{ base: 4, xl: 4 }} alignItems="center">
+          <Drawer placement="right" onClose={onClose} isOpen={isOpen}>
             <DrawerOverlay>
               <DrawerContent>
                 <DrawerCloseButton />
-                <DrawerHeader>RegenScore</DrawerHeader>
+                <DrawerHeader>Menu</DrawerHeader>
                 <DrawerBody>
-                  <VStack align='start' spacing={4}>
-                    <Web3Content />
-
-                    <Link href='/'>
-                      <Text variant={'boldLink'}>Opportunities</Text>
+                  <VStack align="start" spacing={4}>
+                    <Link href="/">
+                      <Text variant={"boldLink"}>Opportunities</Text>
                     </Link>
-                    <Link href='/leaderboard'>
-                      <Text variant={'boldLink'}>Leaderboard</Text>
+                    <Link href="/leaderboard">
+                      <Text variant={"boldLink"}>Leaderboard</Text>
                     </Link>
-                    <Link href='/docs'>
-                      <Text variant={'boldLink'}>Docs</Text>
+                    <Link href="/docs">
+                      <Text variant={"boldLink"}>Docs</Text>
                     </Link>
                   </VStack>
                 </DrawerBody>
