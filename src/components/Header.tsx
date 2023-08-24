@@ -41,8 +41,7 @@ const Header: React.FC = () => {
   });
   const { address, isConnected } = useAccount();
   const { open } = useWeb3Modal();
-  const { score, error, loading, debug } = useScore(address);
-  console.log(score, error, loading, debug);
+  const { score } = useScore(address);
   useEffect(() => {
     const handleScroll = () => {
       const newPos = window.pageYOffset;
