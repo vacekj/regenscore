@@ -1,10 +1,4 @@
-import nftContractAbi from "@/nftContractAbi.json";
 import { NextApiRequest, NextApiResponse } from "next";
-import { createScore } from "./score";
-
-type Request = {
-  address: string;
-};
 
 /* Calculates the address' score and stores it in Privy */
 export default async (req: NextApiRequest, res: NextApiResponse) => {
