@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
+import { Hex } from "viem";
 
 export type DebugInfo = any; // Define the type structure for debug information here.
 
-export function useScore(address: string) {
+export function useScore(address: Hex | undefined) {
   const [score, setScore] = useState<number | null>(null);
   const [debug, setDebug] = useState<DebugInfo | null>(null);
   const [loading, setLoading] = useState(false);

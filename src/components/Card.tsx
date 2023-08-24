@@ -6,7 +6,6 @@ import {
   Center,
   Heading,
   Input,
-  Link,
   Text,
   useMediaQuery,
   useToast,
@@ -14,6 +13,7 @@ import {
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { useAccount } from "wagmi";
+import { getAddress } from "viem";
 
 export default function Card() {
   const toast = useToast();
@@ -27,7 +27,7 @@ export default function Card() {
 
   const effectiveAddress = inputAddress || address || "";
 
-  const { score, debug } = useScore(effectiveAddress);
+  const { score, debug } = useScore(getAddress(effectiveAddress));
 
   const [svg, setSvg] = useState<string>();
   useEffect(() => {
