@@ -3,7 +3,7 @@ import Slider from "./HeroSlider";
 
 export default function Hero() {
   return (
-    <Flex w={{ base: "100%", md: "95%" }} justifySelf="flex-end">
+    <Flex w="100%" justifySelf="flex-end" pl={{ base: "0", md: "54px" }} boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)">
       <Slider />
     </Flex>
   );

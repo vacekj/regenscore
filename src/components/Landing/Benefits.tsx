@@ -1,4 +1,4 @@
-import { Box, Flex, Heading, Text, Grid } from "@chakra-ui/react";
+import { Box, Flex, Heading, Text } from "@chakra-ui/react";
 
 const Benefits: React.FC = () => {
   const BoxContent = ({
@@ -8,53 +8,62 @@ const Benefits: React.FC = () => {
     title: string;
     content: string;
   }) => (
-    <Flex
-      minHeight="380px"
-      flexDir="column"
-      p="32px"
-      pb="48px"
-      borderRadius="25px"
+    <Box
+      flex="1"
+      maxWidth="428px"
+      minWidth="304px"
+      m="12px"
       textAlign="start"
-      justifyContent="center"
-      bg="brand.beige.400"
-      gap="32px"
-      mb={{ base: "4", md: "0" }}
     >
-      <Text
-        variant="bold"
-        fontSize="24px"
-        mb={"32px"}
-        pb="32px"
-        display="inline-block"
-        position="relative"
-        color="brand.deepGreen.400"
+      <Flex
+        minHeight="380px"
+        flexDir="column"
+        pb="48px"
+        borderRadius="25px"
+        textAlign="start"
+        justifyContent="center"
+        bg="brand.beige.400"
+        gap="32px"
+        paddingX="32px"
+        paddingTop="108px"
+        width="100%"
       >
-        {title}
-        <Box
-          width="216px"
-          height="7px"
-          bgColor="brand.primaryOrange.200"
-          position="absolute"
-          bottom="0"
-          left="0"
-        />
-      </Text>
-      <Text fontSize="16px" lineHeight="32px">
-        {content}
-      </Text>
-    </Flex>
+        <Text
+          variant="bold"
+          fontSize="24px"
+          mb="32px"
+          pb="32px"
+          display="inline-block"
+          position="relative"
+          color="brand.deepGreen.400"
+        >
+          {title}
+          <Box
+            width="216px"
+            height="7px"
+            bgColor="brand.primaryOrange.200"
+            position="absolute"
+            bottom="0"
+            left="0"
+          />
+        </Text>
+        <Text fontSize="16px" lineHeight="32px">
+          {content}
+        </Text>
+      </Flex>
+    </Box>
   );
 
   return (
-    <Flex
-      flexDir="column"
-      align="start"
-      justify="center"
-      p={4}
-      w="100%"
-      maxWidth="1342px"
-      margin="47px auto"
-    >
+
+      <Flex
+        flexDir="column"
+        align="flex-start"
+        justify="center"
+        p={4}
+        maxWidth="calc(100% - 108px)"
+        margin="47px auto"
+      >  
       <Heading
         as="h1"
         variant="h2"
@@ -62,17 +71,9 @@ const Benefits: React.FC = () => {
         textAlign="left"
         color="brand.primaryOrange.200"
       >
-        Benefits for Regen Community{" "}
+        Benefits for Regen <br />Community{" "}
       </Heading>
-      <Grid
-        templateColumns={{
-          base: "repeat(1, minmax(0, 420px))",
-          sm: "repeat(2, minmax(0, 420px))",
-          md: "repeat(3, minmax(0, 420px))",
-        }}
-        mt="48px"
-        gap="24px"
-      >
+      <Flex flexWrap="wrap" m="0 -12px" justifyContent="center">
         <BoxContent
           title="Transparent Evaluations"
           content="Qualify for Optimism’s Citizen’s House based on your blockchain activity, and Regen score allowing for an automated inclusion into the Citizen’s House."
@@ -85,7 +86,7 @@ const Benefits: React.FC = () => {
           title="More Opportunities"
           content="Qualify for Optimism’s Citizen’s House based on your blockchain activity, and Regen score allowing for an automated inclusion into the Citizen’s House."
         />
-      </Grid>
+      </Flex>
     </Flex>
   );
 };
