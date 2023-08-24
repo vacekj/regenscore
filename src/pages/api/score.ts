@@ -299,7 +299,7 @@ async function fetchGRDonations(address: string) {
   }
 
   const scores = await Promise.all(
-    [1, 10, 424].map(async (chainId) => {
+    [1, 10, 250, 424].map(async (chainId) => {
       const url = `https://indexer-production.fly.dev/data/${chainId}/contributors/${addressParts.join(
         "/",
       )}.json`;
@@ -312,8 +312,6 @@ async function fetchGRDonations(address: string) {
       }
     }),
   );
-
-  console.log(scores);
 
   return scores.flat();
 }
@@ -334,10 +332,13 @@ export async function createScore(
     score += 50;
   }
 
-  const treasuryPayouts = treasuryTxs.filter(tx => tx.to === address).map(tx => {
-    const value = parseUnits(tx.value, parseInt(tx.tokenDecimal));
-    return Number(formatEther(value));
-  }).reduce((acc, a) => acc + a, 0);
+  const treasuryPayouts = treasuryTxs
+    .filter((tx) => tx.to === address)
+    .map((tx) => {
+      const value = parseUnits(tx.value, parseInt(tx.tokenDecimal));
+      return Number(formatEther(value));
+    })
+    .reduce((acc, a) => acc + a, 0);
 
   score += treasuryPayouts;
 
@@ -455,7 +456,11 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   const treasuryAddresses = await getAddressesPaidByOpTreasury();
   const body = req.body as Request;
   // @ts-ignore
-  const result = await createScore(body.address, opAirdropAddresses, treasuryAddresses);
+  const result = await createScore(
+    body.address,
+    opAirdropAddresses,
+    treasuryAddresses,
+  );
   try {
     return res.status(200).json(result); // send the entire result object as JSON
   } catch (e) {
