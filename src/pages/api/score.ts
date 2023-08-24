@@ -1,4 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
+import { getAddress } from "viem";
 
 const ETHERSCAN_API_KEY = "GB821FZCS37WSXM8GJCCUUD3ZQUTZZY9RX";
 const apikey = "&apikey=" + ETHERSCAN_API_KEY;
@@ -296,15 +297,29 @@ async function fetchGRDonations(address: string) {
   if (!addressParts) {
     throw new Error("Invalid address");
   }
-  const url = `https://indexer-production.fly.dev/data/1/contributors/${addressParts.join(
-    "/",
-  )}.json`;
-  const response = await fetch(url);
-  const donations = await response.json();
-  return donations;
+
+  const scores = await Promise.all(
+    [1, 10, 424].map(async (chainId) => {
+      const url = `https://indexer-production.fly.dev/data/${chainId}/contributors/${addressParts.join(
+        "/",
+      )}.json`;
+      const response = await fetch(url);
+      if (response.ok) {
+        return await response.json();
+      } else {
+        console.error(await response.text());
+        return [];
+      }
+    }),
+  );
+
+  console.log(scores);
+
+  return scores.flat();
 }
 
 export async function createScore(address: string) {
+  address = getAddress(address);
   let score = 0;
   var debug = {
     normalTransactions: [] as ITransaction[],

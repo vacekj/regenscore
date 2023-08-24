@@ -1,28 +1,9 @@
-import { useEffect, useState } from "react";
 import { Hex } from "viem";
-
-export type DebugInfo = any; // Define the type structure for debug information here.
+import useSWR from "swr";
 
 export function useScore(address: Hex | undefined) {
-  const [score, setScore] = useState<number | null>(null);
-  const [debug, setDebug] = useState<DebugInfo | null>(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    const addressPattern = /^0x[a-fA-F0-9]{40}$/;
-
-    // If the address is not provided, we don't make the request.
-    if (!address || !addressPattern.test(address)) {
-      setScore(null);
-      setDebug(null);
-      return;
-    }
-
-    setLoading(true);
-    setError(null);
-
-    fetch("/api/score", {
+  const res = useSWR([address], async ([address]) => {
+    const res = await fetch("/api/score", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -30,20 +11,9 @@ export function useScore(address: Hex | undefined) {
       body: JSON.stringify({
         address,
       }),
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        setScore(res.score ? parseInt(res.score) : null);
-        setDebug(res.debug);
-      })
-      .catch((err) => {
-        console.error(err);
-        setError("Failed to fetch score.");
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, [address]);
+    });
+    return res.json();
+  });
 
-  return { score, debug, loading, error };
+  return { score: res.data?.score, debug: res.data?.debug, ...res };
 }
