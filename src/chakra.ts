@@ -29,8 +29,8 @@ export const theme = extendTheme({
   components: {
     Button: {
       baseStyle: {
-        fontSize: "14px",
-        fontWeight: "bold",
+        fontSize: "16px",
+        fontFamily: "Inter-Black",
         textTransform: "uppercase",
         backgroundColor: "brand.primaryOrange.200",
         _hover: {
@@ -48,10 +48,12 @@ export const theme = extendTheme({
         },
         variant1: {
           // Metamask
+          width: "249px",
+          height: "64px",
           minWidth: "192px",
           color: "brand.deepGreen.400",
           px: "2rem",
-          borderRadius: "6.25rem", // border rarius 100px
+          borderRadius: "6.25rem", // border radius 100px
         },
         variant2: {
           // WalletConnect
@@ -70,7 +72,7 @@ export const theme = extendTheme({
         variant: "brand",
         colorScheme: "",
       },
-    },
+    },    
     Heading: {
       baseStyle: {
         fontFamily: "Remixa-Medium",
@@ -83,6 +85,7 @@ export const theme = extendTheme({
         },
         h2: {
           fontSize: "48px",
+          fontFamily: "Remixa-Semibold",
         },
         h3: {
           fontSize: "24px",
