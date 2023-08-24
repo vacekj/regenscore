@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import styled from '@emotion/styled';
-import { Web3Button, Web3NetworkSwitch, useWeb3Modal } from '@web3modal/react';
-import { useAccount } from 'wagmi';
+import React, { useState, useEffect } from "react";
+import styled from "@emotion/styled";
+import { Web3Button, Web3NetworkSwitch, useWeb3Modal } from "@web3modal/react";
+import { useAccount } from "wagmi";
 import {
   Box,
   Button,
@@ -18,10 +18,10 @@ import {
   VStack,
   useDisclosure,
   useBreakpointValue,
-} from '@chakra-ui/react';
-import Link from 'next/link';
+} from "@chakra-ui/react";
+import Link from "next/link";
 
-import { useScore } from '@/hooks';
+import { useScore } from "@/hooks";
 
 const StyledWeb3NetworkSwitch = styled.div`
   --w3m-accent-color: rgba(0, 0, 0, 0.5); !important;
@@ -51,10 +51,10 @@ const Header: React.FC = () => {
       setVisible(isVisible);
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, [currPos]);
 
@@ -69,12 +69,12 @@ const Header: React.FC = () => {
         {isConnected ? (
           <Web3Button />
         ) : (
-          <Button onClick={() => open()} variant='variant1'>
+          <Button onClick={() => open()} variant="variant1">
             Connect Wallet
           </Button>
         )}
         {score && (
-          <Text variant={'bold'} textTransform={'uppercase'}>
+          <Text variant={"bold"} textTransform={"uppercase"}>
             Score: {score}
           </Text>
         )}
@@ -147,7 +147,7 @@ const Header: React.FC = () => {
           {!isMobile && <Web3Content />}
           {isDrawerMenu && (
             <a onClick={onOpen}>
-              <Image src='/icons/drawer.svg' alt='Drawer' />
+              <Image src="/icons/drawer.svg" alt="Drawer" />
             </a>
           )}
         </Flex>

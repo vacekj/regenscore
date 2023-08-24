@@ -71,9 +71,7 @@ const Slide1 = () => {
       borderStyle="solid"
       borderBottomWidth={{ base: "0", md: "1px" }}
       boxShadow={"-3px 2px 4px 0 rgba(0, 0, 0, 0.25)"}
-
     >
-
       {dropsImages.map((image, index) => (
         <Flex
           key={index}
@@ -102,7 +100,6 @@ const Slide1 = () => {
               levitationStyles[index % levitationStyles.length]
             } 5s infinite`}
           >
-          
             <Image
               src={image.src}
               alt={image.alt}
