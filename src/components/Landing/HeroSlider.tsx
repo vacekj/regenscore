@@ -60,15 +60,18 @@ const Slide1 = () => {
       flexDirection="column"
       w="full"
       h={{ base: "416px", sm: "616px" }}
-      border="1px solid rgba(255, 255, 255, 0.2)"
-      borderRadius={{ base: 0, md: "32px 0 0 0" }}
+      borderRadius={{ base: "0", md: "32px 0 0 0" }}
       bg={`url(/images/leaf-bg.png)`}
       bgRepeat="no-repeat"
       bgSize="cover"
       pl={{ base: "4", md: "82" }}
       justifyContent="center"
-      position="relative"
+      borderWidth="1px 0px 1px 1px"
+      borderColor="rgba(143, 164, 133)"
+      borderStyle="solid"
+      borderBottomWidth={{ base: "0", md: "1px" }}
     >
+
       {dropsImages.map((image, index) => (
         <Flex
           key={index}
@@ -97,6 +100,7 @@ const Slide1 = () => {
               levitationStyles[index % levitationStyles.length]
             } 5s infinite`}
           >
+          
             <Image
               src={image.src}
               alt={image.alt}
@@ -140,6 +144,7 @@ const Slide1 = () => {
         textAlign="initial"
         zIndex={2}
         fontSize={{ base: "18px", sm: "32px", lg: "44px" }}
+        fontFamily="Inter-Light"
       >
         {currentDrop !== null
           ? dropsImages[currentDrop].content
