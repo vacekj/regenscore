@@ -1,9 +1,9 @@
 import { fetchRequest } from '@/utils';
 
-// TODO: move to an environment variable
-const ETHERSCAN_API_KEY = 'GB821FZCS37WSXM8GJCCUUD3ZQUTZZY9RX';
+// const ETHERSCAN_API_KEY = 'GB821FZCS37WSXM8GJCCUUD3ZQUTZZY9RX';
+const ETHERSCAN_API_KEY = process.env.NEXT_PUBLIC_ETHERSCAN_API_KEY;
 const apikey = '&apikey=' + ETHERSCAN_API_KEY;
-
+// "&apikey=6JEC4FAII8AIEUQFI28C765AC4Y1K54ME2"
 export type ERC20Transaction = {
   blockNumber: string;
   timeStamp: string;
