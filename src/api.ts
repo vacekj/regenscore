@@ -15,8 +15,8 @@ async function loadCSV(path: string): Promise<string[][]> {
   return records as string[][];
 }
 
-const ETHERSCAN_API_KEY = process.env.ETHERSCAN_API_KEY;
-const apikey = '&apikey=' + ETHERSCAN_API_KEY;
+const OP_ETHERSCAN_API_KEY = process.env.NEXT_PUBLIC_OPTIMISM_ETHERSCAN_API_KEY;
+const apikey = '&apikey=' + OP_ETHERSCAN_API_KEY;
 
 /** Gets all addresses that have received a payout from the OP treasury */
 export async function getAddressesPaidByOpTreasury() {
