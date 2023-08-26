@@ -12,15 +12,14 @@ export default function Footer() {
     >
       <Grid gridTemplateColumns={'6fr 3fr 3fr'} h="408px">
         <GridItem bg="white">
-          <Box mt={'60px'} ml={'54px'}>
+          <Box mt={'90px'} ml={'54px'}>
             <Box>
               <Image
                 src={'/icons/leaf.svg'}
                 alt="leaf"
                 style={{
                   display: 'inline-block',
-                  marginRight: '10px',
-                  marginLeft: '-20px',
+                  marginRight: '14px',
                 }}
               />
               <Image
@@ -28,11 +27,11 @@ export default function Footer() {
                 alt="leaf"
                 style={{
                   display: 'inline-block',
-                  marginBottom: '40px',
+                  marginBottom: "4px",
                 }}
               />
             </Box>
-            <div style={{ marginTop: '10px' }}>
+            <div style={{ marginTop: '40px' }}>
               <div style={{ marginBottom: '10px' }}>
                 Empower your credibility. Elevate your potential.
               </div>
