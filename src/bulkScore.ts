@@ -1,18 +1,14 @@
-import { createScore } from '@/helpers/scoreApi';
+import { createScore } from '@/helpers/scoreHelpers';
 import { parse } from 'csv-parse';
 import { stringify } from 'csv-stringify/sync';
 import fs from 'fs';
 
-import { getAddressesPaidByOpTreasury, getAdressesAirdroppedOP } from '@/api';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import { isAddress } from 'viem';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const processFile = async () => {
-  const opAirdropAddresses = await getAdressesAirdroppedOP();
-  const treasuryAddresses = await getAddressesPaidByOpTreasury();
-  console.log(treasuryAddresses.length);
   const records = [];
   const parser = fs
     .createReadStream(`${__dirname}/../data/delegates.csv`)
@@ -23,11 +19,7 @@ const processFile = async () => {
       console.warn('Not an address', address);
       continue;
     }
-    const score = await createScore(
-      address,
-      opAirdropAddresses,
-      treasuryAddresses
-    );
+    const score = await createScore(address);
     console.log(record[0], score.score);
     records.push([...record, score.score]);
   }
