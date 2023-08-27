@@ -1,100 +1,15 @@
 import { fetchRequest } from '@/utils';
+import {
+  GetERC20TransactionsResponse,
+  GetNormalTransactionsResponse,
+  GetERC721TransactionsResponse,
+  GetTokenBalanceResponse,
+} from './sourceTypes';
 
 // const ETHERSCAN_API_KEY = 'GB821FZCS37WSXM8GJCCUUD3ZQUTZZY9RX';
 const ETHERSCAN_API_KEY = process.env.NEXT_PUBLIC_ETHERSCAN_API_KEY;
 const apikey = '&apikey=' + ETHERSCAN_API_KEY;
 // "&apikey=6JEC4FAII8AIEUQFI28C765AC4Y1K54ME2"
-export type ERC20Transaction = {
-  blockNumber: string;
-  timeStamp: string;
-  hash: string;
-  nonce: string;
-  blockHash: string;
-  from: string;
-  contractAddress: string;
-  to: string;
-  value: string;
-  tokenName: string;
-  tokenSymbol: string;
-  tokenDecimal: string;
-  transactionIndex: string;
-  gas: string;
-  gasPrice: string;
-  gasUsed: string;
-  cumulativeGasUsed: string;
-  input: string;
-  confirmations: string;
-};
-
-export type GetERC20TransactionsResponse = {
-  result: ERC20Transaction[];
-};
-
-export type GetNormalTransactionsResponse = {
-  result: NormalTransaction[];
-};
-
-export type NormalTransaction = {
-  blockNumber: string;
-  timeStamp: string;
-  hash: string;
-  nonce: string;
-  blockHash: string;
-  transactionIndex: string;
-  from: string;
-  to: string;
-  value: string;
-  gas: string;
-  gasPrice: string;
-  isError: string;
-  txreceipt_status: string;
-  gasUsed: string;
-  contractAddress: string;
-  cumulativeGasUsed: string;
-  input: string;
-  confirmations: string;
-};
-
-export type ERC721Transaction = {
-  blockNumber: string;
-  timeStamp: string;
-  hash: string;
-  nonce: string;
-  blockHash: string;
-  from: string;
-  contractAddress: string;
-  to: string;
-  tokenID: string;
-  value: string;
-  tokenName: string;
-  tokenSymbol: string;
-  tokenDecimal: string;
-  transactionIndex: string;
-  gas: string;
-  gasPrice: string;
-  gasUsed: string;
-  cumulativeGasUsed: string;
-  input: string;
-  confirmations: string;
-};
-
-export type GetERC721TransactionsResponse = {
-  result: ERC721Transaction[];
-};
-
-export type GetTokenBalanceResponse = {
-  result: string;
-  status: string;
-};
-
-export type IGRDonation = {
-  id: string;
-  amountUSD: number;
-  scoreAdded: number;
-  transaction: string;
-  roundName: string;
-  projectTitle: string;
-};
 
 // fetch ERC20 transactions from Etherscan
 export async function getERC20Transactions(address: string) {
