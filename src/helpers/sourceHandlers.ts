@@ -4,11 +4,15 @@ import {
   getERC721Transactions,
   getTokenBalance,
   fetchGRDonations,
+} from './sourceApi';
+import {
+  NormalTransaction,
+  ERC20Transaction,
   GetNormalTransactionsResponse,
   GetERC20TransactionsResponse,
   GetERC721TransactionsResponse,
   GetTokenBalanceResponse,
-} from './sourceApi';
+} from './sourceTypes';
 
 type ContractDetails = {
   name: string;
@@ -99,7 +103,7 @@ export async function handleNormalTransactions(
     const normalTransactions = (await getNormalTransactions(
       address
     )) as GetNormalTransactionsResponse;
-    normalTransactions.result.forEach((tx) => {
+    normalTransactions.result.forEach((tx: NormalTransaction) => {
       score += handleTransaction(
         tx,
         debug.normalTransactions,
@@ -121,7 +125,7 @@ export async function handleERC20Transactions(
     const erc20Transactions = (await getERC20Transactions(
       address
     )) as GetERC20TransactionsResponse;
-    erc20Transactions.result.forEach((tx) => {
+    erc20Transactions.result.forEach((tx: ERC20Transaction) => {
       score += handleTransaction(
         tx,
         debug.erc20Transactions,
