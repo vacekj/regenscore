@@ -1,4 +1,4 @@
-import { GetERC20TransactionsResponse } from '@/helpers/sourceApi';
+import { GetERC20TransactionsResponse } from '@/helpers/sourceTypes';
 import { fetchRequest } from '@/utils';
 import { parse } from 'csv-parse';
 import fs from 'fs';
