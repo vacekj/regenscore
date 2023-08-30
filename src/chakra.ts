@@ -84,8 +84,8 @@ export const theme = extendTheme({
           fontSize: '92px',
         },
         h2: {
-          fontSize: '48px',
-          fontFamily: 'Remixa-Semibold',
+          fontSize: "48px",
+          fontFamily: "Remixa-Medium",
         },
         h3: {
           fontSize: '24px',

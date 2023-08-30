@@ -13,7 +13,7 @@ const Benefits: React.FC = () => {
         minHeight="380px"
         flexDir="column"
         pb="48px"
-        borderRadius="25px"
+        borderRadius="24px"
         textAlign="start"
         justifyContent="center"
         bg="brand.beige.400"
@@ -21,6 +21,7 @@ const Benefits: React.FC = () => {
         paddingX="32px"
         paddingTop="108px"
         width="100%"
+        shadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
       >
         <Text
           variant="bold"
@@ -54,7 +55,7 @@ const Benefits: React.FC = () => {
       align="flex-start"
       justify="center"
       p={4}
-      maxWidth="calc(100% - 108px)"
+      maxWidth="calc(100% - 76px)"
       margin="47px auto"
     >
       <Heading
