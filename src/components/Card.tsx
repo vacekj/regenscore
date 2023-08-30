@@ -13,7 +13,7 @@ import {
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { useAccount } from 'wagmi';
-import { getAddress } from 'viem';
+import { Address, getAddress } from 'viem';
 
 export default function Card() {
   const toast = useToast();
@@ -27,7 +27,7 @@ export default function Card() {
 
   const effectiveAddress = inputAddress || address || '';
 
-  const { score, debug } = useScore(getAddress(effectiveAddress));
+  const { score, debug } = useScore(effectiveAddress as Address);
 
   const [svg, setSvg] = useState<string>();
   useEffect(() => {
@@ -72,7 +72,7 @@ export default function Card() {
       <Text my={2}>or</Text>
       <Input
         value={inputAddress}
-        onChange={(e) => setInputAddress(e.target.value)} // Update inputAddress state on change
+        onChange={(e) => setInputAddress(getAddress(e.target.value))} // Update inputAddress state on change
         placeholder='Enter Ethereum Address'
         mt={0}
       />
