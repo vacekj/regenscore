@@ -108,7 +108,7 @@ const Header: React.FC = () => {
                 Opportunities
               </Text>
             </Link>
-            <Link href="/leaderboard">
+            <Link href="/mint">
               <Text variant={'boldLink'} textTransform={'uppercase'}>
                 Leaderboard
               </Text>
