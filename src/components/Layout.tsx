@@ -3,6 +3,7 @@ import { Flex, Box } from '@chakra-ui/react';
 import Footer from './Footer';
 import Header from './Header';
 import PageTransition from './PageTransition';
+import TrackedActivity from '@/pages/TrackedActivity';
 
 type LayoutProps = {
   children: React.ReactNode;
