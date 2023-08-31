@@ -119,13 +119,18 @@ const CrossIcon = () => (
   </svg>
 );
 
+
 type Status =
   | "NOT_STARTED"
   | "IN_PROGRESS"
   | "SUCCESS"
   | "WARNING"
   | "ERROR"
-  | "WARNING2";
+  | "WARNING2"
+  | "GTCLOGO"
+  | "GIVETHLOGO"
+  | "OPLOGO"
+  | "ETHLOGO";
 
 type CheckProps = {
   status: Status;
