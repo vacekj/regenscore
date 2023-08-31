@@ -119,7 +119,6 @@ const CrossIcon = () => (
   </svg>
 );
 
-
 type Status =
   | "NOT_STARTED"
   | "IN_PROGRESS"
