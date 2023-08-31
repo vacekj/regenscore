@@ -52,7 +52,7 @@ const TrackedActivity = () => {
                 textTransform="capitalize"
                 paddingLeft="0px"
               >
-                Taxanomy
+                Taxonomy
               </Th>
               <Th
                 style={{ borderBottom: "1px solid #F5B333" }}
@@ -107,6 +107,7 @@ const TrackedActivity = () => {
                   display="flex"
                   justifyContent="center"
                   alignItems="center"
+                  w={"fit-content"}
                 >
                   Contribution
                 </Text>

@@ -93,7 +93,21 @@ const Slide1 = () => {
             alignItems="center"
             gap={4}
           >
-            <Box bg="white" borderRadius="100px" h="10px" w="100%"></Box>450
+            <Box
+              w={"100%"}
+              display={"flex"}
+              gap={"16px"}
+              alignItems={"center"}
+              justifyContent={"flex-start"}
+            >
+              <Box
+                bg="white"
+                flexBasis={"100%"}
+                borderRadius="100px"
+                h="10px"
+              />
+              450
+            </Box>
           </GridItem>
           <GridItem
             colStart={1}
@@ -213,15 +227,15 @@ const Exclamation = () => (
     <g id="Group 1000004440">
       <path
         id="Vector"
-        fill-rule="evenodd"
-        clip-rule="evenodd"
+        fillRule="evenodd"
+        clipRule="evenodd"
         d="M16 8.5C16 12.9183 12.4183 16.5 8 16.5C3.58172 16.5 0 12.9183 0 8.5C0 4.08172 3.58172 0.5 8 0.5C12.4183 0.5 16 4.08172 16 8.5ZM15 8.5C15 12.366 11.866 15.5 8 15.5C4.13401 15.5 1 12.366 1 8.5C1 4.63401 4.13401 1.5 8 1.5C11.866 1.5 15 4.63401 15 8.5Z"
         fill="white"
       />
       <path
         id="Line 27 (Stroke)"
-        fill-rule="evenodd"
-        clip-rule="evenodd"
+        fillRule="evenodd"
+        clipRule="evenodd"
         d="M8 13.5C7.72386 13.5 7.5 13.2761 7.5 13L7.5 7C7.5 6.72386 7.72386 6.5 8 6.5C8.27614 6.5 8.5 6.72386 8.5 7L8.5 13C8.5 13.2761 8.27614 13.5 8 13.5Z"
         fill="white"
       />
