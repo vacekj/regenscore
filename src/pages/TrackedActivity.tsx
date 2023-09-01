@@ -130,6 +130,7 @@ const TrackedActivity = () => {
                   display="flex"
                   justifyContent="center"
                   alignItems="center"
+                  w={"fit-content"}
                 >
                   Contribution
                 </Text>
@@ -152,6 +153,7 @@ const TrackedActivity = () => {
                   display="flex"
                   justifyContent="center"
                   alignItems="center"
+                  w={"fit-content"}
                 >
                   Governance
                 </Text>
@@ -174,6 +176,7 @@ const TrackedActivity = () => {
                   display="flex"
                   justifyContent="center"
                   alignItems="center"
+                  w={"fit-content"}
                 >
                   Governance
                 </Text>
@@ -196,6 +199,7 @@ const TrackedActivity = () => {
                   display="flex"
                   justifyContent="center"
                   alignItems="center"
+                  w={"fit-content"}
                 >
                   Outreach
                 </Text>
@@ -218,6 +222,7 @@ const TrackedActivity = () => {
                   display="flex"
                   justifyContent="center"
                   alignItems="center"
+                  w={"fit-content"}
                 >
                   Security
                 </Text>
@@ -240,6 +245,7 @@ const TrackedActivity = () => {
                   display="flex"
                   justifyContent="center"
                   alignItems="center"
+                  w={"fit-content"}
                 >
                   Security
                 </Text>
@@ -262,6 +268,7 @@ const TrackedActivity = () => {
                   display="flex"
                   justifyContent="center"
                   alignItems="center"
+                  w={"fit-content"}
                 >
                   Unitization
                 </Text>
@@ -284,6 +291,7 @@ const TrackedActivity = () => {
                   display="flex"
                   justifyContent="center"
                   alignItems="center"
+                  w={"fit-content"}
                 >
                   Outreach
                 </Text>

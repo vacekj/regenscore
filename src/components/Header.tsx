@@ -85,7 +85,6 @@ const Header: React.FC = () => {
   return (
     <Box
       as="header"
-      bg="brand.deepGreen.400"
       color="white"
       position="fixed"
       top="0"

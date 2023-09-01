@@ -48,7 +48,7 @@ const Slide1 = () => {
 
         <Grid
           templateColumns="repeat(20, 1fr)"
-          w="53%"
+          w="60%"
           gap={4}
           color="white"
           zIndex="100"
@@ -72,7 +72,21 @@ const Slide1 = () => {
             alignItems="center"
             gap={4}
           >
-            <Box bg="white" borderRadius="100px" h="10px" w="80%"></Box>300
+            <Box
+              w={"100%"}
+              display={"flex"}
+              gap={"16px"}
+              alignItems={"center"}
+              justifyContent={"flex-start"}
+            >
+              <Box
+                bg="white"
+                flexBasis={"80%"}
+                borderRadius="100px"
+                h="10px"
+              />
+              300
+            </Box>
           </GridItem>
           <GridItem
             colStart={1}
@@ -128,7 +142,21 @@ const Slide1 = () => {
             alignItems="center"
             gap={4}
           >
-            <Box bg="white" borderRadius="100px" h="10px" w="100%"></Box>450
+            <Box
+              w={"100%"}
+              display={"flex"}
+              gap={"16px"}
+              alignItems={"center"}
+              justifyContent={"flex-start"}
+            >
+              <Box
+                bg="white"
+                flexBasis={"100%"}
+                borderRadius="100px"
+                h="10px"
+              />
+              450
+            </Box>
           </GridItem>
           <GridItem
             colStart={1}
@@ -149,7 +177,21 @@ const Slide1 = () => {
             alignItems="center"
             gap={4}
           >
-            <Box bg="white" borderRadius="100px" h="10px" w="70%"></Box>280
+            <Box
+              w={"100%"}
+              display={"flex"}
+              gap={"16px"}
+              alignItems={"center"}
+              justifyContent={"flex-start"}
+            >
+              <Box
+                bg="white"
+                flexBasis={"70%"}
+                borderRadius="100px"
+                h="10px"
+              />
+              280
+            </Box>
           </GridItem>
           <GridItem
             colStart={1}
@@ -170,7 +212,21 @@ const Slide1 = () => {
             alignItems="center"
             gap={4}
           >
-            <Box bg="white" borderRadius="100px" h="10px" w="60%"></Box>200
+            <Box
+              w={"100%"}
+              display={"flex"}
+              gap={"16px"}
+              alignItems={"center"}
+              justifyContent={"flex-start"}
+            >
+              <Box
+                bg="white"
+                flexBasis={"60%"}
+                borderRadius="100px"
+                h="10px"
+              />
+              200
+            </Box>
           </GridItem>
         </Grid>
       </Box>
@@ -180,13 +236,11 @@ const Slide1 = () => {
 
 const slides = [
   {
-    title: "Slide 1",
-    description: "Description for slide 1.",
     content: Slide1,
   },
 ];
 
-const HeroSlider: React.FC = () => {
+const MintYour: React.FC = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
 
   return (
@@ -214,7 +268,7 @@ const HeroSlider: React.FC = () => {
   );
 };
 
-export default HeroSlider;
+export default MintYour;
 
 const Exclamation = () => (
   <svg
