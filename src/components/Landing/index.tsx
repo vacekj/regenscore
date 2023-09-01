@@ -6,7 +6,7 @@ import HowItWorks from './HowItWorks';
 export default function Landing() {
   return (
     <Flex flexDir="column">
-      <Flex bg={'brand.deepGreen.400'} pt="96px" justifyContent="flex-end">
+      <Flex bg="linear-gradient(to bottom right, #577442 0%, #354728 25%)" pt="96px" justifyContent="flex-end">
         <Hero />
       </Flex>
       <Benefits />
