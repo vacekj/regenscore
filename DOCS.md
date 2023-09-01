@@ -21,7 +21,7 @@ This is data that can be queried directly from the chain, either OP or Ethereum
 
 - #1 did they sell the airdrop? How many % did they sell? Only count first TX after airdrop
 
-- #4 Being Paid from treasury
+- #4 Being Paid from treasury ✅
 
 Fetch and update all txs from the treasury to different addresses, save the individual txs.
 
@@ -29,19 +29,19 @@ Fetch and update all txs from the treasury to different addresses, save the indi
 
 https://documentation.poap.tech/reference/getactionsscan-5, check against known POAPs
 
-- #8 OP Delegate 
+- #8 OP Delegate ✅
 
 https://optimistic.etherscan.io/address/0x4200000000000000000000000000000000000042 watch the DelegateVotesChanged event and update the newBalance amount.
 
-- #14 GTC Holder
+- #14 GTC Holder ✅
 
 Etherscan api for gtc holding
 
-- #15 OP Holder
+- #15 OP Holder ✅
 
 Etherscan api for OP holdings (on Optimism chain)
 
-- #18 ETH Staker
+- #18 ETH Staker ✅
 
 DepositProcessed event on 0x00000000219ab540356cbb839cbe05303d7705fa
 
@@ -55,7 +55,7 @@ https://etherscan.io/address/0xbfb731cd36d26c2a7287716de857e4380c73a64a watch fo
 
 - #21 Made txs on Optimism
   https://viem.sh/docs/actions/public/getTransactionCount.html
-check nonce for that account
+  check nonce for that account
 
 - #22 Interacted with a contract
 
@@ -85,6 +85,7 @@ interacted with ???
 - #3 Praise
 - #10 Publishing Optimism proposals - might be derivable from chain - TODO
 -
+
 # OP Airdrop
 
 example tx of distribution:
@@ -93,4 +94,4 @@ https://optimistic.etherscan.io/tx/0x10fab8702832049567ecfae91bd08617cf46ac97f34
 
 tokens went from OP Foundation addy: 0x2501c477d0a35545a387aa4a3eee4292a9a8b3f0
 
-likely airdrop contract?  https://optimistic.etherscan.io/address/0xbe9a9b1b07f027130e56d8569d1aea5dd5a86013
+likely airdrop contract? https://optimistic.etherscan.io/address/0xbe9a9b1b07f027130e56d8569d1aea5dd5a86013
