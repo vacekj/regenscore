@@ -1,3 +1,4 @@
+import { Address } from 'viem';
 import {
   getERC20Transactions,
   getNormalTransactions,
@@ -24,6 +25,11 @@ type ITransaction = {
   name: string;
   scoreAdded: number;
 };
+
+const REGENSCORE_SQUID_OP =
+  'https://squid.subsquid.io/regen-score-squid/v/v3/graphql';
+const REGENSCORE_SQUID_ETH =
+  'https://squid.subsquid.io/regen-score-squid-eth/v/v2/graphql';
 
 const list_of_contracts: { [key: string]: ContractDetails } = {
   '0x900db999074d9277c5da2a43f252d74366230da0': { name: 'Giveth', weight: 1 },
@@ -67,12 +73,23 @@ const list_of_contracts: { [key: string]: ContractDetails } = {
   },
 };
 
-const list_of_balance_contracts: { [key: string]: ContractDetails } = {
-  '0x900db999074d9277c5da2a43f252d74366230da0': { name: 'GIV', weight: 1 },
-  '0xD56daC73A4d6766464b38ec6D91eB45Ce7457c44': { name: 'PAN', weight: 1 },
-  '0x4e78011ce80ee02d2c3e649fb657e45898257815': { name: 'KLIMA', weight: 1 },
-  '0xb0C22d8D350C67420f06F48936654f567C73E8C8': { name: 'sKLIMA', weight: 1 },
-  '0xde30da39c46104798bb5aa3fe8b9e0e1f348163f': { name: 'GTC', weight: 1 },
+const list_of_balance_contract_mainnet: { [key: string]: ContractDetails } = {
+  '0x900db999074d9277c5da2a43f252d74366230da0': { name: 'GIV', weight: 10 },
+  '0xde30da39c46104798bb5aa3fe8b9e0e1f348163f': { name: 'GTC', weight: 10 },
+};
+
+const list_of_balance_contract_optimism: { [key: string]: ContractDetails } = {
+  '0x4200000000000000000000000000000000000042': { name: 'OP', weight: 10 },
+};
+
+const GRAPHQL_OPTIONS = (query: string) => {
+  return {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ query }),
+  };
 };
 
 const handleTransaction = (
@@ -103,6 +120,7 @@ export async function handleNormalTransactions(
     const normalTransactions = (await getNormalTransactions(
       address
     )) as GetNormalTransactionsResponse;
+    console.log({ normalTransactions });
     normalTransactions.result.forEach((tx: NormalTransaction) => {
       score += handleTransaction(
         tx,
@@ -165,22 +183,47 @@ export async function handleTokenBalances(
   debug: any
 ): Promise<number> {
   let score = 0;
-  for (let key in list_of_balance_contracts) {
+
+  for (let key in list_of_balance_contract_mainnet) {
     try {
       const balanceResponse = (await getTokenBalance(
-        key,
-        address
-      )) as GetTokenBalanceResponse;
-      if (balanceResponse?.status !== '0') {
-        const balanceInWei = BigInt(balanceResponse.result);
-        const balanceInEth = Number(balanceInWei) / 10 ** 18;
-        if (!isNaN(balanceInEth) && balanceInEth > 0) {
-          const addedScore =
-            balanceInEth * list_of_balance_contracts[key].weight;
+        key as Address,
+        address,
+        'mainnet'
+      )) as any;
+      if (balanceResponse !== '0') {
+        const balance = Number(balanceResponse);
+        if (balance > 0) {
+          const addedScore = list_of_balance_contract_mainnet[key].weight;
           score += addedScore;
           debug.tokenBalances.push({
             contract: key,
-            name: list_of_balance_contracts[key].name,
+            network: 'mainnet',
+            name: list_of_balance_contract_mainnet[key].name,
+            scoreAdded: addedScore,
+          });
+        }
+      }
+    } catch (error) {
+      console.error(`Error fetching token balance for contract ${key}:`, error);
+    }
+  }
+  for (let key in list_of_balance_contract_optimism) {
+    try {
+      const balanceResponse = await getTokenBalance(
+        key as Address,
+        address,
+        'optimism'
+      );
+      if (balanceResponse !== '0') {
+        const balance = Number(balanceResponse);
+        if (balance > 0) {
+          const addedScore = list_of_balance_contract_optimism[key].weight;
+          score += addedScore;
+          debug.tokenBalances.push({
+            contract: key,
+            network: 'optimism',
+            name: list_of_balance_contract_optimism[key].name,
             scoreAdded: addedScore,
           });
         }
@@ -211,4 +254,114 @@ export async function handleGRDonations(
     console.error('Error fetching GR donations:', error);
   }
   return score;
+}
+
+export async function handleIsGTCHolder() {}
+
+export async function handleEthStaker(address: string, debug: any) {
+  const url = REGENSCORE_SQUID_ETH;
+  const query = `
+    query MyQuery {
+      ethDeposits(limit: 10, where: {from_eq: "${address}"}) {
+        id
+        blockNumber
+        from
+        transactionHash
+        blockTimestamp
+      }
+    }
+  `;
+
+  const options = GRAPHQL_OPTIONS(query);
+
+  try {
+    const response = await fetch(url, options);
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    const result = await response.json();
+    const ethDeposits = result?.data?.ethDeposits;
+    const scoreAdded = ethDeposits?.length > 0 ? 10 : 0;
+    debug.ethDeposits.push({
+      ethDeposits,
+      scoreAdded,
+    });
+    return scoreAdded;
+  } catch (error) {
+    console.error('There was an error fetching the data:', error);
+    return 0;
+  }
+}
+
+export async function handleOPTreasuryPayouts(
+  address: string,
+  debug: any
+): Promise<number> {
+  const url = REGENSCORE_SQUID_OP;
+  const query = `
+      query MyQuery {
+          transfers(where: {to_eq: "${address}"}) {
+              blockNumber
+              blockTimestamp
+              description
+              from
+              eventName
+              id
+              to
+              transactionHash
+              value
+          }
+      }
+  `;
+
+  const options = GRAPHQL_OPTIONS(query);
+
+  try {
+    const response = await fetch(url, options);
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    const result = await response.json();
+    const transfers = result?.data?.transfers;
+    const scoreAdded = transfers?.length > 0 ? 10 : 0;
+
+    debug.optTreasuryPayouts = {
+      transfers,
+      scoreAdded,
+    };
+
+    return scoreAdded;
+  } catch (error) {
+    console.error('There was an error fetching OPTreasuryPayouts:', error);
+    return 0;
+  }
+}
+
+export async function handleDelegate(address: string, debug: any) {
+  const url = REGENSCORE_SQUID_OP;
+  const query = `
+      query MyQuery {
+          delegates(where: {address_eq: "${address}"}) {
+              id
+              balance
+              address
+          }
+      }
+  `;
+
+  const options = GRAPHQL_OPTIONS(query);
+
+  try {
+    const response = await fetch(url, options);
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    const result = await response.json();
+    const delegates = result?.data?.delegates;
+    debug.delegates = delegates;
+    return delegates?.length > 0 ? 10 : 0;
+  } catch (error) {
+    console.error('There was an error fetching delegate data:', error);
+    return 0;
+  }
 }
