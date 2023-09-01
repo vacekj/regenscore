@@ -1,3 +1,5 @@
+import { Address, createPublicClient, http, formatUnits } from 'viem';
+import { mainnet, optimism } from 'viem/chains';
 import { fetchRequest } from '@/utils';
 import {
   GetERC20TransactionsResponse,
@@ -5,6 +7,7 @@ import {
   GetERC721TransactionsResponse,
   GetTokenBalanceResponse,
 } from './sourceTypes';
+import ERC20 from '@/abi/ERC20';
 
 // const ETHERSCAN_API_KEY = 'GB821FZCS37WSXM8GJCCUUD3ZQUTZZY9RX';
 const ETHERSCAN_API_KEY = process.env.NEXT_PUBLIC_ETHERSCAN_API_KEY;
@@ -107,26 +110,29 @@ export async function getERC721Transactions(address: string) {
   }
 }
 
-// fetch token balance for a given contract address from Etherscan
-export async function getTokenBalance(
+// experimental: not used so far etherscan fetch
+export async function etherscanGetTokenBalance(
   contractAddress: string,
-  address: string
+  address: string,
+  network: 'mainnet' | 'optimism'
 ) {
-  /*
-    https://api.etherscan.io/api
-     ?module=account
-     &action=tokenBalance
-     &address=0x2c1ba59d6f58433fb1eaee7d20b26ed83bda51a3
-     &apikey=YourApiKeyToken
-    */
+  let apiUrl: string;
+
+  switch (network) {
+    case 'mainnet':
+      apiUrl = 'https://api.etherscan.io/api';
+      break;
+    case 'optimism':
+      apiUrl = 'https://api-optimistic.etherscan.io/api';
+      break;
+    default:
+      throw new Error(`Unsupported network: ${network}`);
+  }
+
+  const query = `${apiUrl}?module=account&action=tokenbalance&contractaddress=${contractAddress}&address=${address}${apikey}`;
+
   try {
-    const response = await fetchRequest(
-      'https://api.etherscan.io/api?module=account&action=tokenbalance&contractaddress=' +
-        contractAddress +
-        '&address=' +
-        address +
-        apikey
-    );
+    const response = await fetchRequest(query);
 
     if (!response.ok) {
       throw new Error(`Error! status: ${response.status}`);
@@ -142,6 +148,33 @@ export async function getTokenBalance(
       return 'An unexpected error occurred';
     }
   }
+}
+
+// fetch token balance for a given contract address from Etherscan
+export async function getTokenBalance(
+  contractAddress: Address,
+  address: string,
+  network: 'mainnet' | 'optimism'
+): Promise<string> {
+  const isMainnet = network === 'mainnet';
+  const abi = ERC20;
+  const client = createPublicClient({
+    chain: isMainnet ? mainnet : optimism,
+    transport: http(),
+  });
+  const decimals = await client.readContract({
+    address: contractAddress,
+    abi,
+    functionName: 'decimals',
+  });
+  const balance: any = await client.readContract({
+    address: contractAddress,
+    abi,
+    functionName: 'balanceOf',
+    args: [address],
+  });
+
+  return balance ? formatUnits(balance, Number(decimals)) : '0';
 }
 
 export async function fetchGRDonations(address: string) {
