@@ -79,12 +79,7 @@ const Slide1 = () => {
               alignItems={"center"}
               justifyContent={"flex-start"}
             >
-              <Box
-                bg="white"
-                flexBasis={"80%"}
-                borderRadius="100px"
-                h="10px"
-              />
+              <Box bg="white" flexBasis={"80%"} borderRadius="100px" h="10px" />
               300
             </Box>
           </GridItem>
@@ -184,12 +179,7 @@ const Slide1 = () => {
               alignItems={"center"}
               justifyContent={"flex-start"}
             >
-              <Box
-                bg="white"
-                flexBasis={"70%"}
-                borderRadius="100px"
-                h="10px"
-              />
+              <Box bg="white" flexBasis={"70%"} borderRadius="100px" h="10px" />
               280
             </Box>
           </GridItem>
@@ -219,12 +209,7 @@ const Slide1 = () => {
               alignItems={"center"}
               justifyContent={"flex-start"}
             >
-              <Box
-                bg="white"
-                flexBasis={"60%"}
-                borderRadius="100px"
-                h="10px"
-              />
+              <Box bg="white" flexBasis={"60%"} borderRadius="100px" h="10px" />
               200
             </Box>
           </GridItem>
