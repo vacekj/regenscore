@@ -1,5 +1,17 @@
 import { Check } from "@/components/Check";
-import { Box, Flex, Grid, GridItem, Heading, VStack, Card, CardBody, CardHeader, Text, Button, } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  Grid,
+  GridItem,
+  Heading,
+  VStack,
+  Card,
+  CardBody,
+  CardHeader,
+  Text,
+  Button,
+} from "@chakra-ui/react";
 import { useState } from "react";
 
 const Slide1 = () => {
@@ -32,13 +44,13 @@ const Slide1 = () => {
         zIndex={1}
       />
 
-        <Flex
-          flex="1"
-          flexDirection="column"
-          justifyContent="center"
-          alignItems={{ base: "center", md: "flex-start" }}
-          zIndex={2}
-        >
+      <Flex
+        flex="1"
+        flexDirection="column"
+        justifyContent="center"
+        alignItems={{ base: "center", md: "flex-start" }}
+        zIndex={2}
+      >
         <Heading
           as="h2"
           variant="h2"
@@ -52,11 +64,7 @@ const Slide1 = () => {
           Mint your attestations to <br /> access opportunities
         </Heading>
 
-        <Grid
-          templateColumns="repeat(20, 1fr)"
-          gap={4}
-          color="white"
-        >
+        <Grid templateColumns="repeat(20, 1fr)" gap={4} color="white">
           <GridItem
             colStart={1}
             colEnd={2}
@@ -226,7 +234,7 @@ const Slide1 = () => {
           borderRadius="16.235px"
           margin="0 auto"
           background="linear-gradient(180deg, #F9DD94 0%, #FFC555 100%)"
-          border= "0.812px solid rgba(255, 255, 255, 0.50)"
+          border="0.812px solid rgba(255, 255, 255, 0.50)"
           mt="17.5px"
         >
           <CardHeader padding="0px">
@@ -288,7 +296,9 @@ const Slide1 = () => {
               </Text>
             </div>
             <div>
-              <Button variant="variant3" marginTop="46.76px">MINT NOW</Button>
+              <Button variant="variant3" marginTop="46.76px">
+                MINT NOW
+              </Button>
             </div>
           </CardBody>
         </Card>
