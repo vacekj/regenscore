@@ -1,4 +1,4 @@
-import { Box, Flex, Heading, Text } from "@chakra-ui/react";
+import { Box, Flex, Heading, Text } from '@chakra-ui/react';
 
 const Benefits: React.FC = () => {
   const BoxContent = ({
@@ -65,7 +65,7 @@ const Benefits: React.FC = () => {
         color="brand.primaryOrange.200"
       >
         Benefits for Regen <br />
-        Community{" "}
+        Community{' '}
       </Heading>
       <Flex flexWrap="wrap" m="0 -12px" justifyContent="center">
         <BoxContent

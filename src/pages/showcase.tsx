@@ -1,5 +1,5 @@
-import { Check } from "@/components/Check";
-import { Button, Container, Grid, Heading, GridItem } from "@chakra-ui/react";
+import { Check } from '@/components/Check';
+import { Button, Container, Grid, Heading, GridItem } from '@chakra-ui/react';
 
 export default function Showcase() {
   return (
@@ -17,19 +17,19 @@ export default function Showcase() {
         Heading H3
       </Heading>
       <p>
-        Here is our{" "}
+        Here is our{' '}
         <a className="my-link" href="https://example.com">
           link!
         </a>
       </p>
-      <Check status={"NOT_STARTED"} /> <label>NOT_STARTED</label>
-      <Check status={"IN_PROGRESS"} /> <label>IN_PROGRESS</label>
-      <Check status={"SUCCESS"} /> <label>SUCCESS</label>
-      <Check status={"ERROR"} /> <label>ERROR</label>
-      <Check status={"WARNING"} /> <label>WARNING</label>
+      <Check status={'NOT_STARTED'} /> <label>NOT_STARTED</label>
+      <Check status={'IN_PROGRESS'} /> <label>IN_PROGRESS</label>
+      <Check status={'SUCCESS'} /> <label>SUCCESS</label>
+      <Check status={'ERROR'} /> <label>ERROR</label>
+      <Check status={'WARNING'} /> <label>WARNING</label>
       <Grid
-        gridTemplateRows={""}
-        gridTemplateColumns={"7fr 3fr 2fr"}
+        gridTemplateRows={''}
+        gridTemplateColumns={'7fr 3fr 2fr'}
         h="200px"
         bg=""
       >

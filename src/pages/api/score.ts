@@ -1,5 +1,5 @@
-import { NextApiRequest, NextApiResponse } from "next";
-import { createScore } from "@/helpers/scoreHelpers";
+import { NextApiRequest, NextApiResponse } from 'next';
+import { createScore } from '@/helpers/scoreHelpers';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const body = req.body;

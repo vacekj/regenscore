@@ -1,4 +1,4 @@
-import { Container, Grid, GridItem } from "@chakra-ui/react";
+import { Container, Grid, GridItem } from '@chakra-ui/react';
 
 export default function footer() {
   return (
@@ -7,74 +7,74 @@ export default function footer() {
       /*fontFamily={"Remixa-Regular"}*/ maxW="none"
       p={0}
       m={0}
-      paddingRight={"55px"}
+      paddingRight={'55px'}
       bg="#F2EFE5"
     >
-      <Grid gridTemplateColumns={"6fr 3fr 3fr"} h="408px">
+      <Grid gridTemplateColumns={'6fr 3fr 3fr'} h="408px">
         <GridItem bg="white">
-          <div style={{ marginTop: "60px", marginLeft: "54px" }}>
+          <div style={{ marginTop: '60px', marginLeft: '54px' }}>
             <div>
               <div>
                 <img
                   src="/icons/leaf.jpg"
                   alt="leaf"
                   style={{
-                    display: "inline-block",
-                    marginRight: "10px",
-                    marginLeft: "-20px",
+                    display: 'inline-block',
+                    marginRight: '10px',
+                    marginLeft: '-20px',
                   }}
                 />
                 <img
                   src="/icons/regenscore.jpg"
                   alt="logo"
-                  style={{ display: "inline-block", marginBottom: "40px" }}
+                  style={{ display: 'inline-block', marginBottom: '40px' }}
                 />
               </div>
             </div>
-            <div style={{ marginTop: "10px" }}>
-              <div style={{ marginBottom: "10px" }}>
+            <div style={{ marginTop: '10px' }}>
+              <div style={{ marginBottom: '10px' }}>
                 Empower your credibility. Elevate your potential.
               </div>
-              <div style={{ marginBottom: "30px" }}>REGEN Score</div>
+              <div style={{ marginBottom: '30px' }}>REGEN Score</div>
               <Twitter />
-              <div style={{ marginBottom: "10px", marginTop: "30px" }}>
+              <div style={{ marginBottom: '10px', marginTop: '30px' }}>
                 All rights reserved@2023
               </div>
             </div>
           </div>
         </GridItem>
         <GridItem bg="white">
-          <div style={{ marginTop: "100px", marginLeft: "30px" }}>
+          <div style={{ marginTop: '100px', marginLeft: '30px' }}>
             <div
               style={{
-                marginBottom: "20px",
-                fontWeight: "bold" /*fontFamily: "Remixa-Bold"*/,
+                marginBottom: '20px',
+                fontWeight: 'bold' /*fontFamily: "Remixa-Bold"*/,
               }}
             >
               About Us
             </div>
-            <div style={{ marginTop: "10px" }}>
-              <div style={{ marginBottom: "10px" }}>Docs</div>
-              <div style={{ marginBottom: "10px" }}>Scores</div>
-              <div style={{ marginBottom: "10px" }}>Resources</div>
-              <div style={{ marginBottom: "10px" }}>Activity</div>
+            <div style={{ marginTop: '10px' }}>
+              <div style={{ marginBottom: '10px' }}>Docs</div>
+              <div style={{ marginBottom: '10px' }}>Scores</div>
+              <div style={{ marginBottom: '10px' }}>Resources</div>
+              <div style={{ marginBottom: '10px' }}>Activity</div>
             </div>
           </div>
         </GridItem>
         <GridItem bg="white" borderTopRightRadius="32px">
-          <div style={{ marginTop: "100px", marginLeft: "30px" }}>
+          <div style={{ marginTop: '100px', marginLeft: '30px' }}>
             <div
               style={{
-                marginBottom: "20px",
-                fontWeight: "bold" /*fontFamily: "Remixa-Bold"*/,
+                marginBottom: '20px',
+                fontWeight: 'bold' /*fontFamily: "Remixa-Bold"*/,
               }}
             >
               Help & Support
             </div>
-            <div style={{ marginTop: "10px" }}>
-              <div style={{ marginBottom: "10px" }}>Leaderboard</div>
-              <div style={{ marginBottom: "10px" }}>Opportunities</div>
-              <div style={{ marginBottom: "10px" }}>Privacy - Terms</div>
+            <div style={{ marginTop: '10px' }}>
+              <div style={{ marginBottom: '10px' }}>Leaderboard</div>
+              <div style={{ marginBottom: '10px' }}>Opportunities</div>
+              <div style={{ marginBottom: '10px' }}>Privacy - Terms</div>
             </div>
           </div>
         </GridItem>

@@ -1,13 +1,13 @@
-import { Hex } from "viem";
-import useSWR from "swr";
+import { Hex } from 'viem';
+import useSWR from 'swr';
 
 export function useScore(address: Hex | undefined) {
   const res = useSWR([address], async ([address]) => {
     try {
-      const res = await fetch("/api/score", {
-        method: "POST",
+      const res = await fetch('/api/score', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           address,

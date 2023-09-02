@@ -1,17 +1,17 @@
-import { Address, createPublicClient, http, formatUnits } from "viem";
-import { mainnet, optimism } from "viem/chains";
-import { fetchRequest } from "@/utils";
+import { Address, createPublicClient, http, formatUnits } from 'viem';
+import { mainnet, optimism } from 'viem/chains';
+import { fetchRequest } from '@/utils';
 import {
   GetERC20TransactionsResponse,
   GetNormalTransactionsResponse,
   GetERC721TransactionsResponse,
   GetTokenBalanceResponse,
-} from "./sourceTypes";
-import ERC20 from "@/abi/ERC20";
+} from './sourceTypes';
+import ERC20 from '@/abi/ERC20';
 
 // const ETHERSCAN_API_KEY = 'GB821FZCS37WSXM8GJCCUUD3ZQUTZZY9RX';
 const ETHERSCAN_API_KEY = process.env.NEXT_PUBLIC_ETHERSCAN_API_KEY;
-const apikey = "&apikey=" + ETHERSCAN_API_KEY;
+const apikey = '&apikey=' + ETHERSCAN_API_KEY;
 // "&apikey=6JEC4FAII8AIEUQFI28C765AC4Y1K54ME2"
 
 // fetch ERC20 transactions from Etherscan
@@ -25,7 +25,7 @@ export async function getERC20Transactions(address: string) {
     */
   try {
     const response = await fetchRequest(
-      "https://api.etherscan.io/api?module=account&action=tokentx&address=" +
+      'https://api.etherscan.io/api?module=account&action=tokentx&address=' +
         address +
         apikey,
     );
@@ -41,7 +41,7 @@ export async function getERC20Transactions(address: string) {
     if (error instanceof Error) {
       return error.message;
     } else {
-      return "An unexpected error occurred";
+      return 'An unexpected error occurred';
     }
   }
 }
@@ -57,7 +57,7 @@ export async function getNormalTransactions(address: string) {
     */
   try {
     const response = await fetchRequest(
-      "https://api.etherscan.io/api?module=account&action=txlist&address=" +
+      'https://api.etherscan.io/api?module=account&action=txlist&address=' +
         address +
         apikey,
     );
@@ -73,7 +73,7 @@ export async function getNormalTransactions(address: string) {
     if (error instanceof Error) {
       return error.message;
     } else {
-      return "An unexpected error occurred";
+      return 'An unexpected error occurred';
     }
   }
 }
@@ -89,7 +89,7 @@ export async function getERC721Transactions(address: string) {
     */
   try {
     const response = await fetchRequest(
-      "https://api.etherscan.io/api?module=account&action=tokennfttx&address=" +
+      'https://api.etherscan.io/api?module=account&action=tokennfttx&address=' +
         address +
         apikey,
     );
@@ -105,7 +105,7 @@ export async function getERC721Transactions(address: string) {
     if (error instanceof Error) {
       return error.message;
     } else {
-      return "An unexpected error occurred";
+      return 'An unexpected error occurred';
     }
   }
 }
@@ -114,16 +114,16 @@ export async function getERC721Transactions(address: string) {
 export async function etherscanGetTokenBalance(
   contractAddress: string,
   address: string,
-  network: "mainnet" | "optimism",
+  network: 'mainnet' | 'optimism',
 ) {
   let apiUrl: string;
 
   switch (network) {
-    case "mainnet":
-      apiUrl = "https://api.etherscan.io/api";
+    case 'mainnet':
+      apiUrl = 'https://api.etherscan.io/api';
       break;
-    case "optimism":
-      apiUrl = "https://api-optimistic.etherscan.io/api";
+    case 'optimism':
+      apiUrl = 'https://api-optimistic.etherscan.io/api';
       break;
     default:
       throw new Error(`Unsupported network: ${network}`);
@@ -145,7 +145,7 @@ export async function etherscanGetTokenBalance(
     if (error instanceof Error) {
       return error.message;
     } else {
-      return "An unexpected error occurred";
+      return 'An unexpected error occurred';
     }
   }
 }
@@ -154,9 +154,9 @@ export async function etherscanGetTokenBalance(
 export async function getTokenBalance(
   contractAddress: Address,
   address: string,
-  network: "mainnet" | "optimism",
+  network: 'mainnet' | 'optimism',
 ): Promise<string> {
-  const isMainnet = network === "mainnet";
+  const isMainnet = network === 'mainnet';
   const abi = ERC20;
   const client = createPublicClient({
     chain: isMainnet ? mainnet : optimism,
@@ -165,28 +165,28 @@ export async function getTokenBalance(
   const decimals = await client.readContract({
     address: contractAddress,
     abi,
-    functionName: "decimals",
+    functionName: 'decimals',
   });
   const balance: any = await client.readContract({
     address: contractAddress,
     abi,
-    functionName: "balanceOf",
+    functionName: 'balanceOf',
     args: [address],
   });
 
-  return balance ? formatUnits(balance, Number(decimals)) : "0";
+  return balance ? formatUnits(balance, Number(decimals)) : '0';
 }
 
 export async function fetchGRDonations(address: string) {
   const addressParts = address.match(/.{1,6}/g) ?? [];
   if (!addressParts) {
-    throw new Error("Invalid address");
+    throw new Error('Invalid address');
   }
 
   const scores = await Promise.all(
     [1, 10, 250, 424].map(async (chainId) => {
       const url = `https://indexer-production.fly.dev/data/${chainId}/contributors/${addressParts.join(
-        "/",
+        '/',
       )}.json`;
       const response = await fetch(url);
       if (response.ok) {

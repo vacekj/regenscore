@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
-import styled from "@emotion/styled";
-import { Web3Button, Web3NetworkSwitch, useWeb3Modal } from "@web3modal/react";
-import { useAccount } from "wagmi";
+import React, { useState, useEffect } from 'react';
+import styled from '@emotion/styled';
+import { Web3Button, Web3NetworkSwitch, useWeb3Modal } from '@web3modal/react';
+import { useAccount } from 'wagmi';
 import {
   Box,
   Button,
@@ -18,10 +18,10 @@ import {
   VStack,
   useDisclosure,
   useBreakpointValue,
-} from "@chakra-ui/react";
-import Link from "next/link";
+} from '@chakra-ui/react';
+import Link from 'next/link';
 
-import { useScore } from "@/hooks";
+import { useScore } from '@/hooks';
 
 const StyledWeb3NetworkSwitch = styled.div`
   --w3m-accent-color: rgba(0, 0, 0, 0.5); !important;
@@ -51,10 +51,10 @@ const Header: React.FC = () => {
       setVisible(isVisible);
     };
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener('scroll', handleScroll);
 
     return () => {
-      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener('scroll', handleScroll);
     };
   }, [currPos]);
 
@@ -74,7 +74,7 @@ const Header: React.FC = () => {
           </Button>
         )}
         {score && (
-          <Text variant={"bold"} textTransform={"uppercase"}>
+          <Text variant={'bold'} textTransform={'uppercase'}>
             Score: {score}
           </Text>
         )}
@@ -95,26 +95,26 @@ const Header: React.FC = () => {
       paddingLeft="38px"
       paddingRight="38px"
       transition="all 0.3s ease-in-out"
-      transform={visible ? "translateY(0)" : "translateY(-100%)"}
+      transform={visible ? 'translateY(0)' : 'translateY(-100%)'}
     >
       <Flex p="4" gap={54} alignItems="center">
         <Link href="/">
-          <Image src={"/images/logo-h.svg"} alt="Logo" minW="223" />
+          <Image src={'/images/logo-h.svg'} alt="Logo" minW="223" />
         </Link>
         {!isDrawerMenu && (
           <Flex ml="4" gap={{ base: 4, md: 4, xl: 54 }}>
             <Link href="/">
-              <Text variant={"boldLink"} textTransform={"uppercase"}>
+              <Text variant={'boldLink'} textTransform={'uppercase'}>
                 Opportunities
               </Text>
             </Link>
             <Link href="/leaderboard">
-              <Text variant={"boldLink"} textTransform={"uppercase"}>
+              <Text variant={'boldLink'} textTransform={'uppercase'}>
                 Leaderboard
               </Text>
             </Link>
             <Link href="/docs">
-              <Text variant={"boldLink"} textTransform={"uppercase"}>
+              <Text variant={'boldLink'} textTransform={'uppercase'}>
                 Docs
               </Text>
             </Link>
@@ -131,13 +131,13 @@ const Header: React.FC = () => {
                 <DrawerBody>
                   <VStack align="start" spacing={4}>
                     <Link href="/">
-                      <Text variant={"boldLink"}>Opportunities</Text>
+                      <Text variant={'boldLink'}>Opportunities</Text>
                     </Link>
                     <Link href="/leaderboard">
-                      <Text variant={"boldLink"}>Leaderboard</Text>
+                      <Text variant={'boldLink'}>Leaderboard</Text>
                     </Link>
                     <Link href="/docs">
-                      <Text variant={"boldLink"}>Docs</Text>
+                      <Text variant={'boldLink'}>Docs</Text>
                     </Link>
                   </VStack>
                 </DrawerBody>

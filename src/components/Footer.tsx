@@ -1,4 +1,4 @@
-import { Box, Container, Grid, GridItem, Image, Link } from "@chakra-ui/react";
+import { Box, Container, Grid, GridItem, Image, Link } from '@chakra-ui/react';
 
 export default function Footer() {
   return (
@@ -7,71 +7,71 @@ export default function Footer() {
       maxW="none"
       p={0}
       m={0}
-      paddingRight={"55px"}
+      paddingRight={'55px'}
       bg="backgroundOrange.400"
     >
-      <Grid gridTemplateColumns={"6fr 3fr 3fr"} h="408px">
+      <Grid gridTemplateColumns={'6fr 3fr 3fr'} h="408px">
         <GridItem bg="white">
-          <Box mt={"60px"} ml={"54px"}>
+          <Box mt={'60px'} ml={'54px'}>
             <Box>
               <Image
-                src={"/icons/leaf.svg"}
+                src={'/icons/leaf.svg'}
                 alt="leaf"
                 style={{
-                  display: "inline-block",
-                  marginRight: "10px",
-                  marginLeft: "-20px",
+                  display: 'inline-block',
+                  marginRight: '10px',
+                  marginLeft: '-20px',
                 }}
               />
               <Image
-                src={"/icons/regenscore.svg"}
+                src={'/icons/regenscore.svg'}
                 alt="leaf"
                 style={{
-                  display: "inline-block",
-                  marginBottom: "40px",
+                  display: 'inline-block',
+                  marginBottom: '40px',
                 }}
               />
             </Box>
-            <div style={{ marginTop: "10px" }}>
-              <div style={{ marginBottom: "10px" }}>
+            <div style={{ marginTop: '10px' }}>
+              <div style={{ marginBottom: '10px' }}>
                 Empower your credibility. Elevate your potential.
               </div>
-              <div style={{ marginBottom: "30px" }}>REGEN Score</div>
+              <div style={{ marginBottom: '30px' }}>REGEN Score</div>
               <Twitter />
-              <div style={{ marginBottom: "10px", marginTop: "30px" }}>
+              <div style={{ marginBottom: '10px', marginTop: '30px' }}>
                 All rights reserved @2023
               </div>
             </div>
           </Box>
         </GridItem>
         <GridItem bg="white">
-          <div style={{ marginTop: "100px", marginLeft: "30px" }}>
+          <div style={{ marginTop: '100px', marginLeft: '30px' }}>
             <div
               style={{
-                marginBottom: "20px",
-                fontWeight: "bold",
+                marginBottom: '20px',
+                fontWeight: 'bold',
               }}
             >
               About Us
             </div>
-            <div style={{ marginTop: "10px" }}>
-              <div style={{ marginBottom: "10px" }}>
-                <Link href="#" _hover={{ textDecoration: "none" }}>
+            <div style={{ marginTop: '10px' }}>
+              <div style={{ marginBottom: '10px' }}>
+                <Link href="#" _hover={{ textDecoration: 'none' }}>
                   Docs
                 </Link>
               </div>
-              <div style={{ marginBottom: "10px" }}>
-                <Link href="#" _hover={{ textDecoration: "none" }}>
+              <div style={{ marginBottom: '10px' }}>
+                <Link href="#" _hover={{ textDecoration: 'none' }}>
                   Scores
                 </Link>
               </div>
-              <div style={{ marginBottom: "10px" }}>
-                <Link href="#" _hover={{ textDecoration: "none" }}>
+              <div style={{ marginBottom: '10px' }}>
+                <Link href="#" _hover={{ textDecoration: 'none' }}>
                   Resources
                 </Link>
               </div>
-              <div style={{ marginBottom: "10px" }}>
-                <Link href="#" _hover={{ textDecoration: "none" }}>
+              <div style={{ marginBottom: '10px' }}>
+                <Link href="#" _hover={{ textDecoration: 'none' }}>
                   Activity
                 </Link>
               </div>
@@ -79,28 +79,28 @@ export default function Footer() {
           </div>
         </GridItem>
         <GridItem bg="white" borderTopRightRadius="32px">
-          <div style={{ marginTop: "100px", marginLeft: "30px" }}>
+          <div style={{ marginTop: '100px', marginLeft: '30px' }}>
             <div
               style={{
-                marginBottom: "20px",
-                fontWeight: "bold",
+                marginBottom: '20px',
+                fontWeight: 'bold',
               }}
             >
               Help & Support
             </div>
-            <div style={{ marginTop: "10px" }}>
-              <div style={{ marginBottom: "10px" }}>
-                <Link href="#" _hover={{ textDecoration: "none" }}>
+            <div style={{ marginTop: '10px' }}>
+              <div style={{ marginBottom: '10px' }}>
+                <Link href="#" _hover={{ textDecoration: 'none' }}>
                   Leaderboard
                 </Link>
               </div>
-              <div style={{ marginBottom: "10px" }}>
-                <Link href="#" _hover={{ textDecoration: "none" }}>
+              <div style={{ marginBottom: '10px' }}>
+                <Link href="#" _hover={{ textDecoration: 'none' }}>
                   Opportunities
                 </Link>
               </div>
-              <div style={{ marginBottom: "10px" }}>
-                <Link href="#" _hover={{ textDecoration: "none" }}>
+              <div style={{ marginBottom: '10px' }}>
+                <Link href="#" _hover={{ textDecoration: 'none' }}>
                   Privacy - Terms
                 </Link>
               </div>
