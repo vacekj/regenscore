@@ -334,7 +334,7 @@ export async function handleOPTreasuryPayouts(
     const transfers = result?.data?.transfers;
     const scoreAdded = transfers?.length > 0 ? 10 : 0;
 
-    debug.optTreasuryPayouts = {
+    debug.opTreasuryPayouts = {
       transfers,
       scoreAdded,
     };
