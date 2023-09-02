@@ -2,43 +2,34 @@ import { formatEther, parseUnits, getAddress } from 'viem';
 import {
   handleERC20Transactions,
   handleERC721Transactions,
-  handleGRDonations,
   handleNormalTransactions,
+  handleGRDonations,
   handleTokenBalances,
   handleEthStaker,
   handleOPTreasuryPayouts,
   handleDelegate,
+  handleTxsMadeOnOptimism,
+  handleOPContractsInteractions,
+  handleSafeOwnershipAndActivity,
+  handleOPAirdropReceiver,
 } from './sourceHandlers';
-import { getAdressesAirdroppedOP, getAddressesPaidByOpTreasury } from '@/api';
 
 export async function createScore(
   address: string
 ): Promise<{ score: number; debug: any }> {
-  const opAirdropAddresses = await getAdressesAirdroppedOP();
-  const treasuryTxs = await getAddressesPaidByOpTreasury();
-  address = getAddress(address);
   let score = 0;
-
-  if (opAirdropAddresses[0].includes(address)) score += 100;
-  if (opAirdropAddresses[1].includes(address)) score += 50;
-
-  // const treasuryPayouts = treasuryTxs
-  //   // tODO: FIX TYPE
-  //   .filter((tx: any) => tx.to === address)
-  //   .map((tx: any) =>
-  //     Number(formatEther(parseUnits(tx.value, parseInt(tx.tokenDecimal))))
-  //   )
-  //   .reduce((acc: any, a: any) => acc + a, 0);
-  // score += treasuryPayouts;
-
   const debug = {
-    normalTransactions: [],
-    erc20Transactions: [],
-    erc721Transactions: [],
+    // normalTransactions: null,
+    // erc20Transactions: null,
+    // erc721Transactions:null,
+    opAirdrop: [],
     tokenBalances: [],
     grDonations: [],
     ethDeposits: [],
     opTreasuryPayouts: [],
+    isDelegate: [],
+    optimismTxHistory: [],
+    safeOwnerActivity: [],
   };
   const results = await Promise.all([
     handleTokenBalances(address, debug),
@@ -49,6 +40,10 @@ export async function createScore(
     handleEthStaker(address, debug),
     handleOPTreasuryPayouts(address, debug),
     handleDelegate(address, debug),
+    handleTxsMadeOnOptimism(address, debug),
+    handleOPContractsInteractions(address, debug),
+    handleSafeOwnershipAndActivity(address, debug),
+    handleOPAirdropReceiver(address, debug),
   ]);
 
   score += results.reduce((acc, current) => acc + current, 0);

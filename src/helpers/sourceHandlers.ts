@@ -1,10 +1,13 @@
 import { Address } from 'viem';
 import {
+  getAdressesAirdroppedOP,
   getERC20Transactions,
   getNormalTransactions,
   getERC721Transactions,
   getTokenBalance,
+  getAddressOPTxHistory,
   fetchGRDonations,
+  checkSafeOwnershipAndActivity,
 } from './sourceApi';
 import {
   NormalTransaction,
@@ -14,6 +17,7 @@ import {
   GetERC721TransactionsResponse,
   GetTokenBalanceResponse,
 } from './sourceTypes';
+import { getClient } from '@/utils';
 
 type ContractDetails = {
   name: string;
@@ -120,7 +124,6 @@ export async function handleNormalTransactions(
     const normalTransactions = (await getNormalTransactions(
       address
     )) as GetNormalTransactionsResponse;
-    console.log({ normalTransactions });
     normalTransactions.result.forEach((tx: NormalTransaction) => {
       score += handleTransaction(
         tx,
@@ -242,14 +245,7 @@ export async function handleGRDonations(
   let score = 0;
   try {
     const grDonations = await fetchGRDonations(address);
-    grDonations.forEach((donation) => {
-      const donationScore = donation.amountUSD;
-      score += donationScore;
-      debug.grDonations.push({
-        ...donation,
-        scoreAdded: donationScore,
-      });
-    });
+    if (grDonations.length > 0) score += 10;
   } catch (error) {
     console.error('Error fetching GR donations:', error);
   }
@@ -358,10 +354,80 @@ export async function handleDelegate(address: string, debug: any) {
     }
     const result = await response.json();
     const delegates = result?.data?.delegates;
-    debug.delegates = delegates;
-    return delegates?.length > 0 ? 10 : 0;
+    const isDelegate = delegates?.length > 0;
+    const scoreAdded = isDelegate ? 10 : 0;
+    debug.delegates = {
+      isDelegate,
+      scoreAdded,
+    };
+    return scoreAdded;
   } catch (error) {
     console.error('There was an error fetching delegate data:', error);
     return 0;
   }
+}
+
+export async function handleTxsMadeOnOptimism(address: string, debug: any) {
+  const client = await getClient('optimism');
+  const transactionCount = await client.getTransactionCount({
+    address: address as Address,
+  });
+  const scoreAdded = transactionCount > 0 ? 10 : 0;
+  debug.txsMadeOnOptimism = {
+    scoreAdded,
+    transactionCount,
+  };
+  return scoreAdded;
+}
+
+export async function handleOPContractsInteractions(
+  address: string,
+  debug: any
+) {
+  const { interactedWithContracts, deployedContracts, createdGnosisSafe } =
+    await getAddressOPTxHistory(address);
+  let scoreAdded = 0;
+  if (interactedWithContracts) scoreAdded += 10;
+  if (deployedContracts) scoreAdded += 10;
+  // if (createdGnosisSafe) scoreAdded += 10; // Commented as it's being checked in handleSafeOwnershipAndActivity
+  debug.optimismTxHistory = {
+    interactedWithContracts,
+    deployedContracts,
+    createdGnosisSafe,
+    scoreAdded,
+  };
+  return scoreAdded;
+}
+
+export async function handleSafeOwnershipAndActivity(
+  address: string,
+  debug: any
+) {
+  let scoreAdded = 0;
+  const { ownsSafe, hasExecutedTransaction } =
+    await checkSafeOwnershipAndActivity(address);
+  debug.safeOwnerActivity = {
+    ownsSafe,
+    hasExecutedTransaction,
+  };
+  if (hasExecutedTransaction) scoreAdded += 10;
+  if (ownsSafe) scoreAdded += 10;
+  return scoreAdded;
+}
+
+export async function handleOPAirdropReceiver(address: string, debug: any) {
+  const opAirdropAddresses = await getAdressesAirdroppedOP();
+  let score = 0;
+  if (opAirdropAddresses[0].includes(address.toLowerCase())) {
+    score += 100;
+    debug.opAirdrop = { firstDrop: true };
+  }
+  if (opAirdropAddresses[1].includes(address.toLowerCase())) {
+    score += 50;
+    debug.opAirdrop = { secondDrop: true };
+  }
+
+  debug.opAirdrop = { scoreAdded: score };
+
+  return score;
 }

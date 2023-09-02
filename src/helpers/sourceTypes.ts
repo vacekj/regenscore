@@ -89,3 +89,15 @@ export type IGRDonation = {
   roundName: string;
   projectTitle: string;
 };
+
+export type SafeInfo = {
+  address: string;
+  nonce: number;
+  threshold: number;
+  owners: string[];
+  masterCopy: string;
+  modules: any[];
+  fallbackHandler: string;
+  guard: string;
+  version: string;
+};
