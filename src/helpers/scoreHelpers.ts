@@ -1,4 +1,4 @@
-import { formatEther, parseUnits, getAddress } from 'viem';
+import { formatEther, parseUnits, getAddress } from "viem";
 import {
   handleERC20Transactions,
   handleERC721Transactions,
@@ -8,11 +8,11 @@ import {
   handleEthStaker,
   handleOPTreasuryPayouts,
   handleDelegate,
-} from './sourceHandlers';
-import { getAdressesAirdroppedOP, getAddressesPaidByOpTreasury } from '@/api';
+} from "./sourceHandlers";
+import { getAdressesAirdroppedOP, getAddressesPaidByOpTreasury } from "@/api";
 
 export async function createScore(
-  address: string
+  address: string,
 ): Promise<{ score: number; debug: any }> {
   const opAirdropAddresses = await getAdressesAirdroppedOP();
   const treasuryTxs = await getAddressesPaidByOpTreasury();

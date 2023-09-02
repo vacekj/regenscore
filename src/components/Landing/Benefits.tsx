@@ -8,13 +8,7 @@ const Benefits: React.FC = () => {
     title: string;
     content: string;
   }) => (
-    <Box
-      flex="1"
-      maxWidth="428px"
-      minWidth="304px"
-      m="12px"
-      textAlign="start"
-    >
+    <Box flex="1" maxWidth="428px" minWidth="304px" m="12px" textAlign="start">
       <Flex
         minHeight="380px"
         flexDir="column"
@@ -55,15 +49,14 @@ const Benefits: React.FC = () => {
   );
 
   return (
-
-      <Flex
-        flexDir="column"
-        align="flex-start"
-        justify="center"
-        p={4}
-        maxWidth="calc(100% - 108px)"
-        margin="47px auto"
-      >  
+    <Flex
+      flexDir="column"
+      align="flex-start"
+      justify="center"
+      p={4}
+      maxWidth="calc(100% - 108px)"
+      margin="47px auto"
+    >
       <Heading
         as="h1"
         variant="h2"
@@ -71,7 +64,8 @@ const Benefits: React.FC = () => {
         textAlign="left"
         color="brand.primaryOrange.200"
       >
-        Benefits for Regen <br />Community{" "}
+        Benefits for Regen <br />
+        Community{" "}
       </Heading>
       <Flex flexWrap="wrap" m="0 -12px" justifyContent="center">
         <BoxContent

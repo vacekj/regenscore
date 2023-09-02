@@ -1,8 +1,8 @@
 export async function fetchRequest(url: string) {
   return await fetch(url, {
-    method: 'GET',
+    method: "GET",
     headers: {
-      Accept: 'application/json',
+      Accept: "application/json",
     },
   });
 }

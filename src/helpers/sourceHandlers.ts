@@ -1,11 +1,11 @@
-import { Address } from 'viem';
+import { Address } from "viem";
 import {
   getERC20Transactions,
   getNormalTransactions,
   getERC721Transactions,
   getTokenBalance,
   fetchGRDonations,
-} from './sourceApi';
+} from "./sourceApi";
 import {
   NormalTransaction,
   ERC20Transaction,
@@ -13,7 +13,7 @@ import {
   GetERC20TransactionsResponse,
   GetERC721TransactionsResponse,
   GetTokenBalanceResponse,
-} from './sourceTypes';
+} from "./sourceTypes";
 
 type ContractDetails = {
   name: string;
@@ -27,66 +27,66 @@ type ITransaction = {
 };
 
 const REGENSCORE_SQUID_OP =
-  'https://squid.subsquid.io/regen-score-squid/v/v3/graphql';
+  "https://squid.subsquid.io/regen-score-squid/v/v3/graphql";
 const REGENSCORE_SQUID_ETH =
-  'https://squid.subsquid.io/regen-score-squid-eth/v/v2/graphql';
+  "https://squid.subsquid.io/regen-score-squid-eth/v/v2/graphql";
 
 const list_of_contracts: { [key: string]: ContractDetails } = {
-  '0x900db999074d9277c5da2a43f252d74366230da0': { name: 'Giveth', weight: 1 },
-  '0xD56daC73A4d6766464b38ec6D91eB45Ce7457c44': { name: 'Panvala', weight: 1 },
-  '0x4e78011ce80ee02d2c3e649fb657e45898257815': {
-    name: 'Klima DAO',
+  "0x900db999074d9277c5da2a43f252d74366230da0": { name: "Giveth", weight: 1 },
+  "0xD56daC73A4d6766464b38ec6D91eB45Ce7457c44": { name: "Panvala", weight: 1 },
+  "0x4e78011ce80ee02d2c3e649fb657e45898257815": {
+    name: "Klima DAO",
     weight: 1,
   },
-  '0xb0C22d8D350C67420f06F48936654f567C73E8C8': {
-    name: 'Staked Klima',
+  "0xb0C22d8D350C67420f06F48936654f567C73E8C8": {
+    name: "Staked Klima",
     weight: 1,
   },
-  '0xde30da39c46104798bb5aa3fe8b9e0e1f348163f': { name: 'Gitcoin', weight: 1 },
-  '0x1Ee05530f2BEB59E7D6f2838fCc7D9c9464C253d': { name: 'Unknown', weight: 1 },
-  '0x82C7c02a52B75387DB14FA375938496cbb984388': { name: 'EthBot', weight: 1 },
-  '0x42dCbA5dA33CDDB8202CC182A443a3e7b299dADb': { name: 'Moloch', weight: 100 },
-  '0x8b13e88EAd7EF8075b58c94a7EB18A89FD729B18': {
-    name: 'MoonShotBots',
+  "0xde30da39c46104798bb5aa3fe8b9e0e1f348163f": { name: "Gitcoin", weight: 1 },
+  "0x1Ee05530f2BEB59E7D6f2838fCc7D9c9464C253d": { name: "Unknown", weight: 1 },
+  "0x82C7c02a52B75387DB14FA375938496cbb984388": { name: "EthBot", weight: 1 },
+  "0x42dCbA5dA33CDDB8202CC182A443a3e7b299dADb": { name: "Moloch", weight: 100 },
+  "0x8b13e88EAd7EF8075b58c94a7EB18A89FD729B18": {
+    name: "MoonShotBots",
     weight: 100,
   },
-  '0xf5918382Dd20Ecba89747c50f80fB7f9f1e0524C': {
-    name: 'Rainbow Rolls',
+  "0xf5918382Dd20Ecba89747c50f80fB7f9f1e0524C": {
+    name: "Rainbow Rolls",
     weight: 100,
   },
-  '0xe785E82358879F061BC3dcAC6f0444462D4b5330': {
-    name: 'World of Women',
+  "0xe785E82358879F061BC3dcAC6f0444462D4b5330": {
+    name: "World of Women",
     weight: 100,
   },
-  '0x90B3832e2F2aDe2FE382a911805B6933C056D6ed': { name: 'Pooly', weight: 25 },
-  '0x3545192b340F50d77403DC0A64cf2b32F03d00A9': {
-    name: 'Pooly Lawyer',
+  "0x90B3832e2F2aDe2FE382a911805B6933C056D6ed": { name: "Pooly", weight: 25 },
+  "0x3545192b340F50d77403DC0A64cf2b32F03d00A9": {
+    name: "Pooly Lawyer",
     weight: 50,
   },
-  '0x5663e3E096f1743e77B8F71b5DE0CF9Dfd058523': {
-    name: 'Pooly Judge',
+  "0x5663e3E096f1743e77B8F71b5DE0CF9Dfd058523": {
+    name: "Pooly Judge",
     weight: 100,
   },
-  '0xC5E9dDebb09Cd64DfaCab4011A0D5cEDaf7c9BDb': {
-    name: 'ProofOfHumanity',
+  "0xC5E9dDebb09Cd64DfaCab4011A0D5cEDaf7c9BDb": {
+    name: "ProofOfHumanity",
     weight: 10,
   },
 };
 
 const list_of_balance_contract_mainnet: { [key: string]: ContractDetails } = {
-  '0x900db999074d9277c5da2a43f252d74366230da0': { name: 'GIV', weight: 10 },
-  '0xde30da39c46104798bb5aa3fe8b9e0e1f348163f': { name: 'GTC', weight: 10 },
+  "0x900db999074d9277c5da2a43f252d74366230da0": { name: "GIV", weight: 10 },
+  "0xde30da39c46104798bb5aa3fe8b9e0e1f348163f": { name: "GTC", weight: 10 },
 };
 
 const list_of_balance_contract_optimism: { [key: string]: ContractDetails } = {
-  '0x4200000000000000000000000000000000000042': { name: 'OP', weight: 10 },
+  "0x4200000000000000000000000000000000000042": { name: "OP", weight: 10 },
 };
 
 const GRAPHQL_OPTIONS = (query: string) => {
   return {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
     body: JSON.stringify({ query }),
   };
@@ -95,7 +95,7 @@ const GRAPHQL_OPTIONS = (query: string) => {
 const handleTransaction = (
   transaction: { to: string; from: string },
   debugArray: ITransaction[],
-  contractsList: { [key: string]: ContractDetails }
+  contractsList: { [key: string]: ContractDetails },
 ) => {
   for (let key in contractsList) {
     if (transaction.to === key || transaction.from === key) {
@@ -113,74 +113,74 @@ const handleTransaction = (
 
 export async function handleNormalTransactions(
   address: string,
-  debug: any
+  debug: any,
 ): Promise<number> {
   let score = 0;
   try {
     const normalTransactions = (await getNormalTransactions(
-      address
+      address,
     )) as GetNormalTransactionsResponse;
     console.log({ normalTransactions });
     normalTransactions.result.forEach((tx: NormalTransaction) => {
       score += handleTransaction(
         tx,
         debug.normalTransactions,
-        list_of_contracts
+        list_of_contracts,
       );
     });
   } catch (error) {
-    console.error('Error fetching normal transactions:', error);
+    console.error("Error fetching normal transactions:", error);
   }
   return score;
 }
 
 export async function handleERC20Transactions(
   address: string,
-  debug: any
+  debug: any,
 ): Promise<number> {
   let score = 0;
   try {
     const erc20Transactions = (await getERC20Transactions(
-      address
+      address,
     )) as GetERC20TransactionsResponse;
     erc20Transactions.result.forEach((tx: ERC20Transaction) => {
       score += handleTransaction(
         tx,
         debug.erc20Transactions,
-        list_of_contracts
+        list_of_contracts,
       );
     });
   } catch (error) {
-    console.error('Error fetching ERC20 transactions:', error);
+    console.error("Error fetching ERC20 transactions:", error);
   }
   return score;
 }
 
 export async function handleERC721Transactions(
   address: string,
-  debug: any
+  debug: any,
 ): Promise<number> {
   let score = 0;
   try {
     const erc721Transactions = (await getERC721Transactions(
-      address
+      address,
     )) as GetERC721TransactionsResponse;
     erc721Transactions.result.forEach((tx) => {
       score += handleTransaction(
         tx,
         debug.erc721Transactions,
-        list_of_contracts
+        list_of_contracts,
       );
     });
   } catch (error) {
-    console.error('Error fetching ERC721 transactions:', error);
+    console.error("Error fetching ERC721 transactions:", error);
   }
   return score;
 }
 
 export async function handleTokenBalances(
   address: string,
-  debug: any
+  debug: any,
 ): Promise<number> {
   let score = 0;
 
@@ -189,16 +189,16 @@ export async function handleTokenBalances(
       const balanceResponse = (await getTokenBalance(
         key as Address,
         address,
-        'mainnet'
+        "mainnet",
       )) as any;
-      if (balanceResponse !== '0') {
+      if (balanceResponse !== "0") {
         const balance = Number(balanceResponse);
         if (balance > 0) {
           const addedScore = list_of_balance_contract_mainnet[key].weight;
           score += addedScore;
           debug.tokenBalances.push({
             contract: key,
-            network: 'mainnet',
+            network: "mainnet",
             name: list_of_balance_contract_mainnet[key].name,
             scoreAdded: addedScore,
           });
@@ -213,16 +213,16 @@ export async function handleTokenBalances(
       const balanceResponse = await getTokenBalance(
         key as Address,
         address,
-        'optimism'
+        "optimism",
       );
-      if (balanceResponse !== '0') {
+      if (balanceResponse !== "0") {
         const balance = Number(balanceResponse);
         if (balance > 0) {
           const addedScore = list_of_balance_contract_optimism[key].weight;
           score += addedScore;
           debug.tokenBalances.push({
             contract: key,
-            network: 'optimism',
+            network: "optimism",
             name: list_of_balance_contract_optimism[key].name,
             scoreAdded: addedScore,
           });
@@ -237,7 +237,7 @@ export async function handleTokenBalances(
 
 export async function handleGRDonations(
   address: string,
-  debug: any
+  debug: any,
 ): Promise<number> {
   let score = 0;
   try {
@@ -251,7 +251,7 @@ export async function handleGRDonations(
       });
     });
   } catch (error) {
-    console.error('Error fetching GR donations:', error);
+    console.error("Error fetching GR donations:", error);
   }
   return score;
 }
@@ -288,14 +288,14 @@ export async function handleEthStaker(address: string, debug: any) {
     });
     return scoreAdded;
   } catch (error) {
-    console.error('There was an error fetching the data:', error);
+    console.error("There was an error fetching the data:", error);
     return 0;
   }
 }
 
 export async function handleOPTreasuryPayouts(
   address: string,
-  debug: any
+  debug: any,
 ): Promise<number> {
   const url = REGENSCORE_SQUID_OP;
   const query = `
@@ -332,7 +332,7 @@ export async function handleOPTreasuryPayouts(
 
     return scoreAdded;
   } catch (error) {
-    console.error('There was an error fetching OPTreasuryPayouts:', error);
+    console.error("There was an error fetching OPTreasuryPayouts:", error);
     return 0;
   }
 }
@@ -361,7 +361,7 @@ export async function handleDelegate(address: string, debug: any) {
     debug.delegates = delegates;
     return delegates?.length > 0 ? 10 : 0;
   } catch (error) {
-    console.error('There was an error fetching delegate data:', error);
+    console.error("There was an error fetching delegate data:", error);
     return 0;
   }
 }
