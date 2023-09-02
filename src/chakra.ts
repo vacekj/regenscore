@@ -72,7 +72,7 @@ export const theme = extendTheme({
         variant: "brand",
         colorScheme: "",
       },
-    },    
+    },
     Heading: {
       baseStyle: {
         fontFamily: "Remixa-Medium",

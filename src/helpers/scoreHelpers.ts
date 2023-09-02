@@ -1,4 +1,3 @@
-import { formatEther, parseUnits, getAddress } from 'viem'
 import {
     handleERC20Transactions,
     handleERC721Transactions,
