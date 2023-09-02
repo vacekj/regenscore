@@ -66,6 +66,20 @@ export const theme = extendTheme({
             cursor: 'not-allowed',
           },
         },
+        variant3: {
+          // Mint Now
+          fontSize: "14px",
+          width: "134.75px",
+          height: "45.46px",
+          backgroundColor: "#FFF",
+          color: "brand.deepGreen.400",
+          fontFamily: "Inter-Bold",
+          borderRadius: "81.175px",
+          boxShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.10)",
+          _hover: {
+            backgroundColor: "#FFF",
+          },
+        },
       },
       defaultProps: {
         size: 'lg',

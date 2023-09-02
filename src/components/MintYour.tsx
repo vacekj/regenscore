@@ -1,19 +1,20 @@
-import { Box, Flex, Grid, GridItem, Heading, VStack } from "@chakra-ui/react";
+import { Check } from "@/components/Check";
+import { Box, Flex, Grid, GridItem, Heading, VStack, Card, CardBody, CardHeader, Text, Button, } from "@chakra-ui/react";
 import { useState } from "react";
 
 const Slide1 = () => {
   return (
-    <Flex
-      flexDirection="row"
+    <Grid
+      templateColumns="auto 1fr"
+      gap={4}
       w="full"
-      h={{ base: "416px", sm: "616px" }}
+      h={{ base: "auto", md: "616px" }}
       borderRadius={{ base: "0", md: "32px 0 0 0" }}
       bg={`url(/images/leaf-bg.png)`}
       bgRepeat="no-repeat"
       bgSize="cover"
       pl={{ base: "4", md: "82" }}
-      pt="96px"
-      justifyContent="start"
+      pr="54px"
       borderWidth="1px 0px 1px 1px"
       borderColor="rgba(143, 164, 133)"
       borderStyle="solid"
@@ -26,11 +27,18 @@ const Slide1 = () => {
         left="0"
         right="0"
         bottom="0"
-        borderRadius="30px 0 0 0"
-        bgColor="rgba(53,71,40, 0.8)"
+        borderRadius={{ base: "0", md: "30px 0 0 0" }}
+        bgColor="rgba(53, 71, 40, 0.8)"
+        zIndex={1}
       />
 
-      <Box flex="1" zIndex="100">
+        <Flex
+          flex="1"
+          flexDirection="column"
+          justifyContent="center"
+          alignItems={{ base: "center", md: "flex-start" }}
+          zIndex={2}
+        >
         <Heading
           as="h2"
           variant="h2"
@@ -38,20 +46,16 @@ const Slide1 = () => {
           maxWidth={{ base: "342px", sm: "647px", md: "1100px" }}
           minHeight="92px"
           textAlign="left"
-          zIndex={2}
           mb={"49px"}
-          w={"50%"}
           fontSize="48px"
         >
-          Mint your attestations to <br /> access opportunuties
+          Mint your attestations to <br /> access opportunities
         </Heading>
 
         <Grid
           templateColumns="repeat(20, 1fr)"
-          w="60%"
           gap={4}
           color="white"
-          zIndex="100"
         >
           <GridItem
             colStart={1}
@@ -66,7 +70,7 @@ const Slide1 = () => {
           </GridItem>
           <GridItem
             colStart={3}
-            colEnd={18}
+            colEnd={20}
             h="10"
             display="flex"
             alignItems="center"
@@ -96,7 +100,7 @@ const Slide1 = () => {
           </GridItem>
           <GridItem
             colStart={3}
-            colEnd={18}
+            colEnd={20}
             h="10"
             display="flex"
             alignItems="center"
@@ -131,7 +135,7 @@ const Slide1 = () => {
           </GridItem>
           <GridItem
             colStart={3}
-            colEnd={18}
+            colEnd={20}
             h="10"
             display="flex"
             alignItems="center"
@@ -166,7 +170,7 @@ const Slide1 = () => {
           </GridItem>
           <GridItem
             colStart={3}
-            colEnd={18}
+            colEnd={20}
             h="10"
             display="flex"
             alignItems="center"
@@ -196,7 +200,7 @@ const Slide1 = () => {
           </GridItem>
           <GridItem
             colStart={3}
-            colEnd={18}
+            colEnd={20}
             h="10"
             display="flex"
             alignItems="center"
@@ -214,8 +218,82 @@ const Slide1 = () => {
             </Box>
           </GridItem>
         </Grid>
-      </Box>
-    </Flex>
+      </Flex>
+      <Flex flex="1" zIndex={2} flexDirection="column" justifyContent="center">
+        <Card
+          width="654px"
+          height="451px"
+          borderRadius="16.235px"
+          margin="0 auto"
+          background="linear-gradient(180deg, #F9DD94 0%, #FFC555 100%)"
+          border= "0.812px solid rgba(255, 255, 255, 0.50)"
+          mt="17.5px"
+        >
+          <CardHeader padding="0px">
+            <Box>
+              <Heading
+                as="h3"
+                variant="h3"
+                fontWeight="bold"
+                fontSize="100px"
+                color="#FFF"
+                marginTop="98px"
+                marginLeft="337px"
+              >
+                3167
+              </Heading>
+            </Box>
+          </CardHeader>
+          <CardBody padding="0px" marginLeft="339px">
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "1.89px",
+              }}
+            >
+              <Check status={"WARNING2"} />
+              <Text
+                fontSize="19.482px"
+                fontFamily="Inter-Regular"
+                color="#354728"
+                gap="10px"
+              >
+                Top 10% of users
+              </Text>
+            </div>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "1.89px",
+              }}
+            >
+              <Text
+                fontSize="13px"
+                fontFamily="Inter-Regular"
+                color="#354728"
+                opacity="0.5"
+              >
+                Last Updated
+              </Text>
+              <Text
+                fontSize="13px"
+                fontFamily="Inter-Regular"
+                color="#354728"
+                ml="18px"
+                opacity="0.5"
+              >
+                3 Months Ago
+              </Text>
+            </div>
+            <div>
+              <Button variant="variant3" marginTop="46.76px">MINT NOW</Button>
+            </div>
+          </CardBody>
+        </Card>
+      </Flex>
+    </Grid>
   );
 };
 

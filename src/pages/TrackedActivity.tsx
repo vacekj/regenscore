@@ -69,8 +69,12 @@ const TrackedActivity = () => {
                 fontSize="24px"
                 color="brand.deepGreen.400"
                 textTransform="capitalize"
+                display="flex"
+                alignItems="center"
+                gap="8px"
               >
                 Behavior
+                <Check status={"WARNING2"} />
               </Th>
               <Th
                 style={{ borderBottom: "1px solid #F5B333" }}
