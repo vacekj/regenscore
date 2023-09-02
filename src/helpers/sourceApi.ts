@@ -1,18 +1,31 @@
-import { Address, createPublicClient, http, formatUnits } from 'viem';
-import { mainnet, optimism } from 'viem/chains';
-import { fetchRequest } from '@/utils';
+import { ethers } from 'ethers';
+import { Address, formatUnits } from 'viem';
+import { fetchRequest, getClient, loadCSV } from '@/utils';
 import {
   GetERC20TransactionsResponse,
   GetNormalTransactionsResponse,
   GetERC721TransactionsResponse,
   GetTokenBalanceResponse,
+  SafeInfo,
+  GitcoinProject,
 } from './sourceTypes';
 import ERC20 from '@/abi/ERC20';
 
-// const ETHERSCAN_API_KEY = 'GB821FZCS37WSXM8GJCCUUD3ZQUTZZY9RX';
+// CONSTANTS
+const GICOIN_SCORER_ID = '1603'; // Giveth's ID and API
+const GITCOIN_PASSPORT_SCORER_API_KEY =
+  process.env.GITCOIN_PASSPORT_SCORER_API_KEY;
+const GNOSIS_SAFE_PROXY = '0xc22834581ebc8527d974f8a1c97e1bea4ef910bc';
 const ETHERSCAN_API_KEY = process.env.NEXT_PUBLIC_ETHERSCAN_API_KEY;
 const apikey = '&apikey=' + ETHERSCAN_API_KEY;
-// "&apikey=6JEC4FAII8AIEUQFI28C765AC4Y1K54ME2"
+
+/** Gets all addresses that have received a payout from the OP treasury */
+export async function getAdressesAirdroppedOP(): Promise<[string[], string[]]> {
+  /* First record is a header, so we drop it */
+  const [, ...op1] = await loadCSV('../data/op_airdrop_1.csv');
+  const [, ...op2] = await loadCSV('../data/op_airdrop_2.csv');
+  return [op1.map((records) => records[0]), op2.map((records) => records[0])];
+}
 
 // fetch ERC20 transactions from Etherscan
 export async function getERC20Transactions(address: string) {
@@ -156,25 +169,27 @@ export async function getTokenBalance(
   address: string,
   network: 'mainnet' | 'optimism',
 ): Promise<string> {
-  const isMainnet = network === 'mainnet';
-  const abi = ERC20;
-  const client = createPublicClient({
-    chain: isMainnet ? mainnet : optimism,
-    transport: http(),
-  });
-  const decimals = await client.readContract({
-    address: contractAddress,
-    abi,
-    functionName: 'decimals',
-  });
-  const balance: any = await client.readContract({
-    address: contractAddress,
-    abi,
-    functionName: 'balanceOf',
-    args: [address],
-  });
+  try {
+    const isMainnet = network === 'mainnet';
+    const abi = ERC20;
+    const client = await getClient(isMainnet ? 'mainnet' : 'optimism');
+    const decimals = await client.readContract({
+      address: contractAddress,
+      abi,
+      functionName: 'decimals',
+    });
+    const balance: any = await client.readContract({
+      address: contractAddress,
+      abi,
+      functionName: 'balanceOf',
+      args: [address],
+    });
 
-  return balance ? formatUnits(balance, Number(decimals)) : '0';
+    return balance ? formatUnits(balance, Number(decimals)) : '0';
+  } catch (error) {
+    console.log({ error });
+    return '0';
+  }
 }
 
 export async function fetchGRDonations(address: string) {
@@ -188,15 +203,143 @@ export async function fetchGRDonations(address: string) {
       const url = `https://indexer-production.fly.dev/data/${chainId}/contributors/${addressParts.join(
         '/',
       )}.json`;
-      const response = await fetch(url);
-      if (response.ok) {
-        return await response.json();
-      } else {
-        console.error(await response.text());
+      try {
+        const response = await fetch(url);
+        if (response.ok) {
+          return await response.json();
+        } else {
+          return [];
+        }
+      } catch (error) {
         return [];
       }
     }),
   );
-
   return scores.flat();
+}
+
+async function optimismTxHistoryCheck(txs: any) {
+  let interactedWithContracts, deployedContracts, createdGnosisSafe;
+  for (let tx of txs) {
+    // Checks any contract interaction
+    if (tx.data && tx.data !== '0x') {
+      interactedWithContracts = true;
+      // Checks if it created a Gnosis Safe
+      if (tx.to.toLowerCase() === GNOSIS_SAFE_PROXY.toLowerCase()) {
+        createdGnosisSafe = true;
+      }
+    }
+    // Checks if any contract was deployed
+    if (tx.to === null) {
+      deployedContracts = true;
+    }
+    // Checks if any tx was executed in a Gnosis Safe
+  }
+  return {
+    interactedWithContracts,
+    deployedContracts,
+    createdGnosisSafe,
+  };
+}
+
+export async function getAddressOPTxHistory(address: string) {
+  const provider = new ethers.providers.EtherscanProvider(
+    'optimism',
+    ETHERSCAN_API_KEY,
+  );
+  const history = await provider.getHistory(address as Address);
+
+  const { interactedWithContracts, deployedContracts, createdGnosisSafe } =
+    await optimismTxHistoryCheck(history);
+  return {
+    history,
+    interactedWithContracts,
+    deployedContracts,
+    createdGnosisSafe,
+  };
+}
+
+async function fetchSafesOwnedByUser(userAddress: string): Promise<string[]> {
+  const response = await fetch(
+    `https://safe-transaction-optimism.safe.global/api/v1/owners/${userAddress}/safes/`,
+  );
+  const data = await response.json();
+  return data.safes || [];
+}
+
+async function fetchSafeInfo(safeAddress: string): Promise<SafeInfo> {
+  const response = await fetch(
+    `https://safe-transaction-optimism.safe.global/api/v1/safes/${safeAddress}/`,
+  );
+  return await response.json();
+}
+
+export async function checkSafeOwnershipAndActivity(
+  userAddress: string,
+): Promise<{ ownsSafe: boolean; hasExecutedTransaction: boolean }> {
+  const safesOwnedByUser = await fetchSafesOwnedByUser(userAddress);
+  if (safesOwnedByUser.length === 0) {
+    return { ownsSafe: false, hasExecutedTransaction: false };
+  }
+
+  for (const safe of safesOwnedByUser) {
+    const safeInfo = await fetchSafeInfo(safe);
+    if (safeInfo.owners.includes(userAddress) && safeInfo.nonce > 0) {
+      return { ownsSafe: true, hasExecutedTransaction: true };
+    }
+  }
+
+  return { ownsSafe: true, hasExecutedTransaction: false };
+}
+
+async function fetchGitcoinProjectsData(
+  number: number,
+): Promise<GitcoinProject[]> {
+  const response = await fetch(
+    `https://indexer-production.fly.dev/data/${number}/projects.json`,
+  );
+  if (!response.ok) {
+    throw new Error(
+      `Failed to fetch data for number: ${number}. Status: ${response.status}`,
+    );
+  }
+  return await response.json();
+}
+
+export async function hasAGitcoinProject(address: string): Promise<boolean> {
+  const networksToCheck = [1, 10, 250, 424];
+
+  try {
+    for (let number of networksToCheck) {
+      const projects = await fetchGitcoinProjectsData(number);
+      for (let project of projects) {
+        if (project.owners.includes(address)) {
+          return true;
+        }
+      }
+    }
+  } catch (error) {
+    return false;
+  }
+  return false;
+}
+
+export async function fetchGitcoinPassport(address: string) {
+  const url = `https://api.scorer.gitcoin.co/registry/score/${GICOIN_SCORER_ID}/${address.toLowerCase()}`;
+
+  try {
+    const headers: HeadersInit = {};
+    const API_KEY = GITCOIN_PASSPORT_SCORER_API_KEY;
+    if (API_KEY) {
+      headers['X-API-KEY'] = API_KEY;
+    }
+    const response = await fetch(url, {
+      method: 'GET',
+      headers,
+    });
+    const passport = await response.json();
+    return passport;
+  } catch (error) {
+    throw error;
+  }
 }

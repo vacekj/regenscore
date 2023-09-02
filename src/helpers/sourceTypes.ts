@@ -89,3 +89,40 @@ export type IGRDonation = {
   roundName: string;
   projectTitle: string;
 };
+
+export type SafeInfo = {
+  address: string;
+  nonce: number;
+  threshold: number;
+  owners: string[];
+  masterCopy: string;
+  modules: any[];
+  fallbackHandler: string;
+  guard: string;
+  version: string;
+};
+export type GitcoinProject = {
+  id: string;
+  projectNumber: number;
+  metaPtr: string;
+  metadata: {
+    title: string;
+    description: string;
+    website: string;
+    projectTwitter: string;
+    userGithub: string;
+    projectGithub: string;
+    logoImg: string;
+    bannerImg: string;
+    bannerImgData: object;
+    logoImgData: object;
+    credentials: {
+      github: {
+        credentialSubject: {
+          id: string;
+        };
+      };
+    };
+  };
+  owners: string[];
+};

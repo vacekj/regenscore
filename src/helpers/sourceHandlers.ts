@@ -1,10 +1,15 @@
 import { Address } from 'viem';
 import {
+  getAdressesAirdroppedOP,
   getERC20Transactions,
   getNormalTransactions,
   getERC721Transactions,
   getTokenBalance,
+  getAddressOPTxHistory,
   fetchGRDonations,
+  checkSafeOwnershipAndActivity,
+  hasAGitcoinProject,
+  fetchGitcoinPassport,
 } from './sourceApi';
 import {
   NormalTransaction,
@@ -12,8 +17,8 @@ import {
   GetNormalTransactionsResponse,
   GetERC20TransactionsResponse,
   GetERC721TransactionsResponse,
-  GetTokenBalanceResponse,
 } from './sourceTypes';
+import { getClient } from '@/utils';
 
 type ContractDetails = {
   name: string;
@@ -33,7 +38,10 @@ const REGENSCORE_SQUID_ETH =
 
 const list_of_contracts: { [key: string]: ContractDetails } = {
   '0x900db999074d9277c5da2a43f252d74366230da0': { name: 'Giveth', weight: 1 },
-  '0xD56daC73A4d6766464b38ec6D91eB45Ce7457c44': { name: 'Panvala', weight: 1 },
+  '0xD56daC73A4d6766464b38ec6D91eB45Ce7457c44': {
+    name: 'Panvala',
+    weight: 1,
+  },
   '0x4e78011ce80ee02d2c3e649fb657e45898257815': {
     name: 'Klima DAO',
     weight: 1,
@@ -42,10 +50,19 @@ const list_of_contracts: { [key: string]: ContractDetails } = {
     name: 'Staked Klima',
     weight: 1,
   },
-  '0xde30da39c46104798bb5aa3fe8b9e0e1f348163f': { name: 'Gitcoin', weight: 1 },
-  '0x1Ee05530f2BEB59E7D6f2838fCc7D9c9464C253d': { name: 'Unknown', weight: 1 },
+  '0xde30da39c46104798bb5aa3fe8b9e0e1f348163f': {
+    name: 'Gitcoin',
+    weight: 1,
+  },
+  '0x1Ee05530f2BEB59E7D6f2838fCc7D9c9464C253d': {
+    name: 'Unknown',
+    weight: 1,
+  },
   '0x82C7c02a52B75387DB14FA375938496cbb984388': { name: 'EthBot', weight: 1 },
-  '0x42dCbA5dA33CDDB8202CC182A443a3e7b299dADb': { name: 'Moloch', weight: 100 },
+  '0x42dCbA5dA33CDDB8202CC182A443a3e7b299dADb': {
+    name: 'Moloch',
+    weight: 100,
+  },
   '0x8b13e88EAd7EF8075b58c94a7EB18A89FD729B18': {
     name: 'MoonShotBots',
     weight: 100,
@@ -120,7 +137,6 @@ export async function handleNormalTransactions(
     const normalTransactions = (await getNormalTransactions(
       address,
     )) as GetNormalTransactionsResponse;
-    console.log({ normalTransactions });
     normalTransactions.result.forEach((tx: NormalTransaction) => {
       score += handleTransaction(
         tx,
@@ -242,14 +258,7 @@ export async function handleGRDonations(
   let score = 0;
   try {
     const grDonations = await fetchGRDonations(address);
-    grDonations.forEach((donation) => {
-      const donationScore = donation.amountUSD;
-      score += donationScore;
-      debug.grDonations.push({
-        ...donation,
-        scoreAdded: donationScore,
-      });
-    });
+    if (grDonations.length > 0) score += 10;
   } catch (error) {
     console.error('Error fetching GR donations:', error);
   }
@@ -325,7 +334,7 @@ export async function handleOPTreasuryPayouts(
     const transfers = result?.data?.transfers;
     const scoreAdded = transfers?.length > 0 ? 10 : 0;
 
-    debug.optTreasuryPayouts = {
+    debug.opTreasuryPayouts = {
       transfers,
       scoreAdded,
     };
@@ -358,10 +367,104 @@ export async function handleDelegate(address: string, debug: any) {
     }
     const result = await response.json();
     const delegates = result?.data?.delegates;
-    debug.delegates = delegates;
-    return delegates?.length > 0 ? 10 : 0;
+    const isDelegate = delegates?.length > 0;
+    const scoreAdded = isDelegate ? 10 : 0;
+    debug.optimismDelegate = {
+      isDelegate,
+      scoreAdded,
+    };
+    return scoreAdded;
   } catch (error) {
     console.error('There was an error fetching delegate data:', error);
     return 0;
   }
+}
+
+export async function handleTxsMadeOnOptimism(address: string, debug: any) {
+  const client = await getClient('optimism');
+  const transactionCount = await client.getTransactionCount({
+    address: address as Address,
+  });
+  const scoreAdded = transactionCount > 0 ? 10 : 0;
+  debug.txsMadeOnOptimism = {
+    scoreAdded,
+    transactionCount,
+  };
+  return scoreAdded;
+}
+
+export async function handleOPContractsInteractions(
+  address: string,
+  debug: any,
+) {
+  const { interactedWithContracts, deployedContracts, createdGnosisSafe } =
+    await getAddressOPTxHistory(address);
+  let scoreAdded = 0;
+  if (interactedWithContracts) scoreAdded += 10;
+  if (deployedContracts) scoreAdded += 10;
+  // if (createdGnosisSafe) scoreAdded += 10; // Commented as it's being checked in handleSafeOwnershipAndActivity
+  debug.optimismTxHistory = {
+    interactedWithContracts,
+    deployedContracts,
+    createdGnosisSafe,
+    scoreAdded,
+  };
+  return scoreAdded;
+}
+
+export async function handleSafeOwnershipAndActivity(
+  address: string,
+  debug: any,
+) {
+  let scoreAdded = 0;
+  const { ownsSafe, hasExecutedTransaction } =
+    await checkSafeOwnershipAndActivity(address);
+
+  if (hasExecutedTransaction) scoreAdded += 10;
+  if (ownsSafe) scoreAdded += 10;
+  debug.safeOwnerActivity = {
+    ownsSafe,
+    hasExecutedTransaction,
+    scoreAdded,
+  };
+  return scoreAdded;
+}
+
+export async function handleOPAirdropReceiver(address: string, debug: any) {
+  const opAirdropAddresses = await getAdressesAirdroppedOP();
+  let score = 0;
+  if (opAirdropAddresses[0].includes(address.toLowerCase())) {
+    score += 100;
+    debug.opAirdrop = { firstDrop: true };
+  }
+  if (opAirdropAddresses[1].includes(address.toLowerCase())) {
+    score += 50;
+    debug.opAirdrop = { secondDrop: true };
+  }
+
+  debug.opAirdrop = { scoreAdded: score };
+
+  return score;
+}
+
+export async function handleGitcoinProjectOwner(address: string, debug: any) {
+  let scoreAdded = 0;
+  const isProjectOwner = await hasAGitcoinProject(address);
+  if (isProjectOwner) scoreAdded += 10;
+  debug.gitcoinProjectOwner = {
+    isProjectOwner,
+    scoreAdded,
+  };
+  return scoreAdded;
+}
+
+export async function handleGitcoinPassport(address: string, debug: any) {
+  let scoreAdded = 0;
+  const gitcoinPassport = await fetchGitcoinPassport(address);
+  if (gitcoinPassport.score > 0) scoreAdded += 10;
+  debug.gitcoinPassport = {
+    passport: gitcoinPassport,
+    scoreAdded,
+  };
+  return scoreAdded;
 }

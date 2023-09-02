@@ -12,7 +12,7 @@ numbered by row -1.
 
 This data is static and will not ever change or be updated.
 
-- #2 OP Airdrops 1 and 2
+- #2 OP Airdrops 1 and 2 ✅
 - #6 OP Snapshot Voting - Snapshot voting has been deprecated for OP, therefore static
 
 ## From the chain
@@ -53,32 +53,32 @@ TODO: where?
 
 https://etherscan.io/address/0xbfb731cd36d26c2a7287716de857e4380c73a64a watch for events here
 
-- #21 Made txs on Optimism
+- #21 Made txs on Optimism ✅
   https://viem.sh/docs/actions/public/getTransactionCount.html
   check nonce for that account
 
-- #22 Interacted with a contract
+- #22 Interacted with a contract ✅
 
 check all txs, check the to field, check whether it's a contract (it's code is not 0 https://viem.sh/docs/contract/getBytecode.html)
 
-- #23 Deployed a contract
+- #23 Deployed a contract ✅
 
 check txs to 0 address, check if the data is a deploy tx
 
-- #24 Deployed a Gnosis safe
+- #24 Deployed a Gnosis safe ✅
 
 interacted with ???
 
-- #25 Executed a tx with a gnosis safe
+- #25 Executed a tx with a gnosis safe ✅
 
 interacted with ???
 
 ## Off-chain
 
 - #7 OP Agora voting - TODO
-- #11 Gitcoin Project owner - https://github.com/supermodularxyz/grants-etl OR https://indexer-production.fly.dev/data/1/projects.json
-- #12 Gitcoin Donator - ✅
-- #13 Gitcoin Passport Score - Passport API
+- #11 Gitcoin Project owner ✅ - https://github.com/supermodularxyz/grants-etl OR https://indexer-production.fly.dev/data/1/projects.json
+- #12 Gitcoin Donor - ✅
+- #13 Gitcoin Passport Score ✅ - Passport API
 
 ## Unknown
 
