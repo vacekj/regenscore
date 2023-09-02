@@ -24,7 +24,7 @@
     "@web3modal/react": "^2.7.1",
     "csv-parse": "^5.4.0",
     "csv-stringify": "^6.4.0",
-    "ethers": "^6.7.0",
+    "ethers": "^5.7.2",
     "framer-motion": "^10.15.2",
     "next": "^13.4.13",
     "node-fetch": "^3.3.2",

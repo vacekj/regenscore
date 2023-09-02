@@ -1,7 +1,7 @@
 import { Hex } from 'viem';
 import useSWR from 'swr';
 
-export function useScore(address: Hex | undefined) {
+export function useScore(address: string | Hex | undefined) {
   const res = useSWR([address], async ([address]) => {
     try {
       const res = await fetch('/api/score', {
