@@ -38,12 +38,7 @@ export default function Footer() {
               </div>
               <div style={{ marginBottom: '30px' }}>REGEN Score</div>
               <Twitter />
-              <div
-                style={{
-                  marginBottom: '10px',
-                  marginTop: '30px',
-                }}
-              >
+              <div style={{ marginBottom: '10px', marginTop: '30px' }}>
                 All rights reserved @2023
               </div>
             </div>

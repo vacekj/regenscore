@@ -27,10 +27,7 @@ export default function footer() {
                 <img
                   src="/icons/regenscore.jpg"
                   alt="logo"
-                  style={{
-                    display: 'inline-block',
-                    marginBottom: '40px',
-                  }}
+                  style={{ display: 'inline-block', marginBottom: '40px' }}
                 />
               </div>
             </div>
@@ -40,12 +37,7 @@ export default function footer() {
               </div>
               <div style={{ marginBottom: '30px' }}>REGEN Score</div>
               <Twitter />
-              <div
-                style={{
-                  marginBottom: '10px',
-                  marginTop: '30px',
-                }}
-              >
+              <div style={{ marginBottom: '10px', marginTop: '30px' }}>
                 All rights reserved@2023
               </div>
             </div>
