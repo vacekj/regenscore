@@ -1,4 +1,4 @@
-import { Box, Flex, Heading, Image, Text, Grid } from "@chakra-ui/react";
+import { Box, Flex, Heading, Image, Text, Grid } from '@chakra-ui/react';
 const HowItWorks: React.FC = () => {
   return (
     <Flex
@@ -20,9 +20,9 @@ const HowItWorks: React.FC = () => {
       </Heading>
       <Grid
         templateColumns={{
-          base: "repeat(1, minmax(0, 375px))",
-          sm: "repeat(2, minmax(0, 375px))",
-          xl: "repeat(4, minmax(0, 375px))",
+          base: 'repeat(1, minmax(0, 375px))',
+          sm: 'repeat(2, minmax(0, 375px))',
+          xl: 'repeat(4, minmax(0, 375px))',
         }}
         mt="48px"
       >
@@ -64,15 +64,15 @@ const BoxContent = ({
   last?: boolean;
 }) => (
   <Flex
-    minHeight={{ base: "320px", sm: "380px" }}
+    minHeight={{ base: '320px', sm: '380px' }}
     flexDir="column"
     p={{ base: 0 }}
-    pr={["32px"]}
+    pr={['32px']}
     borderRadius="25px"
     textAlign="start"
     justifyContent="center"
     gap="32px"
-    mb={{ base: 0, sm: "4", md: "0" }}
+    mb={{ base: 0, sm: '4', md: '0' }}
     position="relative"
   >
     <Image
@@ -95,12 +95,12 @@ const BoxContent = ({
       zIndex={2}
       _before={{
         content: '""',
-        position: "absolute",
-        width: last ? "0" : { base: 0, sm: "190px", md: "314px", xl: "266px" },
-        height: "2px",
-        backgroundColor: "brand.primaryOrange.200",
-        top: "50%",
-        left: "46px",
+        position: 'absolute',
+        width: last ? '0' : { base: 0, sm: '190px', md: '314px', xl: '266px' },
+        height: '2px',
+        backgroundColor: 'brand.primaryOrange.200',
+        top: '50%',
+        left: '46px',
       }}
     >
       {step}

@@ -1,4 +1,4 @@
-import { Check } from "@/components/Check";
+import { Check } from '@/components/Check';
 import {
   Box,
   Card,
@@ -8,14 +8,14 @@ import {
   Flex,
   Heading,
   Text,
-} from "@chakra-ui/react";
-import React from "react";
+} from '@chakra-ui/react';
+import React from 'react';
 
 const MyCard = () => {
   return (
-    <div style={{ backgroundColor: "black", minHeight: "100vh" }}>
+    <div style={{ backgroundColor: 'black', minHeight: '100vh' }}>
       <Card
-        width={["90%", "476px"]}
+        width={['90%', '476px']}
         minWidth="240px"
         height="677px"
         borderRadius="12px"
@@ -59,84 +59,84 @@ const MyCard = () => {
           <Flex flexDirection="column" marginTop="30px">
             <div
               style={{
-                display: "flex",
-                alignItems: "center",
-                marginBottom: "30px",
+                display: 'flex',
+                alignItems: 'center',
+                marginBottom: '30px',
               }}
             >
-              <Check status={"SUCCESS"} />
+              <Check status={'SUCCESS'} />
               <Text marginLeft="16px" fontFamily="Remixa-Regular">
                 Scanning...
               </Text>
             </div>
             <div
               style={{
-                display: "flex",
-                alignItems: "center",
-                marginBottom: "30px",
+                display: 'flex',
+                alignItems: 'center',
+                marginBottom: '30px',
               }}
             >
-              <Check status={"SUCCESS"} />
+              <Check status={'SUCCESS'} />
               <Text marginLeft="16px" fontFamily="Remixa-Regular">
                 Double checking
               </Text>
             </div>
             <div
               style={{
-                display: "flex",
-                alignItems: "center",
-                marginBottom: "30px",
+                display: 'flex',
+                alignItems: 'center',
+                marginBottom: '30px',
               }}
             >
-              <Check status={"SUCCESS"} />
+              <Check status={'SUCCESS'} />
               <Text marginLeft="16px" fontFamily="Remixa-Regular">
                 Validation
               </Text>
             </div>
             <div
               style={{
-                display: "flex",
-                alignItems: "center",
-                marginBottom: "30px",
+                display: 'flex',
+                alignItems: 'center',
+                marginBottom: '30px',
               }}
             >
-              <Check status={"SUCCESS"} />
+              <Check status={'SUCCESS'} />
               <Text marginLeft="16px" fontFamily="Remixa-Regular">
                 Brewing coffee
               </Text>
             </div>
             <div
               style={{
-                display: "flex",
-                alignItems: "center",
-                marginBottom: "30px",
+                display: 'flex',
+                alignItems: 'center',
+                marginBottom: '30px',
               }}
             >
-              <Check status={"IN_PROGRESS"} />
+              <Check status={'IN_PROGRESS'} />
               <Text marginLeft="16px" fontFamily="Remixa-Regular">
                 Almost there
               </Text>
             </div>
             <div
               style={{
-                display: "flex",
-                alignItems: "center",
-                marginBottom: "30px",
+                display: 'flex',
+                alignItems: 'center',
+                marginBottom: '30px',
               }}
             >
-              <Check status={"NOT_STARTED"} />
+              <Check status={'NOT_STARTED'} />
               <Text marginLeft="16px" fontFamily="Remixa-Regular">
                 Ready for review
               </Text>
             </div>
             <div
               style={{
-                display: "flex",
-                alignItems: "center",
-                marginBottom: "30px",
+                display: 'flex',
+                alignItems: 'center',
+                marginBottom: '30px',
               }}
             >
-              <Check status={"WARNING"} />
+              <Check status={'WARNING'} />
               <Text
                 marginLeft="16px"
                 fontFamily="Remixa-Regular"

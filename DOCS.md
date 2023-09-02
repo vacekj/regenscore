@@ -76,9 +76,9 @@ interacted with ???
 ## Off-chain
 
 - #7 OP Agora voting - TODO
-- #11 Gitcoin Project owner - https://github.com/supermodularxyz/grants-etl OR https://indexer-production.fly.dev/data/1/projects.json
+- #11 Gitcoin Project owner ✅ - https://github.com/supermodularxyz/grants-etl OR https://indexer-production.fly.dev/data/1/projects.json
 - #12 Gitcoin Donor - ✅
-- #13 Gitcoin Passport Score - Passport API
+- #13 Gitcoin Passport Score ✅ - Passport API
 
 ## Unknown
 

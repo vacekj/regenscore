@@ -27,15 +27,13 @@ export default function Card() {
 
   const effectiveAddress = inputAddress || address || '';
 
-  const { score, debug } = useScore(
-    '0x00d18ca9782bE1CaEF611017c2Fbc1a39779A57C'
-  );
+  const { score, debug } = useScore(effectiveAddress);
 
   const [svg, setSvg] = useState<string>();
   useEffect(() => {
     createSvg(
       effectiveAddress ? score || 0 : '????????',
-      effectiveAddress ?? '0x1234...abcd'
+      effectiveAddress ?? '0x1234...abcd',
     ).then((res) => setSvg(res));
   }, [score, effectiveAddress!]);
 
@@ -69,7 +67,7 @@ export default function Card() {
       <Input
         value={inputAddress}
         onChange={(e) => setInputAddress(e.target.value)} // Update inputAddress state on change
-        placeholder='Enter Ethereum Address'
+        placeholder="Enter Ethereum Address"
         mt={0}
       />
       {/* {!claimed && isConnected && (
@@ -173,15 +171,15 @@ export default function Card() {
           height={'300px'}
           overflowY={'auto'}
         >
-          <Heading size='md' mb={2}>
+          <Heading size="md" mb={2}>
             Debug Information:
           </Heading>
           <pre style={{ whiteSpace: 'pre-wrap', wordWrap: 'break-word' }}>
             <code>
               {Object.keys(debug).map((key) => (
                 <Box key={key} mb={2}>
-                  <Text fontWeight='bold'>{key}:</Text>
-                  <Text as='span' color={'gray.600'}>
+                  <Text fontWeight="bold">{key}:</Text>
+                  <Text as="span" color={'gray.600'}>
                     {JSON.stringify(debug[key], null, 2)}
                   </Text>
                 </Box>

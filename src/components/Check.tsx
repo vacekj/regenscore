@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 const CheckedIcon = () => (
   <svg
@@ -95,22 +95,22 @@ const CrossIcon = () => (
   </svg>
 );
 
-type Status = "NOT_STARTED" | "IN_PROGRESS" | "SUCCESS" | "WARNING" | "ERROR";
+type Status = 'NOT_STARTED' | 'IN_PROGRESS' | 'SUCCESS' | 'WARNING' | 'ERROR';
 
 type CheckProps = {
   status: Status;
 };
 
 export function Check(props: CheckProps) {
-  if (props.status === "SUCCESS") {
+  if (props.status === 'SUCCESS') {
     return <CheckedIcon />;
-  } else if (props.status === "IN_PROGRESS") {
+  } else if (props.status === 'IN_PROGRESS') {
     return <InProgressIcon />;
-  } else if (props.status === "NOT_STARTED") {
+  } else if (props.status === 'NOT_STARTED') {
     return <NotStarted />;
-  } else if (props.status === "ERROR") {
+  } else if (props.status === 'ERROR') {
     return <CrossIcon />;
-  } else if (props.status === "WARNING") {
+  } else if (props.status === 'WARNING') {
     return <ExclamationIcon />;
   }
 }
