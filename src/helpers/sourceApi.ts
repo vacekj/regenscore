@@ -328,11 +328,14 @@ export async function fetchGitcoinPassport(address: string) {
   const url = `https://api.scorer.gitcoin.co/registry/score/${GICOIN_SCORER_ID}/${address.toLowerCase()}`;
 
   try {
+    const headers: HeadersInit = {};
+    const API_KEY = GITCOIN_PASSPORT_SCORER_API_KEY;
+    if (API_KEY) {
+      headers['X-API-KEY'] = API_KEY;
+    }
     const response = await fetch(url, {
       method: 'GET',
-      headers: {
-        'X-API-KEY': GITCOIN_PASSPORT_SCORER_API_KEY,
-      },
+      headers,
     });
     const passport = await response.json();
     return passport;
