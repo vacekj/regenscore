@@ -126,3 +126,27 @@ export type GitcoinProject = {
   };
   owners: string[];
 };
+
+type PoapEvent = {
+  id: number;
+  fancy_id: string;
+  name: string;
+  event_url: string;
+  image_url: string;
+  country: string;
+  city: string;
+  description: string;
+  year: number;
+  start_date: string;
+  end_date: string;
+  expiry_date: string;
+  supply: number;
+};
+
+export type POAP = {
+  event: PoapEvent;
+  tokenId: string;
+  owner: string;
+  chain: string;
+  created: string;
+};

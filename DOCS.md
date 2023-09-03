@@ -25,7 +25,7 @@ This is data that can be queried directly from the chain, either OP or Ethereum
 
 Fetch and update all txs from the treasury to different addresses, save the individual txs.
 
-- #5 Contributor POAPs
+- #5 Contributor POAPs ✅
 
 https://documentation.poap.tech/reference/getactionsscan-5, check against known POAPs
 
@@ -49,7 +49,7 @@ DepositProcessed event on 0x00000000219ab540356cbb839cbe05303d7705fa
 
 TODO: where?
 
-- #20 Bridged to OP from Mainnet
+- #20 Bridged to OP from Mainnet ✅
 
 https://etherscan.io/address/0xbfb731cd36d26c2a7287716de857e4380c73a64a watch for events here
 
