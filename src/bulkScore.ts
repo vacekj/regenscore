@@ -5,23 +5,60 @@ import fs from 'fs';
 
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
-import { isAddress } from 'viem';
+import { isAddress, getAddress } from 'viem';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const processFile = async () => {
-  const records = [];
+  const records = [
+    [
+      'Address',
+      'opAirdropScore',
+      'TokenBalanceGIV',
+      'TokenBalanceOP',
+      'EthDeposits',
+      'OpTreasuryPayouts',
+      'IsOptimismDelegate',
+      'InteractedWithContracts',
+      'CreatedGnosisSafe',
+      'OwnsGnosisSafe',
+      'ExecutedGnosisTx',
+      'IsGitcoinProjectOwner',
+      'GitcoinPassportScore',
+      'OptimismTxCount',
+      'TotalScore',
+    ],
+  ];
   const parser = fs
     .createReadStream(`${__dirname}/../data/delegates.csv`)
     .pipe(parse({}));
+
   for await (const record of parser) {
     const address = record[0];
     if (!isAddress(address)) {
       console.warn('Not an address', address);
       continue;
     }
-    const score = await createScore(address);
-    console.log(record[0], score.score);
-    records.push([...record, score.score]);
+
+    const { score, debug } = await createScore(getAddress(address));
+    console.log(address, score);
+    const row = [
+      address,
+      debug.opAirdrop?.scoreAdded || 0,
+      debug.tokenBalances.find((tb: any) => tb.name === 'GIV')?.scoreAdded || 0,
+      debug.tokenBalances.find((tb: any) => tb.name === 'OP')?.scoreAdded || 0,
+      debug.ethDeposits?.scoreAdded || 0,
+      debug.opTreasuryPayouts?.scoreAdded || 0,
+      debug.optimismDelegate?.scoreAdded || 0,
+      debug.optimismTxHistory?.interactedWithContracts ? 10 : 0,
+      debug.optimismTxHistory?.createdGnosisSafe ? 10 : 0,
+      debug.safeOwnerActivity?.ownsSafe ? 10 : 0,
+      debug.safeOwnerActivity?.hasExecutedTransaction ? 10 : 0,
+      debug.gitcoinProjectOwner?.isProjectOwner ? 10 : 0,
+      debug.gitcoinPassport?.scoreAdded || 0,
+      debug.txsMadeOnOptimism?.scoreAdded || 0,
+      score,
+    ];
+    records.push(row);
   }
   return records;
 };
