@@ -261,7 +261,7 @@ export async function getAddressOPTxHistory(address: string) {
 
 async function fetchSafesOwnedByUser(userAddress: string): Promise<string[]> {
   const response = await fetch(
-    `https://safe-transaction-optimism.safe.global/api/v1/owners/${userAddress?.toLowerCase()}/safes/`,
+    `https://safe-transaction-optimism.safe.global/api/v1/owners/${userAddress}/safes/`,
   );
   const data = await response.json();
   return data.safes || [];
@@ -278,6 +278,7 @@ export async function checkSafeOwnershipAndActivity(
   userAddress: string,
 ): Promise<{ ownsSafe: boolean; hasExecutedTransaction: boolean }> {
   const safesOwnedByUser = await fetchSafesOwnedByUser(userAddress);
+
   if (safesOwnedByUser.length === 0) {
     return { ownsSafe: false, hasExecutedTransaction: false };
   }
@@ -342,4 +343,21 @@ export async function fetchGitcoinPassport(address: string) {
   } catch (error) {
     throw error;
   }
+}
+
+export async function fetchPOAPsForAddress(address: string) {
+  const url = `https://api.poap.tech/actions/scan/${address}`;
+  const response = await fetch(url, {
+    method: 'GET',
+    headers: {
+      accept: 'application/json',
+      'x-api-key': process.env.POAP_API_KEY!, // Your API key
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to fetch POAPs');
+  }
+
+  return await response.json();
 }
