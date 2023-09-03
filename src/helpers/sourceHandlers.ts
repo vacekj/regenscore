@@ -10,6 +10,7 @@ import {
   checkSafeOwnershipAndActivity,
   hasAGitcoinProject,
   fetchGitcoinPassport,
+  fetchPOAPsForAddress,
 } from './sourceApi';
 import {
   NormalTransaction,
@@ -17,6 +18,7 @@ import {
   GetNormalTransactionsResponse,
   GetERC20TransactionsResponse,
   GetERC721TransactionsResponse,
+  POAP,
 } from './sourceTypes';
 import { getClient } from '@/utils';
 
@@ -35,7 +37,7 @@ type ITransaction = {
 const REGENSCORE_SQUID_OP =
   'https://squid.subsquid.io/regen-score-squid/v/v3/graphql';
 const REGENSCORE_SQUID_ETH =
-  'https://squid.subsquid.io/regen-score-squid-eth/v/v2/graphql';
+  'https://squid.subsquid.io/regen-score-squid-eth/v/v3/graphql';
 
 const list_of_contracts: { [key: string]: ContractDetails } = {
   '0x900db999074d9277c5da2a43f252d74366230da0': { name: 'Giveth', weight: 1 },
@@ -116,6 +118,12 @@ const list_of_balance_contract_optimism: { [key: string]: ContractDetails } = {
     decimals: 18,
   },
 };
+
+const REGEN_POAP_EVENT_IDS = [
+  6736, 27649, 30186, 100689, 45205, 45207, 65866, 66627, 127435, 144936,
+  148447, 74498, 136490, 74201, 109068, 102147, 28643, 39093, 28576, 39095,
+  39096, 39097, 66020, 28689, 102289, 102175,
+];
 
 const GRAPHQL_OPTIONS = (query: string) => {
   return {
@@ -324,6 +332,45 @@ export async function handleEthStaker(address: string, debug: any) {
   }
 }
 
+export async function handleOPBridge(address: string, debug: any) {
+  const url = REGENSCORE_SQUID_ETH;
+  const query = `
+    query MyQuery {
+      bridges(limit: 10, where: {from_eq: "${address}"}) {
+        id
+        from
+        amount
+        blockNumber
+        localToken
+        remoteToken
+        transactionHash
+        to
+        eventType
+      }
+    }
+  `;
+
+  const options = GRAPHQL_OPTIONS(query);
+
+  try {
+    const response = await fetch(url, options);
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    const result = await response.json();
+    const opBridges = result?.data?.bridges;
+    const scoreAdded = opBridges?.length > 0 ? 10 : 0;
+    debug.optimismBridges = {
+      opBridges,
+      scoreAdded,
+    };
+    return scoreAdded;
+  } catch (error) {
+    console.error('There was an error fetching the data:', error);
+    return 0;
+  }
+}
+
 export async function handleOPTreasuryPayouts(
   address: string,
   debug: any,
@@ -489,4 +536,27 @@ export async function handleGitcoinPassport(address: string, debug: any) {
     scoreAdded,
   };
   return scoreAdded;
+}
+
+export async function handleRegenPOAPs(address: string, debug: any) {
+  let scoreAdded = 0;
+  try {
+    const poaps = await fetchPOAPsForAddress(address);
+    const matchingRegenPOAPs = poaps.filter((poap: POAP) =>
+      REGEN_POAP_EVENT_IDS.includes(poap.event.id),
+    );
+    const hasRegenPOAP = matchingRegenPOAPs.length > 0;
+    if (hasRegenPOAP) scoreAdded += 10;
+
+    debug.regenPOAPs = {
+      poaps: matchingRegenPOAPs,
+      hasRegenPOAP,
+      scoreAdded,
+    };
+
+    return scoreAdded;
+  } catch (error) {
+    console.log({ error });
+    return scoreAdded;
+  }
 }
