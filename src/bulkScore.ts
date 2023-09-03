@@ -35,7 +35,6 @@ const processFile = async () => {
   for await (const record of parser) {
     const address = record[0];
     if (!isAddress(address)) {
-      console.warn('Not an address', address);
       continue;
     }
 

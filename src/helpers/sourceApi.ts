@@ -167,17 +167,13 @@ export async function etherscanGetTokenBalance(
 export async function getTokenBalance(
   contractAddress: Address,
   address: string,
+  decimals: number,
   network: 'mainnet' | 'optimism',
 ): Promise<string> {
   try {
     const isMainnet = network === 'mainnet';
     const abi = ERC20;
     const client = await getClient(isMainnet ? 'mainnet' : 'optimism');
-    const decimals = await client.readContract({
-      address: contractAddress,
-      abi,
-      functionName: 'decimals',
-    });
     const balance: any = await client.readContract({
       address: contractAddress,
       abi,
@@ -185,7 +181,7 @@ export async function getTokenBalance(
       args: [address],
     });
 
-    return balance ? formatUnits(balance, Number(decimals)) : '0';
+    return balance ? formatUnits(balance, decimals) : '0';
   } catch (error) {
     console.log({ error });
     return '0';
@@ -261,7 +257,7 @@ export async function getAddressOPTxHistory(address: string) {
 
 async function fetchSafesOwnedByUser(userAddress: string): Promise<string[]> {
   const response = await fetch(
-    `https://safe-transaction-optimism.safe.global/api/v1/owners/${userAddress?.toLowerCase()}/safes/`,
+    `https://safe-transaction-optimism.safe.global/api/v1/owners/${userAddress}/safes/`,
   );
   const data = await response.json();
   return data.safes || [];
@@ -325,7 +321,7 @@ export async function hasAGitcoinProject(address: string): Promise<boolean> {
 }
 
 export async function fetchGitcoinPassport(address: string) {
-  const url = `https://api.scorer.gitcoin.co/registry/score/${GICOIN_SCORER_ID}/${address.toLowerCase()}`;
+  const url = `https://api.scorer.gitcoin.co/registry/score/${GICOIN_SCORER_ID}/${address}`;
 
   try {
     const headers: HeadersInit = {};
