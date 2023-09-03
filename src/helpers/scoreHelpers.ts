@@ -1,10 +1,11 @@
 import {
-  handleERC20Transactions,
-  handleERC721Transactions,
-  handleNormalTransactions,
+  // handleERC20Transactions,
+  // handleERC721Transactions,
+  // handleNormalTransactions,
   handleGRDonations,
   handleTokenBalances,
   handleEthStaker,
+  handleOPBridge,
   handleOPTreasuryPayouts,
   handleDelegate,
   handleTxsMadeOnOptimism,
@@ -13,6 +14,7 @@ import {
   handleOPAirdropReceiver,
   handleGitcoinProjectOwner,
   handleGitcoinPassport,
+  handleRegenPOAPs,
 } from './sourceHandlers';
 
 export async function createScore(
@@ -27,12 +29,14 @@ export async function createScore(
     tokenBalances: [],
     grDonations: [],
     ethDeposits: [],
+    optimismBridges: [],
     opTreasuryPayouts: [],
     optimismDelegate: [],
     optimismTxHistory: [],
     safeOwnerActivity: [],
     gitcoinProjectOwner: [],
     gitcoinPassport: [],
+    regenPOAPs: [],
   };
   const results = await Promise.all([
     handleTokenBalances(address, debug),
@@ -41,6 +45,7 @@ export async function createScore(
     // handleERC721Transactions(address, debug),
     handleGRDonations(address, debug),
     handleEthStaker(address, debug),
+    handleOPBridge(address, debug),
     handleOPTreasuryPayouts(address, debug),
     handleDelegate(address, debug),
     handleTxsMadeOnOptimism(address, debug),
@@ -49,6 +54,7 @@ export async function createScore(
     handleOPAirdropReceiver(address, debug),
     handleGitcoinProjectOwner(address, debug),
     handleGitcoinPassport(address, debug),
+    handleRegenPOAPs(address, debug),
   ]);
 
   score += results.reduce((acc, current) => acc + current, 0);

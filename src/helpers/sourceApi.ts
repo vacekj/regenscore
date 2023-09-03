@@ -274,6 +274,7 @@ export async function checkSafeOwnershipAndActivity(
   userAddress: string,
 ): Promise<{ ownsSafe: boolean; hasExecutedTransaction: boolean }> {
   const safesOwnedByUser = await fetchSafesOwnedByUser(userAddress);
+
   if (safesOwnedByUser.length === 0) {
     return { ownsSafe: false, hasExecutedTransaction: false };
   }
@@ -338,4 +339,21 @@ export async function fetchGitcoinPassport(address: string) {
   } catch (error) {
     throw error;
   }
+}
+
+export async function fetchPOAPsForAddress(address: string) {
+  const url = `https://api.poap.tech/actions/scan/${address}`;
+  const response = await fetch(url, {
+    method: 'GET',
+    headers: {
+      accept: 'application/json',
+      'x-api-key': process.env.POAP_API_KEY!, // Your API key
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to fetch POAPs');
+  }
+
+  return await response.json();
 }
