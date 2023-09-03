@@ -23,6 +23,7 @@ import { getClient } from '@/utils';
 type ContractDetails = {
   name: string;
   weight: number;
+  decimals?: number;
 };
 
 type ITransaction = {
@@ -50,7 +51,7 @@ const list_of_contracts: { [key: string]: ContractDetails } = {
     name: 'Staked Klima',
     weight: 1,
   },
-  '0xde30da39c46104798bb5aa3fe8b9e0e1f348163f': {
+  '0xDe30da39c46104798bB5aA3fe8B9e0e1F348163F': {
     name: 'Gitcoin',
     weight: 1,
   },
@@ -91,12 +92,29 @@ const list_of_contracts: { [key: string]: ContractDetails } = {
 };
 
 const list_of_balance_contract_mainnet: { [key: string]: ContractDetails } = {
-  '0x900db999074d9277c5da2a43f252d74366230da0': { name: 'GIV', weight: 10 },
-  '0xde30da39c46104798bb5aa3fe8b9e0e1f348163f': { name: 'GTC', weight: 10 },
+  '0x900dB999074d9277c5DA2A43F252D74366230DA0': {
+    name: 'GIV',
+    weight: 10,
+    decimals: 18,
+  },
+  '0xDe30da39c46104798bB5aA3fe8B9e0e1F348163F': {
+    name: 'GTC',
+    weight: 10,
+    decimals: 18,
+  },
 };
 
 const list_of_balance_contract_optimism: { [key: string]: ContractDetails } = {
-  '0x4200000000000000000000000000000000000042': { name: 'OP', weight: 10 },
+  '0x528CDc92eAB044E1E39FE43B9514bfdAB4412B98': {
+    name: 'GIV',
+    weight: 10,
+    decimals: 18,
+  },
+  '0x4200000000000000000000000000000000000042': {
+    name: 'OP',
+    weight: 10,
+    decimals: 18,
+  },
 };
 
 const GRAPHQL_OPTIONS = (query: string) => {
@@ -202,15 +220,17 @@ export async function handleTokenBalances(
 
   for (let key in list_of_balance_contract_mainnet) {
     try {
+      const token = list_of_balance_contract_mainnet[key];
       const balanceResponse = (await getTokenBalance(
         key as Address,
-        address,
+        getAddress(address),
+        token.decimals!,
         'mainnet',
       )) as any;
       if (balanceResponse !== '0') {
         const balance = Number(balanceResponse);
         if (balance > 0) {
-          const addedScore = list_of_balance_contract_mainnet[key].weight;
+          const addedScore = token.weight;
           score += addedScore;
           debug.tokenBalances.push({
             contract: key,
@@ -226,15 +246,17 @@ export async function handleTokenBalances(
   }
   for (let key in list_of_balance_contract_optimism) {
     try {
+      const token = list_of_balance_contract_optimism[key];
       const balanceResponse = await getTokenBalance(
         key as Address,
-        address,
+        getAddress(address),
+        token.decimals!,
         'optimism',
       );
       if (balanceResponse !== '0') {
         const balance = Number(balanceResponse);
         if (balance > 0) {
-          const addedScore = list_of_balance_contract_optimism[key].weight;
+          const addedScore = token.weight;
           score += addedScore;
           debug.tokenBalances.push({
             contract: key,
