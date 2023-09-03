@@ -28,7 +28,6 @@ export default function Card() {
   const effectiveAddress = inputAddress || address || '';
 
   const { score, debug } = useScore(effectiveAddress);
-
   const [svg, setSvg] = useState<string>();
   useEffect(() => {
     createSvg(

@@ -225,7 +225,7 @@ async function optimismTxHistoryCheck(txs: any) {
     if (tx.data && tx.data !== '0x') {
       interactedWithContracts = true;
       // Checks if it created a Gnosis Safe
-      if (tx.to.toLowerCase() === GNOSIS_SAFE_PROXY.toLowerCase()) {
+      if (tx?.to?.toLowerCase() === GNOSIS_SAFE_PROXY.toLowerCase()) {
         createdGnosisSafe = true;
       }
     }
@@ -261,7 +261,7 @@ export async function getAddressOPTxHistory(address: string) {
 
 async function fetchSafesOwnedByUser(userAddress: string): Promise<string[]> {
   const response = await fetch(
-    `https://safe-transaction-optimism.safe.global/api/v1/owners/${userAddress}/safes/`,
+    `https://safe-transaction-optimism.safe.global/api/v1/owners/${userAddress?.toLowerCase()}/safes/`,
   );
   const data = await response.json();
   return data.safes || [];

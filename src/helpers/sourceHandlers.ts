@@ -1,4 +1,4 @@
-import { Address } from 'viem';
+import { Address, getAddress } from 'viem';
 import {
   getAdressesAirdroppedOP,
   getERC20Transactions,
@@ -291,10 +291,10 @@ export async function handleEthStaker(address: string, debug: any) {
     const result = await response.json();
     const ethDeposits = result?.data?.ethDeposits;
     const scoreAdded = ethDeposits?.length > 0 ? 10 : 0;
-    debug.ethDeposits.push({
+    debug.ethDeposits = {
       ethDeposits,
       scoreAdded,
-    });
+    };
     return scoreAdded;
   } catch (error) {
     console.error('There was an error fetching the data:', error);
@@ -460,7 +460,7 @@ export async function handleGitcoinProjectOwner(address: string, debug: any) {
 
 export async function handleGitcoinPassport(address: string, debug: any) {
   let scoreAdded = 0;
-  const gitcoinPassport = await fetchGitcoinPassport(address);
+  const gitcoinPassport = await fetchGitcoinPassport(getAddress(address));
   if (gitcoinPassport.score > 0) scoreAdded += 10;
   debug.gitcoinPassport = {
     passport: gitcoinPassport,
