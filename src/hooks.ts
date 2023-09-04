@@ -1,5 +1,17 @@
 import { Hex, getAddress } from 'viem';
 import useSWR from 'swr';
+import { useState, useEffect } from 'react';
+
+type Token = {
+  category: string;
+  scoreAdded: number;
+};
+
+type Item = {
+  category: string;
+  scoreAdded: number;
+  tokens?: Token[];
+};
 
 export function useScore(address: string | Hex | undefined) {
   const res = useSWR([address], async ([address]) => {
@@ -21,5 +33,41 @@ export function useScore(address: string | Hex | undefined) {
     }
   });
 
-  return { score: res.data?.score, debug: res.data?.debug, ...res };
+  const [categories, setCategories] = useState<
+    { category: string; scoreAdded: number }[]
+  >([]);
+
+  useEffect(() => {
+    if (res.data?.meta) {
+      const newCategoryScores: Record<string, number> = {};
+      Object.keys(res.data.meta).forEach((key: string) => {
+        const item = res.data.meta[key] as Item;
+        if (typeof item === 'object' && item !== null) {
+          if (key === 'tokenBalances' && item.tokens) {
+            item.tokens.forEach((token: any) => {
+              newCategoryScores[item.category] =
+                (newCategoryScores[item.category] || 0) +
+                (token.scoreAdded || 0);
+            });
+          } else {
+            newCategoryScores[item.category] =
+              (newCategoryScores[item.category] || 0) + (item.scoreAdded || 0);
+          }
+        }
+      });
+      setCategories(
+        Object.entries(newCategoryScores).map(([category, scoreAdded]) => ({
+          category,
+          scoreAdded,
+        })),
+      );
+    }
+  }, [res.data?.meta]);
+
+  return {
+    score: res.data?.score,
+    meta: res.data?.meta,
+    categories,
+    ...res,
+  };
 }

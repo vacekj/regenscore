@@ -40,25 +40,27 @@ const processFile = async () => {
       continue;
     }
 
-    const { score, debug } = await createScore(getAddress(address));
+    const { score, meta } = await createScore(getAddress(address));
     console.log(address, score);
     const row = [
       address,
-      debug.opAirdrop?.scoreAdded || 0,
-      debug.tokenBalances.find((tb: any) => tb.name === 'GIV')?.scoreAdded || 0,
-      debug.tokenBalances.find((tb: any) => tb.name === 'OP')?.scoreAdded || 0,
-      debug.ethDeposits?.scoreAdded || 0,
-      debug.optimismBridges?.scoreAdded || 0,
-      debug.opTreasuryPayouts?.scoreAdded || 0,
-      debug.optimismDelegate?.scoreAdded || 0,
-      debug.optimismTxHistory?.interactedWithContracts ? 10 : 0,
-      debug.optimismTxHistory?.createdGnosisSafe ? 10 : 0,
-      debug.safeOwnerActivity?.ownsSafe ? 10 : 0,
-      debug.safeOwnerActivity?.hasExecutedTransaction ? 10 : 0,
-      debug.gitcoinProjectOwner?.isProjectOwner ? 10 : 0,
-      debug.gitcoinPassport?.scoreAdded || 0,
-      debug.regenPOAPs?.scoreAdded || 0,
-      debug.txsMadeOnOptimism?.scoreAdded || 0,
+      meta.opAirdrop?.scoreAdded || 0,
+      meta.tokenBalances.tokens.find((tb: any) => tb.name === 'GIV')
+        ?.scoreAdded || 0,
+      meta.tokenBalances.tokens.find((tb: any) => tb.name === 'OP')
+        ?.scoreAdded || 0,
+      meta.ethDeposits?.scoreAdded || 0,
+      meta.optimismBridges?.scoreAdded || 0,
+      meta.opTreasuryPayouts?.scoreAdded || 0,
+      meta.optimismDelegate?.scoreAdded || 0,
+      meta.optimismTxHistory?.interactedWithContracts ? 10 : 0,
+      meta.optimismTxHistory?.createdGnosisSafe ? 10 : 0,
+      meta.safeOwnerActivity?.ownsSafe ? 10 : 0,
+      meta.safeOwnerActivity?.hasExecutedTransaction ? 10 : 0,
+      meta.gitcoinProjectOwner?.isProjectOwner ? 10 : 0,
+      meta.gitcoinPassport?.scoreAdded || 0,
+      meta.regenPOAPs?.scoreAdded || 0,
+      meta.txsMadeOnOptimism?.scoreAdded || 0,
       score,
     ];
     records.push(row);

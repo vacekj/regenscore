@@ -20,6 +20,7 @@ import {
   GetERC721TransactionsResponse,
   POAP,
 } from './sourceTypes';
+import { CATEGORIES } from '@/constants';
 import { getClient } from '@/utils';
 
 type ContractDetails = {
@@ -137,13 +138,13 @@ const GRAPHQL_OPTIONS = (query: string) => {
 
 const handleTransaction = (
   transaction: { to: string; from: string },
-  debugArray: ITransaction[],
+  metaArray: ITransaction[],
   contractsList: { [key: string]: ContractDetails },
 ) => {
   for (let key in contractsList) {
     if (transaction.to === key || transaction.from === key) {
       const contractDetail = contractsList[key];
-      debugArray.push({
+      metaArray.push({
         contract: key,
         name: contractDetail.name,
         scoreAdded: contractDetail.weight,
@@ -156,7 +157,7 @@ const handleTransaction = (
 
 export async function handleNormalTransactions(
   address: string,
-  debug: any,
+  meta: any,
 ): Promise<number> {
   let score = 0;
   try {
@@ -166,7 +167,7 @@ export async function handleNormalTransactions(
     normalTransactions.result.forEach((tx: NormalTransaction) => {
       score += handleTransaction(
         tx,
-        debug.normalTransactions,
+        meta.normalTransactions,
         list_of_contracts,
       );
     });
@@ -178,7 +179,7 @@ export async function handleNormalTransactions(
 
 export async function handleERC20Transactions(
   address: string,
-  debug: any,
+  meta: any,
 ): Promise<number> {
   let score = 0;
   try {
@@ -186,11 +187,7 @@ export async function handleERC20Transactions(
       address,
     )) as GetERC20TransactionsResponse;
     erc20Transactions.result.forEach((tx: ERC20Transaction) => {
-      score += handleTransaction(
-        tx,
-        debug.erc20Transactions,
-        list_of_contracts,
-      );
+      score += handleTransaction(tx, meta.erc20Transactions, list_of_contracts);
     });
   } catch (error) {
     console.error('Error fetching ERC20 transactions:', error);
@@ -200,7 +197,7 @@ export async function handleERC20Transactions(
 
 export async function handleERC721Transactions(
   address: string,
-  debug: any,
+  meta: any,
 ): Promise<number> {
   let score = 0;
   try {
@@ -210,7 +207,7 @@ export async function handleERC721Transactions(
     erc721Transactions.result.forEach((tx) => {
       score += handleTransaction(
         tx,
-        debug.erc721Transactions,
+        meta.erc721Transactions,
         list_of_contracts,
       );
     });
@@ -222,7 +219,7 @@ export async function handleERC721Transactions(
 
 export async function handleTokenBalances(
   address: string,
-  debug: any,
+  meta: any,
 ): Promise<number> {
   let score = 0;
 
@@ -240,12 +237,17 @@ export async function handleTokenBalances(
         if (balance > 0) {
           const addedScore = token.weight;
           score += addedScore;
-          debug.tokenBalances.push({
-            contract: key,
-            network: 'mainnet',
-            name: list_of_balance_contract_mainnet[key].name,
-            scoreAdded: addedScore,
-          });
+          meta.tokenBalances.tokens = [
+            ...meta.tokenBalances.tokens,
+            {
+              contract: key,
+              network: 'Mainnet',
+              name: list_of_balance_contract_mainnet[key].name,
+              behavior: `Holds ${token.name} tokens`,
+              scoreAdded: addedScore,
+              category: CATEGORIES.Outreach,
+            },
+          ];
         }
       }
     } catch (error) {
@@ -266,12 +268,17 @@ export async function handleTokenBalances(
         if (balance > 0) {
           const addedScore = token.weight;
           score += addedScore;
-          debug.tokenBalances.push({
-            contract: key,
-            network: 'optimism',
-            name: list_of_balance_contract_optimism[key].name,
-            scoreAdded: addedScore,
-          });
+          meta.tokenBalances.tokens = [
+            ...meta.tokenBalances.tokens,
+            {
+              contract: key,
+              network: 'Optimism',
+              behavior: `Holds ${token.name} tokens`,
+              name: list_of_balance_contract_optimism[key].name,
+              scoreAdded: addedScore,
+              category: CATEGORIES.Outreach,
+            },
+          ];
         }
       }
     } catch (error) {
@@ -283,7 +290,7 @@ export async function handleTokenBalances(
 
 export async function handleGRDonations(
   address: string,
-  debug: any,
+  meta: any,
 ): Promise<number> {
   let score = 0;
   try {
@@ -297,7 +304,7 @@ export async function handleGRDonations(
 
 export async function handleIsGTCHolder() {}
 
-export async function handleEthStaker(address: string, debug: any) {
+export async function handleEthStaker(address: string, meta: any) {
   const url = REGENSCORE_SQUID_ETH;
   const query = `
     query MyQuery {
@@ -321,7 +328,8 @@ export async function handleEthStaker(address: string, debug: any) {
     const result = await response.json();
     const ethDeposits = result?.data?.ethDeposits;
     const scoreAdded = ethDeposits?.length > 0 ? 10 : 0;
-    debug.ethDeposits = {
+    meta.ethDeposits = {
+      ...meta.ethDeposits,
       ethDeposits,
       scoreAdded,
     };
@@ -332,7 +340,7 @@ export async function handleEthStaker(address: string, debug: any) {
   }
 }
 
-export async function handleOPBridge(address: string, debug: any) {
+export async function handleOPBridge(address: string, meta: any) {
   const url = REGENSCORE_SQUID_ETH;
   const query = `
     query MyQuery {
@@ -360,7 +368,8 @@ export async function handleOPBridge(address: string, debug: any) {
     const result = await response.json();
     const opBridges = result?.data?.bridges;
     const scoreAdded = opBridges?.length > 0 ? 10 : 0;
-    debug.optimismBridges = {
+    meta.optimismBridges = {
+      ...meta.optimismBridges,
       opBridges,
       scoreAdded,
     };
@@ -373,7 +382,7 @@ export async function handleOPBridge(address: string, debug: any) {
 
 export async function handleOPTreasuryPayouts(
   address: string,
-  debug: any,
+  meta: any,
 ): Promise<number> {
   const url = REGENSCORE_SQUID_OP;
   const query = `
@@ -403,7 +412,8 @@ export async function handleOPTreasuryPayouts(
     const transfers = result?.data?.transfers;
     const scoreAdded = transfers?.length > 0 ? 10 : 0;
 
-    debug.opTreasuryPayouts = {
+    meta.opTreasuryPayouts = {
+      ...meta.opTreasuryPayouts,
       transfers,
       scoreAdded,
     };
@@ -415,7 +425,7 @@ export async function handleOPTreasuryPayouts(
   }
 }
 
-export async function handleDelegate(address: string, debug: any) {
+export async function handleDelegate(address: string, meta: any) {
   const url = REGENSCORE_SQUID_OP;
   const query = `
       query MyQuery {
@@ -438,7 +448,8 @@ export async function handleDelegate(address: string, debug: any) {
     const delegates = result?.data?.delegates;
     const isDelegate = delegates?.length > 0;
     const scoreAdded = isDelegate ? 10 : 0;
-    debug.optimismDelegate = {
+    meta.optimismDelegate = {
+      ...meta.optimismDelegate,
       isDelegate,
       scoreAdded,
     };
@@ -449,13 +460,14 @@ export async function handleDelegate(address: string, debug: any) {
   }
 }
 
-export async function handleTxsMadeOnOptimism(address: string, debug: any) {
+export async function handleTxsMadeOnOptimism(address: string, meta: any) {
   const client = await getClient('optimism');
   const transactionCount = await client.getTransactionCount({
     address: address as Address,
   });
   const scoreAdded = transactionCount > 0 ? 10 : 0;
-  debug.txsMadeOnOptimism = {
+  meta.txsMadeOnOptimism = {
+    ...meta.txsMadeOnOptimism,
     scoreAdded,
     transactionCount,
   };
@@ -464,7 +476,7 @@ export async function handleTxsMadeOnOptimism(address: string, debug: any) {
 
 export async function handleOPContractsInteractions(
   address: string,
-  debug: any,
+  meta: any,
 ) {
   const { interactedWithContracts, deployedContracts, createdGnosisSafe } =
     await getAddressOPTxHistory(address);
@@ -472,7 +484,8 @@ export async function handleOPContractsInteractions(
   if (interactedWithContracts) scoreAdded += 10;
   if (deployedContracts) scoreAdded += 10;
   // if (createdGnosisSafe) scoreAdded += 10; // Commented as it's being checked in handleSafeOwnershipAndActivity
-  debug.optimismTxHistory = {
+  meta.optimismTxHistory = {
+    ...meta.optimismTxHistory,
     interactedWithContracts,
     deployedContracts,
     createdGnosisSafe,
@@ -483,7 +496,7 @@ export async function handleOPContractsInteractions(
 
 export async function handleSafeOwnershipAndActivity(
   address: string,
-  debug: any,
+  meta: any,
 ) {
   let scoreAdded = 0;
   const { ownsSafe, hasExecutedTransaction } =
@@ -491,7 +504,8 @@ export async function handleSafeOwnershipAndActivity(
 
   if (hasExecutedTransaction) scoreAdded += 10;
   if (ownsSafe) scoreAdded += 10;
-  debug.safeOwnerActivity = {
+  meta.safeOwnerActivity = {
+    ...meta.safeOwnerActivity,
     ownsSafe,
     hasExecutedTransaction,
     scoreAdded,
@@ -499,46 +513,48 @@ export async function handleSafeOwnershipAndActivity(
   return scoreAdded;
 }
 
-export async function handleOPAirdropReceiver(address: string, debug: any) {
+export async function handleOPAirdropReceiver(address: string, meta: any) {
   const opAirdropAddresses = await getAdressesAirdroppedOP();
   let score = 0;
   if (opAirdropAddresses[0].includes(address.toLowerCase())) {
     score += 100;
-    debug.opAirdrop = { firstDrop: true };
+    meta.opAirdrop = { ...meta.opAirdrop, firstDrop: true };
   }
   if (opAirdropAddresses[1].includes(address.toLowerCase())) {
     score += 50;
-    debug.opAirdrop = { secondDrop: true };
+    meta.opAirdrop = { ...meta.opAirdrop, secondDrop: true };
   }
 
-  debug.opAirdrop = { scoreAdded: score };
+  meta.opAirdrop = { ...meta.opAirdrop, scoreAdded: score };
 
   return score;
 }
 
-export async function handleGitcoinProjectOwner(address: string, debug: any) {
+export async function handleGitcoinProjectOwner(address: string, meta: any) {
   let scoreAdded = 0;
   const isProjectOwner = await hasAGitcoinProject(address);
   if (isProjectOwner) scoreAdded += 10;
-  debug.gitcoinProjectOwner = {
+  meta.gitcoinProjectOwner = {
+    ...meta.gitcoinProjectOwner,
     isProjectOwner,
     scoreAdded,
   };
   return scoreAdded;
 }
 
-export async function handleGitcoinPassport(address: string, debug: any) {
+export async function handleGitcoinPassport(address: string, meta: any) {
   let scoreAdded = 0;
   const gitcoinPassport = await fetchGitcoinPassport(getAddress(address));
   if (gitcoinPassport.score > 0) scoreAdded += 10;
-  debug.gitcoinPassport = {
+  meta.gitcoinPassport = {
+    ...meta.gitcoinPassport,
     passport: gitcoinPassport,
     scoreAdded,
   };
   return scoreAdded;
 }
 
-export async function handleRegenPOAPs(address: string, debug: any) {
+export async function handleRegenPOAPs(address: string, meta: any) {
   let scoreAdded = 0;
   try {
     const poaps = await fetchPOAPsForAddress(address);
@@ -548,7 +564,8 @@ export async function handleRegenPOAPs(address: string, debug: any) {
     const hasRegenPOAP = matchingRegenPOAPs.length > 0;
     if (hasRegenPOAP) scoreAdded += 10;
 
-    debug.regenPOAPs = {
+    meta.regenPOAPs = {
+      ...meta.regenPOAPs,
       poaps: matchingRegenPOAPs,
       hasRegenPOAP,
       scoreAdded,

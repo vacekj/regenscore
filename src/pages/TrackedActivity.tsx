@@ -1,4 +1,4 @@
-import { Check } from "@/components/Check";
+import { Check } from '@/components/Check';
 import {
   Table,
   Thead,
@@ -13,11 +13,50 @@ import {
   Box,
   Flex,
   Text,
-} from "@chakra-ui/react";
+} from '@chakra-ui/react';
 
-import React from "react";
+import React from 'react';
+
+import { useAccount } from 'wagmi';
+import { useScore } from '@/hooks';
+
+// TODO: FIX TYPE
+const ActivityRow = ({ activity }: any) => {
+  const source = activity.source || activity.network;
+  return (
+    <Tr>
+      <Td paddingLeft="0px">
+        <Text
+          variant={activity?.category?.toLowerCase()}
+          borderRadius="30px"
+          border="1px solid"
+          padding="7px 16px"
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          w={'fit-content'}
+        >
+          {activity.category}
+        </Text>
+      </Td>
+      <Td display="flex" gap="8px" alignItems="center" height="83px">
+        {source === 'Optimism' && <OptimismLogo />}
+        {source === 'Gitcoin' && <GitcoinLogo />}
+        {source === 'Giveth' && <GivethLogo />}
+        {source === 'Mainnet' && <EthLogo />}
+        {source}
+      </Td>
+      <Td>{activity.behavior}</Td>
+      <Td>{activity.value}</Td>
+      <Td>{activity.scoreAdded}</Td>
+    </Tr>
+  );
+};
 
 const TrackedActivity = () => {
+  const { address } = useAccount();
+  const { meta } = useScore(address);
+  console.log({ meta });
   return (
     <Flex flexDir="column" align="flex-center" justify="center" margin="0 54px">
       <Heading
@@ -45,7 +84,7 @@ const TrackedActivity = () => {
           <Thead>
             <Tr>
               <Th
-                style={{ borderBottom: "1px solid #F5B333" }}
+                style={{ borderBottom: '1px solid #F5B333' }}
                 fontFamily="Inter-Bold"
                 fontSize="24px"
                 color="brand.deepGreen.400"
@@ -55,7 +94,7 @@ const TrackedActivity = () => {
                 Taxonomy
               </Th>
               <Th
-                style={{ borderBottom: "1px solid #F5B333" }}
+                style={{ borderBottom: '1px solid #F5B333' }}
                 fontFamily="Inter-Bold"
                 fontSize="24px"
                 color="brand.deepGreen.400"
@@ -64,7 +103,7 @@ const TrackedActivity = () => {
                 Network
               </Th>
               <Th
-                style={{ borderBottom: "1px solid #F5B333" }}
+                style={{ borderBottom: '1px solid #F5B333' }}
                 fontFamily="Inter-Bold"
                 fontSize="24px"
                 color="brand.deepGreen.400"
@@ -74,10 +113,10 @@ const TrackedActivity = () => {
                 gap="8px"
               >
                 Behavior
-                <Check status={"WARNING2"} />
+                <Check status={'WARNING2'} />
               </Th>
               <Th
-                style={{ borderBottom: "1px solid #F5B333" }}
+                style={{ borderBottom: '1px solid #F5B333' }}
                 fontFamily="Inter-Bold"
                 fontSize="24px"
                 color="brand.deepGreen.400"
@@ -86,7 +125,7 @@ const TrackedActivity = () => {
                 Value
               </Th>
               <Th
-                style={{ borderBottom: "1px solid #F5B333" }}
+                style={{ borderBottom: '1px solid #F5B333' }}
                 fontFamily="Inter-Bold"
                 fontSize="24px"
                 color="brand.deepGreen.400"
@@ -96,218 +135,27 @@ const TrackedActivity = () => {
                 gap="8px"
               >
                 Points Earned
-                <Check status={"WARNING2"} />
+                <Check status={'WARNING2'} />
               </Th>
             </Tr>
           </Thead>
           <Tbody>
-            <Tr>
-              <Td paddingLeft="0px">
-                <Text
-                  variant="contribution"
-                  borderRadius="30px"
-                  border="1px solid"
-                  padding="7px 16px"
-                  display="flex"
-                  justifyContent="center"
-                  alignItems="center"
-                  w={"fit-content"}
-                >
-                  Contribution
-                </Text>
-              </Td>
-              <Td display="flex" gap="8px" alignItems="center" height="83px">
-                <OptimismLogo />
-                Optimism
-              </Td>
-              <Td>Received OP Airdrop</Td>
-              <Td>~$200</Td>
-              <Td>345 Points</Td>
-            </Tr>
-            <Tr>
-              <Td paddingLeft="0px">
-                <Text
-                  variant="contribution"
-                  borderRadius="30px"
-                  border="1px solid"
-                  padding="7px 16px"
-                  display="flex"
-                  justifyContent="center"
-                  alignItems="center"
-                  w={"fit-content"}
-                >
-                  Contribution
-                </Text>
-              </Td>
-              <Td display="flex" gap="8px" alignItems="center" height="83px">
-                <OptimismLogo />
-                Optimism
-              </Td>
-              <Td>Received OP Airdrop</Td>
-              <Td>Yes</Td>
-              <Td>248 Points</Td>
-            </Tr>
-            <Tr>
-              <Td paddingLeft="0px">
-                <Text
-                  variant="governance"
-                  borderRadius="30px"
-                  border="1px solid"
-                  padding="7px 16px"
-                  display="flex"
-                  justifyContent="center"
-                  alignItems="center"
-                  w={"fit-content"}
-                >
-                  Governance
-                </Text>
-              </Td>
-              <Td display="flex" gap="8px" alignItems="center" height="83px">
-                <OptimismLogo />
-                Optimism
-              </Td>
-              <Td>Participated in OP Snapshot Voting</Td>
-              <Td>Yes</Td>
-              <Td>248 Points</Td>
-            </Tr>
-            <Tr>
-              <Td paddingLeft="0px">
-                <Text
-                  variant="governance"
-                  borderRadius="30px"
-                  border="1px solid"
-                  padding="7px 16px"
-                  display="flex"
-                  justifyContent="center"
-                  alignItems="center"
-                  w={"fit-content"}
-                >
-                  Governance
-                </Text>
-              </Td>
-              <Td display="flex" gap="8px" alignItems="center" height="83px">
-                <OptimismLogo />
-                Optimism
-              </Td>
-              <Td>OP Citizen Badgeholder</Td>
-              <Td>Yes</Td>
-              <Td>248 Points</Td>
-            </Tr>
-            <Tr>
-              <Td paddingLeft="0px">
-                <Text
-                  variant="outreach"
-                  borderRadius="30px"
-                  border="1px solid"
-                  padding="7px 16px"
-                  display="flex"
-                  justifyContent="center"
-                  alignItems="center"
-                  w={"fit-content"}
-                >
-                  Outreach
-                </Text>
-              </Td>
-              <Td display="flex" gap="8px" alignItems="center" height="83px">
-                <GitcoinLogo />
-                Gitcoin
-              </Td>
-              <Td>Gitcoin Project owner</Td>
-              <Td>Yes</Td>
-              <Td>150 Points</Td>
-            </Tr>
-            <Tr>
-              <Td paddingLeft="0px">
-                <Text
-                  variant="security"
-                  borderRadius="30px"
-                  border="1px solid"
-                  padding="7px 16px"
-                  display="flex"
-                  justifyContent="center"
-                  alignItems="center"
-                  w={"fit-content"}
-                >
-                  Security
-                </Text>
-              </Td>
-              <Td display="flex" gap="8px" alignItems="center" height="83px">
-                <OptimismLogo />
-                Optimism
-              </Td>
-              <Td>OP tokens Holder</Td>
-              <Td>Yes</Td>
-              <Td>150 Points</Td>
-            </Tr>
-            <Tr>
-              <Td paddingLeft="0px">
-                <Text
-                  variant="security"
-                  borderRadius="30px"
-                  border="1px solid"
-                  padding="7px 16px"
-                  display="flex"
-                  justifyContent="center"
-                  alignItems="center"
-                  w={"fit-content"}
-                >
-                  Security
-                </Text>
-              </Td>
-              <Td display="flex" gap="8px" alignItems="center" height="83px">
-                <EthLogo />
-                Ethereum
-              </Td>
-              <Td>Staked Ethereum</Td>
-              <Td>Yes</Td>
-              <Td>150 Points</Td>
-            </Tr>
-            <Tr>
-              <Td paddingLeft="0px">
-                <Text
-                  variant="unitization"
-                  borderRadius="30px"
-                  border="1px solid"
-                  padding="7px 16px"
-                  display="flex"
-                  justifyContent="center"
-                  alignItems="center"
-                  w={"fit-content"}
-                >
-                  Unitization
-                </Text>
-              </Td>
-              <Td display="flex" gap="8px" alignItems="center" height="83px">
-                <OptimismLogo />
-                Optimism
-              </Td>
-              <Td>Deploy a Gnosis Safe</Td>
-              <Td>Yes</Td>
-              <Td>150 Points</Td>
-            </Tr>
-            <Tr>
-              <Td paddingLeft="0px">
-                <Text
-                  variant="outreach"
-                  borderRadius="30px"
-                  border="1px solid"
-                  padding="7px 16px"
-                  display="flex"
-                  justifyContent="center"
-                  alignItems="center"
-                  w={"fit-content"}
-                >
-                  Outreach
-                </Text>
-              </Td>
-              <Td display="flex" gap="8px" alignItems="center" height="83px">
-                <GivethLogo />
-                Giveth
-              </Td>
-              <Td>Donated on Giveth</Td>
-              <Td>~$300</Td>
-              <Td>150 Points</Td>
-            </Tr>
+            {meta &&
+              // TODO: FIX TYPE
+              Object.values(meta).map((activity: any, index) => (
+                <ActivityRow
+                  key={index}
+                  activity={activity}
+                  category={activity.category}
+                />
+              ))}
+            {meta &&
+              // TODO: FIX TYPE
+              (meta?.tokenBalances?.tokens).map(
+                (activity: any, index: string) => (
+                  <ActivityRow key={index} activity={activity} />
+                ),
+              )}
           </Tbody>
         </Table>
       </TableContainer>
