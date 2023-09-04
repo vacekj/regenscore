@@ -22,8 +22,8 @@ const apikey = '&apikey=' + ETHERSCAN_API_KEY;
 /** Gets all addresses that have received a payout from the OP treasury */
 export async function getAdressesAirdroppedOP(): Promise<[string[], string[]]> {
   /* First record is a header, so we drop it */
-  const [, ...op1] = await loadCSV('../data/op_airdrop_1.csv');
-  const [, ...op2] = await loadCSV('../data/op_airdrop_2.csv');
+  const [, ...op1] = await loadCSV('../public/data/op_airdrop_1.csv');
+  const [, ...op2] = await loadCSV('../public/data/op_airdrop_2.csv');
   return [op1.map((records) => records[0]), op2.map((records) => records[0])];
 }
 
