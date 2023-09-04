@@ -27,7 +27,7 @@ export default function Card() {
 
   const effectiveAddress = inputAddress || address || '';
 
-  const { score, debug } = useScore(effectiveAddress);
+  const { score, meta } = useScore(effectiveAddress);
   const [svg, setSvg] = useState<string>();
   useEffect(() => {
     createSvg(
@@ -158,7 +158,7 @@ export default function Card() {
       >
         {showDebug ? 'Hide Debug Info' : 'Show Debug Info'}
       </Button>
-      {showDebug && debug && (
+      {showDebug && meta && (
         <Box
           mt={6}
           p={4}
@@ -175,11 +175,11 @@ export default function Card() {
           </Heading>
           <pre style={{ whiteSpace: 'pre-wrap', wordWrap: 'break-word' }}>
             <code>
-              {Object.keys(debug).map((key) => (
+              {Object.keys(meta).map((key) => (
                 <Box key={key} mb={2}>
                   <Text fontWeight="bold">{key}:</Text>
                   <Text as="span" color={'gray.600'}>
-                    {JSON.stringify(debug[key], null, 2)}
+                    {JSON.stringify(meta[key], null, 2)}
                   </Text>
                 </Box>
               ))}

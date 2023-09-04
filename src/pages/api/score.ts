@@ -7,6 +7,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     return res.status(200).json(result); // send the entire result object as JSON
   } catch (e) {
-    return res.status(200).send({ score: 0, debug: {} }); // send an empty debug object on error
+    return res.status(200).send({ score: 0, meta: {} }); // send an empty debug object on error
   }
 };

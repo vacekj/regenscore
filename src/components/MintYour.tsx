@@ -1,4 +1,4 @@
-import { Check } from "@/components/Check";
+import { Check } from '@/components/Check';
 import {
   Box,
   Flex,
@@ -11,27 +11,32 @@ import {
   CardHeader,
   Text,
   Button,
-} from "@chakra-ui/react";
-import { useState } from "react";
+} from '@chakra-ui/react';
+import { useState, useEffect } from 'react';
+import { useAccount } from 'wagmi';
+import { useScore } from '@/hooks';
 
 const Slide1 = () => {
+  const { address } = useAccount();
+  const { score, categories } = useScore(address);
+
   return (
     <Grid
       templateColumns="auto 1fr"
       gap={4}
       w="full"
-      h={{ base: "auto", md: "616px" }}
-      borderRadius={{ base: "0", md: "32px 0 0 0" }}
+      h={{ base: 'auto', md: '616px' }}
+      borderRadius={{ base: '0', md: '32px 0 0 0' }}
       bg={`url(/images/leaf-bg.png)`}
       bgRepeat="no-repeat"
       bgSize="cover"
-      pl={{ base: "4", md: "82" }}
+      pl={{ base: '4', md: '82' }}
       pr="54px"
       borderWidth="1px 0px 1px 1px"
       borderColor="rgba(143, 164, 133)"
       borderStyle="solid"
-      borderBottomWidth={{ base: "0", md: "1px" }}
-      boxShadow={"-3px 2px 4px 0 rgba(0, 0, 0, 0.25)"}
+      borderBottomWidth={{ base: '0', md: '1px' }}
+      boxShadow={'-3px 2px 4px 0 rgba(0, 0, 0, 0.25)'}
     >
       <Box
         position="absolute"
@@ -39,7 +44,7 @@ const Slide1 = () => {
         left="0"
         right="0"
         bottom="0"
-        borderRadius={{ base: "0", md: "30px 0 0 0" }}
+        borderRadius={{ base: '0', md: '30px 0 0 0' }}
         bgColor="rgba(53, 71, 40, 0.8)"
         zIndex={1}
       />
@@ -48,183 +53,64 @@ const Slide1 = () => {
         flex="1"
         flexDirection="column"
         justifyContent="center"
-        alignItems={{ base: "center", md: "flex-start" }}
+        alignItems={{ base: 'center', md: 'flex-start' }}
         zIndex={2}
       >
         <Heading
           as="h2"
           variant="h2"
           color="brand.primaryOrange.300"
-          maxWidth={{ base: "342px", sm: "647px", md: "1100px" }}
+          maxWidth={{ base: '342px', sm: '647px', md: '1100px' }}
           minHeight="92px"
           textAlign="left"
-          mb={"49px"}
+          mb={'49px'}
           fontSize="48px"
         >
           Mint your attestations to <br /> access opportunities
         </Heading>
 
         <Grid templateColumns="repeat(20, 1fr)" gap={4} color="white">
-          <GridItem
-            colStart={1}
-            colEnd={2}
-            h="10"
-            display="flex"
-            gap="8px"
-            alignItems="center"
-          >
-            <Exclamation />
-            Utilization
-          </GridItem>
-          <GridItem
-            colStart={3}
-            colEnd={20}
-            h="10"
-            display="flex"
-            alignItems="center"
-            gap={4}
-          >
-            <Box
-              w={"100%"}
-              display={"flex"}
-              gap={"16px"}
-              alignItems={"center"}
-              justifyContent={"flex-start"}
-            >
-              <Box bg="white" flexBasis={"80%"} borderRadius="100px" h="10px" />
-              300
-            </Box>
-          </GridItem>
-          <GridItem
-            colStart={1}
-            colEnd={2}
-            h="10"
-            display="flex"
-            gap="8px"
-            alignItems="center"
-          >
-            <Exclamation />
-            Security
-          </GridItem>
-          <GridItem
-            colStart={3}
-            colEnd={20}
-            h="10"
-            display="flex"
-            alignItems="center"
-            gap={4}
-          >
-            <Box
-              w={"100%"}
-              display={"flex"}
-              gap={"16px"}
-              alignItems={"center"}
-              justifyContent={"flex-start"}
-            >
-              <Box
-                bg="white"
-                flexBasis={"100%"}
-                borderRadius="100px"
-                h="10px"
-              />
-              450
-            </Box>
-          </GridItem>
-          <GridItem
-            colStart={1}
-            colEnd={2}
-            h="10"
-            display="flex"
-            gap="8px"
-            alignItems="center"
-          >
-            <Exclamation />
-            Governance
-          </GridItem>
-          <GridItem
-            colStart={3}
-            colEnd={20}
-            h="10"
-            display="flex"
-            alignItems="center"
-            gap={4}
-          >
-            <Box
-              w={"100%"}
-              display={"flex"}
-              gap={"16px"}
-              alignItems={"center"}
-              justifyContent={"flex-start"}
-            >
-              <Box
-                bg="white"
-                flexBasis={"100%"}
-                borderRadius="100px"
-                h="10px"
-              />
-              450
-            </Box>
-          </GridItem>
-          <GridItem
-            colStart={1}
-            colEnd={2}
-            h="10"
-            display="flex"
-            gap="8px"
-            alignItems="center"
-          >
-            <Exclamation />
-            Contribution
-          </GridItem>
-          <GridItem
-            colStart={3}
-            colEnd={20}
-            h="10"
-            display="flex"
-            alignItems="center"
-            gap={4}
-          >
-            <Box
-              w={"100%"}
-              display={"flex"}
-              gap={"16px"}
-              alignItems={"center"}
-              justifyContent={"flex-start"}
-            >
-              <Box bg="white" flexBasis={"70%"} borderRadius="100px" h="10px" />
-              280
-            </Box>
-          </GridItem>
-          <GridItem
-            colStart={1}
-            colEnd={2}
-            h="10"
-            display="flex"
-            gap="8px"
-            alignItems="center"
-          >
-            <Exclamation />
-            Outreach
-          </GridItem>
-          <GridItem
-            colStart={3}
-            colEnd={20}
-            h="10"
-            display="flex"
-            alignItems="center"
-            gap={4}
-          >
-            <Box
-              w={"100%"}
-              display={"flex"}
-              gap={"16px"}
-              alignItems={"center"}
-              justifyContent={"flex-start"}
-            >
-              <Box bg="white" flexBasis={"60%"} borderRadius="100px" h="10px" />
-              200
-            </Box>
-          </GridItem>
+          {categories.map((categoryItem, index) => (
+            <>
+              <GridItem
+                colStart={1}
+                colEnd={2}
+                h="10"
+                display="flex"
+                gap="8px"
+                alignItems="center"
+                key={index}
+              >
+                <Exclamation />
+                {categoryItem.category}
+              </GridItem>
+              <GridItem
+                colStart={3}
+                colEnd={20}
+                h="10"
+                display="flex"
+                alignItems="center"
+                gap={4}
+                key={index + 'grid'}
+              >
+                <Box
+                  w={'100%'}
+                  display={'flex'}
+                  gap={'16px'}
+                  alignItems={'center'}
+                  justifyContent={'flex-start'}
+                >
+                  <Box
+                    bg="white"
+                    flexBasis={`${categoryItem.scoreAdded}%`}
+                    borderRadius="100px"
+                    h="10px"
+                  />
+                  {categoryItem.scoreAdded}
+                </Box>
+              </GridItem>
+            </>
+          ))}
         </Grid>
       </Flex>
       <Flex flex="1" zIndex={2} flexDirection="column" justifyContent="center">
@@ -248,19 +134,19 @@ const Slide1 = () => {
                 marginTop="98px"
                 marginLeft="337px"
               >
-                3167
+                {score || 0}
               </Heading>
             </Box>
           </CardHeader>
           <CardBody padding="0px" marginLeft="339px">
             <div
               style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "1.89px",
+                display: 'flex',
+                alignItems: 'center',
+                gap: '1.89px',
               }}
             >
-              <Check status={"WARNING2"} />
+              {/* <Check status={'WARNING2'} />
               <Text
                 fontSize="19.482px"
                 fontFamily="Inter-Regular"
@@ -268,16 +154,16 @@ const Slide1 = () => {
                 gap="10px"
               >
                 Top 10% of users
-              </Text>
+              </Text> */}
             </div>
             <div
               style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "1.89px",
+                display: 'flex',
+                alignItems: 'center',
+                gap: '1.89px',
               }}
             >
-              <Text
+              {/* <Text
                 fontSize="13px"
                 fontFamily="Inter-Regular"
                 color="#354728"
@@ -293,7 +179,7 @@ const Slide1 = () => {
                 opacity="0.5"
               >
                 3 Months Ago
-              </Text>
+              </Text> */}
             </div>
             <div>
               <Button variant="variant3" marginTop="46.76px">
@@ -329,7 +215,7 @@ const MintYour: React.FC = () => {
       {slides.map((slide, index) => (
         <VStack
           key={index}
-          display={index === currentSlide ? "flex" : "none"}
+          display={index === currentSlide ? 'flex' : 'none'}
           w="full"
           align="center"
           justify="center"
