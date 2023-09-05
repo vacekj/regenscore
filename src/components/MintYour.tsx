@@ -19,7 +19,7 @@ import { useScore, useEAS } from '@/hooks';
 
 const Slide1 = () => {
   const { address } = useAccount();
-  const { score, categories } = useScore(address);
+  const { score, categories, loading } = useScore(address);
   const { mintAttestation, lastAttestation } = useEAS(address);
   return (
     <Grid
@@ -36,7 +36,7 @@ const Slide1 = () => {
       borderWidth="1px 0px 1px 1px"
       borderColor="rgba(143, 164, 133)"
       borderStyle="solid"
-      borderBottomWidth={{ base: "0", md: "1px" }}
+      borderBottomWidth={{ base: '0', md: '1px' }}
       boxShadow="0px 0px 4px rgba(0, 0, 0, 0.25)"
     >
       <Box
@@ -138,7 +138,7 @@ const Slide1 = () => {
                 marginTop="98px"
                 marginLeft="337px"
               >
-                {score || 0}
+                {score || ''}
               </Heading>
             </Box>
           </CardHeader>
@@ -160,7 +160,7 @@ const Slide1 = () => {
                 Top 10% of users
               </Text> */}
             </div>
-            {lastAttestation && (
+            {lastAttestation && score && (
               <div
                 style={{
                   display: 'flex',
@@ -186,23 +186,29 @@ const Slide1 = () => {
               </div>
             )}
 
-            <div>
-              <Button
-                variant="variant3"
-                marginTop="26.76px"
-                onClick={() => {
-                  if (lastAttestation) {
-                    window.open(
-                      `https://sepolia.easscan.org/attestation/view/${lastAttestation.id}`,
-                    );
-                  } else {
-                    mintAttestation();
-                  }
-                }}
-              >
-                {lastAttestation ? 'VIEW ATTESTATION' : 'MINT NOW'}
-              </Button>
-            </div>
+            {score && (
+              <div>
+                <Button
+                  variant="variant3"
+                  marginTop="26.76px"
+                  onClick={() => {
+                    if (lastAttestation) {
+                      window.open(
+                        `https://sepolia.easscan.org/attestation/view/${lastAttestation.id}`,
+                      );
+                    } else {
+                      mintAttestation();
+                    }
+                  }}
+                >
+                  {lastAttestation
+                    ? 'VIEW ATTESTATION'
+                    : score
+                    ? 'MINT NOW'
+                    : ''}
+                </Button>
+              </div>
+            )}
           </CardBody>
         </Card>
       </Flex>
