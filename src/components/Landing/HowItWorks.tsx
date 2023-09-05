@@ -52,7 +52,14 @@ const HowItWorks: React.FC = () => {
         <BoxContent
           step={4}
           title="Help us improve"
-          content={`Join the Regen Score community and share your feedback and suggestions on how we can make it even better.`}
+          content={(
+            <>
+              Join the Regen Score community and{' '}
+              <Text fontWeight="bold" as="span">
+              <a href="https://tally.so/r/w4JpDA">share your feedback and suggestions</a></Text>{' '}
+              on how we can make it even better.
+            </>
+          )}
           last={true}
         />
       </Grid>
@@ -68,7 +75,7 @@ const BoxContent = ({
 }: {
   step: number;
   title: string;
-  content: string;
+  content: React.ReactNode;
   last?: boolean;
 }) => (
   <Flex
@@ -121,10 +128,11 @@ const BoxContent = ({
       display="inline-block"
       position="relative"
       pt="70px"
+      
     >
       {title}
     </Text>
-    <Text fontSize="16px" lineHeight="32px">
+    <Text fontSize="16px" lineHeight="32px" paddingRight={{ base: "0px", sm: "10px", md: "10px", lg: "10px", xl: "10px" }}>
       {content}
     </Text>
   </Flex>
