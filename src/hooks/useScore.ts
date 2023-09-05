@@ -13,7 +13,7 @@ type Item = {
   tokens?: Token[];
 };
 
-export function useScore(address: string | Hex | undefined) {
+function useScore(address: string | Hex | undefined) {
   const [loading, setLoading] = useState(true);
 
   const res = useSWR([address], async ([address]) => {
@@ -80,3 +80,5 @@ export function useScore(address: string | Hex | undefined) {
     ...res,
   };
 }
+
+export default useScore;
