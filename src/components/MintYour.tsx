@@ -12,14 +12,15 @@ import {
   Text,
   Button,
 } from '@chakra-ui/react';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useAccount } from 'wagmi';
-import { useScore } from '@/hooks';
+import { formatTimestamp } from '@/utils/strings';
+import { useScore, useEAS } from '@/hooks';
 
 const Slide1 = () => {
   const { address } = useAccount();
   const { score, categories } = useScore(address);
-
+  const { mintAttestation, lastAttestation } = useEAS(address);
   return (
     <Grid
       templateColumns="auto 1fr"
@@ -70,47 +71,50 @@ const Slide1 = () => {
         </Heading>
 
         <Grid templateColumns="repeat(20, 1fr)" gap={4} color="white">
-          {categories.map((categoryItem, index) => (
-            <>
-              <GridItem
-                colStart={1}
-                colEnd={2}
-                h="10"
-                display="flex"
-                gap="8px"
-                alignItems="center"
-                key={index}
-              >
-                <Exclamation />
-                {categoryItem.category}
-              </GridItem>
-              <GridItem
-                colStart={3}
-                colEnd={20}
-                h="10"
-                display="flex"
-                alignItems="center"
-                gap={4}
-                key={index + 'grid'}
-              >
-                <Box
-                  w={'100%'}
-                  display={'flex'}
-                  gap={'16px'}
-                  alignItems={'center'}
-                  justifyContent={'flex-start'}
+          {
+            // TODO: FIX TYPE
+            categories.map((categoryItem: any, index: number) => (
+              <>
+                <GridItem
+                  colStart={1}
+                  colEnd={2}
+                  h="10"
+                  display="flex"
+                  gap="8px"
+                  alignItems="center"
+                  key={index}
+                >
+                  <Exclamation />
+                  {categoryItem.category}
+                </GridItem>
+                <GridItem
+                  colStart={3}
+                  colEnd={20}
+                  h="10"
+                  display="flex"
+                  alignItems="center"
+                  gap={4}
+                  key={index + 'grid'}
                 >
                   <Box
-                    bg="white"
-                    flexBasis={`${categoryItem.scoreAdded}%`}
-                    borderRadius="100px"
-                    h="10px"
-                  />
-                  {categoryItem.scoreAdded}
-                </Box>
-              </GridItem>
-            </>
-          ))}
+                    w={'100%'}
+                    display={'flex'}
+                    gap={'16px'}
+                    alignItems={'center'}
+                    justifyContent={'flex-start'}
+                  >
+                    <Box
+                      bg="white"
+                      flexBasis={`${categoryItem.scoreAdded}%`}
+                      borderRadius="100px"
+                      h="10px"
+                    />
+                    {categoryItem.scoreAdded}
+                  </Box>
+                </GridItem>
+              </>
+            ))
+          }
         </Grid>
       </Flex>
       <Flex flex="1" zIndex={2} flexDirection="column" justifyContent="center">
@@ -156,34 +160,47 @@ const Slide1 = () => {
                 Top 10% of users
               </Text> */}
             </div>
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '1.89px',
-              }}
-            >
-              {/* <Text
-                fontSize="13px"
-                fontFamily="Inter-Regular"
-                color="#354728"
-                opacity="0.5"
+            {lastAttestation && (
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                }}
               >
-                Last Updated
-              </Text>
-              <Text
-                fontSize="13px"
-                fontFamily="Inter-Regular"
-                color="#354728"
-                ml="18px"
-                opacity="0.5"
-              >
-                3 Months Ago
-              </Text> */}
-            </div>
+                <Text
+                  fontSize="13px"
+                  fontFamily="Inter-Regular"
+                  color="#354728"
+                  opacity="0.5"
+                >
+                  Attestation Last Updated
+                </Text>
+                <Text
+                  fontSize="13px"
+                  fontFamily="Inter-Regular"
+                  color="#354728"
+                  opacity="0.5"
+                >
+                  {formatTimestamp(lastAttestation.timeCreated)}
+                </Text>
+              </div>
+            )}
+
             <div>
-              <Button variant="variant3" marginTop="46.76px">
-                MINT NOW
+              <Button
+                variant="variant3"
+                marginTop="26.76px"
+                onClick={() => {
+                  if (lastAttestation) {
+                    window.open(
+                      `https://sepolia.easscan.org/attestation/view/${lastAttestation.id}`,
+                    );
+                  } else {
+                    mintAttestation();
+                  }
+                }}
+              >
+                {lastAttestation ? 'VIEW ATTESTATION' : 'MINT NOW'}
               </Button>
             </div>
           </CardBody>
