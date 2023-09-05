@@ -20,6 +20,7 @@
     "@chakra-ui/react": "^2.8.0",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
+    "@ethereum-attestation-service/eas-sdk": "1.1.0-beta.3",
     "@web3modal/ethereum": "^2.7.1",
     "@web3modal/react": "^2.7.1",
     "csv-parse": "^5.4.0",
