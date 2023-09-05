@@ -22,6 +22,7 @@ const Slide1 = () => {
 
   return (
     <Grid
+
       templateColumns="auto 1fr"
       gap={4}
       w="full"
@@ -35,8 +36,8 @@ const Slide1 = () => {
       borderWidth="1px 0px 1px 1px"
       borderColor="rgba(143, 164, 133)"
       borderStyle="solid"
-      borderBottomWidth={{ base: '0', md: '1px' }}
-      boxShadow={'-3px 2px 4px 0 rgba(0, 0, 0, 0.25)'}
+      borderBottomWidth={{ base: "0", md: "1px" }}
+      boxShadow="0px 0px 4px rgba(0, 0, 0, 0.25)"
     >
       <Box
         position="absolute"

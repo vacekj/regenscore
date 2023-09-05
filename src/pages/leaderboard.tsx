@@ -14,6 +14,7 @@ export default function Mint() {
         pl="54px"
         pt="96px"
         justifyContent="flex-end"
+        boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
       >
         <MintYour />
       </Flex>

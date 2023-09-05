@@ -7,7 +7,7 @@ const HowItWorks: React.FC = () => {
       justify="center"
       p={4}
       maxWidth="1342px"
-      margin="47px auto"
+      margin="47px 38px"
     >
       <Heading
         as="h1"
