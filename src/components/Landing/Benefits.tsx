@@ -8,7 +8,7 @@ const Benefits: React.FC = () => {
     title: string;
     content: string;
   }) => (
-    <Box flex="1" maxWidth="428px" minWidth="304px" m="12px" textAlign="start">
+    <Box flex="1" maxWidth="428px" minWidth="304px" m="12px" textAlign="start" >
       <Flex
         minHeight="380px"
         flexDir="column"
@@ -65,8 +65,7 @@ const Benefits: React.FC = () => {
         textAlign="left"
         color="brand.primaryOrange.200"
       >
-        Benefits for Regen <br />
-        Community{' '}
+        Benefits for Regen Community{" "}
       </Heading>
       <Flex flexWrap="wrap" m="0 -12px" justifyContent="center">
         <BoxContent
