@@ -1,6 +1,6 @@
 import { ethers } from 'ethers';
 import { Address, formatUnits } from 'viem';
-import { fetchRequest, getClient, loadCSV } from '@/utils';
+import { fetchRequest, getClient } from '@/utils';
 import {
   GetERC20TransactionsResponse,
   GetNormalTransactionsResponse,
@@ -10,6 +10,9 @@ import {
   GitcoinProject,
 } from './sourceTypes';
 import ERC20 from '@/abi/ERC20';
+
+import OPAirdrop1 from '@/data/op_airdrop_1.json';
+import OPAirdrop2 from '@/data/op_airdrop_2.json';
 
 // CONSTANTS
 const GICOIN_SCORER_ID = '1603'; // Giveth's ID and API
@@ -21,10 +24,12 @@ const apikey = '&apikey=' + ETHERSCAN_API_KEY;
 
 /** Gets all addresses that have received a payout from the OP treasury */
 export async function getAdressesAirdroppedOP(): Promise<[string[], string[]]> {
-  /* First record is a header, so we drop it */
-  const [, ...op1] = await loadCSV('../public/data/op_airdrop_1.csv');
-  const [, ...op2] = await loadCSV('../public/data/op_airdrop_2.csv');
-  return [op1.map((records) => records[0]), op2.map((records) => records[0])];
+  const op1 = OPAirdrop1;
+  const op2 = OPAirdrop2;
+  return [
+    Object.values(op1).map((records: any) => records.address),
+    Object.values(op2).map((records: any) => records.address),
+  ];
 }
 
 // fetch ERC20 transactions from Etherscan
