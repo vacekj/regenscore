@@ -60,11 +60,17 @@ const Slide1 = () => {
       flexDirection="column"
       w="full"
       h={{ base: '416px', sm: '616px' }}
-      borderTopLeftRadius={{ base: "0px", sm: "32px", md: "32px", lg: "32px", xl: "32px" }}
+      borderTopLeftRadius={{
+        base: '0px',
+        sm: '32px',
+        md: '32px',
+        lg: '32px',
+        xl: '32px',
+      }}
       bg={`url(/images/leaf-bg.png)`}
       bgRepeat="no-repeat"
       bgSize="cover"
-      pl={{ base: "30px", sm: "41px", md: "61px", lg: "75px", xl: "88px" }}
+      pl={{ base: '30px', sm: '41px', md: '61px', lg: '75px', xl: '88px' }}
       justifyContent="center"
       borderWidth={{
         base: '0px 0px 0px 0px',
@@ -77,7 +83,6 @@ const Slide1 = () => {
       borderStyle="solid"
       borderBottomWidth={{ base: '0', md: '1px' }}
       boxShadow={'-3px 0px 4px 0 rgba(0, 0, 0, 0.25)'}
-      
     >
       {dropsImages.map((image, index) => (
         <Flex
@@ -123,7 +128,13 @@ const Slide1 = () => {
         left="0"
         right="0"
         bottom="0"
-        borderTopLeftRadius={{ base: "0px", sm: "32px", md: "32px", lg: "32px", xl: "32px" }}
+        borderTopLeftRadius={{
+          base: '0px',
+          sm: '32px',
+          md: '32px',
+          lg: '32px',
+          xl: '32px',
+        }}
         bgColor="rgba(53,71,40, 0.8)"
       />
       <Heading
