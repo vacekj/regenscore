@@ -246,6 +246,8 @@ export async function handleTokenBalances(
               behavior: `Holds ${token.name} tokens`,
               scoreAdded: addedScore,
               category: CATEGORIES.Outreach,
+              value: balance,
+              applies: !!addedScore,
             },
           ];
         }
@@ -277,6 +279,8 @@ export async function handleTokenBalances(
               name: list_of_balance_contract_optimism[key].name,
               scoreAdded: addedScore,
               category: CATEGORIES.Outreach,
+              value: balance,
+              applies: !!addedScore,
             },
           ];
         }
@@ -292,14 +296,23 @@ export async function handleGRDonations(
   address: string,
   meta: any,
 ): Promise<number> {
-  let score = 0;
+  let scoreAdded = 0;
   try {
     const grDonations = await fetchGRDonations(address);
-    if (grDonations.length > 0) score += 10;
+    if (grDonations.length > 0) {
+      scoreAdded += 10;
+      meta.grDonations = {
+        ...meta.grDonations,
+        scoreAdded,
+        value: grDonations.length,
+        applies: !!scoreAdded,
+      };
+    }
+    return scoreAdded;
   } catch (error) {
     console.error('Error fetching GR donations:', error);
+    return 0;
   }
-  return score;
 }
 
 export async function handleIsGTCHolder() {}
@@ -332,6 +345,8 @@ export async function handleEthStaker(address: string, meta: any) {
       ...meta.ethDeposits,
       ethDeposits,
       scoreAdded,
+      applies: !!scoreAdded,
+      value: ethDeposits?.length,
     };
     return scoreAdded;
   } catch (error) {
@@ -372,6 +387,8 @@ export async function handleOPBridge(address: string, meta: any) {
       ...meta.optimismBridges,
       opBridges,
       scoreAdded,
+      applies: !!scoreAdded,
+      value: opBridges?.length,
     };
     return scoreAdded;
   } catch (error) {
@@ -416,6 +433,8 @@ export async function handleOPTreasuryPayouts(
       ...meta.opTreasuryPayouts,
       transfers,
       scoreAdded,
+      applies: !!scoreAdded,
+      value: transfers?.length,
     };
 
     return scoreAdded;
@@ -452,6 +471,7 @@ export async function handleDelegate(address: string, meta: any) {
       ...meta.optimismDelegate,
       isDelegate,
       scoreAdded,
+      value: !!isDelegate,
     };
     return scoreAdded;
   } catch (error) {
@@ -470,6 +490,8 @@ export async function handleTxsMadeOnOptimism(address: string, meta: any) {
     ...meta.txsMadeOnOptimism,
     scoreAdded,
     transactionCount,
+    applies: !!scoreAdded,
+    value: transactionCount,
   };
   return scoreAdded;
 }
@@ -490,6 +512,8 @@ export async function handleOPContractsInteractions(
     deployedContracts,
     createdGnosisSafe,
     scoreAdded,
+    applies: !!scoreAdded,
+    value: interactedWithContracts || deployedContracts,
   };
   return scoreAdded;
 }
@@ -511,6 +535,8 @@ export async function handleSafeOwnershipAndActivity(
     hasExecutedTransaction: !!hasExecutedTransaction,
     belongsToTreasury: !!belongsToTreasury,
     scoreAdded,
+    applies: !!scoreAdded,
+    value: hasExecutedTransaction || ownsSafe,
   };
   return scoreAdded;
 }
@@ -527,7 +553,12 @@ export async function handleOPAirdropReceiver(address: string, meta: any) {
     meta.opAirdrop = { ...meta.opAirdrop, secondDrop: true };
   }
 
-  meta.opAirdrop = { ...meta.opAirdrop, scoreAdded: score };
+  meta.opAirdrop = {
+    ...meta.opAirdrop,
+    scoreAdded: score,
+    applies: !!score,
+    value: !!score,
+  };
 
   return score;
 }
@@ -540,6 +571,8 @@ export async function handleGitcoinProjectOwner(address: string, meta: any) {
     ...meta.gitcoinProjectOwner,
     isProjectOwner,
     scoreAdded,
+    applies: !!scoreAdded,
+    value: isProjectOwner,
   };
   return scoreAdded;
 }
@@ -552,6 +585,8 @@ export async function handleGitcoinPassport(address: string, meta: any) {
     ...meta.gitcoinPassport,
     passport: gitcoinPassport,
     scoreAdded,
+    applies: !!scoreAdded,
+    value: gitcoinPassport.score,
   };
   return scoreAdded;
 }
@@ -571,6 +606,8 @@ export async function handleRegenPOAPs(address: string, meta: any) {
       poaps: matchingRegenPOAPs,
       hasRegenPOAP,
       scoreAdded,
+      applies: !!scoreAdded,
+      value: hasRegenPOAP,
     };
 
     return scoreAdded;
