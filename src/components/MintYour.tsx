@@ -1,4 +1,3 @@
-import { Check } from '@/components/Check';
 import {
   Box,
   Flex,
@@ -11,16 +10,28 @@ import {
   CardHeader,
   Text,
   Button,
+  Tooltip,
+  Image,
 } from '@chakra-ui/react';
 import { useState } from 'react';
 import { useAccount } from 'wagmi';
+import { CATEGORY_TOOLTIP, TooltipProps } from '@/constants';
 import { formatTimestamp } from '@/utils/strings';
 import { useScore, useEAS } from '@/hooks';
+
+const CategoryTooltip: React.FC<TooltipProps> = ({ category }) => {
+  return (
+    <Tooltip label={CATEGORY_TOOLTIP[category]} placement="top-end">
+      <Image src="/icons/info.svg" />
+    </Tooltip>
+  );
+};
 
 const Slide1 = () => {
   const { address } = useAccount();
   const { score, categories, loading } = useScore(address);
   const { mintAttestation, lastAttestation } = useEAS(address);
+
   return (
     <Grid
       templateColumns="auto 1fr"
@@ -84,7 +95,7 @@ const Slide1 = () => {
                   alignItems="center"
                   key={index}
                 >
-                  <Exclamation />
+                  <CategoryTooltip category={categoryItem.category} />
                   {categoryItem.category}
                 </GridItem>
                 <GridItem
