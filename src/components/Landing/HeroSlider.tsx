@@ -60,17 +60,24 @@ const Slide1 = () => {
       flexDirection="column"
       w="full"
       h={{ base: '416px', sm: '616px' }}
-      borderRadius={{ base: '0', md: '32px 0 0 0' }}
+      borderTopLeftRadius={{ base: "0px", sm: "32px", md: "32px", lg: "32px", xl: "32px" }}
       bg={`url(/images/leaf-bg.png)`}
       bgRepeat="no-repeat"
       bgSize="cover"
-      pl={{ base: '4', md: '82' }}
+      pl={{ base: "30px", sm: "41px", md: "61px", lg: "75px", xl: "88px" }}
       justifyContent="center"
-      borderWidth="1px 0px 1px 1px"
+      borderWidth={{
+        base: '0px 0px 0px 0px',
+        sm: '1px 0px 1px 1px',
+        md: '1px 0px 1px 1px',
+        lg: '1px 0px 1px 1px',
+        xl: '1px 0px 1px 1px',
+      }}
       borderColor="rgba(143, 164, 133)"
       borderStyle="solid"
       borderBottomWidth={{ base: '0', md: '1px' }}
       boxShadow={'-3px 0px 4px 0 rgba(0, 0, 0, 0.25)'}
+      
     >
       {dropsImages.map((image, index) => (
         <Flex
@@ -81,8 +88,8 @@ const Slide1 = () => {
           width={image.dropSize}
           height={image.dropSize}
           transition={'all 0.4s ease'}
-          onMouseEnter={() => setCurrentDrop(index)}
-          onMouseLeave={() => setCurrentDrop(null)}
+          //onMouseEnter={() => setCurrentDrop(index)}
+          //onMouseLeave={() => setCurrentDrop(null)}
           _hover={{ transform: 'scale(1.1)' }}
           filter={{ base: 'brightness(70%)', sm: 'none' }}
         >
@@ -116,7 +123,7 @@ const Slide1 = () => {
         left="0"
         right="0"
         bottom="0"
-        borderRadius="32px 0 0 0"
+        borderTopLeftRadius={{ base: "0px", sm: "32px", md: "32px", lg: "32px", xl: "32px" }}
         bgColor="rgba(53,71,40, 0.8)"
       />
       <Heading
@@ -136,7 +143,7 @@ const Slide1 = () => {
       <Text
         variant="xLarge"
         color="white"
-        width={{ base: '100%', xl: '900px' }}
+        width={{ base: '100%', xl: '1221px' }}
         maxWidth={{ base: '100%', sm: '800px' }}
         minHeight={'115px'}
         lineHeight={{ base: '32px', sm: '57px' }}
