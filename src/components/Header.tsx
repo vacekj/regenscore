@@ -122,7 +122,7 @@ const Header: React.FC = () => {
         </Link>
         {!isDrawerMenu && (
           <Flex ml="70px" gap={{ base: 4, sm: '56px', md: '56px', xl: '56px' }}>
-            <Link href="/leaderboard">
+            <Link href="/profile">
               <Text variant={'boldLink'} textTransform={'uppercase'}>
                 My Profile
               </Text>
@@ -150,7 +150,7 @@ const Header: React.FC = () => {
                     <Link href="/">
                       <Text variant={'boldLink'}>Opportunities</Text>
                     </Link>
-                    <Link href="/leaderboard">
+                    <Link href="/profile">
                       <Text variant={'boldLink'}>My Profile</Text>
                     </Link>
                     <Link href="https://giveth.notion.site/Docs-Portal-d21fd8ee276f462d93e5a9083ec2ff8d">
