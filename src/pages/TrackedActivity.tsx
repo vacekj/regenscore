@@ -13,6 +13,7 @@ import {
   Box,
   Flex,
   Text,
+  Tooltip,
 } from '@chakra-ui/react';
 
 import React from 'react';
@@ -116,7 +117,14 @@ const TrackedActivity = () => {
                   gap="8px"
                 >
                   Behavior
-                  <Check status={'WARNING2'} />
+                  <Tooltip
+                    label="A concise description of the activity that resulted in the attestation"
+                    placement="top-end"
+                  >
+                    <div>
+                      <Check status={'WARNING2'} />
+                    </div>
+                  </Tooltip>
                 </Th>
                 <Th
                   style={{ borderBottom: '1px solid #F5B333' }}
@@ -138,7 +146,14 @@ const TrackedActivity = () => {
                   gap="8px"
                 >
                   Points Earned
-                  <Check status={'WARNING2'} />
+                  <Tooltip
+                    label="The number of points awarded for the activity. These points are used to calculate the user's Regen Score."
+                    placement="top-end"
+                  >
+                    <div>
+                      <Check status={'WARNING2'} />
+                    </div>
+                  </Tooltip>
                 </Th>
               </Tr>
             </Thead>
