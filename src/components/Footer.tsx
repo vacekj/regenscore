@@ -13,19 +13,19 @@ import {
 
 export default function Footer() {
   return (
-    <Container
+    <><Container
       fontSize="16px"
-      maxW="none"
+      maxW="1440px"
       p={0}
-      m={0}
+      m={{ base: "0px", sm: "0px", md: "0px", lg: "0px", xl: "auto" }}
       paddingRight={{
         base: "0px",
         sm: "40px",
         md: "40px",
         lg: "54px",
-        xl: "54px",
+        xl: "0px",
       }}
-      bg="backgroundOrange.400"
+      zIndex="2"
     >
       <Grid
         gridTemplateColumns={{ base: "1fr", sm: "6fr 3fr 3fr" }}
@@ -41,16 +41,14 @@ export default function Footer() {
                 style={{
                   display: "inline-block",
                   marginRight: "14px",
-                }}
-              />
+                }} />
               <Image
                 src={"/icons/regenscore.svg"}
                 alt="leaf"
                 style={{
                   display: "inline-block",
                   marginBottom: "4px",
-                }}
-              />
+                }} />
             </Box>
             <div style={{ marginTop: "40px" }}>
               <div style={{ marginBottom: "10px" }}>
@@ -100,7 +98,7 @@ export default function Footer() {
           </div>
         </GridItem>
 
-        <GridItem bg="white" borderTopRightRadius={{ base: "0px", sm: "32px" }}>
+        <GridItem bg="white" borderTopRightRadius={{ base: "0px", sm: "32px", md: "32px", lg: "32px", xl: "0px" }}>
           <div style={{ marginTop: "100px", marginLeft: "30px" }}>
             <div
               style={{
@@ -227,7 +225,14 @@ export default function Footer() {
           All rights reserved @2023
         </div>
       </Stack>
-    </Container>
+    </Container><Box display={{ base: "none", sm: "none", xl: "block" }}
+        bg="white"
+        height="408px"
+        width="100%"
+        position="absolute"
+        bottom="0"
+        left="0"
+        zIndex="1" /></>
   );
 }
 

@@ -5,9 +5,15 @@ const HowItWorks: React.FC = () => {
       flexDir="column"
       align="flex-start"
       justify="center"
-      p={4}
       maxWidth="1342px"
-      margin="47px 38px"
+      p={{ base: "16px", sm: "0px", md: "0px", lg: "0px", xl: "0px" }}
+      margin={{
+        base: '0px auto',
+        sm: '47px 40px',       
+        md: '47px 40px',       
+        lg: '47px 52px',       
+        xl: '47px auto',       
+      }}
     >
       <Heading
         as="h1"
@@ -21,30 +27,32 @@ const HowItWorks: React.FC = () => {
       <Grid
         templateColumns={{
           base: 'repeat(1, minmax(0, 375px))',
-          sm: 'repeat(2, minmax(0, 375px))',
+          sm: 'repeat(3, minmax(0, 375px))',
+          md: 'repeat(3, minmax(0, 375px))',
+          lg: 'repeat(3, minmax(0, 375px))',
           xl: 'repeat(4, minmax(0, 375px))',
         }}
         mt="48px"
       >
         <BoxContent
           step={1}
-          title="Set up your wallet"
-          content={`Follow the wallets setup process, either by creating a new wallet or importing an existing one`}
+          title="Connect your wallet"
+          content={`Connect your wallet to the Regen Score platform in order to track your activity on the blockchain and calculate your current Regen Score.`}
         />
         <BoxContent
           step={2}
-          title="Check your Attestation"
-          content={`Follow the wallet's setup process, either by creating a new wallet or importing an existing one.`}
+          title="Check out your profile"
+          content={`See your Regen Score and learn more about how it is calculated. Check out the attestations earned, which are statements that verify your impact.`}
         />
         <BoxContent
           step={3}
-          title="Improve your Regen score"
-          content={`Follow the wallet's setup process, either by creating a new wallet or importing an existing one.`}
+          title="Share & inspire"
+          content={`Share the impact of your activities on the world and encourage others to get involved!`}
         />
         <BoxContent
           step={4}
-          title="Leaderboard"
-          content={`Follow the wallet's setup process, either by creating a new wallet or importing an existing one.`}
+          title="Help us improve"
+          content={`Join the Regen Score community and share your feedback and suggestions on how we can make it even better.`}
           last={true}
         />
       </Grid>
@@ -70,7 +78,7 @@ const BoxContent = ({
     pr={['32px']}
     borderRadius="25px"
     textAlign="start"
-    justifyContent="center"
+    justifyContent="flex-start"
     gap="32px"
     mb={{ base: 0, sm: '4', md: '0' }}
     position="relative"
@@ -92,15 +100,15 @@ const BoxContent = ({
       top="8px"
       left="16px"
       color="black"
-      zIndex={2}
+      zIndex={1}
       _before={{
         content: '""',
         position: 'absolute',
-        width: last ? '0' : { base: 0, sm: '190px', md: '314px', xl: '266px' },
+        width: last ? '0' : { base: 0, sm: '250px', md: '314px', xl: '277px' },
         height: '2px',
         backgroundColor: 'brand.primaryOrange.200',
-        top: '50%',
-        left: '46px',
+        top: '48%',
+        left: '45px',
       }}
     >
       {step}
@@ -112,6 +120,7 @@ const BoxContent = ({
       fontSize="24px"
       display="inline-block"
       position="relative"
+      pt="70px"
     >
       {title}
     </Text>
