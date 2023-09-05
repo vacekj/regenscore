@@ -22,7 +22,6 @@ const Slide1 = () => {
 
   return (
     <Grid
-
       templateColumns="auto 1fr"
       gap={4}
       w="full"
