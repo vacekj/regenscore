@@ -122,7 +122,7 @@ const Header: React.FC = () => {
         </Link>
         {!isDrawerMenu && (
           <Flex ml="70px" gap={{ base: 4, sm: '56px', md: '56px', xl: '56px' }}>
-            <Link href="/leaderboard">
+            <Link href="/profile">
               <Text variant={'boldLink'} textTransform={'uppercase'}>
                 My Profile
               </Text>

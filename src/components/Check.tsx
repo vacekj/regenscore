@@ -120,21 +120,22 @@ const CrossIcon = () => (
 );
 
 type Status =
-  | "NOT_STARTED"
-  | "IN_PROGRESS"
-  | "SUCCESS"
-  | "WARNING"
-  | "ERROR"
-  | "WARNING2"
-  | "GTCLOGO"
-  | "GIVETHLOGO"
-  | "OPLOGO"
-  | "ETHLOGO";
+  | 'NOT_STARTED'
+  | 'IN_PROGRESS'
+  | 'SUCCESS'
+  | 'WARNING'
+  | 'ERROR'
+  | 'WARNING2'
+  | 'GTCLOGO'
+  | 'GIVETHLOGO'
+  | 'OPLOGO'
+  | 'ETHLOGO';
 
 type CheckProps = {
   status: Status;
 };
 
+// TODO: Move all this to Image component
 export function Check(props: CheckProps) {
   if (props.status === 'SUCCESS') {
     return <CheckedIcon />;
@@ -146,7 +147,7 @@ export function Check(props: CheckProps) {
     return <CrossIcon />;
   } else if (props.status === 'WARNING') {
     return <ExclamationIcon />;
-  } else if (props.status === "WARNING2") {
+  } else if (props.status === 'WARNING2') {
     return <ExclamationIconTwo />;
   }
 }

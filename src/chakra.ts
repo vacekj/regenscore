@@ -27,14 +27,21 @@ export const theme = extendTheme({
   },
 
   breakpoints: {
-    base: "375px", //mobile
-    sm: "768px", //760-1023px
-    md: "1024px", //1024-1279px
-    lg: "1280px", //1280-1439px
-    xl: "1440px", //1440 and more
+    base: '375px', //mobile
+    sm: '768px', //760-1023px
+    md: '1024px', //1024-1279px
+    lg: '1280px', //1280-1439px
+    xl: '1440px', //1440 and more
   },
 
   components: {
+    Tooltip: {
+      baseStyle: {
+        placement: 'top-end',
+        bgColor: 'brand.deepGreen.400',
+        p: 4,
+      },
+    },
     Button: {
       baseStyle: {
         fontSize: '16px',

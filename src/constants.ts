@@ -1,3 +1,15 @@
+type CategoryTooltipType = {
+  Contributor: string;
+  Governance: string;
+  Outreach: string;
+  Security: string;
+  Utilization: string;
+};
+
+export interface TooltipProps {
+  category: keyof CategoryTooltipType;
+}
+
 export enum CATEGORIES {
   Contributor = 'Contributor',
   Governance = 'Governance',
@@ -5,6 +17,19 @@ export enum CATEGORIES {
   Security = 'Security',
   Utilization = 'Utilization',
 }
+
+export const CATEGORY_TOOLTIP: CategoryTooltipType = {
+  Contributor:
+    'Measure of user contribution to community development. Including payment from treasury, holding contributor POAPs…',
+  Governance:
+    'Measure of user participation in community governance. Including voting, submitting proposals…',
+  Outreach:
+    'Measure of user efforts to promote the community. Including donations to public goods, participation in Regen project governance…',
+  Security:
+    ' Measure of user contribution to network security. Including holding tokens, providing liquidity…',
+  Utilization:
+    'Measure of user activity on the network. Including transactions, contract interactions and deployment…',
+};
 
 export const SOURCES = {
   Mainnet: {
