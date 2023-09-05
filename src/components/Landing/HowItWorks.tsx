@@ -6,13 +6,13 @@ const HowItWorks: React.FC = () => {
       align="flex-start"
       justify="center"
       maxWidth="1342px"
-      p={{ base: "16px", sm: "0px", md: "0px", lg: "0px", xl: "0px" }}
+      p={{ base: '16px', sm: '0px', md: '0px', lg: '0px', xl: '0px' }}
       margin={{
         base: '0px auto',
-        sm: '47px 40px',       
-        md: '47px 40px',       
-        lg: '47px 52px',       
-        xl: '47px auto',       
+        sm: '47px 40px',
+        md: '47px 40px',
+        lg: '47px 52px',
+        xl: '47px auto',
       }}
     >
       <Heading

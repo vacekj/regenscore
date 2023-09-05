@@ -92,26 +92,45 @@ const Header: React.FC = () => {
       left="0"
       right="0"
       zIndex="10"
-      paddingLeft={{ base: "0px", sm: "24px", md: "24px", lg: "38px", xl: "38px" }}
-      paddingRight={{ base: "0px", sm: "20px", md: "24px", lg: "38px", xl: "38px" }}
+      paddingLeft={{
+        base: '0px',
+        sm: '24px',
+        md: '24px',
+        lg: '38px',
+        xl: '38px',
+      }}
+      paddingRight={{
+        base: '0px',
+        sm: '20px',
+        md: '24px',
+        lg: '38px',
+        xl: '38px',
+      }}
       transition="all 0.3s ease-in-out"
       transform={visible ? 'translateY(0)' : 'translateY(-100%)'}
     >
       <Flex p="4" gap={5} alignItems="center" height="100px">
-        <Link href="/" >
+        <Link href="/">
           <Image src={'/icons/leaf.svg'} alt="Logo" />
         </Link>
-        <Link href="/" >
-        <Image src={'/icons/logo-header.svg'} alt="Logo" display={{ base: "none", sm: "block" }}/>
+        <Link href="/">
+          <Image
+            src={'/icons/logo-header.svg'}
+            alt="Logo"
+            display={{ base: 'none', sm: 'block' }}
+          />
         </Link>
         {!isDrawerMenu && (
-          <Flex ml="70px" gap={{ base: 4, sm:"56px", md: "56px", xl: "56px" }}>
+          <Flex ml="70px" gap={{ base: 4, sm: '56px', md: '56px', xl: '56px' }}>
             <Link href="/leaderboard">
               <Text variant={'boldLink'} textTransform={'uppercase'}>
                 My Profile
               </Text>
             </Link>
-            <Link href="https://giveth.notion.site/Docs-Portal-d21fd8ee276f462d93e5a9083ec2ff8d" target="_blank">
+            <Link
+              href="https://giveth.notion.site/Docs-Portal-d21fd8ee276f462d93e5a9083ec2ff8d"
+              target="_blank"
+            >
               <Text variant={'boldLink'} textTransform={'uppercase'}>
                 Docs
               </Text>
@@ -155,4 +174,3 @@ const Header: React.FC = () => {
 };
 
 export default Header;
-
