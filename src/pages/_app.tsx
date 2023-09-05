@@ -4,8 +4,9 @@ import {
   w3mProvider,
 } from '@web3modal/ethereum';
 import { Web3Modal } from '@web3modal/react';
+import { infuraProvider } from 'wagmi/providers/infura';
 import { configureChains, createConfig, WagmiConfig } from 'wagmi';
-import { optimism, optimismGoerli } from 'wagmi/chains';
+import { optimism, optimismGoerli, sepolia } from 'wagmi/chains';
 
 import { AnimatePresence } from 'framer-motion';
 import { ChakraProvider } from '@chakra-ui/react';
@@ -14,10 +15,13 @@ import Head from 'next/head';
 import { theme } from '@/chakra';
 import './styles.css';
 
-const chains = [optimism, optimismGoerli];
+const chains = [optimism, optimismGoerli, sepolia];
 const projectId = 'df4f5f1b03670ef123bd5ee18401d0de';
 
-const { publicClient } = configureChains(chains, [w3mProvider({ projectId })]);
+const { publicClient } = configureChains(chains, [
+  w3mProvider({ projectId }),
+  infuraProvider({ apiKey: process.env.NEXT_PUBLIC_INFURA_PROJECT_ID! }),
+]);
 const wagmiConfig = createConfig({
   autoConnect: true,
   connectors: w3mConnectors({ projectId, chains }),

@@ -69,7 +69,7 @@ export const theme = extendTheme({
         variant3: {
           // Mint Now
           fontSize: '14px',
-          width: '134.75px',
+          minWidth: '134.75px',
           height: '45.46px',
           backgroundColor: '#FFF',
           color: 'brand.deepGreen.400',
