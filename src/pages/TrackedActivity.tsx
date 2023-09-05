@@ -23,6 +23,8 @@ import { useScore } from '@/hooks';
 // TODO: FIX TYPE
 const ActivityRow = ({ activity }: any) => {
   const source = activity.source || activity.network;
+  // TODO: Fix this by improving the sources
+  if (activity?.tokens) return null;
   return (
     <Tr>
       <Td paddingLeft="0px">
@@ -47,7 +49,7 @@ const ActivityRow = ({ activity }: any) => {
         {source}
       </Td>
       <Td>{activity.behavior}</Td>
-      <Td>{activity.value}</Td>
+      <Td>{activity.value.toString()}</Td>
       <Td>{activity.scoreAdded}</Td>
     </Tr>
   );
@@ -55,8 +57,8 @@ const ActivityRow = ({ activity }: any) => {
 
 const TrackedActivity = () => {
   const { address } = useAccount();
-  const { meta } = useScore(address);
-  console.log({ meta });
+  const { meta, loading } = useScore(address);
+
   return (
     <Flex flexDir="column" align="flex-center" justify="center" margin="0 54px">
       <Heading
@@ -73,92 +75,96 @@ const TrackedActivity = () => {
         Check out the details of your activities
       </Text>
 
-      <TableContainer
-        borderRadius="8"
-        bg="brand.beige.400"
-        shadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
-        padding="28px 32px 16px 32px"
-        mb="94px"
-      >
-        <Table size="lg">
-          <Thead>
-            <Tr>
-              <Th
-                style={{ borderBottom: '1px solid #F5B333' }}
-                fontFamily="Inter-Bold"
-                fontSize="24px"
-                color="brand.deepGreen.400"
-                textTransform="capitalize"
-                paddingLeft="0px"
-              >
-                Taxonomy
-              </Th>
-              <Th
-                style={{ borderBottom: '1px solid #F5B333' }}
-                fontFamily="Inter-Bold"
-                fontSize="24px"
-                color="brand.deepGreen.400"
-                textTransform="capitalize"
-              >
-                Network
-              </Th>
-              <Th
-                style={{ borderBottom: '1px solid #F5B333' }}
-                fontFamily="Inter-Bold"
-                fontSize="24px"
-                color="brand.deepGreen.400"
-                textTransform="capitalize"
-                display="flex"
-                alignItems="center"
-                gap="8px"
-              >
-                Behavior
-                <Check status={'WARNING2'} />
-              </Th>
-              <Th
-                style={{ borderBottom: '1px solid #F5B333' }}
-                fontFamily="Inter-Bold"
-                fontSize="24px"
-                color="brand.deepGreen.400"
-                textTransform="capitalize"
-              >
-                Value
-              </Th>
-              <Th
-                style={{ borderBottom: '1px solid #F5B333' }}
-                fontFamily="Inter-Bold"
-                fontSize="24px"
-                color="brand.deepGreen.400"
-                textTransform="capitalize"
-                display="flex"
-                alignItems="center"
-                gap="8px"
-              >
-                Points Earned
-                <Check status={'WARNING2'} />
-              </Th>
-            </Tr>
-          </Thead>
-          <Tbody>
-            {meta &&
-              // TODO: FIX TYPE
-              Object.values(meta).map((activity: any, index) => (
-                <ActivityRow
-                  key={index}
-                  activity={activity}
-                  category={activity.category}
-                />
-              ))}
-            {meta &&
-              // TODO: FIX TYPE
-              (meta?.tokenBalances?.tokens).map(
-                (activity: any, index: string) => (
-                  <ActivityRow key={index} activity={activity} />
-                ),
-              )}
-          </Tbody>
-        </Table>
-      </TableContainer>
+      {meta && (
+        <TableContainer
+          borderRadius="8"
+          bg="brand.beige.400"
+          shadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
+          padding="28px 32px 16px 32px"
+          mb="94px"
+        >
+          <Table size="lg">
+            <Thead>
+              <Tr>
+                <Th
+                  style={{ borderBottom: '1px solid #F5B333' }}
+                  fontFamily="Inter-Bold"
+                  fontSize="24px"
+                  color="brand.deepGreen.400"
+                  textTransform="capitalize"
+                  paddingLeft="0px"
+                >
+                  Taxonomy
+                </Th>
+                <Th
+                  style={{ borderBottom: '1px solid #F5B333' }}
+                  fontFamily="Inter-Bold"
+                  fontSize="24px"
+                  color="brand.deepGreen.400"
+                  textTransform="capitalize"
+                >
+                  Network
+                </Th>
+                <Th
+                  style={{ borderBottom: '1px solid #F5B333' }}
+                  fontFamily="Inter-Bold"
+                  fontSize="24px"
+                  color="brand.deepGreen.400"
+                  textTransform="capitalize"
+                  display="flex"
+                  alignItems="center"
+                  gap="8px"
+                >
+                  Behavior
+                  <Check status={'WARNING2'} />
+                </Th>
+                <Th
+                  style={{ borderBottom: '1px solid #F5B333' }}
+                  fontFamily="Inter-Bold"
+                  fontSize="24px"
+                  color="brand.deepGreen.400"
+                  textTransform="capitalize"
+                >
+                  Value
+                </Th>
+                <Th
+                  style={{ borderBottom: '1px solid #F5B333' }}
+                  fontFamily="Inter-Bold"
+                  fontSize="24px"
+                  color="brand.deepGreen.400"
+                  textTransform="capitalize"
+                  display="flex"
+                  alignItems="center"
+                  gap="8px"
+                >
+                  Points Earned
+                  <Check status={'WARNING2'} />
+                </Th>
+              </Tr>
+            </Thead>
+            <Tbody>
+              {meta &&
+                // TODO: FIX TYPE
+                Object.values(meta)
+                  .filter((key: any) => !!key.applies)
+                  .map((activity: any, index) => (
+                    <ActivityRow
+                      key={index}
+                      activity={activity}
+                      category={activity.category}
+                    />
+                  ))}
+              {meta &&
+                // TODO: FIX TYPE
+                (meta?.tokenBalances?.tokens)
+                  .filter((key: any) => !!key.applies)
+                  .map((activity: any, index: string) => (
+                    <ActivityRow key={index} activity={activity} />
+                  ))}
+            </Tbody>
+          </Table>
+        </TableContainer>
+      )}
     </Flex>
   );
 };
