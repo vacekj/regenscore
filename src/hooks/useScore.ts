@@ -18,8 +18,8 @@ function useScore(address: string | Hex | undefined) {
 
   const res = useSWR([address], async ([address]) => {
     try {
+      if (!address) return setLoading;
       setLoading(true);
-      if (!address) return null;
       const res = await fetch('/api/score', {
         method: 'POST',
         headers: {
@@ -37,7 +37,6 @@ function useScore(address: string | Hex | undefined) {
       return { error };
     }
   });
-
   const [categories, setCategories] = useState<
     { category: string; scoreAdded: number }[]
   >([]);
