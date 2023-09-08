@@ -52,7 +52,7 @@ const Hero: React.FC = () => {
       templateRows={['repeat(3,max-content)', 'repeat(2, 1fr)']}
       pl={[0, '82px']}
       pr={[0, '54px']}
-      pt={[0, "100px"]}
+      pt={[0, '100px']}
       pb={[0, 79]}
       gap={4}
       w="full"
@@ -85,10 +85,10 @@ const Hero: React.FC = () => {
         maxWidth={{ base: 'auto', sm: '647px', md: '1100px' }}
         minHeight="92px"
         textAlign="left"
-        fontSize={["44px", "48px"]}
+        fontSize={['44px', '48px']}
         px={[30]}
         zIndex="2"
-        pt={[0, "20px"]}
+        pt={[0, '20px']}
       >
         Mint your attestations to <br /> access opportunities
       </Heading>
@@ -199,13 +199,13 @@ const Hero: React.FC = () => {
         backgroundColor={['brand.backgroundOrange.400', 'transparent']}
         templateRows={`repeat(${categories.length},1fr)`}
         templateColumns={'max-content 1fr'}
-        gap={["36px", 8]}
+        gap={['36px', 8]}
         color={['brand.deepGreen.400', 'white']}
         alignItems={'center'}
         pb={[79, 0]}
-        pt={["70px", 0]}
+        pt={['70px', 0]}
         mt={[-50, 0]}
-        px={['20px', "30px"]}
+        px={['20px', '30px']}
         zIndex={2}
       >
         {
