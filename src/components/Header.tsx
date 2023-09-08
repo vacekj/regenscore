@@ -62,7 +62,7 @@ const Header: React.FC = () => {
   const Web3Content = () => {
     return (
       <>
-        {isConnected && (
+        {isConnected && !isMobile && (
           <StyledWeb3NetworkSwitch>
             <Web3NetworkSwitch />
           </StyledWeb3NetworkSwitch>
@@ -70,11 +70,11 @@ const Header: React.FC = () => {
         {isConnected ? (
           <Web3Button />
         ) : (
-          <Button onClick={() => open()} variant="variant1">
+          <Button size={['md', 'lg']} onClick={() => open()} variant="variant1">
             Connect Wallet
           </Button>
         )}
-        {score && (
+        {score && !isMobile && (
           <Text variant={'bold'} textTransform={'uppercase'}>
             Score: {score}
           </Text>
@@ -158,7 +158,7 @@ const Header: React.FC = () => {
               </DrawerContent>
             </DrawerOverlay>
           </Drawer>
-          {!isMobile && <Web3Content />}
+          <Web3Content />
           {isDrawerMenu && (
             <a onClick={onOpen}>
               <Image src="/icons/drawer.svg" alt="Drawer" />

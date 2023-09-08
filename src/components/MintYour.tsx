@@ -12,6 +12,8 @@ import {
   Button,
   Tooltip,
   Image,
+  Icon,
+  ChakraProps,
 } from '@chakra-ui/react';
 import React from 'react';
 import { useAccount } from 'wagmi';
@@ -19,13 +21,25 @@ import { CATEGORY_TOOLTIP, TooltipProps } from '@/constants';
 import { formatTimestamp } from '@/utils/strings';
 import { useScore, useEAS } from '@/hooks';
 
-const CategoryTooltip: React.FC<TooltipProps> = ({ category }) => {
+function InfoIcon(props: ChakraProps) {
   return (
-    <Tooltip label={CATEGORY_TOOLTIP[category]} placement="top-end">
-      <Image src="/icons/info.svg" />
-    </Tooltip>
+    <Icon width="16" height="16" viewBox="0 0 16 16" fill="none" {...props}>
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M16 8C16 12.4183 12.4183 16 8 16C3.58172 16 0 12.4183 0 8C0 3.58172 3.58172 0 8 0C12.4183 0 16 3.58172 16 8ZM15 8C15 11.866 11.866 15 8 15C4.13401 15 1 11.866 1 8C1 4.13401 4.13401 1 8 1C11.866 1 15 4.13401 15 8Z"
+        fill="currentColor"
+      />
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M8 13C7.72386 13 7.5 12.7761 7.5 12.5L7.5 6.5C7.5 6.22386 7.72386 6 8 6C8.27614 6 8.5 6.22386 8.5 6.5L8.5 12.5C8.5 12.7761 8.27614 13 8 13Z"
+        fill="currentColor"
+      />
+      <circle cx="8" cy="4" r="1" fill="currentColor" />
+    </Icon>
   );
-};
+}
 
 const Hero: React.FC = () => {
   const { address } = useAccount();
@@ -34,24 +48,24 @@ const Hero: React.FC = () => {
 
   return (
     <Grid
-      templateColumns="repeat(2, 1fr)"
-      templateRows="repeat(2, 1fr)"
-      pl={{ base: '4', md: '82' }}
-      pr="54px"
-      pt={100}
-      pb={79}
+      templateColumns={['1fr', 'repeat(2, 1fr)']}
+      templateRows={['repeat(3,max-content)', 'repeat(2, 1fr)']}
+      pl={[0, '82px']}
+      pr={[0, '54px']}
+      pt={[100]}
+      pb={[0, 79]}
       gap={4}
       w="full"
       h={{ base: 'auto', md: '616px' }}
-      // bg={`url(/images/leaf-bg.png)`}
+      bg={`url(/images/leaf-bg.png)`}
       bgRepeat="no-repeat"
       bgSize="cover"
       borderRadius={{ base: '0', md: '32px 0 0 0' }}
-      borderWidth="1px 0px 1px 1px"
+      borderWidth={[0, '1px 0px 1px 1px']}
       borderColor="rgba(143, 164, 133)"
       borderStyle="solid"
       borderBottomWidth={{ base: '0', md: '1px' }}
-      boxShadow="0px 0px 4px rgba(0, 0, 0, 0.25)"
+      boxShadow={[0, '0px 0px 4px rgba(0, 0, 0, 0.25)']}
     >
       {/*<Box*/}
       {/*  position="absolute"*/}
@@ -68,56 +82,59 @@ const Hero: React.FC = () => {
         as="h2"
         variant="h2"
         color="brand.primaryOrange.300"
-        maxWidth={{ base: '342px', sm: '647px', md: '1100px' }}
+        maxWidth={{ base: 'auto', sm: '647px', md: '1100px' }}
         minHeight="92px"
         textAlign="left"
         fontSize="48px"
+        px={[30]}
       >
         Mint your attestations to <br /> access opportunities
       </Heading>
 
       {/* Orange Card with score */}
       <GridItem
-        rowSpan={2}
+        rowSpan={[1, 2]}
         display={'flex'}
         flex="1"
-        zIndex={2}
         flexDirection="column"
         justifyContent="center"
       >
         <Card
-          width="654px"
+          width={['auto', '654px']}
           height="451px"
           borderRadius="16.235px"
-          margin="0 auto"
           background="linear-gradient(180deg, #F9DD94 0%, #FFC555 100%)"
           border="0.812px solid rgba(255, 255, 255, 0.50)"
           mt="17.5px"
         >
-          <CardHeader padding="0px">
-            <Box>
-              <Heading
-                as="h3"
-                variant="h3"
-                fontWeight="bold"
-                fontSize="100px"
-                color="#FFF"
-                marginTop="98px"
-                marginLeft="337px"
-              >
-                {score || ''}
-              </Heading>
-            </Box>
+          <CardHeader padding="0px" textAlign={'center'}>
+            <Heading
+              as="h3"
+              variant="h3"
+              fontWeight="bold"
+              fontSize="100px"
+              color="#FFF"
+              marginTop="98px"
+              marginLeft={[0, '337px']}
+            >
+              {score || ''}
+            </Heading>
           </CardHeader>
-          <CardBody padding="0px" marginLeft="339px">
-            <div
+          <CardBody
+            padding="0px"
+            marginLeft={[0, '339px']}
+            display={'flex'}
+            alignItems={'center'}
+            justifyContent={'center'}
+          >
+            {/*<div
               style={{
                 display: 'flex',
                 alignItems: 'center',
                 gap: '1.89px',
               }}
             >
-              {/* <Check status={'WARNING2'} />
+              <Check status={'WARNING2'} />
               <Text
                 fontSize="19.482px"
                 fontFamily="Inter-Regular"
@@ -125,8 +142,8 @@ const Hero: React.FC = () => {
                 gap="10px"
               >
                 Top 10% of users
-              </Text> */}
-            </div>
+              </Text>
+            </div>*/}
             {lastAttestation && score && (
               <div
                 style={{
@@ -154,27 +171,21 @@ const Hero: React.FC = () => {
             )}
 
             {score && (
-              <div>
-                <Button
-                  variant="variant3"
-                  marginTop="26.76px"
-                  onClick={() => {
-                    if (lastAttestation) {
-                      window.open(
-                        `https://sepolia.easscan.org/attestation/view/${lastAttestation.id}`,
-                      );
-                    } else {
-                      mintAttestation();
-                    }
-                  }}
-                >
-                  {lastAttestation
-                    ? 'VIEW ATTESTATION'
-                    : score
-                    ? 'MINT NOW'
-                    : ''}
-                </Button>
-              </div>
+              <Button
+                variant="variant3"
+                marginTop="26.76px"
+                onClick={() => {
+                  if (lastAttestation) {
+                    window.open(
+                      `https://sepolia.easscan.org/attestation/view/${lastAttestation.id}`,
+                    );
+                  } else {
+                    mintAttestation();
+                  }
+                }}
+              >
+                {lastAttestation ? 'VIEW ATTESTATION' : score ? 'MINT NOW' : ''}
+              </Button>
             )}
           </CardBody>
         </Card>
@@ -182,23 +193,37 @@ const Hero: React.FC = () => {
 
       {/* Categories */}
       <Grid
+        backgroundColor={'brand.backgroundOrange.400'}
         templateRows={`repeat(${categories.length},1fr)`}
         templateColumns={'max-content 1fr'}
         gap={4}
-        color="white"
+        color={['brand.deepGreen.400', 'white']}
         alignItems={'center'}
+        pb={[79, 0]}
+        pt={[50, 0]}
+        mt={[-50, 0]}
+        px={['20px', 0]}
       >
         {
           // TODO: FIX TYPE
           categories.map((categoryItem: any, index: number) => (
             <>
-              <Flex h="10" gap="8px" alignItems="center" key={index}>
-                <CategoryTooltip category={categoryItem.category} />
+              <Flex gap="8px" alignItems="center" key={index}>
+                <Tooltip
+                  label={CATEGORY_TOOLTIP[categoryItem.category]}
+                  placement="top-end"
+                >
+                  <InfoIcon
+                    color={['brand.deepGreen.400', 'white']}
+                    w={'16px'}
+                    h={'16px'}
+                  />
+                </Tooltip>
                 {categoryItem.category}
               </Flex>
               <Flex alignItems={'center'} gap={18}>
                 <Box
-                  bg="white"
+                  bg="brand.deepGreen.400"
                   flexBasis={`${categoryItem.scoreAdded}%`}
                   borderRadius="100px"
                   h="10px"
@@ -228,7 +253,7 @@ const MintYour: React.FC = () => {
       h="full"
       flexDir="column"
       pos="relative"
-      align="center"
+      align={['stretch', 'center']}
       justify="center"
       direction="column"
     >
