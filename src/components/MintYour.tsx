@@ -13,7 +13,7 @@ import {
   Tooltip,
   Image,
 } from '@chakra-ui/react';
-import { useState } from 'react';
+import React from 'react';
 import { useAccount } from 'wagmi';
 import { CATEGORY_TOOLTIP, TooltipProps } from '@/constants';
 import { formatTimestamp } from '@/utils/strings';
@@ -27,108 +27,64 @@ const CategoryTooltip: React.FC<TooltipProps> = ({ category }) => {
   );
 };
 
-const Slide1 = () => {
+const Hero: React.FC = () => {
   const { address } = useAccount();
   const { score, categories, loading } = useScore(address);
   const { mintAttestation, lastAttestation } = useEAS(address);
 
   return (
     <Grid
-      templateColumns="auto 1fr"
+      templateColumns="repeat(2, 1fr)"
+      templateRows="repeat(2, 1fr)"
+      pl={{ base: '4', md: '82' }}
+      pr="54px"
+      pt={100}
+      pb={79}
       gap={4}
       w="full"
       h={{ base: 'auto', md: '616px' }}
-      borderRadius={{ base: '0', md: '32px 0 0 0' }}
-      bg={`url(/images/leaf-bg.png)`}
+      // bg={`url(/images/leaf-bg.png)`}
       bgRepeat="no-repeat"
       bgSize="cover"
-      pl={{ base: '4', md: '82' }}
-      pr="54px"
+      borderRadius={{ base: '0', md: '32px 0 0 0' }}
       borderWidth="1px 0px 1px 1px"
       borderColor="rgba(143, 164, 133)"
       borderStyle="solid"
       borderBottomWidth={{ base: '0', md: '1px' }}
       boxShadow="0px 0px 4px rgba(0, 0, 0, 0.25)"
     >
-      <Box
-        position="absolute"
-        top="0"
-        left="0"
-        right="0"
-        bottom="0"
-        borderRadius={{ base: '0', md: '30px 0 0 0' }}
-        bgColor="rgba(53, 71, 40, 0.8)"
-        zIndex={1}
-      />
+      {/*<Box*/}
+      {/*  position="absolute"*/}
+      {/*  top="0"*/}
+      {/*  left="0"*/}
+      {/*  right="0"*/}
+      {/*  bottom="0"*/}
+      {/*  borderRadius={{ base: '0', md: '30px 0 0 0' }}*/}
+      {/*  bgColor="rgba(53, 71, 40, 0.8)"*/}
+      {/*  zIndex={1}*/}
+      {/*/>*/}
 
-      <Flex
+      <Heading
+        as="h2"
+        variant="h2"
+        color="brand.primaryOrange.300"
+        maxWidth={{ base: '342px', sm: '647px', md: '1100px' }}
+        minHeight="92px"
+        textAlign="left"
+        fontSize="48px"
+      >
+        Mint your attestations to <br /> access opportunities
+      </Heading>
+
+      {/* Orange Card with score */}
+      <GridItem
+        rowSpan={2}
+        display={'flex'}
         flex="1"
+        zIndex={2}
         flexDirection="column"
         justifyContent="center"
-        alignItems={{ base: 'center', md: 'flex-start' }}
-        zIndex={2}
       >
-        <Heading
-          as="h2"
-          variant="h2"
-          color="brand.primaryOrange.300"
-          maxWidth={{ base: '342px', sm: '647px', md: '1100px' }}
-          minHeight="92px"
-          textAlign="left"
-          mb={'49px'}
-          fontSize="48px"
-        >
-          Mint your attestations to <br /> access opportunities
-        </Heading>
-
-        <Grid templateColumns="repeat(20, 1fr)" gap={4} color="white">
-          {
-            // TODO: FIX TYPE
-            categories.map((categoryItem: any, index: number) => (
-              <>
-                <GridItem
-                  colStart={1}
-                  colEnd={2}
-                  h="10"
-                  display="flex"
-                  gap="8px"
-                  alignItems="center"
-                  key={index}
-                >
-                  <CategoryTooltip category={categoryItem.category} />
-                  {categoryItem.category}
-                </GridItem>
-                <GridItem
-                  colStart={3}
-                  colEnd={20}
-                  h="10"
-                  display="flex"
-                  alignItems="center"
-                  gap={4}
-                  key={index + 'grid'}
-                >
-                  <Box
-                    w={'100%'}
-                    display={'flex'}
-                    gap={'16px'}
-                    alignItems={'center'}
-                    justifyContent={'flex-start'}
-                  >
-                    <Box
-                      bg="white"
-                      flexBasis={`${categoryItem.scoreAdded}%`}
-                      borderRadius="100px"
-                      h="10px"
-                    />
-                    {categoryItem.scoreAdded}
-                  </Box>
-                </GridItem>
-              </>
-            ))
-          }
-        </Grid>
-      </Flex>
-      <Flex flex="1" zIndex={2} flexDirection="column" justifyContent="center">
         <Card
           width="654px"
           height="451px"
@@ -222,20 +178,50 @@ const Slide1 = () => {
             )}
           </CardBody>
         </Card>
-      </Flex>
+      </GridItem>
+
+      {/* Categories */}
+      <Grid
+        templateRows={`repeat(${categories.length},1fr)`}
+        templateColumns={'max-content 1fr'}
+        gap={4}
+        color="white"
+        alignItems={'center'}
+      >
+        {
+          // TODO: FIX TYPE
+          categories.map((categoryItem: any, index: number) => (
+            <>
+              <Flex h="10" gap="8px" alignItems="center" key={index}>
+                <CategoryTooltip category={categoryItem.category} />
+                {categoryItem.category}
+              </Flex>
+              <Flex alignItems={'center'} gap={18}>
+                <Box
+                  bg="white"
+                  flexBasis={`${categoryItem.scoreAdded}%`}
+                  borderRadius="100px"
+                  h="10px"
+                />
+                <Box
+                  w={'100%'}
+                  display={'flex'}
+                  gap={'16px'}
+                  alignItems={'center'}
+                  justifyContent={'flex-start'}
+                >
+                  {categoryItem.scoreAdded}
+                </Box>
+              </Flex>
+            </>
+          ))
+        }
+      </Grid>
     </Grid>
   );
 };
 
-const slides = [
-  {
-    content: Slide1,
-  },
-];
-
 const MintYour: React.FC = () => {
-  const [currentSlide, setCurrentSlide] = useState(0);
-
   return (
     <Flex
       w="full"
@@ -246,17 +232,7 @@ const MintYour: React.FC = () => {
       justify="center"
       direction="column"
     >
-      {slides.map((slide, index) => (
-        <VStack
-          key={index}
-          display={index === currentSlide ? 'flex' : 'none'}
-          w="full"
-          align="center"
-          justify="center"
-        >
-          {slide.content()}
-        </VStack>
-      ))}
+      <Hero />
     </Flex>
   );
 };
