@@ -82,7 +82,7 @@ const Slide1 = () => {
       borderColor="rgba(143, 164, 133)"
       borderStyle="solid"
       borderBottomWidth={{ base: '0', md: '1px' }}
-      boxShadow={'-3px 0px 4px 0 rgba(0, 0, 0, 0.25)'}
+      boxShadow={[0, '-3px 0px 4px 0 rgba(0, 0, 0, 0.25)']}
     >
       {dropsImages.map((image, index) => (
         <Flex

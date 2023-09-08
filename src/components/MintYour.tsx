@@ -52,7 +52,7 @@ const Hero: React.FC = () => {
       templateRows={['repeat(3,max-content)', 'repeat(2, 1fr)']}
       pl={[0, '82px']}
       pr={[0, '54px']}
-      pt={[100]}
+      pt={[0, "100px"]}
       pb={[0, 79]}
       gap={4}
       w="full"
@@ -65,18 +65,18 @@ const Hero: React.FC = () => {
       borderColor="rgba(143, 164, 133)"
       borderStyle="solid"
       borderBottomWidth={{ base: '0', md: '1px' }}
-      boxShadow={[0, '0px 0px 4px rgba(0, 0, 0, 0.25)']}
+      boxShadow={[0, '-3px 0px 4px 0 rgba(0, 0, 0, 0.25)']}
     >
-      {/*<Box*/}
-      {/*  position="absolute"*/}
-      {/*  top="0"*/}
-      {/*  left="0"*/}
-      {/*  right="0"*/}
-      {/*  bottom="0"*/}
-      {/*  borderRadius={{ base: '0', md: '30px 0 0 0' }}*/}
-      {/*  bgColor="rgba(53, 71, 40, 0.8)"*/}
-      {/*  zIndex={1}*/}
-      {/*/>*/}
+      <Box
+        position="absolute"
+        top="0"
+        left="0"
+        right="0"
+        bottom="0"
+        borderRadius={{ base: '0', md: '30px 0 0 0' }}
+        bgColor="rgba(53, 71, 40, 0.8)"
+        zIndex={0}
+      />
 
       <Heading
         as="h2"
@@ -85,8 +85,10 @@ const Hero: React.FC = () => {
         maxWidth={{ base: 'auto', sm: '647px', md: '1100px' }}
         minHeight="92px"
         textAlign="left"
-        fontSize="48px"
+        fontSize={["44px", "48px"]}
         px={[30]}
+        zIndex="2"
+        pt={[0, "20px"]}
       >
         Mint your attestations to <br /> access opportunities
       </Heading>
@@ -98,6 +100,7 @@ const Hero: React.FC = () => {
         flex="1"
         flexDirection="column"
         justifyContent="center"
+        zIndex={3}
       >
         <Card
           width={['auto', '654px']}
@@ -193,16 +196,17 @@ const Hero: React.FC = () => {
 
       {/* Categories */}
       <Grid
-        backgroundColor={'brand.backgroundOrange.400'}
+        backgroundColor={['brand.backgroundOrange.400', 'transparent']}
         templateRows={`repeat(${categories.length},1fr)`}
         templateColumns={'max-content 1fr'}
-        gap={4}
+        gap={["36px", 8]}
         color={['brand.deepGreen.400', 'white']}
         alignItems={'center'}
         pb={[79, 0]}
-        pt={[50, 0]}
+        pt={["70px", 0]}
         mt={[-50, 0]}
-        px={['20px', 0]}
+        px={['20px', "30px"]}
+        zIndex={2}
       >
         {
           // TODO: FIX TYPE
@@ -223,7 +227,7 @@ const Hero: React.FC = () => {
               </Flex>
               <Flex alignItems={'center'} gap={18}>
                 <Box
-                  bg="brand.deepGreen.400"
+                  bg={['brand.deepGreen.400', 'white']}
                   flexBasis={`${categoryItem.scoreAdded}%`}
                   borderRadius="100px"
                   h="10px"
