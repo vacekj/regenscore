@@ -61,23 +61,34 @@ const TrackedActivity = () => {
   const { meta, loading } = useScore(address);
 
   return (
-    <Flex flexDir="column" align="flex-center" justify="center" marginX={["0", "auto"]} maxWidth={{ base: "100%", xl: "1331px" }}
-    width="100%">
+    <Flex
+      flexDir="column"
+      align="flex-center"
+      justify="center"
+      marginX={['0', 'auto']}
+      maxWidth={{ base: '100%', xl: '1331px' }}
+      width="100%"
+    >
       <Heading
         as="h1"
         variant="h2"
-        fontSize={["36px", "48px"]}
+        fontSize={['36px', '48px']}
         mb="8px"
-        mt={["0", "82px"]}
+        mt={['0', '82px']}
         textAlign="start"
         color="brand.primaryOrange.200"
-        marginX={{ base: "16px", sm: "40px", md: "40px", lg: "54px", xl: "0" }}
-        maxWidth={{ base: "auto", xl: "1386px" }}
+        marginX={{ base: '16px', sm: '40px', md: '40px', lg: '54px', xl: '0' }}
+        maxWidth={{ base: 'auto', xl: '1386px' }}
         width="100%"
       >
         Tracked Activity
       </Heading>
-      <Text mb={["28px", "46px"]} fontSize={["16px", "20"]} fontFamily="Inter-Regular" marginX={{ base: "16px", sm: "40px", md: "40px", lg: "54px", xl: "0" }}>
+      <Text
+        mb={['28px', '46px']}
+        fontSize={['16px', '20']}
+        fontFamily="Inter-Regular"
+        marginX={{ base: '16px', sm: '40px', md: '40px', lg: '54px', xl: '0' }}
+      >
         Check out the details of your activities
       </Text>
 
@@ -90,7 +101,13 @@ const TrackedActivity = () => {
           mb="94px"
           maxWidth="1331px"
           width="100%"
-          marginX={{ base: "16px", sm: "40px", md: "40px", lg: "54px", xl: "0" }}
+          marginX={{
+            base: '16px',
+            sm: '40px',
+            md: '40px',
+            lg: '54px',
+            xl: '0',
+          }}
         >
           <Table size="lg">
             <Thead>

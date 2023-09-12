@@ -86,13 +86,13 @@ export const theme = extendTheme({
           _hover: {
             backgroundColor: '#FFF',
           },
-        },  
+        },
         variant4: {
           // Mint Now
           fontSize: '14px',
           minWidth: '32px',
-          paddingLeft: "16px",
-          paddingRight: "16px",
+          paddingLeft: '16px',
+          paddingRight: '16px',
           height: '45.46px',
           backgroundColor: '#FFF',
           color: 'brand.deepGreen.400',
@@ -102,9 +102,8 @@ export const theme = extendTheme({
           _hover: {
             backgroundColor: '#FFF',
           },
-        },  
+        },
       },
-
 
       defaultProps: {
         size: 'lg',

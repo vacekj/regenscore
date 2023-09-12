@@ -106,8 +106,8 @@ const Header: React.FC = () => {
         lg: '38px',
         xl: '0',
       }}
-      marginX={["auto"]}
-      maxWidth={{ base: "100%", xl: "1386px" }}
+      marginX={['auto']}
+      maxWidth={{ base: '100%', xl: '1386px' }}
       width="100%"
       transition="all 0.3s ease-in-out"
       transform={visible ? 'translateY(0)' : 'translateY(-100%)'}
@@ -130,10 +130,7 @@ const Header: React.FC = () => {
                 My Profile
               </Text>
             </Link>
-            <Link
-              href="https://docs.regenscore.io/"
-              target="_blank"
-            >
+            <Link href="https://docs.regenscore.io/" target="_blank">
               <Text variant={'boldLink'} textTransform={'uppercase'}>
                 Docs
               </Text>

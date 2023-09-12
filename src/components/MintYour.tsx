@@ -48,18 +48,30 @@ const Hero: React.FC = () => {
 
   return (
     <Grid
-      templateColumns={['1fr', '1fr', '1fr', 'repeat(2, 1fr)' , 'repeat(2, 1fr)']}
-      templateRows={['repeat(3,max-content)', 'repeat(3,max-content)', 'repeat(3,max-content)', 'repeat(2, 1fr)', 'repeat(2, 1fr)']}
-      pl={[0, "5px", "54px", "54px",'54px']}
-      pr={[0, "5px", "54px", "54px",'54px']}
-      pt={[0,"", "", "60px", "100px", '100px']}
+      templateColumns={[
+        '1fr',
+        '1fr',
+        '1fr',
+        'repeat(2, 1fr)',
+        'repeat(2, 1fr)',
+      ]}
+      templateRows={[
+        'repeat(3,max-content)',
+        'repeat(3,max-content)',
+        'repeat(3,max-content)',
+        'repeat(2, 1fr)',
+        'repeat(2, 1fr)',
+      ]}
+      pl={[0, '5px', '54px', '54px', '54px']}
+      pr={[0, '5px', '54px', '54px', '54px']}
+      pt={[0, '', '', '60px', '100px', '100px']}
       pb={[0, 79]}
       gap={4}
       w="full"
       h={{ base: 'max-content', md: '616px' }}
       bg={`url(/images/leaf-bg.png)`}
       bgRepeat="no-repeat"
-      bgSize={["240%", "cover"]}
+      bgSize={['240%', 'cover']}
       borderRadius={{ base: '0', md: '32px 0 0 0' }}
       borderWidth={[0, '1px 0px 1px 1px']}
       borderColor="rgba(143, 164, 133)"
@@ -88,12 +100,18 @@ const Hero: React.FC = () => {
         color="brand.primaryOrange.300"
         maxWidth={{ base: 'auto', sm: '647px', md: '1100px' }}
         minHeight="92px"
-        textAlign={{ base: "left", sm: "center", md: "center", lg: "left", xl: "left" }}
+        textAlign={{
+          base: 'left',
+          sm: 'center',
+          md: 'center',
+          lg: 'left',
+          xl: 'left',
+        }}
         fontSize={['44px', '48px']}
         px={[30]}
         zIndex="2"
-        pt={["10px", '20px']}
-        minWidth={["auto", "auto", "auto", "auto", "auto"]}
+        pt={['10px', '20px']}
+        minWidth={['auto', 'auto', 'auto', 'auto', 'auto']}
       >
         Mint your attestations to <br /> access opportunities
       </Heading>
@@ -106,11 +124,11 @@ const Hero: React.FC = () => {
         flexDirection="column"
         justifyContent="center"
         zIndex={3}
-        alignItems={{ base: "", sm: "center", md: "", lg: "", xl: "" }}
+        alignItems={{ base: '', sm: 'center', md: '', lg: '', xl: '' }}
       >
         <Card
-          maxWidth={["", "500px", "500px", "", '654px']}
-          maxHeight={["451px","451px","451px","400px","451px"]}
+          maxWidth={['', '500px', '500px', '', '654px']}
+          maxHeight={['451px', '451px', '451px', '400px', '451px']}
           width="100%"
           height="100%"
           borderRadius="16.235px"
@@ -125,15 +143,27 @@ const Hero: React.FC = () => {
               fontWeight="bold"
               fontSize="100px"
               color="#FFF"
-              marginTop={["77px","20px", "20px", "98px", "98px"]}
-              marginLeft={{ base: "150px", sm: "230px", md: "230px", lg: "200px", xl: "337px" }}
+              marginTop={['77px', '20px', '20px', '98px', '98px']}
+              marginLeft={{
+                base: '150px',
+                sm: '230px',
+                md: '230px',
+                lg: '200px',
+                xl: '337px',
+              }}
             >
               {score || ''}
             </Heading>
           </CardHeader>
           <CardBody
             padding="0px"
-            marginLeft={{ base: "150px", sm: "230px", md: "230px", lg: "200px", xl: "337px" }}
+            marginLeft={{
+              base: '150px',
+              sm: '230px',
+              md: '230px',
+              lg: '200px',
+              xl: '337px',
+            }}
             alignItems={'start'}
             justifyContent={'center'}
             textAlign={['start']}
@@ -182,7 +212,8 @@ const Hero: React.FC = () => {
             )}
 
             {score && (
-              <Button mb={["63.54px","40px", "40px", "0", "0"]}
+              <Button
+                mb={['63.54px', '40px', '40px', '0', '0']}
                 variant="variant3"
                 marginTop="26.76px"
                 mr="8.25px"
@@ -199,11 +230,22 @@ const Hero: React.FC = () => {
                 {lastAttestation ? 'VIEW ATTESTATION' : score ? 'MINT NOW' : ''}
               </Button>
             )}
-            <Button mb={["63.54px","40px", "40px", "0", "0"]}
+            <Button
+              mb={['63.54px', '40px', '40px', '0', '0']}
               variant="variant4"
-              marginTop="26.76px">
-              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none">
-                <path d="M24.0001 20.9997C23.4613 20.9995 22.9281 21.1085 22.4327 21.3201C21.9373 21.5317 21.4899 21.8416 21.1176 22.2309L11.8676 17.0266C12.0467 16.3537 12.0467 15.6457 11.8676 14.9728L21.1176 9.76843C21.7911 10.4668 22.6962 10.8956 23.6632 10.9745C24.6303 11.0534 25.5929 10.777 26.3708 10.1971C27.1487 9.61725 27.6884 8.77364 27.889 7.82435C28.0895 6.87505 27.9371 5.88521 27.4602 5.04025C26.9833 4.1953 26.2146 3.55321 25.2983 3.23428C24.382 2.91535 23.3808 2.94146 22.4824 3.30771C21.5839 3.67397 20.8498 4.35524 20.4176 5.2239C19.9854 6.09256 19.8847 7.089 20.1344 8.02656L10.8844 13.2309C10.3319 12.6548 9.61963 12.2572 8.83927 12.0892C8.0589 11.9213 7.24612 11.9906 6.50549 12.2884C5.76487 12.5861 5.13026 13.0987 4.68333 13.7601C4.23639 14.4215 3.99756 15.2014 3.99756 15.9997C3.99756 16.7979 4.23639 17.5779 4.68333 18.2393C5.13026 18.9007 5.76487 19.4132 6.50549 19.711C7.24612 20.0087 8.0589 20.0781 8.83927 19.9101C9.61963 19.7421 10.3319 19.3445 10.8844 18.7684L20.1344 23.9728C19.92 24.7802 19.9637 25.6345 20.2595 26.4158C20.5552 27.1971 21.0882 27.8662 21.7836 28.3292C22.479 28.7922 23.3019 29.0258 24.1368 28.9974C24.9717 28.9689 25.7768 28.6797 26.439 28.1703C27.1012 27.661 27.5873 26.9572 27.8291 26.1575C28.071 25.3579 28.0563 24.5026 27.7873 23.7116C27.5183 22.9207 27.0084 22.2339 26.3292 21.7475C25.6499 21.2611 24.8355 20.9996 24.0001 20.9997Z" fill="black" />
+              marginTop="26.76px"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="32"
+                height="32"
+                viewBox="0 0 32 32"
+                fill="none"
+              >
+                <path
+                  d="M24.0001 20.9997C23.4613 20.9995 22.9281 21.1085 22.4327 21.3201C21.9373 21.5317 21.4899 21.8416 21.1176 22.2309L11.8676 17.0266C12.0467 16.3537 12.0467 15.6457 11.8676 14.9728L21.1176 9.76843C21.7911 10.4668 22.6962 10.8956 23.6632 10.9745C24.6303 11.0534 25.5929 10.777 26.3708 10.1971C27.1487 9.61725 27.6884 8.77364 27.889 7.82435C28.0895 6.87505 27.9371 5.88521 27.4602 5.04025C26.9833 4.1953 26.2146 3.55321 25.2983 3.23428C24.382 2.91535 23.3808 2.94146 22.4824 3.30771C21.5839 3.67397 20.8498 4.35524 20.4176 5.2239C19.9854 6.09256 19.8847 7.089 20.1344 8.02656L10.8844 13.2309C10.3319 12.6548 9.61963 12.2572 8.83927 12.0892C8.0589 11.9213 7.24612 11.9906 6.50549 12.2884C5.76487 12.5861 5.13026 13.0987 4.68333 13.7601C4.23639 14.4215 3.99756 15.2014 3.99756 15.9997C3.99756 16.7979 4.23639 17.5779 4.68333 18.2393C5.13026 18.9007 5.76487 19.4132 6.50549 19.711C7.24612 20.0087 8.0589 20.0781 8.83927 19.9101C9.61963 19.7421 10.3319 19.3445 10.8844 18.7684L20.1344 23.9728C19.92 24.7802 19.9637 25.6345 20.2595 26.4158C20.5552 27.1971 21.0882 27.8662 21.7836 28.3292C22.479 28.7922 23.3019 29.0258 24.1368 28.9974C24.9717 28.9689 25.7768 28.6797 26.439 28.1703C27.1012 27.661 27.5873 26.9572 27.8291 26.1575C28.071 25.3579 28.0563 24.5026 27.7873 23.7116C27.5183 22.9207 27.0084 22.2339 26.3292 21.7475C25.6499 21.2611 24.8355 20.9996 24.0001 20.9997Z"
+                  fill="black"
+                />
               </svg>
             </Button>
           </CardBody>
@@ -224,9 +266,9 @@ const Hero: React.FC = () => {
         px={['20px', '30px']}
         zIndex={2}
         alignContent="center"
-        maxWidth={["", "500px", "500px", "auto", 'auto']}
-        minWidth={["", "400px", "500px", "0", '0']}
-        marginX={["", "auto", "auto", "0", '0']}
+        maxWidth={['', '500px', '500px', 'auto', 'auto']}
+        minWidth={['', '400px', '500px', '0', '0']}
+        marginX={['', 'auto', 'auto', '0', '0']}
       >
         {
           // TODO: FIX TYPE
@@ -245,7 +287,7 @@ const Hero: React.FC = () => {
                 </Tooltip>
                 {categoryItem.category}
               </Flex>
-              <Flex alignItems={'center'} gap={18} >
+              <Flex alignItems={'center'} gap={18}>
                 <Box
                   bg={['brand.deepGreen.400', 'white']}
                   flexBasis={`${categoryItem.scoreAdded}%`}
