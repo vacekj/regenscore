@@ -22,7 +22,6 @@ const hotjarVersion = 6;
 
 Hotjar.init(siteId, hotjarVersion);
 
-
 const chains = [optimism, optimismGoerli, sepolia];
 const projectId = 'df4f5f1b03670ef123bd5ee18401d0de';
 
