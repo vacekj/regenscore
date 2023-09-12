@@ -104,8 +104,11 @@ const Header: React.FC = () => {
         sm: '20px',
         md: '24px',
         lg: '38px',
-        xl: '38px',
+        xl: '0',
       }}
+      marginX={["auto"]}
+      maxWidth={{ base: "100%", xl: "1386px" }}
+      width="100%"
       transition="all 0.3s ease-in-out"
       transform={visible ? 'translateY(0)' : 'translateY(-100%)'}
     >
@@ -128,7 +131,7 @@ const Header: React.FC = () => {
               </Text>
             </Link>
             <Link
-              href="https://giveth.notion.site/Docs-Portal-d21fd8ee276f462d93e5a9083ec2ff8d"
+              href="https://docs.regenscore.io/"
               target="_blank"
             >
               <Text variant={'boldLink'} textTransform={'uppercase'}>
@@ -150,7 +153,7 @@ const Header: React.FC = () => {
                     <Link href="/profile">
                       <Text variant={'boldLink'}>My Profile</Text>
                     </Link>
-                    <Link href="https://giveth.notion.site/Docs-Portal-d21fd8ee276f462d93e5a9083ec2ff8d">
+                    <Link href="https://docs.regenscore.io/">
                       <Text variant={'boldLink'}>Docs</Text>
                     </Link>
                   </VStack>
