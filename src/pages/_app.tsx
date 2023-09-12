@@ -16,6 +16,7 @@ import { theme } from '@/chakra';
 import './styles.css';
 import CustomHead from './customhead';
 import Hotjar from '@hotjar/browser';
+import HotjarTracking from './HotjarTracking';
 
 const siteId = 3651658;
 const hotjarVersion = 6;
@@ -64,6 +65,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           '--w3m-button-border-radius': '100px',
         }}
       />
+      <HotjarTracking />
     </>
   );
 }

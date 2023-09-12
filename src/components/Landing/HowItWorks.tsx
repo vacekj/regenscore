@@ -18,6 +18,8 @@ const HowItWorks: React.FC = () => {
       <Heading
         as="h1"
         variant="h2"
+        fontSize={['36px', '48px']}
+        fontWeight={[600, 500]}
         mb={6}
         textAlign="left"
         color="brand.primaryOrange.200"

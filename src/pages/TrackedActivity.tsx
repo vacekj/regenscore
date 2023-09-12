@@ -73,6 +73,7 @@ const TrackedActivity = () => {
         as="h1"
         variant="h2"
         fontSize={['36px', '48px']}
+        fontWeight={[600, 500]}
         mb="8px"
         mt={['0', '82px']}
         textAlign="start"

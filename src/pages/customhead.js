@@ -14,8 +14,13 @@ const CustomHead = () => (
         gtag('config', 'G-93QB1E2CK5');
       `}
     </script>
+  </Head>
+);
 
-    {/* <script>
+export default CustomHead;
+
+{
+  /* <script>
         (function(h,o,t,j,a,r){
             h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
             h._hjSettings={hjid:3651658,hjsv:6};
@@ -24,8 +29,5 @@ const CustomHead = () => (
             r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
             a.appendChild(r);
         })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
-    </script> */}
-  </Head>
-);
-
-export default CustomHead;
+    </script> */
+}

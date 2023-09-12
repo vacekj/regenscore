@@ -8,7 +8,7 @@ const Benefits: React.FC = () => {
     title: string;
     content: string;
   }) => (
-    <Box flex="1" maxWidth="428px" minWidth="304px" m="12px" textAlign="start">
+    <Box flex="1" maxWidth="428px" minWidth="304px" m="12px" textAlign="start" >
       <Flex
         minHeight="380px"
         flexDir="column"
@@ -57,8 +57,8 @@ const Benefits: React.FC = () => {
       maxWidth="1342px"
       p={{ base: '16px', sm: '0px', md: '0px', lg: '0px', xl: '0px' }}
       margin={{
-        base: '47px auto',
-        sm: '47px 40px',
+        base: '10px auto',
+        sm: '10px 40px',
         md: '47px 40px',
         lg: '47px 52px',
         xl: '47px auto',
@@ -67,9 +67,12 @@ const Benefits: React.FC = () => {
       <Heading
         as="h1"
         variant="h2"
+        fontSize={['36px', '48px']}
+        fontWeight={[600, 500]}
         mb={6}
         textAlign="left"
         color="brand.primaryOrange.200"
+        mt={['0', '35px']}
       >
         Benefits for Regen Community{' '}
       </Heading>
