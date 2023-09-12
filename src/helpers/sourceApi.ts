@@ -352,7 +352,7 @@ export async function fetchPOAPsForAddress(address: string) {
     method: 'GET',
     headers: {
       accept: 'application/json',
-      'x-api-key': process.env.POAP_API_KEY!, // Your API key
+      'x-api-key': process.env.NEXT_PUBLIC_POAP_API_KEY!, // Your API key
     },
   });
 
