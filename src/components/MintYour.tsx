@@ -78,8 +78,8 @@ const Hero: React.FC = () => {
       borderStyle="solid"
       borderBottomWidth={{ base: '0', md: '1px' }}
       boxShadow={[0, '-3px 0px 4px 0 rgba(0, 0, 0, 0.25)']}
-      // maxWidth="1386px"
-      // marginX="auto"
+      maxWidth="1386px"
+      marginX="auto"
     >
       <Box
         position="absolute"
@@ -90,8 +90,8 @@ const Hero: React.FC = () => {
         borderRadius={{ base: '0', md: '30px 0 0 0' }}
         bgColor="rgba(53, 71, 40, 0.8)"
         zIndex={0}
-        // marginX="auto"
-        // maxWidth="1386px"
+        marginX="auto"
+        maxWidth="1386px"
       />
 
       <Heading

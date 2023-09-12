@@ -55,6 +55,9 @@ const Slide1 = () => {
       content: 'Some more content for Gitcoin',
     },
   ];
+
+
+  
   return (
     <Flex
       flexDirection="column"
@@ -83,6 +86,8 @@ const Slide1 = () => {
       borderStyle="solid"
       borderBottomWidth={{ base: '0', md: '1px' }}
       boxShadow={[0, '-3px 0px 4px 0 rgba(0, 0, 0, 0.25)']}
+      marginX="auto"
+      maxWidth="1386px"
     >
       {dropsImages.map((image, index) => (
         <Flex
@@ -136,6 +141,8 @@ const Slide1 = () => {
           xl: '32px',
         }}
         bgColor="rgba(53,71,40, 0.8)"
+        marginX="auto"
+        maxWidth="1386px"
       />
       <Heading
         as="h1"
