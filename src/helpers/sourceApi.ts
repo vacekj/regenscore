@@ -17,7 +17,7 @@ import OPAirdrop2 from '@/data/op_airdrop_2.json';
 // CONSTANTS
 const GICOIN_SCORER_ID = '1603'; // Giveth's ID and API
 const GITCOIN_PASSPORT_SCORER_API_KEY =
-  process.env.GITCOIN_PASSPORT_SCORER_API_KEY;
+  process.env.NEXT_PUBLIC_GITCOIN_PASSPORT_SCORER_API_KEY;
 const GNOSIS_SAFE_PROXY = '0xc22834581ebc8527d974f8a1c97e1bea4ef910bc';
 const ETHERSCAN_API_KEY = process.env.NEXT_PUBLIC_ETHERSCAN_API_KEY;
 const apikey = '&apikey=' + ETHERSCAN_API_KEY;
