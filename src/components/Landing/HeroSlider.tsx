@@ -56,8 +56,6 @@ const Slide1 = () => {
     },
   ];
 
-
-  
   return (
     <Flex
       flexDirection="column"

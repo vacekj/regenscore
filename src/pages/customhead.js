@@ -1,9 +1,11 @@
-
 import Head from 'next/head';
 
 const CustomHead = () => (
   <Head>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-93QB1E2CK5"></script>
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-93QB1E2CK5"
+    ></script>
     <script>
       {`
         window.dataLayer = window.dataLayer || [];
@@ -12,7 +14,7 @@ const CustomHead = () => (
         gtag('config', 'G-93QB1E2CK5');
       `}
     </script>
-    
+
     {/* <script>
         (function(h,o,t,j,a,r){
             h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
