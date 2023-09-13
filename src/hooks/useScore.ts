@@ -29,10 +29,8 @@ function useScore(address: string | Hex | undefined) {
           address: getAddress(address!),
         }),
       });
-      setLoading(false);
       return res.json();
     } catch (error) {
-      setLoading(false);
       console.log({ error });
       return { error };
     }
@@ -44,24 +42,21 @@ function useScore(address: string | Hex | undefined) {
   useEffect(() => {
     if (res.data?.meta) {
       const newCategoryScores: Record<string, number> = {};
-      Object.keys(res.data.meta)
-        .filter((key) => !!res.data.meta[key].applies)
-        .forEach((key: string) => {
-          const item = res.data.meta[key] as Item;
-          if (typeof item === 'object' && item !== null) {
-            if (key === 'tokenBalances' && item.tokens) {
-              item.tokens.forEach((token: any) => {
-                newCategoryScores[item.category] =
-                  (newCategoryScores[item.category] || 0) +
-                  (token.scoreAdded || 0);
-              });
-            } else {
+      Object.keys(res.data.meta).forEach((key: string) => {
+        const item = res.data.meta[key] as Item;
+        if (typeof item === 'object' && item !== null) {
+          if (key === 'tokenBalances' && item.tokens) {
+            item.tokens.forEach((token: any) => {
               newCategoryScores[item.category] =
                 (newCategoryScores[item.category] || 0) +
-                (item.scoreAdded || 0);
-            }
+                (token.scoreAdded || 0);
+            });
+          } else {
+            newCategoryScores[item.category] =
+              (newCategoryScores[item.category] || 0) + (item.scoreAdded || 0);
           }
-        });
+        }
+      });
       setCategories(
         Object.entries(newCategoryScores).map(([category, scoreAdded]) => ({
           category,
@@ -75,7 +70,6 @@ function useScore(address: string | Hex | undefined) {
     score: res.data?.score,
     meta: res.data?.meta,
     categories,
-    loading,
     ...res,
   };
 }

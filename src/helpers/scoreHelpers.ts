@@ -38,7 +38,6 @@ export async function createScore(
     txsMadeOnOptimism: {
       source: 'Optimism',
       category: CATEGORIES.Utilization,
-      behavior: 'Made transactions on the Optimism network',
     },
     grDonations: {
       source: 'Gitcoin',
@@ -109,6 +108,7 @@ export async function createScore(
     handleGitcoinPassport(address, meta),
     handleRegenPOAPs(address, meta),
   ]);
+
   score += results.reduce((acc, current) => acc + current, 0);
 
   return { score, meta };

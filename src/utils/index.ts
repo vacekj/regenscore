@@ -1,6 +1,5 @@
 import { parse } from 'csv-parse';
 import fs from 'fs';
-import fetch from 'node-fetch';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import { createPublicClient, http } from 'viem';
