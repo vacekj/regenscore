@@ -23,6 +23,7 @@
     "@ethereum-attestation-service/eas-sdk": "0.29.1",
     "@ethersproject/providers": "^5.7.2",
     "@hotjar/browser": "^1.0.9",
+    "@supabase/supabase-js": "^2.33.1",
     "@web3modal/ethereum": "^2.7.1",
     "@web3modal/react": "^2.7.1",
     "csv-parse": "^5.4.0",
