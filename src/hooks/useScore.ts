@@ -13,6 +13,7 @@ type Item = {
   tokens?: Token[];
 };
 
+/*TODO(mateo): types */
 function useScore(address: string | Hex | undefined) {
   const [loading, setLoading] = useState(true);
 

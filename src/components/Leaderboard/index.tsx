@@ -1,6 +1,6 @@
 import { Flex } from '@chakra-ui/react';
 import Hero from '../Landing/Hero';
-import TrackedActivity from '@/pages/TrackedActivity';
+import TrackedActivity from '@/components/TrackedActivity';
 
 export default function Landing() {
   return (

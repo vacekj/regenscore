@@ -14,14 +14,8 @@ import { AppProps } from 'next/app';
 import Head from 'next/head';
 import { theme } from '@/chakra';
 import './styles.css';
-import CustomHead from './customhead';
-import Hotjar from '@hotjar/browser';
+import CustomHead from '../components/customhead';
 import HotjarTracking from './HotjarTracking';
-
-const siteId = 3651658;
-const hotjarVersion = 6;
-
-Hotjar.init(siteId, hotjarVersion);
 
 const chains = [optimism, optimismGoerli, sepolia];
 const projectId = 'df4f5f1b03670ef123bd5ee18401d0de';
@@ -65,7 +59,6 @@ function MyApp({ Component, pageProps }: AppProps) {
           '--w3m-button-border-radius': '100px',
         }}
       />
-      <HotjarTracking />
     </>
   );
 }

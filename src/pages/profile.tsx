@@ -1,6 +1,6 @@
 import dynamic from 'next/dynamic';
 import MintYour from '@/components/MintYour';
-import TrackedActivity from '@/pages/TrackedActivity';
+import TrackedActivity from '@/components/TrackedActivity';
 
 import { Flex } from '@chakra-ui/react';
 
