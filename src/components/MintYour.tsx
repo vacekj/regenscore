@@ -136,23 +136,12 @@ const Hero: React.FC = () => {
           border="0.812px solid rgba(255, 255, 255, 0.50)"
           mt="17.5px"
         >
-          <Flex
-            display="flex"
-            flexDirection="row"
-          >
+          <Flex display="flex" flexDirection="row">
             {/* Left Column */}
-            <Flex
-              flex={["0.3", "1"]}
-              flexDirection="column"
-            >
-            </Flex>
+            <Flex flex={['0.3', '1']} flexDirection="column"></Flex>
 
             {/* Right Column */}
-            <Flex
-              flex={["0.7", "1"]}
-              flexDirection="column"
-            >
-
+            <Flex flex={['0.7', '1']} flexDirection="column">
               <CardHeader padding="0px" textAlign={['start']}>
                 <Heading
                   as="h3"
@@ -161,13 +150,13 @@ const Hero: React.FC = () => {
                   fontSize="100px"
                   color="#FFF"
                   marginTop={['77px', '20px', '20px', '98px', '98px']}
-                // marginLeft={{
-                //   base: '150px',
-                //   sm: '230px',
-                //   md: '230px',
-                //   lg: '200px',
-                //   xl: '337px',
-                // }}
+                  // marginLeft={{
+                  //   base: '150px',
+                  //   sm: '230px',
+                  //   md: '230px',
+                  //   lg: '200px',
+                  //   xl: '337px',
+                  // }}
                 >
                   {score || ''}
                 </Heading>
@@ -244,7 +233,11 @@ const Hero: React.FC = () => {
                       }
                     }}
                   >
-                    {lastAttestation ? 'VIEW ATTESTATION' : score ? 'MINT NOW' : ''}
+                    {lastAttestation
+                      ? 'VIEW ATTESTATION'
+                      : score
+                      ? 'MINT NOW'
+                      : ''}
                   </Button>
                 )}
                 <Button
@@ -281,7 +274,7 @@ const Hero: React.FC = () => {
         alignItems={'center'}
         pb={[79, 0]}
         pt={['70px', 0]}
-        mt={["-50px", 0]}
+        mt={['-50px', 0]}
         px={['20px', '30px']}
         zIndex={2}
         alignContent="center"
@@ -377,17 +370,34 @@ const Exclamation = () => (
   </svg>
 );
 
-
 const Scoremeter = () => (
-  <svg width="213" height="418" viewBox="0 0 213 418" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg
+    width="213"
+    height="418"
+    viewBox="0 0 213 418"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
     <g style="mix-blend-mode:overlay">
-      <path fill-rule="evenodd" clip-rule="evenodd" d="M212.093 20.0429C209.894 6.96064 197.507 -1.86248 184.425 0.335915C62.9624 20.7469 0.339778 115.902 0.00114755 210.465C-0.338291 305.255 61.9335 399.596 184.909 417.69C198.033 419.621 210.238 410.547 212.169 397.423C214.1 384.299 205.026 372.094 191.902 370.163C94.4967 355.83 47.7791 283.535 48.0402 210.637C48.302 137.513 95.8696 63.93 192.386 47.711C205.468 45.5126 214.291 33.1252 212.093 20.0429Z" fill="url(#paint0_linear_668_1462)" />
+      <path
+        fill-rule="evenodd"
+        clip-rule="evenodd"
+        d="M212.093 20.0429C209.894 6.96064 197.507 -1.86248 184.425 0.335915C62.9624 20.7469 0.339778 115.902 0.00114755 210.465C-0.338291 305.255 61.9335 399.596 184.909 417.69C198.033 419.621 210.238 410.547 212.169 397.423C214.1 384.299 205.026 372.094 191.902 370.163C94.4967 355.83 47.7791 283.535 48.0402 210.637C48.302 137.513 95.8696 63.93 192.386 47.711C205.468 45.5126 214.291 33.1252 212.093 20.0429Z"
+        fill="url(#paint0_linear_668_1462)"
+      />
     </g>
     <defs>
-      <linearGradient id="paint0_linear_668_1462" x1="77.3146" y1="76.266" x2="180.599" y2="383.718" gradientUnits="userSpaceOnUse">
+      <linearGradient
+        id="paint0_linear_668_1462"
+        x1="77.3146"
+        y1="76.266"
+        x2="180.599"
+        y2="383.718"
+        gradientUnits="userSpaceOnUse"
+      >
         <stop offset="0.0429313" />
         <stop offset="1" stop-opacity="0" />
       </linearGradient>
     </defs>
   </svg>
-)
+);
