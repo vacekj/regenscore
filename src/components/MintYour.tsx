@@ -111,7 +111,7 @@ const Hero: React.FC = () => {
         px={[30]}
         zIndex="2"
         pt={['10px', '20px']}
-        minWidth={['auto', 'auto', 'auto', 'auto', 'auto']}
+        minWidth={['auto']}
       >
         Mint your attestations to <br /> access opportunities
       </Heading>
@@ -136,39 +136,56 @@ const Hero: React.FC = () => {
           border="0.812px solid rgba(255, 255, 255, 0.50)"
           mt="17.5px"
         >
-          <CardHeader padding="0px" textAlign={['start']}>
-            <Heading
-              as="h3"
-              variant="h3"
-              fontWeight="bold"
-              fontSize="100px"
-              color="#FFF"
-              marginTop={['77px', '20px', '20px', '98px', '98px']}
-              marginLeft={{
-                base: '150px',
-                sm: '230px',
-                md: '230px',
-                lg: '200px',
-                xl: '337px',
-              }}
-            >
-              {score || ''}
-            </Heading>
-          </CardHeader>
-          <CardBody
-            padding="0px"
-            marginLeft={{
-              base: '150px',
-              sm: '230px',
-              md: '230px',
-              lg: '200px',
-              xl: '337px',
-            }}
-            alignItems={'start'}
-            justifyContent={'center'}
-            textAlign={['start']}
+          <Flex
+            display="flex"
+            flexDirection="row"
           >
-            {/*<div
+            {/* Left Column */}
+            <Flex
+              flex={["0.3", "1"]}
+              flexDirection="column"
+            >
+            </Flex>
+
+            {/* Right Column */}
+            <Flex
+              flex={["0.7", "1"]}
+              flexDirection="column"
+            >
+
+              <CardHeader padding="0px" textAlign={['start']}>
+                <Heading
+                  as="h3"
+                  variant="h3"
+                  fontWeight="bold"
+                  fontSize="100px"
+                  color="#FFF"
+                  marginTop={['77px', '20px', '20px', '98px', '98px']}
+                // marginLeft={{
+                //   base: '150px',
+                //   sm: '230px',
+                //   md: '230px',
+                //   lg: '200px',
+                //   xl: '337px',
+                // }}
+                >
+                  {score || ''}
+                </Heading>
+              </CardHeader>
+              <CardBody
+                padding="0px"
+                // marginLeft={{
+                //   base: '150px',
+                //   sm: '230px',
+                //   md: '230px',
+                //   lg: '200px',
+                //   xl: '337px',
+                // }}
+                alignItems={'start'}
+                justifyContent={'center'}
+                textAlign={['start']}
+              >
+                {/*<div
               style={{
                 display: 'flex',
                 alignItems: 'center',
@@ -185,70 +202,72 @@ const Hero: React.FC = () => {
                 Top 10% of users
               </Text>
             </div>*/}
-            {lastAttestation && score && (
-              <div
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                }}
-              >
-                <Text
-                  fontSize="13px"
-                  fontFamily="Inter-Regular"
-                  color="#354728"
-                  opacity="0.5"
-                >
-                  Attestation Last Updated
-                </Text>
-                <Text
-                  fontSize="13px"
-                  fontFamily="Inter-Regular"
-                  color="#354728"
-                  opacity="0.5"
-                >
-                  {formatTimestamp(lastAttestation.timeCreated)}
-                </Text>
-              </div>
-            )}
+                {lastAttestation && score && (
+                  <div
+                    style={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                    }}
+                  >
+                    <Text
+                      fontSize="13px"
+                      fontFamily="Inter-Regular"
+                      color="#354728"
+                      opacity="0.5"
+                    >
+                      Attestation Last Updated
+                    </Text>
+                    <Text
+                      fontSize="13px"
+                      fontFamily="Inter-Regular"
+                      color="#354728"
+                      opacity="0.5"
+                    >
+                      {formatTimestamp(lastAttestation.timeCreated)}
+                    </Text>
+                  </div>
+                )}
 
-            {score && (
-              <Button
-                mb={['63.54px', '40px', '40px', '0', '0']}
-                variant="variant3"
-                marginTop="26.76px"
-                mr="8.25px"
-                onClick={() => {
-                  if (lastAttestation) {
-                    window.open(
-                      `https://sepolia.easscan.org/attestation/view/${lastAttestation.id}`,
-                    );
-                  } else {
-                    mintAttestation();
-                  }
-                }}
-              >
-                {lastAttestation ? 'VIEW ATTESTATION' : score ? 'MINT NOW' : ''}
-              </Button>
-            )}
-            <Button
-              mb={['63.54px', '40px', '40px', '0', '0']}
-              variant="variant4"
-              marginTop="26.76px"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="32"
-                height="32"
-                viewBox="0 0 32 32"
-                fill="none"
-              >
-                <path
-                  d="M24.0001 20.9997C23.4613 20.9995 22.9281 21.1085 22.4327 21.3201C21.9373 21.5317 21.4899 21.8416 21.1176 22.2309L11.8676 17.0266C12.0467 16.3537 12.0467 15.6457 11.8676 14.9728L21.1176 9.76843C21.7911 10.4668 22.6962 10.8956 23.6632 10.9745C24.6303 11.0534 25.5929 10.777 26.3708 10.1971C27.1487 9.61725 27.6884 8.77364 27.889 7.82435C28.0895 6.87505 27.9371 5.88521 27.4602 5.04025C26.9833 4.1953 26.2146 3.55321 25.2983 3.23428C24.382 2.91535 23.3808 2.94146 22.4824 3.30771C21.5839 3.67397 20.8498 4.35524 20.4176 5.2239C19.9854 6.09256 19.8847 7.089 20.1344 8.02656L10.8844 13.2309C10.3319 12.6548 9.61963 12.2572 8.83927 12.0892C8.0589 11.9213 7.24612 11.9906 6.50549 12.2884C5.76487 12.5861 5.13026 13.0987 4.68333 13.7601C4.23639 14.4215 3.99756 15.2014 3.99756 15.9997C3.99756 16.7979 4.23639 17.5779 4.68333 18.2393C5.13026 18.9007 5.76487 19.4132 6.50549 19.711C7.24612 20.0087 8.0589 20.0781 8.83927 19.9101C9.61963 19.7421 10.3319 19.3445 10.8844 18.7684L20.1344 23.9728C19.92 24.7802 19.9637 25.6345 20.2595 26.4158C20.5552 27.1971 21.0882 27.8662 21.7836 28.3292C22.479 28.7922 23.3019 29.0258 24.1368 28.9974C24.9717 28.9689 25.7768 28.6797 26.439 28.1703C27.1012 27.661 27.5873 26.9572 27.8291 26.1575C28.071 25.3579 28.0563 24.5026 27.7873 23.7116C27.5183 22.9207 27.0084 22.2339 26.3292 21.7475C25.6499 21.2611 24.8355 20.9996 24.0001 20.9997Z"
-                  fill="black"
-                />
-              </svg>
-            </Button>
-          </CardBody>
+                {score && (
+                  <Button
+                    mb={['63.54px', '40px', '40px', '0', '0']}
+                    variant="variant3"
+                    marginTop="26.76px"
+                    mr="8.25px"
+                    onClick={() => {
+                      if (lastAttestation) {
+                        window.open(
+                          `https://sepolia.easscan.org/attestation/view/${lastAttestation.id}`,
+                        );
+                      } else {
+                        mintAttestation();
+                      }
+                    }}
+                  >
+                    {lastAttestation ? 'VIEW ATTESTATION' : score ? 'MINT NOW' : ''}
+                  </Button>
+                )}
+                <Button
+                  mb={['63.54px', '40px', '40px', '0', '0']}
+                  variant="variant4"
+                  marginTop="26.76px"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="32"
+                    height="32"
+                    viewBox="0 0 32 32"
+                    fill="none"
+                  >
+                    <path
+                      d="M24.0001 20.9997C23.4613 20.9995 22.9281 21.1085 22.4327 21.3201C21.9373 21.5317 21.4899 21.8416 21.1176 22.2309L11.8676 17.0266C12.0467 16.3537 12.0467 15.6457 11.8676 14.9728L21.1176 9.76843C21.7911 10.4668 22.6962 10.8956 23.6632 10.9745C24.6303 11.0534 25.5929 10.777 26.3708 10.1971C27.1487 9.61725 27.6884 8.77364 27.889 7.82435C28.0895 6.87505 27.9371 5.88521 27.4602 5.04025C26.9833 4.1953 26.2146 3.55321 25.2983 3.23428C24.382 2.91535 23.3808 2.94146 22.4824 3.30771C21.5839 3.67397 20.8498 4.35524 20.4176 5.2239C19.9854 6.09256 19.8847 7.089 20.1344 8.02656L10.8844 13.2309C10.3319 12.6548 9.61963 12.2572 8.83927 12.0892C8.0589 11.9213 7.24612 11.9906 6.50549 12.2884C5.76487 12.5861 5.13026 13.0987 4.68333 13.7601C4.23639 14.4215 3.99756 15.2014 3.99756 15.9997C3.99756 16.7979 4.23639 17.5779 4.68333 18.2393C5.13026 18.9007 5.76487 19.4132 6.50549 19.711C7.24612 20.0087 8.0589 20.0781 8.83927 19.9101C9.61963 19.7421 10.3319 19.3445 10.8844 18.7684L20.1344 23.9728C19.92 24.7802 19.9637 25.6345 20.2595 26.4158C20.5552 27.1971 21.0882 27.8662 21.7836 28.3292C22.479 28.7922 23.3019 29.0258 24.1368 28.9974C24.9717 28.9689 25.7768 28.6797 26.439 28.1703C27.1012 27.661 27.5873 26.9572 27.8291 26.1575C28.071 25.3579 28.0563 24.5026 27.7873 23.7116C27.5183 22.9207 27.0084 22.2339 26.3292 21.7475C25.6499 21.2611 24.8355 20.9996 24.0001 20.9997Z"
+                      fill="black"
+                    />
+                  </svg>
+                </Button>
+              </CardBody>
+            </Flex>
+          </Flex>
         </Card>
       </GridItem>
 
@@ -262,7 +281,7 @@ const Hero: React.FC = () => {
         alignItems={'center'}
         pb={[79, 0]}
         pt={['70px', 0]}
-        mt={[-50, 0]}
+        mt={["-50px", 0]}
         px={['20px', '30px']}
         zIndex={2}
         alignContent="center"
@@ -357,3 +376,18 @@ const Exclamation = () => (
     </g>
   </svg>
 );
+
+
+const Scoremeter = () => (
+  <svg width="213" height="418" viewBox="0 0 213 418" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <g style="mix-blend-mode:overlay">
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M212.093 20.0429C209.894 6.96064 197.507 -1.86248 184.425 0.335915C62.9624 20.7469 0.339778 115.902 0.00114755 210.465C-0.338291 305.255 61.9335 399.596 184.909 417.69C198.033 419.621 210.238 410.547 212.169 397.423C214.1 384.299 205.026 372.094 191.902 370.163C94.4967 355.83 47.7791 283.535 48.0402 210.637C48.302 137.513 95.8696 63.93 192.386 47.711C205.468 45.5126 214.291 33.1252 212.093 20.0429Z" fill="url(#paint0_linear_668_1462)" />
+    </g>
+    <defs>
+      <linearGradient id="paint0_linear_668_1462" x1="77.3146" y1="76.266" x2="180.599" y2="383.718" gradientUnits="userSpaceOnUse">
+        <stop offset="0.0429313" />
+        <stop offset="1" stop-opacity="0" />
+      </linearGradient>
+    </defs>
+  </svg>
+)
