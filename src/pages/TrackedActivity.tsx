@@ -24,8 +24,6 @@ import { useScore } from '@/hooks';
 // TODO: FIX TYPE
 const ActivityRow = ({ activity }: any) => {
   const source = activity.source || activity.network;
-  // TODO: Fix this by improving the sources
-  if (activity?.tokens) return null;
   return (
     <Tr>
       <Td paddingLeft="0px">
@@ -50,7 +48,7 @@ const ActivityRow = ({ activity }: any) => {
         {source}
       </Td>
       <Td>{activity.behavior}</Td>
-      <Td>{activity.value.toString()}</Td>
+      <Td>{activity.value}</Td>
       <Td>{activity.scoreAdded}</Td>
     </Tr>
   );
@@ -58,8 +56,8 @@ const ActivityRow = ({ activity }: any) => {
 
 const TrackedActivity = () => {
   const { address } = useAccount();
-  const { meta, loading } = useScore(address);
-
+  const { meta } = useScore(address);
+  console.log({ meta });
   return (
     <Flex flexDir="column" align="flex-center" justify="center" margin="0 54px">
       <Heading
