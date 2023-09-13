@@ -147,10 +147,7 @@ const Header: React.FC = () => {
                 <DrawerHeader>Menu</DrawerHeader>
                 <DrawerBody>
                   <VStack align="start" spacing={4}>
-                    <Link href="/">
-                      <Text variant={'boldLink'}>Opportunities</Text>
-                    </Link>
-                    <Link href="/profile">
+                    <Link href="/leaderboard">
                       <Text variant={'boldLink'}>My Profile</Text>
                     </Link>
                     <Link href="https://giveth.notion.site/Docs-Portal-d21fd8ee276f462d93e5a9083ec2ff8d">
