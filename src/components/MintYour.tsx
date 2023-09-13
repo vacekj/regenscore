@@ -43,7 +43,7 @@ function InfoIcon(props: ChakraProps) {
 
 const Hero: React.FC = () => {
   const { address } = useAccount();
-  const { score, categories, loading } = useScore(address);
+  const { score, categories, loading, error } = useScore(address);
   const { mintAttestation, lastAttestation } = useEAS(address);
 
   return (
@@ -81,6 +81,9 @@ const Hero: React.FC = () => {
       maxWidth="1386px"
       marginX="auto"
     >
+      {error !== undefined && <div>eror statel</div>}
+      {loading && <div>eror statel</div>}
+      {!score && !loading && !error && <div>eror statel</div>}
       <Box
         position="absolute"
         top="0"
