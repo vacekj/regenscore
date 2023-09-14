@@ -14,8 +14,7 @@ import { AppProps } from 'next/app';
 import Head from 'next/head';
 import { theme } from '@/chakra';
 import './styles.css';
-import CustomHead from '../components/customhead';
-import HotjarTracking from './HotjarTracking';
+import CustomHead from '../components/CustomHead';
 
 const chains = [optimism, optimismGoerli, sepolia];
 const projectId = 'df4f5f1b03670ef123bd5ee18401d0de';
