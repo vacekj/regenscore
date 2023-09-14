@@ -45,7 +45,6 @@ function InfoIcon(props: ChakraProps) {
 const Hero: React.FC = () => {
   const { address } = useAccount();
   const { score, categories, loading, error } = useScore(address);
-  console.log(loading);
   const { mintAttestation, lastAttestation } = useEAS(address);
   const percentile = 0.9;
   return (
