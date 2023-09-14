@@ -117,3 +117,5 @@ dist
 .pnp.*
 .vercel
 .DS_Store
+.env*.local
+.env.local

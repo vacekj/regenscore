@@ -18,6 +18,8 @@ const HowItWorks: React.FC = () => {
       <Heading
         as="h1"
         variant="h2"
+        fontSize={['36px', '48px']}
+        fontWeight={[600, 500]}
         mb={6}
         textAlign="left"
         color="brand.primaryOrange.200"
@@ -37,17 +39,17 @@ const HowItWorks: React.FC = () => {
         <BoxContent
           step={1}
           title="Connect your wallet"
-          content={`Connect your wallet to the Regen Score platform in order to track your activity on the blockchain and calculate your current Regen Score.`}
+          content={`Track your activity on the blockchain and calculate your current Regen Score.`}
         />
         <BoxContent
           step={2}
-          title="Check out your profile"
-          content={`See your Regen Score and learn more about how it is calculated. Check out the attestations earned, which are statements that verify your impact.`}
+          title="Your profile"
+          content={`See your Regen Score and learn more about how it is calculated. Check out attestations earned and how they impacted your score.`}
         />
         <BoxContent
           step={3}
           title="Share & inspire"
-          content={`Share the impact of your activities on the world and encourage others to get involved!`}
+          content={`Share the impact of your activities to the world and encourage others to get involved!`}
         />
         <BoxContent
           step={4}
@@ -57,7 +59,7 @@ const HowItWorks: React.FC = () => {
               Join the Regen Score community and{' '}
               <Text fontWeight="bold" as="span">
                 <a href="https://tally.so/r/w4JpDA">
-                  share your feedback and suggestions
+                  share feedback and suggestions
                 </a>
               </Text>{' '}
               on how we can make it even better.

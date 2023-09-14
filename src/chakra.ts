@@ -26,14 +26,6 @@ export const theme = extendTheme({
     },
   },
 
-  breakpoints: {
-    base: '375px', //mobile
-    sm: '768px', //760-1023px
-    md: '1024px', //1024-1279px
-    lg: '1280px', //1280-1439px
-    xl: '1440px', //1440 and more
-  },
-
   components: {
     Tooltip: {
       baseStyle: {
@@ -94,8 +86,30 @@ export const theme = extendTheme({
           _hover: {
             backgroundColor: '#FFF',
           },
+          _disabled: {
+            backgroundColor: 'rgba(255, 255, 255, 1)',
+            cursor: 'not-allowed',
+            boxShadow: '0px 4px 4px 0px rgba(0, 0, 0, 0.20)',
+          },
+        },
+        variant4: {
+          // Mint Now
+          fontSize: '14px',
+          minWidth: '32px',
+          paddingLeft: '16px',
+          paddingRight: '16px',
+          height: '45.46px',
+          backgroundColor: '#FFF',
+          color: 'brand.deepGreen.400',
+          fontFamily: 'Inter-Bold',
+          borderRadius: '81.175px',
+          boxShadow: '0px 4px 4px 0px rgba(0, 0, 0, 0.10)',
+          _hover: {
+            backgroundColor: '#FFF',
+          },
         },
       },
+
       defaultProps: {
         size: 'lg',
         variant: 'brand',
