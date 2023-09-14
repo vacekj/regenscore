@@ -2,23 +2,23 @@ import Head from 'next/head';
 import Script from 'next/script';
 
 const CustomHead = () => (
-  <Head>
+  <>
     {/* Google Analytics */}
-    <script
+    <Script
       async
       src="https://www.googletagmanager.com/gtag/js?id=G-93QB1E2CK5"
-    ></script>
-    <script>
+    ></Script>
+    <Script id={'ga'}>
       {`
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
         gtag('config', 'G-93QB1E2CK5');
       `}
-    </script>
+    </Script>
 
     {/*Hotjar Tracking Code*/}
-    <Script>
+    <Script id={'hotjar'}>
       {`(function(h,o,t,j,a,r){
         h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
         h._hjSettings={hjid:3651658,hjsv:6};
@@ -28,7 +28,7 @@ const CustomHead = () => (
         a.appendChild(r);
     })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');`}
     </Script>
-  </Head>
+  </>
 );
 
 export default CustomHead;

@@ -17,7 +17,7 @@ import {
 } from '@chakra-ui/react';
 import React from 'react';
 import { useAccount } from 'wagmi';
-import { CATEGORY_TOOLTIP } from '@/constants';
+import { CATEGORY_TOOLTIP, CategoryTooltipKeyType } from '@/constants';
 import { formatTimestamp } from '@/utils/strings';
 import { useScore, useEAS } from '@/hooks';
 import { Arrow } from '@/components/ScoreMeter';
@@ -45,6 +45,7 @@ function InfoIcon(props: ChakraProps) {
 const Hero: React.FC = () => {
   const { address } = useAccount();
   const { score, categories, loading, error } = useScore(address);
+  console.log(loading);
   const { mintAttestation, lastAttestation } = useEAS(address);
   const percentile = 0.9;
   return (
@@ -169,7 +170,7 @@ const Hero: React.FC = () => {
           )}
 
           {/* Loading State */}
-          {loading && !score && (
+          {loading && (
             <CardBody
               position="absolute"
               top="55%"
@@ -441,40 +442,52 @@ const Hero: React.FC = () => {
       >
         {
           // TODO: FIX TYPE
-          categories.map((categoryItem: any, index: number) => (
-            <>
-              <Flex gap="8px" alignItems="center" key={index}>
-                <Tooltip
-                  label={CATEGORY_TOOLTIP[categoryItem.category]}
-                  placement="top-end"
-                >
-                  <InfoIcon
-                    color={['brand.deepGreen.400', 'white']}
-                    w={'16px'}
-                    h={'16px'}
+          categories.map(
+            (
+              categoryItem: {
+                category: string;
+                scoreAdded: number;
+              },
+              index: number,
+            ) => (
+              <>
+                <Flex gap="8px" alignItems="center" key={index}>
+                  <Tooltip
+                    label={
+                      CATEGORY_TOOLTIP[
+                        categoryItem.category as CategoryTooltipKeyType
+                      ]
+                    }
+                    placement="top-end"
+                  >
+                    <InfoIcon
+                      color={['brand.deepGreen.400', 'white']}
+                      w={'16px'}
+                      h={'16px'}
+                    />
+                  </Tooltip>
+                  {categoryItem.category}
+                </Flex>
+                <Flex alignItems={'center'} gap={18}>
+                  <Box
+                    bg={['brand.deepGreen.400', 'white']}
+                    flexBasis={`${categoryItem.scoreAdded}%`}
+                    borderRadius="100px"
+                    h="10px"
                   />
-                </Tooltip>
-                {categoryItem.category}
-              </Flex>
-              <Flex alignItems={'center'} gap={18}>
-                <Box
-                  bg={['brand.deepGreen.400', 'white']}
-                  flexBasis={`${categoryItem.scoreAdded}%`}
-                  borderRadius="100px"
-                  h="10px"
-                />
-                <Box
-                  w={'100%'}
-                  display={'flex'}
-                  gap={'16px'}
-                  alignItems={'center'}
-                  justifyContent={'flex-start'}
-                >
-                  {categoryItem.scoreAdded}
-                </Box>
-              </Flex>
-            </>
-          ))
+                  <Box
+                    w={'100%'}
+                    display={'flex'}
+                    gap={'16px'}
+                    alignItems={'center'}
+                    justifyContent={'flex-start'}
+                  >
+                    {categoryItem.scoreAdded}
+                  </Box>
+                </Flex>
+              </>
+            ),
+          )
         }
       </Grid>
     </Grid>
