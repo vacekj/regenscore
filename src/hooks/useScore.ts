@@ -20,7 +20,8 @@ export function useScore(address: string | Hex | undefined) {
   const res = useSWR([address], async ([address]) => {
     try {
       setLoading(true);
-      if (!address) return null;
+      if (!address) return setLoading(false);
+
       const res = await fetch('/api/score', {
         method: 'POST',
         headers: {
