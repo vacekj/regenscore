@@ -200,9 +200,9 @@ const TrackedActivity = () => {
                   ))}
               {meta &&
                 // TODO: FIX TYPE
-                (meta?.tokenBalances?.tokens)
-                  .filter((key: any) => !!key.applies)
-                  .map((activity: any, index: string) => (
+                meta?.tokenBalances?.tokens
+                  ?.filter((key: any) => !!key.applies)
+                  ?.map((activity: any, index: string) => (
                     <ActivityRow key={index} activity={activity} />
                   ))}
             </Tbody>
