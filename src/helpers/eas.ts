@@ -1,5 +1,6 @@
 import { EAS, SchemaEncoder } from '@ethereum-attestation-service/eas-sdk';
 
+// TODO: MOVE THIS TO ENV VARS FOR KEYCHECK PASS AND REMOVE THE FILE ON KEYCHECKIGNORE
 export const RegenScoreSchemaUID =
   '0xa1285d8c9b3164eb94f22a4084d4d01fc7fb66d27c56ddba32033c63a5ed76cd';
 export const EASContractAddress = '0xC2679fBD37d54388Ce493F1DB75320D236e1815e'; // Sepolia v0.26
