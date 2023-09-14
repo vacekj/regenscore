@@ -5,4 +5,4 @@ pre-commit:
       glob: '*.{js,ts,jsx,tsx}'
       run: pnpm prettier --write {staged_files}
     keycheck:
-      run: keycheck'
+      run: keycheck
