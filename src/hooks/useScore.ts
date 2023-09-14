@@ -14,13 +14,13 @@ type Item = {
 };
 
 /*TODO(mateo): types */
-function useScore(address: string | Hex | undefined) {
+export function useScore(address: string | Hex | undefined) {
   const [loading, setLoading] = useState(true);
 
   const res = useSWR([address], async ([address]) => {
     try {
-      if (!address) return setLoading;
       setLoading(true);
+      if (!address) return null;
       const res = await fetch('/api/score', {
         method: 'POST',
         headers: {
