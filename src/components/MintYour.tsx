@@ -20,6 +20,7 @@ import { useAccount } from 'wagmi';
 import { CATEGORY_TOOLTIP } from '@/constants';
 import { formatTimestamp } from '@/utils/strings';
 import { useScore, useEAS } from '@/hooks';
+import { Arrow } from '@/components/ScoreMeter';
 
 function InfoIcon(props: ChakraProps) {
   return (
@@ -45,7 +46,7 @@ const Hero: React.FC = () => {
   const { address } = useAccount();
   const { score, categories, loading, error } = useScore(address);
   const { mintAttestation, lastAttestation } = useEAS(address);
-
+  const percentile = 0.9;
   return (
     <Grid
       templateColumns={[
@@ -115,10 +116,6 @@ const Hero: React.FC = () => {
       >
         Mint your attestations to <br /> access opportunities
       </Heading>
-
-      {/* {error !== undefined && <div>eror statel</div>}
-      {loading && <div>eror statel</div>}
-      {!score && !loading && !error && <div>eror statel</div>} */}
 
       {/* Orange Card with score */}
       <GridItem
@@ -249,7 +246,48 @@ const Hero: React.FC = () => {
 
           <Flex display="flex" flexDirection="row">
             {/* Left Column */}
-            <Flex flex={['0.3', '1']} flexDirection="column"></Flex>
+            <Flex
+              flex={['0.3', '1']}
+              alignItems={'center'}
+              justifyContent={'center'}
+              flexDirection="column"
+              position={'relative'}
+            >
+              <Arrow rotate={percentile * 160 + 10} />
+              <svg
+                width="213"
+                height="418"
+                viewBox="0 0 213 418"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                style={{
+                  transform: 'scale(0.9)',
+                  position: 'absolute',
+                  top: 50,
+                  right: 70,
+                }}
+              >
+                <path
+                  fillRule="evenodd"
+                  clipRule="evenodd"
+                  d="M212.093 20.0429C209.894 6.96064 197.507 -1.86248 184.425 0.335915C62.9625 20.7469 0.33979 115.902 0.00116021 210.465C-0.338276 305.255 61.9335 399.596 184.909 417.69C198.033 419.621 210.238 410.547 212.169 397.423C214.1 384.299 205.026 372.094 191.902 370.163C94.4967 355.83 47.7791 283.535 48.0402 210.637C48.302 137.513 95.8696 63.93 192.386 47.711C205.468 45.5126 214.291 33.1252 212.093 20.0429Z"
+                  fill="url(#paint0_linear_1201_930)"
+                />
+                <defs>
+                  <linearGradient
+                    id="paint0_linear_1201_930"
+                    x1="77.3146"
+                    y1="76.266"
+                    x2="180.599"
+                    y2="383.718"
+                    gradientUnits="userSpaceOnUse"
+                  >
+                    <stop offset="0.0429313" stopColor="white" />
+                    <stop offset="1" stopColor="white" stopOpacity="0" />
+                  </linearGradient>
+                </defs>
+              </svg>
+            </Flex>
 
             {/* Right Column */}
             <Flex flex={['0.7', '1']} flexDirection="column">
