@@ -81,9 +81,7 @@ const Hero: React.FC = () => {
       maxWidth="1386px"
       marginX="auto"
     >
-      {error !== undefined && <div>eror statel</div>}
-      {loading && <div>eror statel</div>}
-      {!score && !loading && !error && <div>eror statel</div>}
+
       <Box
         position="absolute"
         top="0"
@@ -119,6 +117,10 @@ const Hero: React.FC = () => {
         Mint your attestations to <br /> access opportunities
       </Heading>
 
+      {/* {error !== undefined && <div>eror statel</div>}
+      {loading && <div>eror statel</div>}
+      {!score && !loading && !error && <div>eror statel</div>} */}
+
       {/* Orange Card with score */}
       <GridItem
         rowSpan={[1, 2]}
@@ -139,6 +141,52 @@ const Hero: React.FC = () => {
           border="0.812px solid rgba(255, 255, 255, 0.50)"
           mt="17.5px"
         >
+
+          {/* Empty State */}
+          {(!score && !error && !loading) && (
+            <CardBody position="absolute" top="55%" left="50%" transform="translate(-50%, -50%)">
+              <Flex alignItems="center" justifyContent="center" flexDir="row" gap="11px">
+                <WarningSharp />
+                <Text textAlign="center" fontFamily="Inter-Bold" fontSize="24px" color="white">
+                  No data
+                </Text>
+              </Flex>
+              <Button variant="variant3" isDisabled mt="22px"> MINT</Button>
+            </CardBody>
+          )}
+
+          {/* Loading State */}
+          {(loading && !score) && (
+            <CardBody position="absolute" top="55%" left="50%" transform="translate(-50%, -50%)">
+              <Flex flexDir="column" align="center">
+                <Flex alignItems="center" justifyContent="center" flexDir="row" gap="11px">
+                  <Text textAlign="center" fontFamily="Inter-Bold" fontSize="24px" color="white">
+                    Loading data.....
+                  </Text>
+                </Flex>
+                <Button variant="variant3" isDisabled mt="22px"> MINT</Button>
+              </Flex>
+            </CardBody>
+          )}
+
+          {/* Error State */}
+          {error !== undefined && (
+            <CardBody position="absolute" top="55%" left="50%" transform="translate(-50%, -50%)">
+              <Flex flexDir="column" align="center">
+                <Flex alignItems="center" justifyContent="center" flexDir="column" gap="11px">
+                  <AttestationFailed />
+                  <Text textAlign="center" fontFamily="Inter-Bold" fontSize="24px" color="#E43126" whiteSpace="nowrap">
+                    Attestation Failed!!!
+                  </Text>
+                  <Text textAlign="center" fontFamily="Inter-Regular" fontSize="24px" color="#E43126" width="40vw" mx="50px">
+                    Loading your data attestation failed. Please try again.
+                  </Text>
+                </Flex>
+                <Button variant="variant3" isDisabled mt="22px"> MINT</Button>
+              </Flex>
+            </CardBody>
+          )}
+
           <Flex display="flex" flexDirection="row">
             {/* Left Column */}
             <Flex flex={['0.3', '1']} flexDirection="column"></Flex>
@@ -153,13 +201,13 @@ const Hero: React.FC = () => {
                   fontSize="100px"
                   color="#FFF"
                   marginTop={['77px', '20px', '20px', '98px', '98px']}
-                  // marginLeft={{
-                  //   base: '150px',
-                  //   sm: '230px',
-                  //   md: '230px',
-                  //   lg: '200px',
-                  //   xl: '337px',
-                  // }}
+                // marginLeft={{
+                //   base: '150px',
+                //   sm: '230px',
+                //   md: '230px',
+                //   lg: '200px',
+                //   xl: '337px',
+                // }}
                 >
                   {score || ''}
                 </Heading>
@@ -239,8 +287,8 @@ const Hero: React.FC = () => {
                     {lastAttestation
                       ? 'VIEW ATTESTATION'
                       : score
-                      ? 'MINT NOW'
-                      : ''}
+                        ? 'MINT NOW'
+                        : ''}
                   </Button>
                 )}
                 {score && (
@@ -416,3 +464,15 @@ const Scoremeter = () => (
     </defs>
   </svg>
 );
+
+const WarningSharp = () => (
+  <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M29.9374 27.9861L16.7768 3.54044C16.734 3.46091 16.6704 3.39445 16.5929 3.34813C16.5154 3.3018 16.4268 3.27734 16.3365 3.27734C16.2461 3.27734 16.1575 3.3018 16.08 3.34813C16.0025 3.39445 15.9389 3.46091 15.8961 3.54044L2.73301 27.9861C2.69202 28.0623 2.67151 28.1478 2.67347 28.2343C2.67543 28.3208 2.69981 28.4053 2.74421 28.4795C2.78861 28.5538 2.85152 28.6153 2.92679 28.6579C3.00206 28.7006 3.08712 28.723 3.17364 28.7229H29.4999C29.5861 28.7224 29.6708 28.6997 29.7456 28.6568C29.8205 28.6139 29.883 28.5524 29.927 28.4782C29.971 28.404 29.9951 28.3197 29.997 28.2335C29.9988 28.1473 29.9783 28.062 29.9374 27.9861ZM17.5861 25.7179H15.0861V23.2179H17.5861V25.7179ZM17.3361 21.7229H15.3361L14.9611 11.7229H17.7111L17.3361 21.7229Z" fill="white" />
+  </svg>
+)
+
+const AttestationFailed = () => (
+  <svg width="52" height="52" viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M26 0C11.6637 0 0 11.6637 0 26C0 40.3363 11.6637 52 26 52C40.3363 52 52 40.3363 52 26C52 11.6637 40.3363 0 26 0ZM28.5 39.9888H23.5V34.9888H28.5V39.9888ZM28 32H24L23.25 12H28.75L28 32Z" fill="#E43126" />
+  </svg>
+)

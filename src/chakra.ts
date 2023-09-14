@@ -86,6 +86,11 @@ export const theme = extendTheme({
           _hover: {
             backgroundColor: '#FFF',
           },
+          _disabled: {
+            backgroundColor: 'rgba(255, 255, 255, 1)',
+            cursor: 'not-allowed',
+            boxShadow: '0px 4px 4px 0px rgba(0, 0, 0, 0.20)',
+          },
         },
         variant4: {
           // Mint Now
