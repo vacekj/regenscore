@@ -77,7 +77,7 @@ export function useScore(address: string | Hex | undefined) {
     score: res.data?.score,
     meta: res.data?.meta,
     categories,
-    loading,
+    loading: false,
     ...res,
   };
 }
