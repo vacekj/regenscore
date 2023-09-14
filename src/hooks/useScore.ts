@@ -13,7 +13,7 @@ type Item = {
   tokens?: Token[];
 };
 
-/*TODO(mateo): types */
+/*TODO(mateo): types, fetch from supabase first, if not in supabase, load from our api */
 export function useScore(address: string | Hex | undefined) {
   const [loading, setLoading] = useState(true);
 

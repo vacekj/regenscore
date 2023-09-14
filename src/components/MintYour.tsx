@@ -340,7 +340,7 @@ const Hero: React.FC = () => {
                 Top 10% of users
               </Text>
             </div>*/}
-                {lastAttestation && score && (
+                {score && (
                   <div
                     style={{
                       display: 'flex',
@@ -353,7 +353,7 @@ const Hero: React.FC = () => {
                       color="#354728"
                       opacity="0.5"
                     >
-                      Attestation Last Updated
+                      Last Updated
                     </Text>
                     <Text
                       fontSize="13px"
@@ -361,7 +361,7 @@ const Hero: React.FC = () => {
                       color="#354728"
                       opacity="0.5"
                     >
-                      {formatTimestamp(lastAttestation.timeCreated)}
+                      {/*{formatTimestamp(lastAttestation?.timeCreated)}*/}
                     </Text>
                   </div>
                 )}
