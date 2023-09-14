@@ -62,7 +62,7 @@ const Header: React.FC = () => {
   const Web3Content = () => {
     return (
       <>
-        {isConnected && (
+        {isConnected && !isMobile && (
           <StyledWeb3NetworkSwitch>
             <Web3NetworkSwitch />
           </StyledWeb3NetworkSwitch>
@@ -70,11 +70,11 @@ const Header: React.FC = () => {
         {isConnected ? (
           <Web3Button />
         ) : (
-          <Button onClick={() => open()} variant="variant1">
+          <Button size={['md', 'lg']} onClick={() => open()} variant="variant1">
             Connect Wallet
           </Button>
         )}
-        {score && (
+        {score && !isMobile && (
           <Text variant={'bold'} textTransform={'uppercase'}>
             Score: {score}
           </Text>
@@ -104,8 +104,11 @@ const Header: React.FC = () => {
         sm: '20px',
         md: '24px',
         lg: '38px',
-        xl: '38px',
+        xl: '0',
       }}
+      marginX={['auto']}
+      maxWidth={{ base: '100%', xl: '1386px' }}
+      width="100%"
       transition="all 0.3s ease-in-out"
       transform={visible ? 'translateY(0)' : 'translateY(-100%)'}
     >
@@ -127,10 +130,7 @@ const Header: React.FC = () => {
                 My Profile
               </Text>
             </Link>
-            <Link
-              href="https://giveth.notion.site/Docs-Portal-d21fd8ee276f462d93e5a9083ec2ff8d"
-              target="_blank"
-            >
+            <Link href="https://docs.regenscore.io/" target="_blank">
               <Text variant={'boldLink'} textTransform={'uppercase'}>
                 Docs
               </Text>
@@ -147,10 +147,10 @@ const Header: React.FC = () => {
                 <DrawerHeader>Menu</DrawerHeader>
                 <DrawerBody>
                   <VStack align="start" spacing={4}>
-                    <Link href="/leaderboard">
+                    <Link href="/profile">
                       <Text variant={'boldLink'}>My Profile</Text>
                     </Link>
-                    <Link href="https://giveth.notion.site/Docs-Portal-d21fd8ee276f462d93e5a9083ec2ff8d">
+                    <Link href="https://docs.regenscore.io/">
                       <Text variant={'boldLink'}>Docs</Text>
                     </Link>
                   </VStack>
@@ -158,7 +158,7 @@ const Header: React.FC = () => {
               </DrawerContent>
             </DrawerOverlay>
           </Drawer>
-          {!isMobile && <Web3Content />}
+          <Web3Content />
           {isDrawerMenu && (
             <a onClick={onOpen}>
               <Image src="/icons/drawer.svg" alt="Drawer" />

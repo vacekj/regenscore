@@ -17,7 +17,7 @@ export enum CATEGORIES {
   Security = 'Security',
   Utilization = 'Utilization',
 }
-
+export type CategoryTooltipKeyType = keyof typeof CATEGORY_TOOLTIP;
 export const CATEGORY_TOOLTIP: CategoryTooltipType = {
   Contributor:
     'Measure of user contribution to community development. Including payment from treasury, holding contributor POAPs…',
