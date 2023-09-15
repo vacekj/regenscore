@@ -169,7 +169,7 @@ const Hero: React.FC = () => {
           )}
 
           {/* Loading State */}
-          {loading && (
+          {!!loading && (
             <CardBody
               position="absolute"
               top="55%"
@@ -201,7 +201,7 @@ const Hero: React.FC = () => {
           )}
 
           {/* Error State */}
-          {error !== undefined && (
+          {!!error && (
             <CardBody
               position="absolute"
               top="55%"
