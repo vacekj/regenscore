@@ -11,45 +11,70 @@ type Item = {
   category: string;
   scoreAdded: number;
   tokens?: Token[];
+  applies?: Boolean;
+};
+
+type ResponseData = {
+  score?: number;
+  meta?: {
+    [key: string]: Item;
+  };
 };
 
 /*TODO(mateo): types, fetch from supabase first, if not in supabase, load from our api */
 export function useScore(address: string | Hex | undefined) {
-  const [loading, setLoading] = useState(true);
-
-  const res = useSWR([address], async ([address]) => {
-    try {
-      setLoading(true);
-      if (!address) return setLoading(false);
-
-      const res = await fetch('/api/score', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          address: getAddress(address!),
-        }),
-      });
-      setLoading(false);
-      return res.json();
-    } catch (error) {
-      setLoading(false);
-      console.log({ error });
-      return { error };
-    }
-  });
+  const [loading, setLoading] = useState(false);
+  const [data, setData] = useState<ResponseData | null>(null);
+  const [error, setError] = useState(null);
   const [categories, setCategories] = useState<
     { category: string; scoreAdded: number }[]
   >([]);
 
   useEffect(() => {
-    if (res.data?.meta) {
+    let active = true;
+    const fetchScore = async () => {
+      setLoading(true);
+      console.log("It's being called", { loading });
+      if (!address) {
+        setLoading(false);
+        return;
+      }
+      try {
+        const res = await fetch('/api/score', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            address: getAddress(address!),
+          }),
+        });
+        if (!active) return;
+        setLoading(false);
+        const jsonData = await res.json();
+        setData(jsonData);
+      } catch (error: any) {
+        if (!active) return;
+        setLoading(false);
+        setError(error);
+        console.log({ error });
+      }
+    };
+    fetchScore();
+
+    return () => {
+      active = false; // Prevents setting state on unmounted component
+    };
+  }, [address]);
+
+  useEffect(() => {
+    const meta = data?.meta;
+    if (meta) {
       const newCategoryScores: Record<string, number> = {};
-      Object.keys(res.data.meta)
-        .filter((key) => !!res.data.meta[key].applies)
+      Object.keys(meta)
+        .filter((key) => !!meta[key].applies)
         .forEach((key: string) => {
-          const item = res.data.meta[key] as Item;
+          const item = meta[key] as Item;
           if (typeof item === 'object' && item !== null) {
             if (key === 'tokenBalances' && item.tokens) {
               item.tokens.forEach((token: any) => {
@@ -71,14 +96,14 @@ export function useScore(address: string | Hex | undefined) {
         })),
       );
     }
-  }, [res.data?.meta]);
+  }, [data]);
 
   return {
-    score: res.data?.score,
-    meta: res.data?.meta,
+    score: data?.score,
+    meta: data?.meta,
     categories,
-    loading: false,
-    ...res,
+    loading,
+    error,
   };
 }
 
