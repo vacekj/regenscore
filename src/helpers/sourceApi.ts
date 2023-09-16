@@ -277,21 +277,43 @@ async function fetchSafeInfo(safeAddress: string): Promise<SafeInfo> {
 
 export async function checkSafeOwnershipAndActivity(
   userAddress: string,
-): Promise<{ ownsSafe: boolean; hasExecutedTransaction: boolean }> {
+): Promise<{
+  ownsSafe: boolean;
+  hasExecutedTransaction: boolean;
+  belongsToTreasury: boolean;
+}> {
   const safesOwnedByUser = await fetchSafesOwnedByUser(userAddress);
 
   if (safesOwnedByUser.length === 0) {
-    return { ownsSafe: false, hasExecutedTransaction: false };
+    return {
+      ownsSafe: false,
+      hasExecutedTransaction: false,
+      belongsToTreasury: false,
+    };
+  }
+
+  let safeHistory = {
+    ownsSafe: true,
+    hasExecutedTransaction: false,
+    belongsToTreasury: false,
+  };
+
+  if (safesOwnedByUser.includes('0x2501c477D0A35545a387Aa4A3EEe4292A9a8B3F0')) {
+    safeHistory = { ...safeHistory, belongsToTreasury: true };
   }
 
   for (const safe of safesOwnedByUser) {
     const safeInfo = await fetchSafeInfo(safe);
     if (safeInfo.owners.includes(userAddress) && safeInfo.nonce > 0) {
-      return { ownsSafe: true, hasExecutedTransaction: true };
+      safeHistory = {
+        ...safeHistory,
+        ownsSafe: true,
+        hasExecutedTransaction: true,
+      };
     }
   }
 
-  return { ownsSafe: true, hasExecutedTransaction: false };
+  return safeHistory;
 }
 
 async function fetchGitcoinProjectsData(
