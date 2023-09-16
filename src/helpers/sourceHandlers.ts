@@ -523,15 +523,16 @@ export async function handleSafeOwnershipAndActivity(
   meta: any,
 ) {
   let scoreAdded = 0;
-  const { ownsSafe, hasExecutedTransaction } =
+  const { ownsSafe, hasExecutedTransaction, belongsToTreasury } =
     await checkSafeOwnershipAndActivity(address);
 
   if (hasExecutedTransaction) scoreAdded += 10;
   if (ownsSafe) scoreAdded += 10;
   meta.safeOwnerActivity = {
     ...meta.safeOwnerActivity,
-    ownsSafe,
-    hasExecutedTransaction,
+    ownsSafe: !!ownsSafe,
+    hasExecutedTransaction: !!hasExecutedTransaction,
+    belongsToTreasury: !!belongsToTreasury,
     scoreAdded,
     applies: !!scoreAdded,
     value: hasExecutedTransaction || ownsSafe,
