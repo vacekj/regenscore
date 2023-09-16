@@ -27,6 +27,7 @@ function useScore(address: string | Hex | undefined) {
         },
         body: JSON.stringify({
           address: getAddress(address!),
+          shouldUpdate: true, // TODO: Check this by versioning of the scores
         }),
       });
       setLoading(false);

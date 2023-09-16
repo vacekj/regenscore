@@ -17,7 +17,7 @@ import OPAirdrop2 from '@/data/op_airdrop_2.json';
 // CONSTANTS
 const GICOIN_SCORER_ID = '1603'; // Giveth's ID and API
 const GITCOIN_PASSPORT_SCORER_API_KEY =
-  process.env.NEXT_PUBLIC_GITCOIN_PASSPORT_SCORER_API_KEY;
+  process.env.GITCOIN_PASSPORT_SCORER_API_KEY;
 const GNOSIS_SAFE_PROXY = '0xc22834581ebc8527d974f8a1c97e1bea4ef910bc';
 const ETHERSCAN_API_KEY = process.env.NEXT_PUBLIC_ETHERSCAN_API_KEY;
 const apikey = '&apikey=' + ETHERSCAN_API_KEY;
@@ -277,21 +277,42 @@ async function fetchSafeInfo(safeAddress: string): Promise<SafeInfo> {
 
 export async function checkSafeOwnershipAndActivity(
   userAddress: string,
-): Promise<{ ownsSafe: boolean; hasExecutedTransaction: boolean }> {
+): Promise<{
+  ownsSafe: boolean;
+  hasExecutedTransaction: boolean;
+  belongsToTreasury: boolean;
+}> {
   const safesOwnedByUser = await fetchSafesOwnedByUser(userAddress);
-
   if (safesOwnedByUser.length === 0) {
-    return { ownsSafe: false, hasExecutedTransaction: false };
+    return {
+      ownsSafe: false,
+      hasExecutedTransaction: false,
+      belongsToTreasury: false,
+    };
+  }
+
+  let safeHistory = {
+    ownsSafe: true,
+    hasExecutedTransaction: false,
+    belongsToTreasury: false,
+  };
+
+  if (safesOwnedByUser.includes('0x2501c477D0A35545a387Aa4A3EEe4292A9a8B3F0')) {
+    safeHistory = { ...safeHistory, belongsToTreasury: true };
   }
 
   for (const safe of safesOwnedByUser) {
     const safeInfo = await fetchSafeInfo(safe);
     if (safeInfo.owners.includes(userAddress) && safeInfo.nonce > 0) {
-      return { ownsSafe: true, hasExecutedTransaction: true };
+      safeHistory = {
+        ...safeHistory,
+        ownsSafe: true,
+        hasExecutedTransaction: true,
+      };
     }
   }
 
-  return { ownsSafe: true, hasExecutedTransaction: false };
+  return safeHistory;
 }
 
 async function fetchGitcoinProjectsData(
@@ -352,7 +373,7 @@ export async function fetchPOAPsForAddress(address: string) {
     method: 'GET',
     headers: {
       accept: 'application/json',
-      'x-api-key': process.env.NEXT_PUBLIC_POAP_API_KEY!, // Your API key
+      'x-api-key': process.env.POAP_API_KEY!, // Your API key
     },
   });
 

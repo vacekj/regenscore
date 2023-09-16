@@ -59,6 +59,7 @@ const processFile = async () => {
       meta.optimismTxHistory?.createdGnosisSafe || false,
       meta.safeOwnerActivity?.ownsSafe || false,
       meta.safeOwnerActivity?.hasExecutedTransaction || false,
+      meta.safeOwnerActivity?.belongsToTreasury || false,
       meta.gitcoinProjectOwner?.isProjectOwner || false,
       meta.gitcoinPassport?.value || false,
       meta.regenPOAPs?.value || false,
