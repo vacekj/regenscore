@@ -1,5 +1,4 @@
 import { Hex, getAddress } from 'viem';
-import useSWR from 'swr';
 import { useState, useEffect } from 'react';
 
 type Token = {
