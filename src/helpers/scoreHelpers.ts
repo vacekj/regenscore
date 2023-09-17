@@ -98,23 +98,23 @@ export async function createScore(
     },
   };
   const results = await Promise.all([
-    handleTokenBalances(address, meta),
+    handleTokenBalances(address, meta), // points depend on the token hold
     // handleNormalTransactions(address, meta),
     // handleERC20Transactions(address, meta),
     // handleERC721Transactions(address, meta),
     handleGRDonations(address, meta),
-    handleEthStaker(address, meta),
-    handleOPBridge(address, meta),
-    handleOPTreasuryPayouts(address, meta),
-    handleDelegate(address, meta),
-    handleTxsMadeOnOptimism(address, meta),
-    handleOPContractsInteractions(address, meta),
-    handleSafeOwnershipAndActivity(address, meta),
-    handleOPAirdropReceiver(address, meta),
+    handleEthStaker(address, meta, 10),
+    handleOPBridge(address, meta, 10),
+    handleOPTreasuryPayouts(address, meta, 400),
+    handleDelegate(address, meta, 500),
+    handleTxsMadeOnOptimism(address, meta, 10),
+    handleOPContractsInteractions(address, meta, 10),
+    handleSafeOwnershipAndActivity(address, meta, 10),
+    handleOPAirdropReceiver(address, meta, 200),
     handleGitcoinProjectOwner(address, meta),
-    handleGitcoinPassport(address, meta),
-    handleRegenPOAPs(address, meta),
-    handleTrustedSeedMember(address, meta),
+    handleGitcoinPassport(address, meta, 10),
+    handleRegenPOAPs(address, meta, 20),
+    handleTrustedSeedMember(address, meta, 10),
   ]);
   score += results.reduce((acc, current) => acc + current, 0);
   return { score, meta };
