@@ -77,27 +77,42 @@ export default function Footer() {
               </div>
               <div style={{ marginTop: '10px' }}>
                 <div style={{ marginBottom: '10px' }}>
-                  <Link href="https://docs.regenscore.io/scoring-formula" _hover={{ textDecoration: 'none' }}>
+                  <Link
+                    href="https://docs.regenscore.io/scoring-formula"
+                    _hover={{ textDecoration: 'none' }}
+                  >
                     Scoring Formula
                   </Link>
                 </div>
                 <div style={{ marginBottom: '10px' }}>
-                  <Link href="https://docs.regenscore.io/matchmaking" _hover={{ textDecoration: 'none' }}>
+                  <Link
+                    href="https://docs.regenscore.io/matchmaking"
+                    _hover={{ textDecoration: 'none' }}
+                  >
                     Matchmaking
                   </Link>
                 </div>
                 <div style={{ marginBottom: '10px' }}>
-                  <Link href="https://docs.regenscore.io/governance-accessibility" _hover={{ textDecoration: 'none' }}>
+                  <Link
+                    href="https://docs.regenscore.io/governance-accessibility"
+                    _hover={{ textDecoration: 'none' }}
+                  >
                     Governance Accesibility
                   </Link>
                 </div>
                 <div style={{ marginBottom: '10px' }}>
-                  <Link href="https://docs.regenscore.io/steward-health-check" _hover={{ textDecoration: 'none' }}>
+                  <Link
+                    href="https://docs.regenscore.io/steward-health-check"
+                    _hover={{ textDecoration: 'none' }}
+                  >
                     Steward Health Check
                   </Link>
                 </div>
                 <div style={{ marginBottom: '10px' }}>
-                  <Link href="https://mirror.xyz/0xC5A756D63C5fe67b438acBE468aA62a52093fDEf" _hover={{ textDecoration: 'none' }}>
+                  <Link
+                    href="https://mirror.xyz/0xC5A756D63C5fe67b438acBE468aA62a52093fDEf"
+                    _hover={{ textDecoration: 'none' }}
+                  >
                     Mirror Blog
                   </Link>
                 </div>
@@ -126,7 +141,10 @@ export default function Footer() {
               </div>
               <div style={{ marginTop: '10px' }}>
                 <div style={{ marginBottom: '10px' }}>
-                  <Link href="https://twitter.com/regenscoreio" _hover={{ textDecoration: 'none' }}>
+                  <Link
+                    href="https://twitter.com/regenscoreio"
+                    _hover={{ textDecoration: 'none' }}
+                  >
                     <Twitter />
                   </Link>
                 </div>
@@ -136,17 +154,33 @@ export default function Footer() {
                   </Link>
                 </div>
                 <div style={{ marginBottom: '10px' }}>
-                  <Link href="https://github.com/vacekj/regenscore" _hover={{ textDecoration: 'none' }}>
-                    Github</Link> | <Link href="https://github.com/vacekj/regenscore/issues" _hover={{ textDecoration: 'none' }}>Submit issues
+                  <Link
+                    href="https://github.com/vacekj/regenscore"
+                    _hover={{ textDecoration: 'none' }}
+                  >
+                    Github
+                  </Link>{' '}
+                  |{' '}
+                  <Link
+                    href="https://github.com/vacekj/regenscore/issues"
+                    _hover={{ textDecoration: 'none' }}
+                  >
+                    Submit issues
                   </Link>
                 </div>
                 <div style={{ marginBottom: '10px' }}>
-                  <Link href="mailto:info@regenscore.io" _hover={{ textDecoration: 'none' }}>
+                  <Link
+                    href="mailto:info@regenscore.io"
+                    _hover={{ textDecoration: 'none' }}
+                  >
                     E-Mail
                   </Link>
                 </div>
                 <div style={{ marginBottom: '10px' }}>
-                  <Link href="https://docs.regenscore.io/user-agreement" _hover={{ textDecoration: 'none' }}>
+                  <Link
+                    href="https://docs.regenscore.io/user-agreement"
+                    _hover={{ textDecoration: 'none' }}
+                  >
                     User Agreement
                   </Link>
                 </div>
@@ -195,31 +229,45 @@ export default function Footer() {
               </div>
               <div style={{ marginTop: '10px', textAlign: 'left' }}>
                 <div style={{ marginBottom: '10px' }}>
-                  <Link href="https://docs.regenscore.io/scoring-formula" _hover={{ textDecoration: 'none' }}>
+                  <Link
+                    href="https://docs.regenscore.io/scoring-formula"
+                    _hover={{ textDecoration: 'none' }}
+                  >
                     Scoring Formula
                   </Link>
                 </div>
                 <div style={{ marginBottom: '10px' }}>
-                  <Link href="https://docs.regenscore.io/matchmaking" _hover={{ textDecoration: 'none' }}>
+                  <Link
+                    href="https://docs.regenscore.io/matchmaking"
+                    _hover={{ textDecoration: 'none' }}
+                  >
                     Matchmaking
                   </Link>
                 </div>
                 <div style={{ marginBottom: '10px' }}>
-                  <Link href="https://docs.regenscore.io/governance-accessibility" _hover={{ textDecoration: 'none' }}>
+                  <Link
+                    href="https://docs.regenscore.io/governance-accessibility"
+                    _hover={{ textDecoration: 'none' }}
+                  >
                     Governance Accesibility
                   </Link>
                 </div>
                 <div style={{ marginBottom: '10px' }}>
-                  <Link href="https://docs.regenscore.io/steward-health-check" _hover={{ textDecoration: 'none' }}>
+                  <Link
+                    href="https://docs.regenscore.io/steward-health-check"
+                    _hover={{ textDecoration: 'none' }}
+                  >
                     Steward Health Check
                   </Link>
                 </div>
                 <div style={{ marginBottom: '10px' }}>
-                  <Link href="https://mirror.xyz/0xC5A756D63C5fe67b438acBE468aA62a52093fDEf" _hover={{ textDecoration: 'none' }}>
+                  <Link
+                    href="https://mirror.xyz/0xC5A756D63C5fe67b438acBE468aA62a52093fDEf"
+                    _hover={{ textDecoration: 'none' }}
+                  >
                     Mirror Blog
                   </Link>
                 </div>
-
               </div>
             </div>
             <div style={{ marginTop: '40px', textAlign: 'start' }}>
@@ -233,7 +281,10 @@ export default function Footer() {
               </div>
               <div style={{ marginTop: '10px', textAlign: 'left' }}>
                 <div style={{ marginBottom: '10px' }}>
-                  <Link href="https://twitter.com/regenscoreio" _hover={{ textDecoration: 'none' }}>
+                  <Link
+                    href="https://twitter.com/regenscoreio"
+                    _hover={{ textDecoration: 'none' }}
+                  >
                     <Twitter />
                   </Link>
                 </div>
@@ -243,17 +294,33 @@ export default function Footer() {
                   </Link>
                 </div>
                 <div style={{ marginBottom: '10px' }}>
-                  <Link href="https://github.com/vacekj/regenscore" _hover={{ textDecoration: 'none' }}>
-                    Github</Link> | <Link href="https://github.com/vacekj/regenscore/issues" _hover={{ textDecoration: 'none' }}>Submit issues
+                  <Link
+                    href="https://github.com/vacekj/regenscore"
+                    _hover={{ textDecoration: 'none' }}
+                  >
+                    Github
+                  </Link>{' '}
+                  |{' '}
+                  <Link
+                    href="https://github.com/vacekj/regenscore/issues"
+                    _hover={{ textDecoration: 'none' }}
+                  >
+                    Submit issues
                   </Link>
                 </div>
                 <div style={{ marginBottom: '10px' }}>
-                  <Link href="mailto:info@regenscore.io" _hover={{ textDecoration: 'none' }}>
+                  <Link
+                    href="mailto:info@regenscore.io"
+                    _hover={{ textDecoration: 'none' }}
+                  >
                     E-Mail
                   </Link>
                 </div>
                 <div style={{ marginBottom: '10px' }}>
-                  <Link href="https://docs.regenscore.io/user-agreement" _hover={{ textDecoration: 'none' }}>
+                  <Link
+                    href="https://docs.regenscore.io/user-agreement"
+                    _hover={{ textDecoration: 'none' }}
+                  >
                     User Agreement
                   </Link>
                 </div>
