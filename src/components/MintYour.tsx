@@ -47,6 +47,7 @@ const Hero: React.FC = () => {
   const { score, categories, loading, error } = useScore(address);
   const { mintAttestation, lastAttestation } = useEAS(address);
   const percentile = 0.9;
+
   return (
     <Grid
       templateColumns={[

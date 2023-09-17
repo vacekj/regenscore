@@ -53,7 +53,11 @@ const ActivityRow = ({ activity }: any) => {
         {source}
       </Td>
       <Td>{activity.behavior}</Td>
-      <Td>{activity.value.toString()}</Td>
+      <Td>
+        {typeof activity.value === 'boolean'
+          ? activity.value.toString()
+          : activity.value}
+      </Td>
       <Td>{activity.scoreAdded}</Td>
     </Tr>
   );

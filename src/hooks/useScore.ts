@@ -34,7 +34,6 @@ export function useScore(address: string | Hex | undefined) {
     let active = true;
     const fetchScore = async () => {
       setLoading(true);
-      console.log("It's being called", { loading });
       if (!address) {
         setLoading(false);
         return;
@@ -47,6 +46,7 @@ export function useScore(address: string | Hex | undefined) {
           },
           body: JSON.stringify({
             address: getAddress(address!),
+            // shouldUpdate: false
           }),
         });
         if (!active) return;
@@ -70,17 +70,20 @@ export function useScore(address: string | Hex | undefined) {
   useEffect(() => {
     const meta = data?.meta;
     if (meta) {
+      console.log({ meta });
       const newCategoryScores: Record<string, number> = {};
       Object.keys(meta)
-        .filter((key) => !!meta[key].applies)
+        .filter((key) => key === 'tokenBalances' || !!meta[key].applies)
         .forEach((key: string) => {
           const item = meta[key] as Item;
           if (typeof item === 'object' && item !== null) {
             if (key === 'tokenBalances' && item.tokens) {
               item.tokens.forEach((token: any) => {
-                newCategoryScores[item.category] =
-                  (newCategoryScores[item.category] || 0) +
-                  (token.scoreAdded || 0);
+                if (token.applies) {
+                  newCategoryScores[item.category] =
+                    (newCategoryScores[item.category] || 0) +
+                    (token.scoreAdded || 0);
+                }
               });
             } else {
               newCategoryScores[item.category] =

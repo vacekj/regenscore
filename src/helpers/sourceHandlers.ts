@@ -23,6 +23,8 @@ import {
 import { CATEGORIES } from '@/constants';
 import { getClient } from '@/utils';
 
+import TrustedSeedMembers from '@/data/trusted_seed_members.json';
+
 type ContractDetails = {
   name: string;
   weight: number;
@@ -118,6 +120,10 @@ const list_of_balance_contract_optimism: { [key: string]: ContractDetails } = {
     weight: 10,
     decimals: 18,
   },
+  // '0x68f5c0a2de713a54991e01858fd27a3832401849': {
+  //   name: 'OP/WETH v3',
+  //   weight: 10,
+  // },
 };
 
 const REGEN_POAP_EVENT_IDS = [
@@ -246,8 +252,8 @@ export async function handleTokenBalances(
               behavior: `Holds ${token.name} tokens`,
               scoreAdded: addedScore,
               category: CATEGORIES.Outreach,
-              value: balance,
-              applies: !!addedScore,
+              value: balance.toFixed(2),
+              applies: true,
             },
           ];
         }
@@ -279,8 +285,8 @@ export async function handleTokenBalances(
               name: list_of_balance_contract_optimism[key].name,
               scoreAdded: addedScore,
               category: CATEGORIES.Outreach,
-              value: balance,
-              applies: !!addedScore,
+              value: balance.toFixed(2),
+              applies: true,
             },
           ];
         }
@@ -289,6 +295,7 @@ export async function handleTokenBalances(
       console.error(`Error fetching token balance for contract ${key}:`, error);
     }
   }
+
   return score;
 }
 
@@ -527,7 +534,9 @@ export async function handleSafeOwnershipAndActivity(
     await checkSafeOwnershipAndActivity(address);
 
   if (hasExecutedTransaction) scoreAdded += 10;
+  if (belongsToTreasury) scoreAdded += 10;
   if (ownsSafe) scoreAdded += 10;
+
   meta.safeOwnerActivity = {
     ...meta.safeOwnerActivity,
     ownsSafe: !!ownsSafe,
@@ -585,7 +594,7 @@ export async function handleGitcoinPassport(address: string, meta: any) {
     passport: gitcoinPassport,
     scoreAdded,
     applies: !!scoreAdded,
-    value: gitcoinPassport.score,
+    value: parseFloat(gitcoinPassport.score).toFixed(2),
   };
   return scoreAdded;
 }
@@ -614,4 +623,55 @@ export async function handleRegenPOAPs(address: string, meta: any) {
     console.log({ error });
     return scoreAdded;
   }
+}
+
+export async function handleGivethActivity(address: string, meta: any) {
+  let scoreAdded = 0;
+  const query = `
+    query {
+      walletAddressUsed(address: "${address}")
+    }
+  `;
+
+  try {
+    const response = await fetch('https://mainnet.serve.giveth.io/graphql', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ query }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    const result = await response.json();
+    console.log({ result });
+    return scoreAdded;
+  } catch (error) {
+    console.error('Error fetching wallet address usage:', error);
+    return false;
+  }
+}
+
+export async function handleTrustedSeedMember(address: string, meta: any) {
+  let scoreAdded = 0;
+  const addressInfo = TrustedSeedMembers.find(
+    (item) => item.address.toLowerCase() === address.toLowerCase(),
+  );
+  if (
+    addressInfo &&
+    (!!addressInfo.onChainScore || !!addressInfo.offChainScore)
+  ) {
+    scoreAdded += 10;
+    meta.trustedSeedMember = {
+      ...meta.trustedSeedMember,
+      ...addressInfo,
+      scoreAdded,
+      applies: !!scoreAdded,
+      value: addressInfo.onChainScore || addressInfo.offChainScore,
+    };
+  }
+  return scoreAdded;
 }
