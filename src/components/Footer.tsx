@@ -57,8 +57,7 @@ export default function Footer() {
                 <div style={{ marginBottom: '10px' }}>
                   Empower your credibility. Elevate your potential.
                 </div>
-                <div style={{ marginBottom: '30px' }}>REGEN Score</div>
-                <Twitter />
+                <div style={{ marginBottom: '85px' }}>REGEN Score</div>
                 <div style={{ marginBottom: '10px', marginTop: '30px' }}>
                   All rights reserved @2023
                 </div>
@@ -74,27 +73,32 @@ export default function Footer() {
                   fontWeight: 'bold',
                 }}
               >
-                About Us
+                About
               </div>
               <div style={{ marginTop: '10px' }}>
                 <div style={{ marginBottom: '10px' }}>
-                  <Link href="#" _hover={{ textDecoration: 'none' }}>
-                    Docs
+                  <Link href="https://docs.regenscore.io/scoring-formula" _hover={{ textDecoration: 'none' }}>
+                    Scoring Formula
                   </Link>
                 </div>
                 <div style={{ marginBottom: '10px' }}>
-                  <Link href="#" _hover={{ textDecoration: 'none' }}>
-                    Scores
+                  <Link href="https://docs.regenscore.io/matchmaking" _hover={{ textDecoration: 'none' }}>
+                    Matchmaking
                   </Link>
                 </div>
                 <div style={{ marginBottom: '10px' }}>
-                  <Link href="#" _hover={{ textDecoration: 'none' }}>
-                    Resources
+                  <Link href="https://docs.regenscore.io/governance-accessibility" _hover={{ textDecoration: 'none' }}>
+                    Governance Accesibility
                   </Link>
                 </div>
                 <div style={{ marginBottom: '10px' }}>
-                  <Link href="#" _hover={{ textDecoration: 'none' }}>
-                    Activity
+                  <Link href="https://docs.regenscore.io/steward-health-check" _hover={{ textDecoration: 'none' }}>
+                    Steward Health Check
+                  </Link>
+                </div>
+                <div style={{ marginBottom: '10px' }}>
+                  <Link href="https://mirror.xyz/0xC5A756D63C5fe67b438acBE468aA62a52093fDEf" _hover={{ textDecoration: 'none' }}>
+                    Mirror Blog
                   </Link>
                 </div>
               </div>
@@ -122,18 +126,28 @@ export default function Footer() {
               </div>
               <div style={{ marginTop: '10px' }}>
                 <div style={{ marginBottom: '10px' }}>
-                  <Link href="#" _hover={{ textDecoration: 'none' }}>
-                    Leaderboard
+                  <Link href="https://twitter.com/regenscoreio" _hover={{ textDecoration: 'none' }}>
+                    <Twitter />
                   </Link>
                 </div>
                 <div style={{ marginBottom: '10px' }}>
                   <Link href="#" _hover={{ textDecoration: 'none' }}>
-                    Opportunities
+                    Discord
                   </Link>
                 </div>
                 <div style={{ marginBottom: '10px' }}>
-                  <Link href="#" _hover={{ textDecoration: 'none' }}>
-                    Privacy - Terms
+                  <Link href="https://github.com/vacekj/regenscore" _hover={{ textDecoration: 'none' }}>
+                    Github</Link> | <Link href="https://github.com/vacekj/regenscore/issues" _hover={{ textDecoration: 'none' }}>Submit issues
+                  </Link>
+                </div>
+                <div style={{ marginBottom: '10px' }}>
+                  <Link href="mailto:info@regenscore.io" _hover={{ textDecoration: 'none' }}>
+                    E-Mail
+                  </Link>
+                </div>
+                <div style={{ marginBottom: '10px' }}>
+                  <Link href="https://docs.regenscore.io/user-agreement" _hover={{ textDecoration: 'none' }}>
+                    User Agreement
                   </Link>
                 </div>
               </div>
@@ -167,7 +181,7 @@ export default function Footer() {
             <div
               style={{
                 marginTop: '40px',
-                textAlign: 'center',
+                textAlign: 'left',
                 marginBottom: '37px',
               }}
             >
@@ -177,29 +191,35 @@ export default function Footer() {
                   fontWeight: 'bold',
                 }}
               >
-                About Us
+                About
               </div>
               <div style={{ marginTop: '10px', textAlign: 'left' }}>
                 <div style={{ marginBottom: '10px' }}>
-                  <Link href="#" _hover={{ textDecoration: 'none' }}>
-                    Docs
+                  <Link href="https://docs.regenscore.io/scoring-formula" _hover={{ textDecoration: 'none' }}>
+                    Scoring Formula
                   </Link>
                 </div>
                 <div style={{ marginBottom: '10px' }}>
-                  <Link href="#" _hover={{ textDecoration: 'none' }}>
-                    Scores
+                  <Link href="https://docs.regenscore.io/matchmaking" _hover={{ textDecoration: 'none' }}>
+                    Matchmaking
                   </Link>
                 </div>
                 <div style={{ marginBottom: '10px' }}>
-                  <Link href="#" _hover={{ textDecoration: 'none' }}>
-                    Resources
+                  <Link href="https://docs.regenscore.io/governance-accessibility" _hover={{ textDecoration: 'none' }}>
+                    Governance Accesibility
                   </Link>
                 </div>
                 <div style={{ marginBottom: '10px' }}>
-                  <Link href="#" _hover={{ textDecoration: 'none' }}>
-                    Activity
+                  <Link href="https://docs.regenscore.io/steward-health-check" _hover={{ textDecoration: 'none' }}>
+                    Steward Health Check
                   </Link>
                 </div>
+                <div style={{ marginBottom: '10px' }}>
+                  <Link href="https://mirror.xyz/0xC5A756D63C5fe67b438acBE468aA62a52093fDEf" _hover={{ textDecoration: 'none' }}>
+                    Mirror Blog
+                  </Link>
+                </div>
+
               </div>
             </div>
             <div style={{ marginTop: '40px', textAlign: 'start' }}>
@@ -213,31 +233,38 @@ export default function Footer() {
               </div>
               <div style={{ marginTop: '10px', textAlign: 'left' }}>
                 <div style={{ marginBottom: '10px' }}>
-                  <Link href="#" _hover={{ textDecoration: 'none' }}>
-                    Leaderboard
+                  <Link href="https://twitter.com/regenscoreio" _hover={{ textDecoration: 'none' }}>
+                    <Twitter />
                   </Link>
                 </div>
                 <div style={{ marginBottom: '10px' }}>
                   <Link href="#" _hover={{ textDecoration: 'none' }}>
-                    Opportunities
+                    Discord
                   </Link>
                 </div>
                 <div style={{ marginBottom: '10px' }}>
-                  <Link href="#" _hover={{ textDecoration: 'none' }}>
-                    Privacy - Terms
+                  <Link href="https://github.com/vacekj/regenscore" _hover={{ textDecoration: 'none' }}>
+                    Github</Link> | <Link href="https://github.com/vacekj/regenscore/issues" _hover={{ textDecoration: 'none' }}>Submit issues
+                  </Link>
+                </div>
+                <div style={{ marginBottom: '10px' }}>
+                  <Link href="mailto:info@regenscore.io" _hover={{ textDecoration: 'none' }}>
+                    E-Mail
+                  </Link>
+                </div>
+                <div style={{ marginBottom: '10px' }}>
+                  <Link href="https://docs.regenscore.io/user-agreement" _hover={{ textDecoration: 'none' }}>
+                    User Agreement
                   </Link>
                 </div>
               </div>
             </div>
           </Flex>
-          <Center>
-            <Twitter />
-          </Center>
           <div
             style={{
               textAlign: 'center',
               marginTop: '32px',
-              marginBottom: '30px',
+              marginBottom: '24px',
             }}
           >
             All rights reserved @2023
@@ -262,8 +289,8 @@ const Twitter = () => (
   <svg
     id="Layer_1"
     data-name="Layer 1"
-    width="25px"
-    height="25px"
+    width="24px"
+    height="24px"
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 487.43 456.19"
   >
