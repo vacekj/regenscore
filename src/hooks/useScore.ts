@@ -46,7 +46,7 @@ export function useScore(address: string | Hex | undefined) {
           },
           body: JSON.stringify({
             address: getAddress(address!),
-            shouldUpdate: true,
+            // shouldUpdate: true,
           }),
         });
         if (!active) return;
