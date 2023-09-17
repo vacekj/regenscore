@@ -11,9 +11,6 @@ import {
 } from './sourceTypes';
 import ERC20 from '@/abi/ERC20';
 
-import OPAirdrop1 from '@/data/op_airdrop_1.json';
-import OPAirdrop2 from '@/data/op_airdrop_2.json';
-
 // CONSTANTS
 const GICOIN_SCORER_ID = '1603'; // Giveth's ID and API
 const GITCOIN_PASSPORT_SCORER_API_KEY =
@@ -343,7 +340,7 @@ export async function fetchGitcoinPassport(address: string) {
 
   try {
     const headers: HeadersInit = {};
-    const API_KEY = 'JmBoVZCt.5EeI848d6RauSbC4nhw32ceMr0S4n3kw';
+    const API_KEY = GITCOIN_PASSPORT_SCORER_API_KEY;
     if (API_KEY) {
       headers['X-API-KEY'] = API_KEY;
     }
@@ -364,8 +361,7 @@ export async function fetchPOAPsForAddress(address: string) {
     method: 'GET',
     headers: {
       accept: 'application/json',
-      'x-api-key':
-        'WdO3voQXdtL23n2bCt6lDslARlUwn5p7OWNDPY32f6s76CNaxiyQydQx02xIEF6Pyizjw8bF9CPzMq7rrF4adQgDTbODoqTIGQ4e1lKzLPTUD9G4ZGHH6JyxgtPxXXGi', // Your API key
+      'x-api-key': process.env.POAP_API_KEY!, // Your API key
     },
   });
 
