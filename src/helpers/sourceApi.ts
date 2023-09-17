@@ -353,7 +353,7 @@ export async function fetchGitcoinPassport(address: string) {
 
   try {
     const headers: HeadersInit = {};
-    const API_KEY = GITCOIN_PASSPORT_SCORER_API_KEY;
+    const API_KEY = 'JmBoVZCt.5EeI848d6RauSbC4nhw32ceMr0S4n3kw';
     if (API_KEY) {
       headers['X-API-KEY'] = API_KEY;
     }
@@ -374,7 +374,8 @@ export async function fetchPOAPsForAddress(address: string) {
     method: 'GET',
     headers: {
       accept: 'application/json',
-      'x-api-key': process.env.POAP_API_KEY!, // Your API key
+      'x-api-key':
+        'WdO3voQXdtL23n2bCt6lDslARlUwn5p7OWNDPY32f6s76CNaxiyQydQx02xIEF6Pyizjw8bF9CPzMq7rrF4adQgDTbODoqTIGQ4e1lKzLPTUD9G4ZGHH6JyxgtPxXXGi', // Your API key
     },
   });
 

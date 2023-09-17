@@ -1,0 +1,3 @@
+Address,opAirdropScore,TokenBalanceGIV,TokenBalanceOP,EthDeposits,OptimismBridges,OpTreasuryPayouts,IsOptimismDelegate,InteractedWithContracts,CreatedGnosisSafe,OwnsGnosisSafe,ExecutedGnosisTx,isPartOfOPTreasury,IsGitcoinProjectOwner,GitcoinPassportScore,RegenPOAPs,OptimismTxCount,TotalScore
+0x839395e20bbB182fa440d08F850E6c7A8f6F0780,1,138683.99,11450.00,false,1,2,1,1,false,1,1,false,1,0.00,2,65,1250
+0x778549Eb292AC98A96a05E122967f22eFA003707,1,false,892.22,false,0,1,0,1,false,false,false,false,false,false,false,18,660

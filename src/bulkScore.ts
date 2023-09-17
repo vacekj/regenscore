@@ -23,6 +23,7 @@ const processFile = async () => {
       'CreatedGnosisSafe',
       'OwnsGnosisSafe',
       'ExecutedGnosisTx',
+      'isPartOfOPTreasury',
       'IsGitcoinProjectOwner',
       'GitcoinPassportScore',
       'RegenPOAPs',
@@ -32,7 +33,7 @@ const processFile = async () => {
   ];
   const parser = fs
     .createReadStream(
-      `${__dirname}/../public/data/trusted_seed_active_members_redux.csv`,
+      `${__dirname}/../public/data/trusted_seed_active_members.csv`,
     )
     .pipe(parse({}));
 
@@ -46,24 +47,24 @@ const processFile = async () => {
     console.log(address, score);
     const row = [
       address,
-      meta.opAirdrop?.value || false,
+      meta.opAirdrop?.value || 'false',
       meta.tokenBalances.tokens.find((tb: any) => tb.name === 'GIV')?.value ||
-        false,
+        'false',
       meta.tokenBalances.tokens.find((tb: any) => tb.name === 'OP')?.value ||
-        false,
-      meta.ethDeposits?.value || false,
+        'false',
+      meta.ethDeposits?.value || 'false',
       meta.optimismBridges?.value || 0,
       meta.opTreasuryPayouts?.value || 0,
       meta.optimismDelegate?.value || 0,
-      meta.optimismTxHistory?.interactedWithContracts || false,
-      meta.optimismTxHistory?.createdGnosisSafe || false,
-      meta.safeOwnerActivity?.ownsSafe || false,
-      meta.safeOwnerActivity?.hasExecutedTransaction || false,
-      meta.safeOwnerActivity?.belongsToTreasury || false,
-      meta.gitcoinProjectOwner?.isProjectOwner || false,
-      meta.gitcoinPassport?.value || false,
-      meta.regenPOAPs?.value || false,
-      meta.txsMadeOnOptimism?.value || false,
+      meta.optimismTxHistory?.interactedWithContracts || 'false',
+      meta.optimismTxHistory?.createdGnosisSafe || 'false',
+      meta.safeOwnerActivity?.ownsSafe || 'false',
+      meta.safeOwnerActivity?.hasExecutedTransaction || 'false',
+      meta.safeOwnerActivity?.belongsToTreasury || 'false',
+      meta.gitcoinProjectOwner?.isProjectOwner || 'false',
+      meta.gitcoinPassport?.value || 'false',
+      meta.regenPOAPs?.value || 'false',
+      meta.txsMadeOnOptimism?.value || 'false',
       score,
     ];
     records.push(row);

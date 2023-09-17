@@ -324,7 +324,11 @@ export async function handleGRDonations(
 
 export async function handleIsGTCHolder() {}
 
-export async function handleEthStaker(address: string, meta: any) {
+export async function handleEthStaker(
+  address: string,
+  meta: any,
+  points: number,
+) {
   const url = REGENSCORE_SQUID_ETH;
   const query = `
     query MyQuery {
@@ -347,7 +351,7 @@ export async function handleEthStaker(address: string, meta: any) {
     }
     const result = await response.json();
     const ethDeposits = result?.data?.ethDeposits;
-    const scoreAdded = ethDeposits?.length > 0 ? 10 : 0;
+    const scoreAdded = ethDeposits?.length > 0 ? points : 0;
     meta.ethDeposits = {
       ...meta.ethDeposits,
       ethDeposits,
@@ -362,7 +366,11 @@ export async function handleEthStaker(address: string, meta: any) {
   }
 }
 
-export async function handleOPBridge(address: string, meta: any) {
+export async function handleOPBridge(
+  address: string,
+  meta: any,
+  points: number,
+) {
   const url = REGENSCORE_SQUID_ETH;
   const query = `
     query MyQuery {
@@ -389,7 +397,7 @@ export async function handleOPBridge(address: string, meta: any) {
     }
     const result = await response.json();
     const opBridges = result?.data?.bridges;
-    const scoreAdded = opBridges?.length > 0 ? 10 : 0;
+    const scoreAdded = opBridges?.length > 0 ? points : 0;
     meta.optimismBridges = {
       ...meta.optimismBridges,
       opBridges,
@@ -407,6 +415,7 @@ export async function handleOPBridge(address: string, meta: any) {
 export async function handleOPTreasuryPayouts(
   address: string,
   meta: any,
+  points: number,
 ): Promise<number> {
   const url = REGENSCORE_SQUID_OP;
   const query = `
@@ -434,7 +443,7 @@ export async function handleOPTreasuryPayouts(
     }
     const result = await response.json();
     const transfers = result?.data?.transfers;
-    const scoreAdded = transfers?.length > 0 ? 10 : 0;
+    const scoreAdded = transfers?.length > 0 ? points : 0;
 
     meta.opTreasuryPayouts = {
       ...meta.opTreasuryPayouts,
@@ -451,7 +460,11 @@ export async function handleOPTreasuryPayouts(
   }
 }
 
-export async function handleDelegate(address: string, meta: any) {
+export async function handleDelegate(
+  address: string,
+  meta: any,
+  points: number,
+) {
   const url = REGENSCORE_SQUID_OP;
   const query = `
       query MyQuery {
@@ -473,7 +486,7 @@ export async function handleDelegate(address: string, meta: any) {
     const result = await response.json();
     const delegates = result?.data?.delegates;
     const isDelegate = delegates?.length > 0;
-    const scoreAdded = isDelegate ? 10 : 0;
+    const scoreAdded = isDelegate ? points : 0;
     meta.optimismDelegate = {
       ...meta.optimismDelegate,
       isDelegate,
@@ -487,12 +500,16 @@ export async function handleDelegate(address: string, meta: any) {
   }
 }
 
-export async function handleTxsMadeOnOptimism(address: string, meta: any) {
+export async function handleTxsMadeOnOptimism(
+  address: string,
+  meta: any,
+  points: number,
+) {
   const client = await getClient('optimism');
   const transactionCount = await client.getTransactionCount({
     address: address as Address,
   });
-  const scoreAdded = transactionCount > 0 ? 10 : 0;
+  const scoreAdded = transactionCount > 0 ? points : 0;
   meta.txsMadeOnOptimism = {
     ...meta.txsMadeOnOptimism,
     scoreAdded,
@@ -506,12 +523,13 @@ export async function handleTxsMadeOnOptimism(address: string, meta: any) {
 export async function handleOPContractsInteractions(
   address: string,
   meta: any,
+  points: number,
 ) {
   const { interactedWithContracts, deployedContracts, createdGnosisSafe } =
     await getAddressOPTxHistory(address);
   let scoreAdded = 0;
-  if (interactedWithContracts) scoreAdded += 10;
-  if (deployedContracts) scoreAdded += 10;
+  if (interactedWithContracts) scoreAdded += points;
+  if (deployedContracts) scoreAdded += points;
   // if (createdGnosisSafe) scoreAdded += 10; // Commented as it's being checked in handleSafeOwnershipAndActivity
   meta.optimismTxHistory = {
     ...meta.optimismTxHistory,
@@ -528,14 +546,15 @@ export async function handleOPContractsInteractions(
 export async function handleSafeOwnershipAndActivity(
   address: string,
   meta: any,
+  points: number,
 ) {
   let scoreAdded = 0;
   const { ownsSafe, hasExecutedTransaction, belongsToTreasury } =
     await checkSafeOwnershipAndActivity(address);
 
-  if (hasExecutedTransaction) scoreAdded += 10;
-  if (belongsToTreasury) scoreAdded += 10;
-  if (ownsSafe) scoreAdded += 10;
+  if (hasExecutedTransaction) scoreAdded += points;
+  if (belongsToTreasury) scoreAdded += points;
+  if (ownsSafe) scoreAdded += points;
 
   meta.safeOwnerActivity = {
     ...meta.safeOwnerActivity,
@@ -549,15 +568,19 @@ export async function handleSafeOwnershipAndActivity(
   return scoreAdded;
 }
 
-export async function handleOPAirdropReceiver(address: string, meta: any) {
+export async function handleOPAirdropReceiver(
+  address: string,
+  meta: any,
+  points: number,
+) {
   const opAirdropAddresses = await getAdressesAirdroppedOP();
   let score = 0;
   if (opAirdropAddresses[0].includes(address.toLowerCase())) {
-    score += 100;
+    score = points;
     meta.opAirdrop = { ...meta.opAirdrop, firstDrop: true };
   }
   if (opAirdropAddresses[1].includes(address.toLowerCase())) {
-    score += 50;
+    score = points;
     meta.opAirdrop = { ...meta.opAirdrop, secondDrop: true };
   }
 
@@ -585,21 +608,31 @@ export async function handleGitcoinProjectOwner(address: string, meta: any) {
   return scoreAdded;
 }
 
-export async function handleGitcoinPassport(address: string, meta: any) {
+export async function handleGitcoinPassport(
+  address: string,
+  meta: any,
+  points: number,
+) {
   let scoreAdded = 0;
   const gitcoinPassport = await fetchGitcoinPassport(getAddress(address));
-  if (gitcoinPassport.score > 0) scoreAdded += 10;
+  if (gitcoinPassport.score > 0) scoreAdded += points;
   meta.gitcoinPassport = {
     ...meta.gitcoinPassport,
     passport: gitcoinPassport,
     scoreAdded,
     applies: !!scoreAdded,
-    value: parseFloat(gitcoinPassport.score).toFixed(2),
+    value: isNaN(gitcoinPassport.score)
+      ? 'false'
+      : parseFloat(gitcoinPassport.score).toFixed(2),
   };
   return scoreAdded;
 }
 
-export async function handleRegenPOAPs(address: string, meta: any) {
+export async function handleRegenPOAPs(
+  address: string,
+  meta: any,
+  points: number,
+) {
   let scoreAdded = 0;
   try {
     const poaps = await fetchPOAPsForAddress(address);
@@ -607,7 +640,7 @@ export async function handleRegenPOAPs(address: string, meta: any) {
       REGEN_POAP_EVENT_IDS.includes(poap.event.id),
     );
     const hasRegenPOAP = matchingRegenPOAPs.length > 0;
-    if (hasRegenPOAP) scoreAdded += 10;
+    if (hasRegenPOAP) scoreAdded += points * matchingRegenPOAPs.length;
 
     meta.regenPOAPs = {
       ...meta.regenPOAPs,
@@ -615,7 +648,7 @@ export async function handleRegenPOAPs(address: string, meta: any) {
       hasRegenPOAP,
       scoreAdded,
       applies: !!scoreAdded,
-      value: hasRegenPOAP,
+      value: matchingRegenPOAPs.length,
     };
 
     return scoreAdded;
@@ -655,7 +688,11 @@ export async function handleGivethActivity(address: string, meta: any) {
   }
 }
 
-export async function handleTrustedSeedMember(address: string, meta: any) {
+export async function handleTrustedSeedMember(
+  address: string,
+  meta: any,
+  points: number,
+) {
   let scoreAdded = 0;
   const addressInfo = TrustedSeedMembers.find(
     (item) => item.address.toLowerCase() === address.toLowerCase(),
@@ -664,7 +701,7 @@ export async function handleTrustedSeedMember(address: string, meta: any) {
     addressInfo &&
     (!!addressInfo.onChainScore || !!addressInfo.offChainScore)
   ) {
-    scoreAdded += 10;
+    scoreAdded += points;
     meta.trustedSeedMember = {
       ...meta.trustedSeedMember,
       ...addressInfo,
