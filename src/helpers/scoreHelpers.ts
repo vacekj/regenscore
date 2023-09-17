@@ -15,6 +15,7 @@ import {
   handleGitcoinProjectOwner,
   handleGitcoinPassport,
   handleRegenPOAPs,
+  handleTrustedSeedMember,
 } from './sourceHandlers';
 import { CATEGORIES } from '@/constants';
 
@@ -71,7 +72,7 @@ export async function createScore(
       behavior: 'Made transactions on the Optimism network',
     },
     safeOwnerActivity: {
-      source: 'Safe',
+      source: 'Gnosis Safe',
       category: CATEGORIES.Utilization,
       behavior: 'Interacted with a Gnosis Safe',
     },
@@ -89,6 +90,11 @@ export async function createScore(
       source: 'Mainnet',
       category: CATEGORIES.Outreach,
       behavior: 'Assisted to regen events and got a POAP',
+    },
+    trustedSeedMember: {
+      source: 'Trusted Seed',
+      category: CATEGORIES.Outreach,
+      behavior: 'Is a Trusted Seed Member',
     },
   };
   const results = await Promise.all([
@@ -108,8 +114,8 @@ export async function createScore(
     handleGitcoinProjectOwner(address, meta),
     handleGitcoinPassport(address, meta),
     handleRegenPOAPs(address, meta),
+    handleTrustedSeedMember(address, meta),
   ]);
   score += results.reduce((acc, current) => acc + current, 0);
-
   return { score, meta };
 }

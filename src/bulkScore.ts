@@ -32,7 +32,7 @@ const processFile = async () => {
   ];
   const parser = fs
     .createReadStream(
-      `${__dirname}/../public/data/trusted_seed_active_members.csv`,
+      `${__dirname}/../public/data/trusted_seed_active_members_redux.csv`,
     )
     .pipe(parse({}));
 
