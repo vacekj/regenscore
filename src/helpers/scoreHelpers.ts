@@ -16,6 +16,7 @@ import {
   handleGitcoinPassport,
   handleRegenPOAPs,
   handleTrustedSeedMember,
+  handleGivethActivity,
 } from './sourceHandlers';
 import { CATEGORIES } from '@/constants';
 
@@ -96,6 +97,11 @@ export async function createScore(
       category: CATEGORIES.Outreach,
       behavior: 'Is a Trusted Seed Member',
     },
+    givethActivity: {
+      source: 'Giveth',
+      category: CATEGORIES.Outreach,
+      behavior: 'Giveth project owner and/or contributor',
+    },
   };
   const results = await Promise.all([
     handleTokenBalances(address, meta), // points depend on the token hold
@@ -110,11 +116,12 @@ export async function createScore(
     handleTxsMadeOnOptimism(address, meta, 10),
     handleOPContractsInteractions(address, meta, 10),
     handleSafeOwnershipAndActivity(address, meta, 10),
-    handleOPAirdropReceiver(address, meta, 200),
+    handleOPAirdropReceiver(address, meta),
     handleGitcoinProjectOwner(address, meta),
     handleGitcoinPassport(address, meta, 10),
     handleRegenPOAPs(address, meta, 20),
     handleTrustedSeedMember(address, meta, 10),
+    handleGivethActivity(address, meta, 10),
   ]);
   score += results.reduce((acc, current) => acc + current, 0);
   return { score, meta };
