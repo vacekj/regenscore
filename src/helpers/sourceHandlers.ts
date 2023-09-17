@@ -1,6 +1,5 @@
 import { Address, getAddress } from 'viem';
 import {
-  getAdressesAirdroppedOP,
   getERC20Transactions,
   getNormalTransactions,
   getERC721Transactions,
@@ -568,30 +567,56 @@ export async function handleSafeOwnershipAndActivity(
   return scoreAdded;
 }
 
-export async function handleOPAirdropReceiver(
-  address: string,
-  meta: any,
-  points: number,
-) {
-  const opAirdropAddresses = await getAdressesAirdroppedOP();
-  let score = 0;
-  if (opAirdropAddresses[0].includes(address.toLowerCase())) {
-    score = points;
-    meta.opAirdrop = { ...meta.opAirdrop, firstDrop: true };
-  }
-  if (opAirdropAddresses[1].includes(address.toLowerCase())) {
-    score = points;
-    meta.opAirdrop = { ...meta.opAirdrop, secondDrop: true };
-  }
+export async function handleOPAirdropReceiver(address: string, meta: any) {
+  try {
+    const baseUrl = process.env.VERCEL_URL || 'http://localhost:3000';
 
-  meta.opAirdrop = {
-    ...meta.opAirdrop,
-    scoreAdded: score,
-    applies: !!score,
-    value: !!score,
-  };
+    const responss = await fetch(`${baseUrl}/api/op_airdrop`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        address: getAddress(address!),
+      }),
+    });
+    const { airdrop1, airdrop2 } = await responss.json();
 
-  return score;
+    const OP =
+      list_of_balance_contract_optimism[
+        '0x4200000000000000000000000000000000000042'
+      ];
+    const currentOP = Number(
+      await getTokenBalance(
+        '0x4200000000000000000000000000000000000042' as Address,
+        getAddress(address),
+        OP.decimals!,
+        'optimism',
+      ),
+    );
+    const totalAirdrop = airdrop1 + airdrop2;
+
+    let score = 0;
+
+    if (currentOP > totalAirdrop) {
+      score = 300;
+    } else if (totalAirdrop > 0 && currentOP > 0) {
+      score = (currentOP / totalAirdrop) * 100;
+    }
+
+    meta.opAirdrop = {
+      ...meta.opAirdrop,
+      scoreAdded: score,
+      currentOP,
+      applies: !!score,
+      value: totalAirdrop,
+    };
+
+    return score;
+  } catch (error) {
+    console.log({ error });
+    return 0;
+  }
 }
 
 export async function handleGitcoinProjectOwner(address: string, meta: any) {
@@ -658,12 +683,19 @@ export async function handleRegenPOAPs(
   }
 }
 
-export async function handleGivethActivity(address: string, meta: any) {
+export async function handleGivethActivity(
+  address: string,
+  meta: any,
+  points: number,
+) {
   let scoreAdded = 0;
   const query = `
-    query {
-      walletAddressUsed(address: "${address}")
+  query {
+    walletAddressUsed(address: "${address}") {
+      hasRelatedProject
+      hasDonated
     }
+  } 
   `;
 
   try {
@@ -674,17 +706,31 @@ export async function handleGivethActivity(address: string, meta: any) {
       },
       body: JSON.stringify({ query }),
     });
-
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
 
     const result = await response.json();
-    console.log({ result });
+    const givethActivity = result?.data?.walletAddressUsed;
+    const { hasRelatedProject, hasDonated } = givethActivity;
+    if (hasRelatedProject) {
+      scoreAdded += points;
+    }
+    if (hasDonated) {
+      scoreAdded += points;
+    }
+    meta.givethActivity = {
+      ...meta.givethActivity,
+      hasRelatedProject,
+      hasDonated,
+      scoreAdded,
+      applies: !!scoreAdded,
+      value: hasRelatedProject || hasDonated,
+    };
     return scoreAdded;
   } catch (error) {
     console.error('Error fetching wallet address usage:', error);
-    return false;
+    return 0;
   }
 }
 

@@ -22,16 +22,6 @@ const GNOSIS_SAFE_PROXY = '0xc22834581ebc8527d974f8a1c97e1bea4ef910bc';
 const ETHERSCAN_API_KEY = process.env.NEXT_PUBLIC_ETHERSCAN_API_KEY;
 const apikey = '&apikey=' + ETHERSCAN_API_KEY;
 
-/** Gets all addresses that have received a payout from the OP treasury */
-export async function getAdressesAirdroppedOP(): Promise<[string[], string[]]> {
-  const op1 = OPAirdrop1;
-  const op2 = OPAirdrop2;
-  return [
-    Object.values(op1).map((records: any) => records.address),
-    Object.values(op2).map((records: any) => records.address),
-  ];
-}
-
 // fetch ERC20 transactions from Etherscan
 export async function getERC20Transactions(address: string) {
   /*

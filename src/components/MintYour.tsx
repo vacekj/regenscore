@@ -308,7 +308,7 @@ const Hero: React.FC = () => {
                   //   xl: '337px',
                   // }}
                 >
-                  {score || ''}
+                  {score?.toFixed(1) || ''}
                 </Heading>
               </CardHeader>
               <CardBody
@@ -362,7 +362,7 @@ const Hero: React.FC = () => {
                       color="#354728"
                       opacity="0.5"
                     >
-                      {/*{formatTimestamp(lastAttestation?.timeCreated)}*/}
+                      {formatTimestamp(lastAttestation?.timeCreated)}
                     </Text>
                   </div>
                 )}
