@@ -25,6 +25,8 @@ import { Arrow } from '@/components/ScoreMeter';
 import { useBreakpointValue } from '@chakra-ui/react';
 import useSWR from 'swr';
 import supabase from '@/utils/supabase-client';
+import { Check } from '@/components/Check';
+import { Hex } from 'viem';
 
 function InfoIcon(props: ChakraProps) {
   return (
@@ -50,7 +52,11 @@ const Hero: React.FC = () => {
   const { address } = useAccount();
   const { score, categories, loading, error } = useScore(address);
   const { mintAttestation, lastAttestation } = useEAS(address);
-  const { data: percentile } = useSWR('percentiles', async () => {
+  const { data: percentile } = useSWR<{
+    address: Hex;
+    percentile_rank_all: number;
+    score: number;
+  }>('percentiles', async () => {
     const { data, error } = await supabase
       .from('percentiles')
       .select('*')
@@ -63,6 +69,8 @@ const Hero: React.FC = () => {
       throw error;
     }
   });
+
+  console.log(percentile);
 
   const scale = useBreakpointValue({
     base: 0.5,
@@ -289,7 +297,9 @@ const Hero: React.FC = () => {
                 mt={['-60px', '0', '0', '0', '30px']}
               >
                 <Container position="absolute" marginLeft={['104%', '130%']}>
-                  <Arrow rotate={percentile?.percentile_rank_all * 170 + 10} />
+                  <Arrow
+                    rotate={(percentile?.percentile_rank_all ?? 0) * 170 + 10}
+                  />
                 </Container>
                 <svg
                   width="213"
@@ -357,23 +367,29 @@ const Hero: React.FC = () => {
                   justifyContent={'center'}
                   textAlign={['start']}
                 >
-                  {/*<div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '1.89px',
-              }}
-            >
-              <Check status={'WARNING2'} />
-              <Text
-                fontSize="19.482px"
-                fontFamily="Inter-Regular"
-                color="#354728"
-                gap="10px"
-              >
-                Top 10% of users
-              </Text>
-            </div>*/}
+                  <div
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '1.89px',
+                    }}
+                  >
+                    <Check status={'WARNING2'} />
+                    <Text
+                      fontSize="19.482px"
+                      fontFamily="Inter-Regular"
+                      color="#354728"
+                      gap="10px"
+                    >
+                      {' '}
+                      Top{' '}
+                      {(
+                        100 -
+                        (percentile?.percentile_rank_all ?? 0) * 100
+                      ).toFixed(0)}
+                      % of users
+                    </Text>
+                  </div>
                   {score && score !== 0 && (
                     <div
                       style={{
