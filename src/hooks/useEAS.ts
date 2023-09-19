@@ -21,7 +21,6 @@ function useEAS(address: string | Hex | undefined) {
   const chainId = useChainId();
   const { score, meta } = useScore(address);
   const [ethToUsdPrice, setEthToUsdPrice] = useState(0);
-  const [feeValue, setFeeValue] = useState('1');
   // Fee setup
   const { config, error: prepareError } = usePrepareSendTransaction({
     to: ATTESTER_PUBLIC_KEY,
@@ -51,10 +50,9 @@ function useEAS(address: string | Hex | undefined) {
     try {
       const tx = await sendTransactionAsync?.();
       const hash = tx?.hash as Hash;
-      console.log('hash', hash);
       const receipt = await waitForTransaction({ hash });
       if (receipt?.status === 'success') {
-        return true;
+        return hash;
       }
     } catch (error) {
       console.error('Error in transaction:', error);
@@ -76,59 +74,73 @@ function useEAS(address: string | Hex | undefined) {
   }, [address]);
 
   const mintAttestation = async () => {
-    console.log({ address, score, meta, walletClient });
-    if (!address || !score || !meta || !walletClient) return;
-    toast({
-      title: 'Payment',
-      description: "We're sending a payment transaction",
-      status: 'info',
-      duration: 10000,
-      isClosable: true,
-    });
-    // Charge fee in ETH
-    const feePayed = await chargeUserInETH();
+    try {
+      console.log({ address, score, meta, walletClient });
+      if (!address || !score || !meta || !walletClient) return;
+      toast({
+        title: 'Payment',
+        description: "We're sending a payment transaction",
+        status: 'info',
+        duration: 10000,
+        isClosable: true,
+      });
+      // Charge fee in ETH
+      const txReceipt = await chargeUserInETH();
 
-    if (!feePayed)
-      return toast({
-        title: 'Error',
-        description: 'Fee payment unsuccessful. Please try again.',
-        status: 'error',
+      if (!txReceipt)
+        return toast({
+          title: 'Error',
+          description: 'Fee payment unsuccessful. Please try again.',
+          status: 'error',
+          duration: 9000,
+          isClosable: true,
+        });
+      toast({
+        title: 'Minting',
+        description:
+          "We're creating your attestation. This may take a few seconds.",
+        status: 'info',
         duration: 9000,
         isClosable: true,
       });
-    toast({
-      title: 'Minting',
-      description:
-        "We're creating your attestation. This may take a few seconds.",
-      status: 'info',
-      duration: 9000,
-      isClosable: true,
-    });
-    console.log({ meta: JSON.stringify(meta) });
-    const res = await fetch('/api/attest', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        address: getAddress(address!),
-        score: parseInt(score.toString()),
-        meta: JSON.stringify(meta), // TODO: move this to ipfs, data got bigger
-        network: chainId,
-      }),
-    });
-    const attestationUID = await res.json();
-    fetchAttestations();
-    console.log({ res });
-    console.log('attestationUID', attestationUID);
-    toast({
-      title: 'Done!',
-      description: 'We have created your attestation.',
-      status: 'success',
-      duration: 9000,
-      isClosable: true,
-    });
-    return attestationUID;
+
+      const res = await fetch('/api/attest', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          address: getAddress(address!),
+          score: parseInt(score.toString()),
+          meta,
+          network: chainId,
+          receipt: txReceipt,
+        }),
+      });
+      const attest = await res.json();
+      if (attest?.error)
+        return toast({
+          title: 'Error',
+          description:
+            'There was an error creating your attestation. Please try again.',
+          status: 'error',
+          duration: 9000,
+          isClosable: true,
+        });
+      fetchAttestations();
+      console.log('attestationUID', attest);
+      toast({
+        title: 'Done!',
+        description: 'We have created your attestation.',
+        status: 'success',
+        duration: 9000,
+        isClosable: true,
+      });
+      return attest;
+    } catch (error) {
+      console.log({ error });
+      return false;
+    }
   };
 
   return {
