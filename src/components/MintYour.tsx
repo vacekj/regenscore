@@ -52,6 +52,7 @@ function InfoIcon(props: ChakraProps) {
 const Hero: React.FC = () => {
   const currentChain = useChainId();
   const { address } = useAccount();
+  const currentChain = useChainId();
   const {
     score,
     version: scoreVersion,

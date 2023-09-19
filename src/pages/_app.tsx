@@ -16,7 +16,7 @@ import { theme } from '@/chakra';
 import './styles.css';
 import CustomHead from '../components/CustomHead';
 
-const chains = [sepolia];
+const chains = [optimism, sepolia];
 const projectId = 'df4f5f1b03670ef123bd5ee18401d0de';
 
 const { publicClient } = configureChains(chains, [

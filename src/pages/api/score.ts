@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import supabase from '@/utils/supabase-client';
 import { createScore } from '@/helpers/scoreHelpers';
-import { CURRENT_SCORE_VERSION } from '@/utils/constants';
+import { CURRENT_SCORE_VERSION } from '@/constants';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const address = req.body.address || req.query.address;
