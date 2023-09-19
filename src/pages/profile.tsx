@@ -16,7 +16,10 @@ export default function Mint() {
       </Head>
       <Layout>
         <Flex
-          bg={["linear-gradient(to bottom left, #577442 0%, #354728 35%)", "linear-gradient(to bottom right, #577442 0%, #354728 25%)"]}
+          bg={[
+            'linear-gradient(to bottom left, #577442 0%, #354728 35%)',
+            'linear-gradient(to bottom right, #577442 0%, #354728 25%)',
+          ]}
           justifyContent="flex-end"
           boxShadow={[0, '0px 4px 4px rgba(0, 0, 0, 0.25)']}
           pt="96px"
@@ -29,4 +32,3 @@ export default function Mint() {
     </>
   );
 }
-
