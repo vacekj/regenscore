@@ -12,6 +12,7 @@ type Item = {
   scoreAdded: number;
   tokens?: Token[];
   applies?: Boolean;
+  behavior: string;
 };
 
 type ResponseData = {
@@ -100,6 +101,8 @@ export function useScore(address: string | Hex | undefined) {
       );
     }
   }, [data]);
+
+  console.log(data?.meta);
 
   return {
     score: data?.score,
