@@ -100,7 +100,7 @@ export function useScore(address: string | Hex | undefined) {
         })),
       );
     }
-  }, [data]);
+  }, [data, address]);
 
   return {
     score: data?.score,
