@@ -1,4 +1,4 @@
-export default [
+const erc20Abi = [
   {
     inputs: [
       { internalType: 'address', name: 'initialMinter', type: 'address' },
@@ -290,4 +290,5 @@ export default [
     stateMutability: 'nonpayable',
     type: 'function',
   },
-];
+] as const;
+export default erc20Abi;
