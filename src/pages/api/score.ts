@@ -16,7 +16,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       .select('*')
       .eq('address', address)
       .single();
-
     if (
       !existingData ||
       shouldUpdate === true ||

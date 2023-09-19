@@ -54,13 +54,13 @@ const Hero: React.FC = () => {
   const { address } = useAccount();
   const {
     score,
+    meta,
     version: scoreVersion,
     categories,
     loading,
     error,
   } = useScore(address);
   const { mintAttestation, lastAttestation } = useEAS(address);
-
   // TODO: do this somewhere else
   const network = currentChain === 11155111 ? 'sepolia' : 'optimism';
 
@@ -418,7 +418,7 @@ const Hero: React.FC = () => {
                       % of users
                     </Text>
                   </div>
-                  {created_at && (
+                  {created_at && lastAttestation && (
                     <div
                       style={{
                         display: 'flex',
@@ -434,7 +434,7 @@ const Hero: React.FC = () => {
                         <Link
                           color="#354728"
                           textDecoration={'underline'}
-                          href={`https://${network}.easscan.org/attestation/view/${lastAttestation.id}`}
+                          href={`https://${network}.easscan.org/attestation/view/${lastAttestation?.id}`}
                         >
                           Last Updated
                         </Link>

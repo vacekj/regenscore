@@ -14,10 +14,9 @@ export function privateKeyToSigner(privateKey: string, chainId: number) {
       chainId === 11155111 ? 'sepolia' : 'optimism'
     }.infura.io/v3/${process.env.NEXT_PUBLIC_INFURA_PROJECT_ID}`,
   };
-  console.log({ network });
   const wallet = new Wallet(privateKey);
   const provider = new providers.JsonRpcProvider(network.url, network);
-  return wallet.connect(provider);
+  return { signer: wallet.connect(provider), provider };
 }
 
 export function publicClientToProvider(publicClient: PublicClient) {
