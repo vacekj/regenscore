@@ -11,6 +11,12 @@ import {
   Flex,
   Text,
   Tooltip,
+  Box,
+  Grid,
+  GridItem,
+  Container,
+  Show,
+  Hide
 } from '@chakra-ui/react';
 
 import React from 'react';
@@ -74,7 +80,12 @@ const TrackedActivity = () => {
       justify="center"
       marginX={['0', 'auto']}
       maxWidth={{ base: '100%', xl: '1440px' }}
-      px={{ base: '0', sm: '0', md: '0', lg: '0', xl: '54px' }}
+      px={{
+        base: '16px',
+        sm: '40px',
+        md: '40px',
+        lg: '54px', xl: '54px'
+      }}
       width="100%"
     >
       <Heading
@@ -86,7 +97,7 @@ const TrackedActivity = () => {
         mt={['0', '82px']}
         textAlign="start"
         color="brand.primaryOrange.200"
-        marginX={{ base: '16px', sm: '40px', md: '40px', lg: '54px', xl: '0' }}
+
         maxWidth={{ base: 'auto', xl: '1386px' }}
         width="100%"
       >
@@ -96,13 +107,13 @@ const TrackedActivity = () => {
         mb={['28px', '46px']}
         fontSize={['16px', '20']}
         fontFamily="Inter-Regular"
-        marginX={{ base: '16px', sm: '40px', md: '40px', lg: '54px', xl: '0' }}
+
       >
         Check out the details of your activities
       </Text>
 
       {meta && (
-        <TableContainer
+        <><TableContainer
           borderRadius="8"
           bg="brand.beige.400"
           shadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
@@ -110,15 +121,9 @@ const TrackedActivity = () => {
           mb="94px"
           maxWidth="1331px"
           width="100%"
-          marginX={{
-            base: '16px',
-            sm: '40px',
-            md: '40px',
-            lg: '54px',
-            xl: '0',
-          }}
+          display={["none", "none", "none", "block", "block"]}
         >
-          <Table size="lg">
+          <Table size={["sm", "lg", "", "", ""]}>
             <Thead>
               <Tr>
                 <Th
@@ -200,8 +205,7 @@ const TrackedActivity = () => {
                     <ActivityRow
                       key={index}
                       activity={activity}
-                      category={activity.category}
-                    />
+                      category={activity.category} />
                   ))}
               {meta &&
                 // TODO: FIX TYPE
@@ -213,6 +217,55 @@ const TrackedActivity = () => {
             </Tbody>
           </Table>
         </TableContainer>
+
+          <Show below="lg">
+            <Container margin="0" padding="0">
+            <Grid
+              width="100%"
+              maxW="1440px"
+              templateColumns="auto auto auto"
+              marginBottom="94px"
+            >
+              <GridItem bg="white"
+                p="20px"
+                borderRadius="8px">
+                {meta &&
+                  Object.values(meta)
+                    .filter((key) => !!key.applies)
+                    .map((activity, index) => (
+                      <div key={index}>
+                        <div>{activity.behavior}</div>
+                      </div>
+                    ))}
+              </GridItem>
+              <GridItem bg="white"
+                p="20px"
+                borderRadius="8px">
+                {meta &&
+                  Object.values(meta)
+                    .filter((key) => !!key.applies)
+                    .map((activity, index) => (
+                      <div key={index}>
+                        <div>{activity.category}</div>
+                      </div>
+                    ))}
+              </GridItem>
+              <GridItem bg="white"
+                p="20px"
+                borderRadius="8px">
+                {meta &&
+                  Object.values(meta)
+                    .filter((key) => !!key.applies)
+                    .map((activity, index) => (
+                      <div key={index}>
+                        <div>{activity.scoreAdded}</div>
+                      </div>
+                    ))}
+              </GridItem>
+            </Grid>
+            </Container>
+          </Show>
+        </>
       )}
     </Flex>
   );
