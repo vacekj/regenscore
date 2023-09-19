@@ -9,6 +9,7 @@ import {
   CardBody,
   CardHeader,
   Text,
+  Link,
   Button,
   Tooltip,
   Image,
@@ -17,9 +18,9 @@ import {
   Container,
 } from '@chakra-ui/react';
 import React from 'react';
-import { useAccount } from 'wagmi';
+import { useAccount, useChainId } from 'wagmi';
 import { CATEGORY_TOOLTIP, CategoryTooltipKeyType } from '@/constants';
-import { formatTimestamp } from '@/utils/strings';
+import { formatTimestamp, formatNumber } from '@/utils/strings';
 import { useScore, useEAS } from '@/hooks';
 import { Arrow } from '@/components/ScoreMeter';
 import { useBreakpointValue } from '@chakra-ui/react';
@@ -49,9 +50,20 @@ function InfoIcon(props: ChakraProps) {
 }
 
 const Hero: React.FC = () => {
+  const currentChain = useChainId();
   const { address } = useAccount();
-  const { score, categories, loading, error } = useScore(address);
+  const {
+    score,
+    version: scoreVersion,
+    categories,
+    loading,
+    error,
+  } = useScore(address);
   const { mintAttestation, lastAttestation } = useEAS(address);
+
+  // TODO: do this somewhere else
+  const network = currentChain === 11155111 ? 'sepolia' : 'optimism';
+
   const { data: percentile } = useSWR<{
     address: Hex;
     percentile_rank_all: number;
@@ -366,7 +378,7 @@ const Hero: React.FC = () => {
                       //   xl: '337px',
                       // }}
                     >
-                      {score?.toFixed(1) || ''}
+                      {formatNumber(score) || ''}
                     </Heading>
                   )}
                 </CardHeader>
@@ -419,6 +431,13 @@ const Hero: React.FC = () => {
                         color="#354728"
                         opacity="0.5"
                       >
+                        <Link
+                          color="#354728"
+                          textDecoration={'underline'}
+                          href={`https://${network}.easscan.org/attestation/view/${lastAttestation.id}`}
+                        >
+                          Attestation{' '}
+                        </Link>{' '}
                         Last Updated{' '}
                       </Text>
                       <Text
@@ -439,20 +458,10 @@ const Hero: React.FC = () => {
                       marginTop="26.76px"
                       mr="8.25px"
                       onClick={() => {
-                        if (lastAttestation) {
-                          window.open(
-                            `https://sepolia.easscan.org/attestation/view/${lastAttestation.id}`,
-                          );
-                        } else {
-                          mintAttestation();
-                        }
+                        mintAttestation();
                       }}
                     >
-                      {lastAttestation
-                        ? 'VIEW ATTESTATION'
-                        : score
-                        ? 'MINT NOW'
-                        : ''}
+                      MINT NOW
                     </Button>
                   )}
                   {score && (
@@ -563,7 +572,7 @@ const Hero: React.FC = () => {
                         fontSize: '16px',
                       }}
                     >
-                      {categoryItem.scoreAdded}
+                      {formatNumber(categoryItem.scoreAdded)}
                     </span>
                   </Box>
                 </Flex>
