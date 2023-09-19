@@ -170,7 +170,7 @@ const Slide1 = () => {
       >
         {currentDrop !== null
           ? dropsImages[currentDrop].content
-          : 'Qualify for Optimism’s Citizen’s House based on your blockchain activity'}{' '}
+          : 'Transparent Individual Evaluation and Democratization of Governance'}{' '}
       </Text>
     </Flex>
   );
