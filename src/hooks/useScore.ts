@@ -102,8 +102,6 @@ export function useScore(address: string | Hex | undefined) {
     }
   }, [data]);
 
-  console.log(data?.meta);
-
   return {
     score: data?.score,
     meta: data?.meta,
