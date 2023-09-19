@@ -59,7 +59,7 @@ export default function Footer() {
                 </div>
                 <div style={{ marginBottom: '85px' }}>REGEN Score</div>
                 <div style={{ marginBottom: '10px', marginTop: '30px' }}>
-                  All rights reserved @2023
+                  All rights reserved © 2023
                 </div>
               </div>
             </Box>
@@ -334,7 +334,7 @@ export default function Footer() {
               marginBottom: '24px',
             }}
           >
-            All rights reserved @2023
+            All rights reserved © 2023
           </div>
         </Stack>
       </Container>

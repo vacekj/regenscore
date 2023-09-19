@@ -219,45 +219,53 @@ const TrackedActivity = () => {
             </Table>
           </TableContainer>
 
+          {/*TODO: add pagination*/}
           <Show below="lg">
-            <Container margin="0" padding="0">
-              <Grid
-                width="100%"
-                maxW="1440px"
-                templateColumns="auto auto auto"
-                marginBottom="94px"
-              >
-                <GridItem bg="white" p="20px" borderRadius="8px">
-                  {meta &&
-                    Object.values(meta)
-                      .filter((key) => !!key.applies)
-                      .map((activity, index) => (
-                        <div key={index}>
-                          <div>{activity.behavior}</div>
-                        </div>
-                      ))}
-                </GridItem>
-                <GridItem bg="white" p="20px" borderRadius="8px">
-                  {meta &&
-                    Object.values(meta)
-                      .filter((key) => !!key.applies)
-                      .map((activity, index) => (
-                        <div key={index}>
-                          <div>{activity.category}</div>
-                        </div>
-                      ))}
-                </GridItem>
-                <GridItem bg="white" p="20px" borderRadius="8px">
-                  {meta &&
-                    Object.values(meta)
-                      .filter((key) => !!key.applies)
-                      .map((activity, index) => (
-                        <div key={index}>
-                          <div>{activity.scoreAdded}</div>
-                        </div>
-                      ))}
-                </GridItem>
-              </Grid>
+            <Container
+              display={'flex'}
+              flexDir={'column'}
+              gap={'16px'}
+              margin="0"
+              mx={'auto'}
+              padding="24px"
+              bg="rgba(255, 255, 255, 0.55)"
+              marginBottom="94px"
+              borderRadius="8px"
+            >
+              {Object.values(meta)
+                .filter((key) => !!key.applies)
+                .map((activity, index) => (
+                  <Grid
+                    key={index}
+                    width="100%"
+                    maxW="1440px"
+                    templateColumns="1fr 1fr"
+                    templateRows={'1fr 1fr'}
+                    p={'24px'}
+                    bg={'rgba(255, 255, 255, 0.55)'}
+                    gap={'16px'}
+                    alignItems={'center'}
+                  >
+                    <GridItem fontSize={'20px'} colSpan={2}>
+                      {activity.behavior}
+                    </GridItem>
+                    <GridItem>
+                      <Text
+                        variant={activity?.category?.toLowerCase()}
+                        borderRadius="30px"
+                        border="1px solid"
+                        padding="7px 16px"
+                        display="flex"
+                        justifyContent="center"
+                        alignItems="center"
+                        w={'fit-content'}
+                      >
+                        {activity.category}
+                      </Text>
+                    </GridItem>
+                    <GridItem>{activity.scoreAdded} Points</GridItem>
+                  </Grid>
+                ))}
             </Container>
           </Show>
         </>
