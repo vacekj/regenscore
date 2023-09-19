@@ -20,7 +20,6 @@ type ResponseData = {
   meta?: {
     [key: string]: Item;
   };
-  version?: number;
 };
 
 /*TODO(mateo): types, fetch from supabase first, if not in supabase, load from our api */
@@ -53,8 +52,8 @@ export function useScore(address: string | Hex | undefined) {
         });
         if (!active) return;
         setLoading(false);
-        const resData = await res.json();
-        setData(resData);
+        const jsonData = await res.json();
+        setData(jsonData);
       } catch (error: any) {
         if (!active) return;
         setLoading(false);
@@ -72,6 +71,7 @@ export function useScore(address: string | Hex | undefined) {
   useEffect(() => {
     const meta = data?.meta;
     if (meta) {
+      console.log({ meta });
       const newCategoryScores: Record<string, number> = {};
       Object.keys(meta)
         .filter((key) => key === 'tokenBalances' || !!meta[key].applies)
@@ -105,7 +105,6 @@ export function useScore(address: string | Hex | undefined) {
   return {
     score: data?.score,
     meta: data?.meta,
-    version: data?.version || 0,
     categories,
     loading,
     error,
