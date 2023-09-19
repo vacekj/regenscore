@@ -14,6 +14,7 @@ import {
   Image,
   Icon,
   ChakraProps,
+  Container,
 } from '@chakra-ui/react';
 import React from 'react';
 import { useAccount } from 'wagmi';
@@ -21,6 +22,9 @@ import { CATEGORY_TOOLTIP, CategoryTooltipKeyType } from '@/constants';
 import { formatTimestamp } from '@/utils/strings';
 import { useScore, useEAS } from '@/hooks';
 import { Arrow } from '@/components/ScoreMeter';
+import { useBreakpointValue } from '@chakra-ui/react'
+import useSWR from 'swr';
+import supabase from '@/utils/supabase-client';
 
 function InfoIcon(props: ChakraProps) {
   return (
@@ -46,8 +50,21 @@ const Hero: React.FC = () => {
   const { address } = useAccount();
   const { score, categories, loading, error } = useScore(address);
   const { mintAttestation, lastAttestation } = useEAS(address);
-  const percentile = 0.9;
+  const { data: percentile } = useSWR('percentiles', async () => {
+    const { data, error } = await supabase
+      .from('percentiles')
+      .select('*')
+      .eq('address', address)
+      .single();
 
+    if (data) {
+      return data;
+    } else if (error) {
+      throw error;
+    }
+  });
+
+  const scale = useBreakpointValue({ base: 0.5, sm: 0.8, md: 0.8, lg: 0.8, xl: 0.9 });
   return (
     <Grid
       templateColumns={[
@@ -70,7 +87,7 @@ const Hero: React.FC = () => {
       pb={[0, 79]}
       gap={4}
       w="full"
-      h={{ base: 'max-content', md: '616px' }}
+      h={{ base: 'max-content', lg: '616px' }}
       bg={`url(/images/leaf-bg.png)`}
       bgRepeat="no-repeat"
       bgSize={['240%', 'cover']}
@@ -114,6 +131,7 @@ const Hero: React.FC = () => {
         zIndex="2"
         pt={['10px', '20px']}
         minWidth={['auto']}
+        mx={["auto", "auto", "0"]}
       >
         Mint your attestations to <br /> access opportunities
       </Heading>
@@ -130,12 +148,14 @@ const Hero: React.FC = () => {
       >
         <Card
           maxWidth={['', '500px', '500px', '', '654px']}
-          maxHeight={['451px', '451px', '451px', '400px', '451px']}
+          maxHeight={['451px', '400px', '400px', '400px', '451px']}
+          minW={["0", "435px"]}
+          minH={["400px"]}
           width="100%"
           height="100%"
           borderRadius="16.235px"
           background="linear-gradient(180deg, #F9DD94 0%, #FFC555 100%)"
-          border="0.812px solid rgba(255, 255, 255, 0.50)"
+          border={["none", "0.812px solid rgba(255, 255, 255, 0.50)"]}
           mt="17.5px"
         >
           {/* Empty State */}
@@ -231,7 +251,7 @@ const Hero: React.FC = () => {
                     fontFamily="Inter-Regular"
                     fontSize="24px"
                     color="#E43126"
-                    width="40vw"
+                    width={["90vW", "35vw"]}
                     mx="50px"
                   >
                     Loading your data attestation failed. Please try again.
@@ -247,51 +267,53 @@ const Hero: React.FC = () => {
 
           <Flex display="flex" flexDirection="row">
             {/* Left Column */}
-            <Flex
-              flex={['0.3', '1']}
-              alignItems={'center'}
-              justifyContent={'center'}
-              flexDirection="column"
-              position={'relative'}
-            >
-              <Arrow rotate={percentile * 160 + 10} />
-              <svg
-                width="213"
-                height="418"
-                viewBox="0 0 213 418"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                style={{
-                  transform: 'scale(0.9)',
-                  position: 'absolute',
-                  top: 50,
-                  right: 70,
-                }}
+            {score && (
+              <Flex
+                flex={["0.3", "1", "1", '1', '1']}
+                alignItems={'center'}
+                justifyContent={'center'}
+                flexDirection="column"
+                position={'relative'}
+                marginRight={"0px"}
+                ml={["-67px", "0"]}
+                mt={["-60px", "0", "0", "0", "30px"]}
               >
-                <path
-                  fillRule="evenodd"
-                  clipRule="evenodd"
-                  d="M212.093 20.0429C209.894 6.96064 197.507 -1.86248 184.425 0.335915C62.9625 20.7469 0.33979 115.902 0.00116021 210.465C-0.338276 305.255 61.9335 399.596 184.909 417.69C198.033 419.621 210.238 410.547 212.169 397.423C214.1 384.299 205.026 372.094 191.902 370.163C94.4967 355.83 47.7791 283.535 48.0402 210.637C48.302 137.513 95.8696 63.93 192.386 47.711C205.468 45.5126 214.291 33.1252 212.093 20.0429Z"
-                  fill="url(#paint0_linear_1201_930)"
-                />
-                <defs>
-                  <linearGradient
-                    id="paint0_linear_1201_930"
-                    x1="77.3146"
-                    y1="76.266"
-                    x2="180.599"
-                    y2="383.718"
-                    gradientUnits="userSpaceOnUse"
-                  >
-                    <stop offset="0.0429313" stopColor="white" />
-                    <stop offset="1" stopColor="white" stopOpacity="0" />
-                  </linearGradient>
-                </defs>
-              </svg>
-            </Flex>
+                <Container position="absolute" marginLeft={["104%", "130%"]}>
+                  <Arrow rotate={percentile?.percentile_rank_all * 170 + 10} />
+                </Container>
+                <svg
+                  width="213"
+                  height="418"
+                  viewBox="0 0 213 418"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  style={{ transform: `scale(${scale})` }}
+                >
+                  <path
+                    fillRule="evenodd"
+                    clipRule="evenodd"
+                    d="M212.093 20.0429C209.894 6.96064 197.507 -1.86248 184.425 0.335915C62.9625 20.7469 0.33979 115.902 0.00116021 210.465C-0.338276 305.255 61.9335 399.596 184.909 417.69C198.033 419.621 210.238 410.547 212.169 397.423C214.1 384.299 205.026 372.094 191.902 370.163C94.4967 355.83 47.7791 283.535 48.0402 210.637C48.302 137.513 95.8696 63.93 192.386 47.711C205.468 45.5126 214.291 33.1252 212.093 20.0429Z"
+                    fill="url(#paint0_linear_1201_930)"
+                  />
+                  <defs>
+                    <linearGradient
+                      id="paint0_linear_1201_930"
+                      x1="77.3146"
+                      y1="76.266"
+                      x2="180.599"
+                      y2="383.718"
+                      gradientUnits="userSpaceOnUse"
+                    >
+                      <stop offset="0.0429313" stopColor="white" />
+                      <stop offset="1" stopColor="white" stopOpacity="0" />
+                    </linearGradient>
+                  </defs>
+                </svg>
+              </Flex>
+            )}
 
             {/* Right Column */}
-            <Flex flex={['0.7', '1']} flexDirection="column">
+            <Flex flex={["0.7", "1", "1", '1', '1']} flexDirection="column">
               <CardHeader padding="0px" textAlign={['start']}>
                 <Heading
                   as="h3"
@@ -299,14 +321,14 @@ const Hero: React.FC = () => {
                   fontWeight="bold"
                   fontSize="100px"
                   color="#FFF"
-                  marginTop={['77px', '20px', '20px', '98px', '98px']}
-                  // marginLeft={{
-                  //   base: '150px',
-                  //   sm: '230px',
-                  //   md: '230px',
-                  //   lg: '200px',
-                  //   xl: '337px',
-                  // }}
+                  marginTop={['55px', '78px', '78px', '78px', '80px']}
+                // marginLeft={{
+                //   base: '150px',
+                //   sm: '230px',
+                //   md: '230px',
+                //   lg: '200px',
+                //   xl: '337px',
+                // }}
                 >
                   {score?.toFixed(1) || ''}
                 </Heading>
@@ -386,8 +408,8 @@ const Hero: React.FC = () => {
                     {lastAttestation
                       ? 'VIEW ATTESTATION'
                       : score
-                      ? 'MINT NOW'
-                      : ''}
+                        ? 'MINT NOW'
+                        : ''}
                   </Button>
                 )}
                 {score && (
@@ -432,12 +454,12 @@ const Hero: React.FC = () => {
         alignItems={'center'}
         pb={[79, 0]}
         pt={['70px', 0]}
-        mt={['-50px', 0]}
+        mt={['-50px', "20px", "20px", "20px", "0",]}
         px={['20px', '30px']}
         zIndex={2}
         alignContent="center"
         maxWidth={['', '500px', '500px', 'auto', 'auto']}
-        minWidth={['', '400px', '500px', '0', '0']}
+        minWidth={['', '500px', '500px', '0', '0']}
         marginX={['', 'auto', 'auto', '0', '0']}
       >
         {
@@ -455,7 +477,7 @@ const Hero: React.FC = () => {
                   <Tooltip
                     label={
                       CATEGORY_TOOLTIP[
-                        categoryItem.category as CategoryTooltipKeyType
+                      categoryItem.category as CategoryTooltipKeyType
                       ]
                     }
                     placement="top-end"
@@ -466,7 +488,7 @@ const Hero: React.FC = () => {
                       h={'16px'}
                     />
                   </Tooltip>
-                  {categoryItem.category}
+                  <span style={{ fontFamily: 'Inter-Medium', fontWeight: "500", fontSize: '16px' }}>{categoryItem.category}</span>
                 </Flex>
                 <Flex alignItems={'center'} gap={18}>
                   <Box
@@ -482,13 +504,208 @@ const Hero: React.FC = () => {
                     alignItems={'center'}
                     justifyContent={'flex-start'}
                   >
-                    {categoryItem.scoreAdded}
+                    <span style={{ fontFamily: 'Inter-Medium', fontWeight: "500", fontSize: '16px' }}>{categoryItem.scoreAdded}</span>
                   </Box>
                 </Flex>
               </>
             ),
           )
         }
+
+        {/* Loading State */}
+        {!!loading && (
+          <Flex alignItems={'center'} mx="auto" gap={"25px"} ml={["0", "100px", "100px", "0", "0"]}>
+            <Box gap={["34px", "34px", "34px", "28px", "34px"]} display={["none", "flex"]} alignItems="center" flexDir={"column"}>
+              <Rectangle />
+              <Rectangle />
+              <Rectangle />
+              <Rectangle />
+              <Rectangle />
+            </Box>
+            <Box gap={["34px", "34px", "34px", "28px", "34px"]} display={["flex", "none"]} alignItems="center" flexDir={"column"}>
+              <RectangleGreen />
+              <RectangleGreen />
+              <RectangleGreen />
+              <RectangleGreen />
+              <RectangleGreen />
+            </Box>
+            <Box
+              bg={['brand.deepGreen.400', 'white']}
+              display={"flex"}
+              flexDir={"row"} />
+            <Box
+              w={'5px'}
+              gap={["34px", "34px", "34px", "28px", "34px"]}
+              alignItems={'start'}
+              justifyContent={'flex-start'}
+              flexDir={"column"}
+              display={["none", "flex"]}
+            >
+              <Bar />
+              <Bar />
+              <Bar />
+              <Bar />
+              <Bar />
+            </Box>
+            <Box
+              w={'5px'}
+              gap={["34px", "34px", "34px", "28px", "34px"]}
+              alignItems={'start'}
+              justifyContent={'flex-start'}
+              flexDir={"column"}
+              display={["flex", "none"]}
+            >
+              <BarGreen />
+              <BarGreen />
+              <BarGreen />
+              <BarGreen />
+              <BarGreen />
+            </Box>
+            <Box
+              display={'flex'}
+              gap={["30px", "30px", "30px", "24px", "30px"]}
+              alignItems={'start'}
+              justifyContent={'flex-start'}
+              flexDir={"column"}
+            >
+              <span style={{ fontFamily: 'Inter-Medium', fontWeight: "500", fontSize: '16px' }}>Loading...</span>
+              <span style={{ fontFamily: 'Inter-Medium', fontWeight: "500", fontSize: '16px' }}>Loading...</span>
+              <span style={{ fontFamily: 'Inter-Medium', fontWeight: "500", fontSize: '16px' }}>Loading...</span>
+              <span style={{ fontFamily: 'Inter-Medium', fontWeight: "500", fontSize: '16px' }}>Loading...</span>
+              <span style={{ fontFamily: 'Inter-Medium', fontWeight: "500", fontSize: '16px' }}>Loading...</span>
+            </Box>
+          </Flex>
+        )}
+
+        {/* Error State */}
+        {!!error && (
+          <Flex alignItems={'center'} mx="auto" gap={"25px"} ml={["0", "100px", "100px", "0", "0"]}>
+            <Box gap={["34px", "34px", "34px", "28px", "34px"]} display={["none", "flex"]} alignItems="center" flexDir={"column"}>
+              <Rectangle />
+              <Rectangle />
+              <Rectangle />
+              <Rectangle />
+              <Rectangle />
+            </Box>
+            <Box gap={["34px", "34px", "34px", "28px", "34px"]} display={["flex", "none"]} alignItems="center" flexDir={"column"}>
+              <RectangleGreen />
+              <RectangleGreen />
+              <RectangleGreen />
+              <RectangleGreen />
+              <RectangleGreen />
+            </Box>
+            <Box
+              bg={['brand.deepGreen.400', 'white']}
+              display={"flex"}
+              flexDir={"row"} />
+            <Box
+              w={'5px'}
+              gap={["34px", "34px", "34px", "28px", "34px"]}
+              alignItems={'start'}
+              justifyContent={'flex-start'}
+              flexDir={"column"}
+              display={["none", "flex"]}
+            >
+              <Bar />
+              <Bar />
+              <Bar />
+              <Bar />
+              <Bar />
+            </Box>
+            <Box
+              w={'5px'}
+              gap={["34px", "34px", "34px", "28px", "34px"]}
+              alignItems={'start'}
+              justifyContent={'flex-start'}
+              flexDir={"column"}
+              display={["flex", "none"]}
+            >
+              <BarGreen />
+              <BarGreen />
+              <BarGreen />
+              <BarGreen />
+              <BarGreen />
+            </Box>
+            <Box
+              display={'flex'}
+              gap={["30px", "30px", "30px", "24px", "30px"]}
+              alignItems={'start'}
+              justifyContent={'flex-start'}
+              flexDir={"column"}
+            >
+              <span style={{ fontFamily: 'Inter-Medium', fontWeight: "500", fontSize: '16px' }}>Loading...</span>
+              <span style={{ fontFamily: 'Inter-Medium', fontWeight: "500", fontSize: '16px' }}>Loading...</span>
+              <span style={{ fontFamily: 'Inter-Medium', fontWeight: "500", fontSize: '16px' }}>Loading...</span>
+              <span style={{ fontFamily: 'Inter-Medium', fontWeight: "500", fontSize: '16px' }}>Loading...</span>
+              <span style={{ fontFamily: 'Inter-Medium', fontWeight: "500", fontSize: '16px' }}>Loading...</span>
+            </Box>
+          </Flex>
+        )}
+
+        {/* Empty State */}
+        {!score && !error && !loading && (
+          <Flex alignItems={'center'} mx="auto" gap={"25px"} ml={["0", "100px", "100px", "0", "0"]}>
+            <Box gap={["34px", "34px", "34px", "28px", "34px"]} display={["none", "flex"]} alignItems="center" flexDir={"column"}>
+              <Rectangle />
+              <Rectangle />
+              <Rectangle />
+              <Rectangle />
+              <Rectangle />
+            </Box>
+            <Box gap={["34px", "34px", "34px", "28px", "34px"]} display={["flex", "none"]} alignItems="center" flexDir={"column"}>
+              <RectangleGreen />
+              <RectangleGreen />
+              <RectangleGreen />
+              <RectangleGreen />
+              <RectangleGreen />
+            </Box>
+            <Box
+              bg={['brand.deepGreen.400', 'white']}
+              display={"flex"}
+              flexDir={"row"} />
+            <Box
+              w={'5px'}
+              gap={["34px", "34px", "34px", "28px", "34px"]}
+              alignItems={'start'}
+              justifyContent={'flex-start'}
+              flexDir={"column"}
+              display={["none", "flex"]}
+            >
+              <Bar />
+              <Bar />
+              <Bar />
+              <Bar />
+              <Bar />
+            </Box>
+            <Box
+              w={'5px'}
+              gap={["34px", "34px", "34px", "28px", "34px"]}
+              alignItems={'start'}
+              justifyContent={'flex-start'}
+              flexDir={"column"}
+              display={["flex", "none"]}
+            >
+              <BarGreen />
+              <BarGreen />
+              <BarGreen />
+              <BarGreen />
+              <BarGreen />
+            </Box>
+            <Box
+              display={'flex'}
+              gap={["30px", "30px", "30px", "24px", "30px"]}
+              alignItems={'start'}
+              justifyContent={'flex-start'}
+              flexDir={"column"}
+            >
+              <span style={{ fontFamily: 'Inter-Medium', fontWeight: "500", fontSize: '16px' }}>No Data</span>
+              <span style={{ fontFamily: 'Inter-Medium', fontWeight: "500", fontSize: '16px' }}>No Data</span>
+              <span style={{ fontFamily: 'Inter-Medium', fontWeight: "500", fontSize: '16px' }}>No Data</span>
+              <span style={{ fontFamily: 'Inter-Medium', fontWeight: "500", fontSize: '16px' }}>No Data</span>
+              <span style={{ fontFamily: 'Inter-Medium', fontWeight: "500", fontSize: '16px' }}>No Data</span>
+            </Box>
+          </Flex>
+        )}
       </Grid>
     </Grid>
   );
@@ -605,3 +822,39 @@ const AttestationFailed = () => (
     />
   </svg>
 );
+
+const Rectangle = () => (
+  <svg width="80" height="19" viewBox="0 0 80 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect width="80" height="19" fill="url(#paint0_linear_847_5847)" />
+    <defs>
+      <linearGradient id="paint0_linear_847_5847" x1="76.8542" y1="-2.00987e-06" x2="39.0971" y2="50.4459" gradientUnits="userSpaceOnUse">
+        <stop stop-color="#F2EFE5" />
+        <stop offset="1" stop-color="#F3FFDA" />
+      </linearGradient>
+    </defs>
+  </svg>
+)
+
+const Bar = () => (
+  <svg width="5" height="19" viewBox="0 0 5 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect width="5" height="19" fill="url(#paint0_linear_847_5845)" />
+    <defs>
+      <linearGradient id="paint0_linear_847_5845" x1="4.80338" y1="-2.00987e-06" x2="-1.72336" y2="0.545007" gradientUnits="userSpaceOnUse">
+        <stop stop-color="#F2EFE5" />
+        <stop offset="1" stop-color="#F3FFDA" />
+      </linearGradient>
+    </defs>
+  </svg>
+)
+
+const RectangleGreen = () => (
+  <svg width="80" height="19" viewBox="0 0 80 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect width="80" height="19" fill="#354728" />
+  </svg>
+)
+
+const BarGreen = () => (
+  <svg width="5" height="19" viewBox="0 0 5 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect width="5" height="19" fill="#354728" />
+  </svg>
+)

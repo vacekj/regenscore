@@ -5,8 +5,9 @@ const HowItWorks: React.FC = () => {
       flexDir="column"
       align="flex-start"
       justify="center"
-      maxWidth="1342px"
-      p={{ base: '16px', sm: '0px', md: '0px', lg: '0px', xl: '0px' }}
+      maxWidth={{ base: '100%', xl: '1440px' }}
+      px={{ base: '16px', sm: '0', md: '0', lg: '0', xl: '54px' }}
+      py={{ base: '16px', sm: '0', md: '0', lg: '0', xl: '0' }}
       margin={{
         base: '0px auto',
         sm: '47px 40px',

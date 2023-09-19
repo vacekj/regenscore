@@ -1,4 +1,4 @@
-function ScoreMeter() {}
+function ScoreMeter() { }
 
 type ArrowProps = {
   rotate: number;
@@ -15,7 +15,7 @@ export function Arrow({ rotate = 0 }: ArrowProps) {
       viewBox="0 0 38 57"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      style={{ ...rotationStyle, position: 'absolute', right: 70, top: 230 }}
+      style={{ ...rotationStyle, }}
     >
       <path
         d="M18.3333 56.5496L0.0750066 0.925482C0.0750066 0.925482 11.427 12.6066 20.4564 11.9654C27.9454 11.4336 37.0162 2.19932 37.0162 2.19932L18.3333 56.5496Z"

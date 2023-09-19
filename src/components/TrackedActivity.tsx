@@ -73,7 +73,8 @@ const TrackedActivity = () => {
       align="flex-center"
       justify="center"
       marginX={['0', 'auto']}
-      maxWidth={{ base: '100%', xl: '1331px' }}
+      maxWidth={{ base: '100%', xl: '1440px' }}
+      px={{ base: '0', sm: '0', md: '0', lg: '0', xl: '54px' }}
       width="100%"
     >
       <Heading
