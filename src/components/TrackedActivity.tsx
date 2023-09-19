@@ -16,7 +16,7 @@ import {
   GridItem,
   Container,
   Show,
-  Hide
+  Hide,
 } from '@chakra-ui/react';
 
 import React from 'react';
@@ -84,7 +84,8 @@ const TrackedActivity = () => {
         base: '16px',
         sm: '40px',
         md: '40px',
-        lg: '54px', xl: '54px'
+        lg: '54px',
+        xl: '54px',
       }}
       width="100%"
     >
@@ -97,7 +98,6 @@ const TrackedActivity = () => {
         mt={['0', '82px']}
         textAlign="start"
         color="brand.primaryOrange.200"
-
         maxWidth={{ base: 'auto', xl: '1386px' }}
         width="100%"
       >
@@ -107,162 +107,157 @@ const TrackedActivity = () => {
         mb={['28px', '46px']}
         fontSize={['16px', '20']}
         fontFamily="Inter-Regular"
-
       >
         Check out the details of your activities
       </Text>
 
       {meta && (
-        <><TableContainer
-          borderRadius="8"
-          bg="brand.beige.400"
-          shadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
-          padding="28px 32px 16px 32px"
-          mb="94px"
-          maxWidth="1331px"
-          width="100%"
-          display={["none", "none", "none", "block", "block"]}
-        >
-          <Table size={["sm", "lg", "", "", ""]}>
-            <Thead>
-              <Tr>
-                <Th
-                  style={{ borderBottom: '1px solid #F5B333' }}
-                  fontFamily="Inter-Bold"
-                  fontSize="24px"
-                  color="brand.deepGreen.400"
-                  textTransform="capitalize"
-                  paddingLeft="0px"
-                >
-                  Taxonomy
-                </Th>
-                <Th
-                  style={{ borderBottom: '1px solid #F5B333' }}
-                  fontFamily="Inter-Bold"
-                  fontSize="24px"
-                  color="brand.deepGreen.400"
-                  textTransform="capitalize"
-                >
-                  Network
-                </Th>
-                <Th
-                  style={{ borderBottom: '1px solid #F5B333' }}
-                  fontFamily="Inter-Bold"
-                  fontSize="24px"
-                  color="brand.deepGreen.400"
-                  textTransform="capitalize"
-                  display="flex"
-                  alignItems="center"
-                  gap="8px"
-                >
-                  Behavior
-                  <Tooltip
-                    label="A concise description of the activity that resulted in the attestation"
-                    placement="top-end"
+        <>
+          <TableContainer
+            borderRadius="8"
+            bg="brand.beige.400"
+            shadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
+            padding="28px 32px 16px 32px"
+            mb="94px"
+            maxWidth="1331px"
+            width="100%"
+            display={['none', 'none', 'none', 'block', 'block']}
+          >
+            <Table size={['sm', 'lg', '', '', '']}>
+              <Thead>
+                <Tr>
+                  <Th
+                    style={{ borderBottom: '1px solid #F5B333' }}
+                    fontFamily="Inter-Bold"
+                    fontSize="24px"
+                    color="brand.deepGreen.400"
+                    textTransform="capitalize"
+                    paddingLeft="0px"
                   >
-                    <div>
-                      <Check status={'WARNING2'} />
-                    </div>
-                  </Tooltip>
-                </Th>
-                <Th
-                  style={{ borderBottom: '1px solid #F5B333' }}
-                  fontFamily="Inter-Bold"
-                  fontSize="24px"
-                  color="brand.deepGreen.400"
-                  textTransform="capitalize"
-                >
-                  Value
-                </Th>
-                <Th
-                  style={{ borderBottom: '1px solid #F5B333' }}
-                  fontFamily="Inter-Bold"
-                  fontSize="24px"
-                  color="brand.deepGreen.400"
-                  textTransform="capitalize"
-                  display="flex"
-                  alignItems="center"
-                  gap="8px"
-                >
-                  Points Earned
-                  <Tooltip
-                    label="The number of points awarded for the activity. These points are used to calculate the user's Regen Score."
-                    placement="top-end"
+                    Taxonomy
+                  </Th>
+                  <Th
+                    style={{ borderBottom: '1px solid #F5B333' }}
+                    fontFamily="Inter-Bold"
+                    fontSize="24px"
+                    color="brand.deepGreen.400"
+                    textTransform="capitalize"
                   >
-                    <div>
-                      <Check status={'WARNING2'} />
-                    </div>
-                  </Tooltip>
-                </Th>
-              </Tr>
-            </Thead>
-            <Tbody>
-              {meta &&
-                // TODO: FIX TYPE
-                Object.values(meta)
-                  .filter((key: any) => !!key.applies)
-                  .map((activity: any, index) => (
-                    <ActivityRow
-                      key={index}
-                      activity={activity}
-                      category={activity.category} />
-                  ))}
-              {meta &&
-                // TODO: FIX TYPE
-                meta?.tokenBalances?.tokens
-                  ?.filter((key: any) => !!key.applies)
-                  ?.map((activity: any, index: number) => (
-                    <ActivityRow key={index} activity={activity} />
-                  ))}
-            </Tbody>
-          </Table>
-        </TableContainer>
+                    Network
+                  </Th>
+                  <Th
+                    style={{ borderBottom: '1px solid #F5B333' }}
+                    fontFamily="Inter-Bold"
+                    fontSize="24px"
+                    color="brand.deepGreen.400"
+                    textTransform="capitalize"
+                    display="flex"
+                    alignItems="center"
+                    gap="8px"
+                  >
+                    Behavior
+                    <Tooltip
+                      label="A concise description of the activity that resulted in the attestation"
+                      placement="top-end"
+                    >
+                      <div>
+                        <Check status={'WARNING2'} />
+                      </div>
+                    </Tooltip>
+                  </Th>
+                  <Th
+                    style={{ borderBottom: '1px solid #F5B333' }}
+                    fontFamily="Inter-Bold"
+                    fontSize="24px"
+                    color="brand.deepGreen.400"
+                    textTransform="capitalize"
+                  >
+                    Value
+                  </Th>
+                  <Th
+                    style={{ borderBottom: '1px solid #F5B333' }}
+                    fontFamily="Inter-Bold"
+                    fontSize="24px"
+                    color="brand.deepGreen.400"
+                    textTransform="capitalize"
+                    display="flex"
+                    alignItems="center"
+                    gap="8px"
+                  >
+                    Points Earned
+                    <Tooltip
+                      label="The number of points awarded for the activity. These points are used to calculate the user's Regen Score."
+                      placement="top-end"
+                    >
+                      <div>
+                        <Check status={'WARNING2'} />
+                      </div>
+                    </Tooltip>
+                  </Th>
+                </Tr>
+              </Thead>
+              <Tbody>
+                {meta &&
+                  // TODO: FIX TYPE
+                  Object.values(meta)
+                    .filter((key: any) => !!key.applies)
+                    .map((activity: any, index) => (
+                      <ActivityRow
+                        key={index}
+                        activity={activity}
+                        category={activity.category}
+                      />
+                    ))}
+                {meta &&
+                  // TODO: FIX TYPE
+                  meta?.tokenBalances?.tokens
+                    ?.filter((key: any) => !!key.applies)
+                    ?.map((activity: any, index: number) => (
+                      <ActivityRow key={index} activity={activity} />
+                    ))}
+              </Tbody>
+            </Table>
+          </TableContainer>
 
           <Show below="lg">
             <Container margin="0" padding="0">
-            <Grid
-              width="100%"
-              maxW="1440px"
-              templateColumns="auto auto auto"
-              marginBottom="94px"
-            >
-              <GridItem bg="white"
-                p="20px"
-                borderRadius="8px">
-                {meta &&
-                  Object.values(meta)
-                    .filter((key) => !!key.applies)
-                    .map((activity, index) => (
-                      <div key={index}>
-                        <div>{activity.behavior}</div>
-                      </div>
-                    ))}
-              </GridItem>
-              <GridItem bg="white"
-                p="20px"
-                borderRadius="8px">
-                {meta &&
-                  Object.values(meta)
-                    .filter((key) => !!key.applies)
-                    .map((activity, index) => (
-                      <div key={index}>
-                        <div>{activity.category}</div>
-                      </div>
-                    ))}
-              </GridItem>
-              <GridItem bg="white"
-                p="20px"
-                borderRadius="8px">
-                {meta &&
-                  Object.values(meta)
-                    .filter((key) => !!key.applies)
-                    .map((activity, index) => (
-                      <div key={index}>
-                        <div>{activity.scoreAdded}</div>
-                      </div>
-                    ))}
-              </GridItem>
-            </Grid>
+              <Grid
+                width="100%"
+                maxW="1440px"
+                templateColumns="auto auto auto"
+                marginBottom="94px"
+              >
+                <GridItem bg="white" p="20px" borderRadius="8px">
+                  {meta &&
+                    Object.values(meta)
+                      .filter((key) => !!key.applies)
+                      .map((activity, index) => (
+                        <div key={index}>
+                          <div>{activity.behavior}</div>
+                        </div>
+                      ))}
+                </GridItem>
+                <GridItem bg="white" p="20px" borderRadius="8px">
+                  {meta &&
+                    Object.values(meta)
+                      .filter((key) => !!key.applies)
+                      .map((activity, index) => (
+                        <div key={index}>
+                          <div>{activity.category}</div>
+                        </div>
+                      ))}
+                </GridItem>
+                <GridItem bg="white" p="20px" borderRadius="8px">
+                  {meta &&
+                    Object.values(meta)
+                      .filter((key) => !!key.applies)
+                      .map((activity, index) => (
+                        <div key={index}>
+                          <div>{activity.scoreAdded}</div>
+                        </div>
+                      ))}
+                </GridItem>
+              </Grid>
             </Container>
           </Show>
         </>
