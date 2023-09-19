@@ -1,6 +1,5 @@
-export function formatTimestamp(timestamp: number): string {
+export function formatTimestamp(date: Date): string {
   try {
-    const date = new Date(timestamp * 1000);
     const options: Intl.DateTimeFormatOptions = {
       year: 'numeric',
       month: 'long',

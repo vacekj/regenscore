@@ -56,7 +56,7 @@ const Hero: React.FC = () => {
     address: Hex;
     percentile_rank_all: number;
     score: number;
-  }>('percentiles', async () => {
+  }>('percentiles' + address, async () => {
     const { data, error } = await supabase
       .from('percentiles')
       .select('*')
@@ -70,7 +70,23 @@ const Hero: React.FC = () => {
     }
   });
 
-  console.log(percentile);
+  const { data: created_at } = useSWR<{
+    created_at: string;
+  }>('created_at', async () => {
+    const { data, error } = await supabase
+      .from('scores')
+      .select('*')
+      .order('created_at', { ascending: false })
+      .eq('address', address)
+      .limit(1)
+      .single();
+
+    if (data) {
+      return data;
+    } else if (error) {
+      throw error;
+    }
+  });
 
   const scale = useBreakpointValue({
     base: 0.5,
@@ -390,11 +406,11 @@ const Hero: React.FC = () => {
                       % of users
                     </Text>
                   </div>
-                  {score && score !== 0 && (
+                  {created_at && (
                     <div
                       style={{
                         display: 'flex',
-                        flexDirection: 'column',
+                        flexDirection: 'row',
                       }}
                     >
                       <Text
@@ -403,7 +419,7 @@ const Hero: React.FC = () => {
                         color="#354728"
                         opacity="0.5"
                       >
-                        Last Updated
+                        Last Updated{' '}
                       </Text>
                       <Text
                         fontSize="13px"
@@ -411,7 +427,7 @@ const Hero: React.FC = () => {
                         color="#354728"
                         opacity="0.5"
                       >
-                        {formatTimestamp(lastAttestation?.timeCreated)}
+                        {formatTimestamp(new Date(created_at.created_at))}
                       </Text>
                     </div>
                   )}
