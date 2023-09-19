@@ -6,22 +6,25 @@ import {
   useWalletClient,
   usePrepareSendTransaction,
   useSendTransaction,
+  useChainId,
 } from 'wagmi';
 import { Hash, waitForTransaction } from '@wagmi/core';
 import { parseEther } from 'viem';
 
 import { useScore } from './index';
 import { getScoreAttestations } from '@/helpers/eas';
+import { ATTESTER_PUBLIC_KEY } from '@/constants';
 
 function useEAS(address: string | Hex | undefined) {
   const toast = useToast();
   const { data: walletClient } = useWalletClient();
+  const chainId = useChainId();
   const { score, meta } = useScore(address);
   const [ethToUsdPrice, setEthToUsdPrice] = useState(0);
   const [feeValue, setFeeValue] = useState('1');
   // Fee setup
   const { config, error: prepareError } = usePrepareSendTransaction({
-    to: process.env.NEXT_PUBLIC_ATTESTER,
+    to: ATTESTER_PUBLIC_KEY,
     value: parseEther(ethToUsdPrice ? (1 / ethToUsdPrice).toString() : '0'),
   });
   const { sendTransactionAsync } = useSendTransaction(config);
@@ -61,7 +64,7 @@ function useEAS(address: string | Hex | undefined) {
 
   const fetchAttestations = async () => {
     if (address) {
-      const fetch = await getScoreAttestations(getAddress(address));
+      const fetch = await getScoreAttestations(getAddress(address), chainId);
       const attestations = fetch?.attestations;
       setAttestations(attestations);
       setLastAttestation(attestations[0]);
@@ -75,10 +78,16 @@ function useEAS(address: string | Hex | undefined) {
   const mintAttestation = async () => {
     console.log({ address, score, meta, walletClient });
     if (!address || !score || !meta || !walletClient) return;
-    if (score < 50) return alert('Score too low to mint attestation');
-
+    toast({
+      title: 'Payment',
+      description: "We're sending a payment transaction",
+      status: 'info',
+      duration: 10000,
+      isClosable: true,
+    });
     // Charge fee in ETH
     const feePayed = await chargeUserInETH();
+
     if (!feePayed)
       return toast({
         title: 'Error',
@@ -105,6 +114,7 @@ function useEAS(address: string | Hex | undefined) {
         address: getAddress(address!),
         score: parseInt(score.toString()),
         meta: JSON.stringify(meta), // TODO: move this to ipfs, data got bigger
+        network: chainId,
       }),
     });
     const attestationUID = await res.json();

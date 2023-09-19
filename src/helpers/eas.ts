@@ -47,8 +47,16 @@ export const createAttestation = async (
   }
 };
 
-export const getScoreAttestations = async (address: string): Promise<any> => {
+export const getScoreAttestations = async (
+  address: string,
+  chainId: number,
+): Promise<any> => {
+  // TODO: get network name properly
   try {
+    let easGraphql = 'https://optimism.easscan.org/graphql';
+    if (chainId === 11155111) {
+      easGraphql = 'https://sepolia.easscan.org/graphql';
+    }
     const query = `
     query Attestation($where: AttestationWhereInput, $orderBy: [AttestationOrderByWithRelationInput!]) {
       attestations(where: $where, orderBy: $orderBy) {
@@ -92,7 +100,7 @@ export const getScoreAttestations = async (address: string): Promise<any> => {
       ],
     };
 
-    const response = await fetch('https://sepolia.easscan.org/graphql', {
+    const response = await fetch(easGraphql, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
