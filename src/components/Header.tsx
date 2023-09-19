@@ -49,7 +49,6 @@ const Header: React.FC = () => {
       const newPos = window.pageYOffset;
       const isVisible = currPos > newPos;
       setCurrPos(newPos);
-      console.log(newPos);
       if (newPos < 30) {
         setVisible(true);
         return;
