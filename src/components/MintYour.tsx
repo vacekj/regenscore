@@ -52,7 +52,6 @@ function InfoIcon(props: ChakraProps) {
 const Hero: React.FC = () => {
   const currentChain = useChainId();
   const { address } = useAccount();
-  const currentChain = useChainId();
   const {
     score,
     version: scoreVersion,
@@ -437,13 +436,13 @@ const Hero: React.FC = () => {
                           textDecoration={'underline'}
                           href={`https://${network}.easscan.org/attestation/view/${lastAttestation.id}`}
                         >
-                          Attestation{' '}
-                        </Link>{' '}
-                        Last Updated{' '}
+                          Last Updated
+                        </Link>
                       </Text>
                       <Text
                         fontSize="13px"
                         fontFamily="Inter-Regular"
+                        ml="2px"
                         color="#354728"
                         opacity="0.5"
                       >
