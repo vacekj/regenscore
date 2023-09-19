@@ -588,7 +588,7 @@ export async function handleOPAirdropReceiver(address: string, meta: any) {
       ];
     const currentOP = Number(
       await getTokenBalance(
-        '0x4200000000000000000000000000000000000042' as Address,
+        '0x4200000000000000000000000000000000000042',
         getAddress(address),
         OP.decimals!,
         'optimism',

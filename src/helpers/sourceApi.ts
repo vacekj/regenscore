@@ -1,5 +1,5 @@
 import { ethers } from 'ethers';
-import { Address, formatUnits } from 'viem';
+import { Address, formatUnits, Hex } from 'viem';
 import { fetchRequest, getClient } from '@/utils';
 import {
   GetERC20TransactionsResponse,
@@ -158,7 +158,7 @@ export async function etherscanGetTokenBalance(
 // fetch token balance for a given contract address from Etherscan
 export async function getTokenBalance(
   contractAddress: Address,
-  address: string,
+  address: Hex,
   decimals: number,
   network: 'mainnet' | 'optimism',
 ): Promise<string> {
