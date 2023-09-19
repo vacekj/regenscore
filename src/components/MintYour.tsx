@@ -71,6 +71,7 @@ const Hero: React.FC = () => {
     lg: 0.8,
     xl: 0.9,
   });
+
   return (
     <Grid
       templateColumns={[
@@ -163,6 +164,9 @@ const Hero: React.FC = () => {
           background="linear-gradient(180deg, #F9DD94 0%, #FFC555 100%)"
           border={['none', '0.812px solid rgba(255, 255, 255, 0.50)']}
           mt="17.5px"
+          style={{
+            color: '#cf34eb !important',
+          }}
         >
           {/* Empty State */}
           {!score && !error && !loading && (
@@ -178,7 +182,7 @@ const Hero: React.FC = () => {
                 flexDir="row"
                 gap="11px"
               >
-                <WarningSharp />
+                {/*<WarningSharp />*/}
                 <Text
                   textAlign="center"
                   fontFamily="Inter-Bold"
@@ -196,7 +200,7 @@ const Hero: React.FC = () => {
           )}
 
           {/* Loading State */}
-          {!!loading && (
+          {loading && (
             <CardBody
               position="absolute"
               top="55%"
@@ -264,16 +268,16 @@ const Hero: React.FC = () => {
                   </Text>
                 </Flex>
                 <Button variant="variant3" isDisabled mt="22px">
-                  {' '}
                   MINT
                 </Button>
               </Flex>
             </CardBody>
           )}
 
-          <Flex display="flex" flexDirection="row">
-            {/* Left Column */}
-            {score && (
+          {Boolean(score) && score != 0 && (
+            <Flex display="flex" flexDirection="row">
+              {/* Left Column */}
+
               <Flex
                 flex={['0.3', '1', '1', '1', '1']}
                 alignItems={'center'}
@@ -316,18 +320,32 @@ const Hero: React.FC = () => {
                   </defs>
                 </svg>
               </Flex>
-            )}
 
-            {/* Right Column */}
-            <Flex flex={['0.7', '1', '1', '1', '1']} flexDirection="column">
-              <CardHeader padding="0px" textAlign={['start']}>
-                <Heading
-                  as="h3"
-                  variant="h3"
-                  fontWeight="bold"
-                  fontSize="100px"
-                  color="#FFF"
-                  marginTop={['55px', '78px', '78px', '78px', '80px']}
+              {/* Right Column */}
+              <Flex flex={['0.7', '1', '1', '1', '1']} flexDirection="column">
+                <CardHeader padding="0px" textAlign={['start']}>
+                  {score && score !== 0 && (
+                    <Heading
+                      as="h3"
+                      variant="h3"
+                      fontWeight="bold"
+                      fontSize="100px"
+                      color="#FFF"
+                      marginTop={['55px', '78px', '78px', '78px', '80px']}
+                      // marginLeft={{
+                      //   base: '150px',
+                      //   sm: '230px',
+                      //   md: '230px',
+                      //   lg: '200px',
+                      //   xl: '337px',
+                      // }}
+                    >
+                      {score?.toFixed(1) || ''}
+                    </Heading>
+                  )}
+                </CardHeader>
+                <CardBody
+                  padding="0px"
                   // marginLeft={{
                   //   base: '150px',
                   //   sm: '230px',
@@ -335,24 +353,11 @@ const Hero: React.FC = () => {
                   //   lg: '200px',
                   //   xl: '337px',
                   // }}
+                  alignItems={'start'}
+                  justifyContent={'center'}
+                  textAlign={['start']}
                 >
-                  {score?.toFixed(1) || ''}
-                </Heading>
-              </CardHeader>
-              <CardBody
-                padding="0px"
-                // marginLeft={{
-                //   base: '150px',
-                //   sm: '230px',
-                //   md: '230px',
-                //   lg: '200px',
-                //   xl: '337px',
-                // }}
-                alignItems={'start'}
-                justifyContent={'center'}
-                textAlign={['start']}
-              >
-                {/*<div
+                  {/*<div
               style={{
                 display: 'flex',
                 alignItems: 'center',
@@ -369,84 +374,85 @@ const Hero: React.FC = () => {
                 Top 10% of users
               </Text>
             </div>*/}
-                {score && (
-                  <div
-                    style={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                    }}
-                  >
-                    <Text
-                      fontSize="13px"
-                      fontFamily="Inter-Regular"
-                      color="#354728"
-                      opacity="0.5"
+                  {score && score !== 0 && (
+                    <div
+                      style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                      }}
                     >
-                      Last Updated
-                    </Text>
-                    <Text
-                      fontSize="13px"
-                      fontFamily="Inter-Regular"
-                      color="#354728"
-                      opacity="0.5"
-                    >
-                      {formatTimestamp(lastAttestation?.timeCreated)}
-                    </Text>
-                  </div>
-                )}
+                      <Text
+                        fontSize="13px"
+                        fontFamily="Inter-Regular"
+                        color="#354728"
+                        opacity="0.5"
+                      >
+                        Last Updated
+                      </Text>
+                      <Text
+                        fontSize="13px"
+                        fontFamily="Inter-Regular"
+                        color="#354728"
+                        opacity="0.5"
+                      >
+                        {formatTimestamp(lastAttestation?.timeCreated)}
+                      </Text>
+                    </div>
+                  )}
 
-                {score && (
-                  <Button
-                    mb={['63.54px', '40px', '40px', '0', '0']}
-                    variant="variant3"
-                    marginTop="26.76px"
-                    mr="8.25px"
-                    onClick={() => {
-                      if (lastAttestation) {
-                        window.open(
-                          `https://sepolia.easscan.org/attestation/view/${lastAttestation.id}`,
-                        );
-                      } else {
-                        mintAttestation();
-                      }
-                    }}
-                  >
-                    {lastAttestation
-                      ? 'VIEW ATTESTATION'
-                      : score
-                      ? 'MINT NOW'
-                      : ''}
-                  </Button>
-                )}
-                {score && (
-                  <Button
-                    mb={['63.54px', '40px', '40px', '0', '0']}
-                    variant="variant4"
-                    marginTop="26.76px"
-                    as={'a'}
-                    href={`https://twitter.com/share?text=${encodeURIComponent(
-                      `Check out my RegenScore and check out yours
+                  {score && (
+                    <Button
+                      mb={['63.54px', '40px', '40px', '0', '0']}
+                      variant="variant3"
+                      marginTop="26.76px"
+                      mr="8.25px"
+                      onClick={() => {
+                        if (lastAttestation) {
+                          window.open(
+                            `https://sepolia.easscan.org/attestation/view/${lastAttestation.id}`,
+                          );
+                        } else {
+                          mintAttestation();
+                        }
+                      }}
+                    >
+                      {lastAttestation
+                        ? 'VIEW ATTESTATION'
+                        : score
+                        ? 'MINT NOW'
+                        : ''}
+                    </Button>
+                  )}
+                  {score && (
+                    <Button
+                      mb={['63.54px', '40px', '40px', '0', '0']}
+                      variant="variant4"
+                      marginTop="26.76px"
+                      as={'a'}
+                      href={`https://twitter.com/share?text=${encodeURIComponent(
+                        `Check out my RegenScore and check out yours
                     
                     https://regenscore.io/profile/${address}`,
-                    )}`}
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="32"
-                      height="32"
-                      viewBox="0 0 32 32"
-                      fill="none"
+                      )}`}
                     >
-                      <path
-                        d="M24.0001 20.9997C23.4613 20.9995 22.9281 21.1085 22.4327 21.3201C21.9373 21.5317 21.4899 21.8416 21.1176 22.2309L11.8676 17.0266C12.0467 16.3537 12.0467 15.6457 11.8676 14.9728L21.1176 9.76843C21.7911 10.4668 22.6962 10.8956 23.6632 10.9745C24.6303 11.0534 25.5929 10.777 26.3708 10.1971C27.1487 9.61725 27.6884 8.77364 27.889 7.82435C28.0895 6.87505 27.9371 5.88521 27.4602 5.04025C26.9833 4.1953 26.2146 3.55321 25.2983 3.23428C24.382 2.91535 23.3808 2.94146 22.4824 3.30771C21.5839 3.67397 20.8498 4.35524 20.4176 5.2239C19.9854 6.09256 19.8847 7.089 20.1344 8.02656L10.8844 13.2309C10.3319 12.6548 9.61963 12.2572 8.83927 12.0892C8.0589 11.9213 7.24612 11.9906 6.50549 12.2884C5.76487 12.5861 5.13026 13.0987 4.68333 13.7601C4.23639 14.4215 3.99756 15.2014 3.99756 15.9997C3.99756 16.7979 4.23639 17.5779 4.68333 18.2393C5.13026 18.9007 5.76487 19.4132 6.50549 19.711C7.24612 20.0087 8.0589 20.0781 8.83927 19.9101C9.61963 19.7421 10.3319 19.3445 10.8844 18.7684L20.1344 23.9728C19.92 24.7802 19.9637 25.6345 20.2595 26.4158C20.5552 27.1971 21.0882 27.8662 21.7836 28.3292C22.479 28.7922 23.3019 29.0258 24.1368 28.9974C24.9717 28.9689 25.7768 28.6797 26.439 28.1703C27.1012 27.661 27.5873 26.9572 27.8291 26.1575C28.071 25.3579 28.0563 24.5026 27.7873 23.7116C27.5183 22.9207 27.0084 22.2339 26.3292 21.7475C25.6499 21.2611 24.8355 20.9996 24.0001 20.9997Z"
-                        fill="black"
-                      />
-                    </svg>
-                  </Button>
-                )}
-              </CardBody>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="32"
+                        height="32"
+                        viewBox="0 0 32 32"
+                        fill="none"
+                      >
+                        <path
+                          d="M24.0001 20.9997C23.4613 20.9995 22.9281 21.1085 22.4327 21.3201C21.9373 21.5317 21.4899 21.8416 21.1176 22.2309L11.8676 17.0266C12.0467 16.3537 12.0467 15.6457 11.8676 14.9728L21.1176 9.76843C21.7911 10.4668 22.6962 10.8956 23.6632 10.9745C24.6303 11.0534 25.5929 10.777 26.3708 10.1971C27.1487 9.61725 27.6884 8.77364 27.889 7.82435C28.0895 6.87505 27.9371 5.88521 27.4602 5.04025C26.9833 4.1953 26.2146 3.55321 25.2983 3.23428C24.382 2.91535 23.3808 2.94146 22.4824 3.30771C21.5839 3.67397 20.8498 4.35524 20.4176 5.2239C19.9854 6.09256 19.8847 7.089 20.1344 8.02656L10.8844 13.2309C10.3319 12.6548 9.61963 12.2572 8.83927 12.0892C8.0589 11.9213 7.24612 11.9906 6.50549 12.2884C5.76487 12.5861 5.13026 13.0987 4.68333 13.7601C4.23639 14.4215 3.99756 15.2014 3.99756 15.9997C3.99756 16.7979 4.23639 17.5779 4.68333 18.2393C5.13026 18.9007 5.76487 19.4132 6.50549 19.711C7.24612 20.0087 8.0589 20.0781 8.83927 19.9101C9.61963 19.7421 10.3319 19.3445 10.8844 18.7684L20.1344 23.9728C19.92 24.7802 19.9637 25.6345 20.2595 26.4158C20.5552 27.1971 21.0882 27.8662 21.7836 28.3292C22.479 28.7922 23.3019 29.0258 24.1368 28.9974C24.9717 28.9689 25.7768 28.6797 26.439 28.1703C27.1012 27.661 27.5873 26.9572 27.8291 26.1575C28.071 25.3579 28.0563 24.5026 27.7873 23.7116C27.5183 22.9207 27.0084 22.2339 26.3292 21.7475C25.6499 21.2611 24.8355 20.9996 24.0001 20.9997Z"
+                          fill="black"
+                        />
+                      </svg>
+                    </Button>
+                  )}
+                </CardBody>
+              </Flex>
             </Flex>
-          </Flex>
+          )}
         </Card>
       </GridItem>
 
@@ -535,7 +541,7 @@ const Hero: React.FC = () => {
         }
 
         {/* Loading State */}
-        {!!loading && (
+        {loading && (
           <Flex
             alignItems={'center'}
             mx="auto"
@@ -1031,8 +1037,8 @@ const Rectangle = () => (
         y2="50.4459"
         gradientUnits="userSpaceOnUse"
       >
-        <stop stop-color="#F2EFE5" />
-        <stop offset="1" stop-color="#F3FFDA" />
+        <stop stopColor="#F2EFE5" />
+        <stop offset="1" stopColor="#F3FFDA" />
       </linearGradient>
     </defs>
   </svg>
@@ -1056,8 +1062,8 @@ const Bar = () => (
         y2="0.545007"
         gradientUnits="userSpaceOnUse"
       >
-        <stop stop-color="#F2EFE5" />
-        <stop offset="1" stop-color="#F3FFDA" />
+        <stop stopColor="#F2EFE5" />
+        <stop offset="1" stopColor="#F3FFDA" />
       </linearGradient>
     </defs>
   </svg>
