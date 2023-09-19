@@ -5,16 +5,12 @@ import { useEffect, useState } from 'react';
 import type { JsonRpcProvider, JsonRpcSigner } from '@ethersproject/providers';
 import { usePublicClient, useWalletClient } from 'wagmi';
 
-export function privateKeyToSigner(privateKey: string, chainId: number) {
-  // TODO: do this properly
+export function privateKeyToSigner(privateKey: string) {
   const network = {
-    chainId,
-    name: chainId === 11155111 ? 'Sepolia' : 'Optimism',
-    url: `https://${
-      chainId === 11155111 ? 'sepolia' : 'optimism'
-    }.infura.io/v3/${process.env.NEXT_PUBLIC_INFURA_PROJECT_ID}`,
+    chainId: 11155111,
+    name: 'Sepolia',
+    url: `https://sepolia.infura.io/v3/${process.env.NEXT_PUBLIC_INFURA_PROJECT_ID}`,
   };
-  console.log({ network });
   const wallet = new Wallet(privateKey);
   const provider = new providers.JsonRpcProvider(network.url, network);
   return wallet.connect(provider);

@@ -5,10 +5,7 @@ import { privateKeyToSigner } from '@/utils/eas-wagmi-utils';
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const body = req.body;
-    const signer = privateKeyToSigner(
-      process.env.ATTESTER_PVT_KEY!,
-      body.network,
-    );
+    const signer = privateKeyToSigner(process.env.ATTESTER_PVT_KEY!);
     const result = await createAttestation(
       body.address,
       body.score,
