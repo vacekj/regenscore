@@ -212,7 +212,7 @@ const Hero: React.FC = () => {
           }}
         >
           {/* Empty State */}
-          {!score && !error && !loading && (
+          {!score && !error && !loading ? (
             <CardBody
               position="absolute"
               top="55%"
@@ -236,38 +236,37 @@ const Hero: React.FC = () => {
                 </Text>
               </Flex>
             </CardBody>
-          )}
-
-          {/* Loading State */}
-          {loading && (
-            <CardBody
-              position="absolute"
-              top="55%"
-              left="50%"
-              transform="translate(-50%, -50%)"
-            >
-              <Flex flexDir="column" align="center">
-                <Flex
-                  alignItems="center"
-                  justifyContent="center"
-                  flexDir="row"
-                  gap="11px"
-                >
-                  <Text
-                    textAlign="center"
-                    fontFamily="Inter-Bold"
-                    fontSize="24px"
-                    color="white"
+          ) : (
+            loading && (
+              <CardBody
+                position="absolute"
+                top="55%"
+                left="50%"
+                transform="translate(-50%, -50%)"
+              >
+                <Flex flexDir="column" align="center">
+                  <Flex
+                    alignItems="center"
+                    justifyContent="center"
+                    flexDir="row"
+                    gap="11px"
                   >
-                    Loading data.....
-                  </Text>
+                    <Text
+                      textAlign="center"
+                      fontFamily="Inter-Bold"
+                      fontSize="24px"
+                      color="white"
+                    >
+                      Loading data.....
+                    </Text>
+                  </Flex>
+                  <Button variant="variant3" isDisabled mt="22px">
+                    {' '}
+                    MINT
+                  </Button>
                 </Flex>
-                <Button variant="variant3" isDisabled mt="22px">
-                  {' '}
-                  MINT
-                </Button>
-              </Flex>
-            </CardBody>
+              </CardBody>
+            )
           )}
 
           {/* Error State */}
@@ -313,7 +312,7 @@ const Hero: React.FC = () => {
             </CardBody>
           )}
 
-          {Boolean(score) && score != 0 && (
+          {Boolean(score) && score != 0 && !loading && (
             <Flex display="flex" flexDirection="row">
               {/* Left Column */}
 

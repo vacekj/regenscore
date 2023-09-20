@@ -31,11 +31,15 @@ export function useScore(address: string | Hex | undefined) {
     { category: string; scoreAdded: number }[]
   >([]);
 
+  const reset = () => {
+    setLoading(false);
+    setData(null);
+    setCategories([]);
+  };
+
   const fetchScore = async () => {
     if (!address) {
-      setLoading(false);
-      setData(null);
-      setCategories([]);
+      reset();
       return;
     }
     setLoading(true);
@@ -63,7 +67,10 @@ export function useScore(address: string | Hex | undefined) {
 
   useEffect(() => {
     const fetchMyData = async () => {
-      if (!address) return;
+      if (!address) {
+        reset();
+        return;
+      }
       setLoading(true);
       const res = await fetch('/api/myscore', {
         method: 'POST',
