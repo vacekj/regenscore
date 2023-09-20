@@ -290,7 +290,7 @@ export async function checkSafeOwnershipAndActivity(
   }
 
   for (const safe of safesOwnedByUser) {
-    const safeInfo = await fetchSafeInfo(safe);
+    const safeInfo = await fetchSafeInfo(safe as Address);
     if (safeInfo.owners.includes(userAddress) && safeInfo.nonce > 0) {
       safeHistory = {
         ...safeHistory,
