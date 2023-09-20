@@ -1,3 +1,4 @@
+import { Address } from 'viem';
 import {
   // handleERC20Transactions,
   // handleERC721Transactions,
@@ -21,7 +22,7 @@ import {
 import { CATEGORIES } from '@/constants';
 
 export async function createScore(
-  address: string,
+  address: Address,
 ): Promise<{ score: number; meta: any }> {
   let score = 0;
   const meta = {

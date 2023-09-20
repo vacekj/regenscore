@@ -12,3 +12,11 @@ export function formatTimestamp(date: Date): string {
     return '';
   }
 }
+
+export function formatNumber(num: number, decimals?: number): string {
+  if (Number.isInteger(num)) {
+    return num.toString();
+  } else {
+    return num.toFixed(decimals || 1);
+  }
+}

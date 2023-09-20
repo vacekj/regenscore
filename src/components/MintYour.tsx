@@ -9,6 +9,7 @@ import {
   CardBody,
   CardHeader,
   Text,
+  Link,
   Button,
   Tooltip,
   Image,
@@ -16,10 +17,10 @@ import {
   ChakraProps,
   Container,
 } from '@chakra-ui/react';
-import React from 'react';
-import { useAccount } from 'wagmi';
+import React, { useEffect } from 'react';
+import { useAccount, useChainId } from 'wagmi';
 import { CATEGORY_TOOLTIP, CategoryTooltipKeyType } from '@/constants';
-import { formatTimestamp } from '@/utils/strings';
+import { formatTimestamp, formatNumber } from '@/utils/strings';
 import { useScore, useEAS } from '@/hooks';
 import { Arrow } from '@/components/ScoreMeter';
 import { useBreakpointValue } from '@chakra-ui/react';
@@ -49,9 +50,21 @@ function InfoIcon(props: ChakraProps) {
 }
 
 const Hero: React.FC = () => {
+  const currentChain = useChainId();
   const { address } = useAccount();
-  const { score, categories, loading, error } = useScore(address);
+  const {
+    fetchScore,
+    score,
+    meta,
+    version: scoreVersion,
+    categories,
+    loading,
+    error,
+  } = useScore(address);
+  console.log({ score, meta, loading });
   const { mintAttestation, lastAttestation } = useEAS(address);
+  // TODO: do this somewhere else
+  const network = currentChain === 11155111 ? 'sepolia' : 'optimism';
   const { data: percentile } = useSWR<{
     address: Hex;
     percentile_rank_all: number;
@@ -95,6 +108,12 @@ const Hero: React.FC = () => {
     lg: 0.8,
     xl: 0.9,
   });
+
+  useEffect(() => {
+    if (!score) {
+      fetchScore();
+    }
+  }, [score]);
 
   return (
     <Grid
@@ -213,13 +232,9 @@ const Hero: React.FC = () => {
                   fontSize="24px"
                   color="white"
                 >
-                  No data
+                  {score === 0 ? 0 : 'No data'}
                 </Text>
               </Flex>
-              <Button variant="variant3" isDisabled mt="22px">
-                {' '}
-                MINT
-              </Button>
             </CardBody>
           )}
 
@@ -370,7 +385,7 @@ const Hero: React.FC = () => {
                       //   xl: '337px',
                       // }}
                     >
-                      {score?.toFixed() || ''}
+                      {formatNumber(score) || ''}
                     </Heading>
                   )}
                 </CardHeader>
@@ -411,7 +426,7 @@ const Hero: React.FC = () => {
                       % of users
                     </Text>
                   </div>
-                  {created_at && (
+                  {created_at && lastAttestation && (
                     <div
                       style={{
                         display: 'flex',
@@ -424,11 +439,18 @@ const Hero: React.FC = () => {
                         color="#354728"
                         opacity="0.5"
                       >
-                        Last Updated{' '}
+                        <Link
+                          color="#354728"
+                          textDecoration={'underline'}
+                          href={`https://${network}.easscan.org/attestation/view/${lastAttestation?.id}`}
+                        >
+                          Last Updated
+                        </Link>
                       </Text>
                       <Text
                         fontSize="13px"
                         fontFamily="Inter-Regular"
+                        ml="2px"
                         color="#354728"
                         opacity="0.5"
                         pl="5px"
@@ -444,22 +466,17 @@ const Hero: React.FC = () => {
                       variant="variant3"
                       marginTop="26.76px"
                       mr="8.25px"
+                      cursor={'pointer'}
                       ml={['0px', '-5px']}
                       onClick={() => {
-                        if (lastAttestation) {
-                          window.open(
-                            `https://sepolia.easscan.org/attestation/view/${lastAttestation.id}`,
-                          );
-                        } else {
-                          mintAttestation();
+                        try {
+                          mintAttestation(score, meta);
+                        } catch (error) {
+                          console.log({ error });
                         }
                       }}
                     >
-                      {lastAttestation
-                        ? 'VIEW ATTESTATION'
-                        : score
-                        ? 'MINT NOW'
-                        : ''}
+                      MINT ATTESTATION
                     </Button>
                   )}
                   {score && (
@@ -570,7 +587,7 @@ const Hero: React.FC = () => {
                         fontSize: '16px',
                       }}
                     >
-                      {categoryItem.scoreAdded}
+                      {formatNumber(categoryItem.scoreAdded)}
                     </span>
                   </Box>
                 </Flex>

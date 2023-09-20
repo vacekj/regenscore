@@ -161,7 +161,7 @@ const handleTransaction = (
 };
 
 export async function handleNormalTransactions(
-  address: string,
+  address: Address,
   meta: any,
 ): Promise<number> {
   let score = 0;
@@ -183,7 +183,7 @@ export async function handleNormalTransactions(
 }
 
 export async function handleERC20Transactions(
-  address: string,
+  address: Address,
   meta: any,
 ): Promise<number> {
   let score = 0;
@@ -201,7 +201,7 @@ export async function handleERC20Transactions(
 }
 
 export async function handleERC721Transactions(
-  address: string,
+  address: Address,
   meta: any,
 ): Promise<number> {
   let score = 0;
@@ -223,7 +223,7 @@ export async function handleERC721Transactions(
 }
 
 export async function handleTokenBalances(
-  address: string,
+  address: Address,
   meta: any,
 ): Promise<number> {
   let score = 0;
@@ -299,7 +299,7 @@ export async function handleTokenBalances(
 }
 
 export async function handleGRDonations(
-  address: string,
+  address: Address,
   meta: any,
 ): Promise<number> {
   let scoreAdded = 0;
@@ -324,7 +324,7 @@ export async function handleGRDonations(
 export async function handleIsGTCHolder() {}
 
 export async function handleEthStaker(
-  address: string,
+  address: Address,
   meta: any,
   points: number,
 ) {
@@ -366,7 +366,7 @@ export async function handleEthStaker(
 }
 
 export async function handleOPBridge(
-  address: string,
+  address: Address,
   meta: any,
   points: number,
 ) {
@@ -412,7 +412,7 @@ export async function handleOPBridge(
 }
 
 export async function handleOPTreasuryPayouts(
-  address: string,
+  address: Address,
   meta: any,
   points: number,
 ): Promise<number> {
@@ -460,7 +460,7 @@ export async function handleOPTreasuryPayouts(
 }
 
 export async function handleDelegate(
-  address: string,
+  address: Address,
   meta: any,
   points: number,
 ) {
@@ -500,7 +500,7 @@ export async function handleDelegate(
 }
 
 export async function handleTxsMadeOnOptimism(
-  address: string,
+  address: Address,
   meta: any,
   points: number,
 ) {
@@ -520,7 +520,7 @@ export async function handleTxsMadeOnOptimism(
 }
 
 export async function handleOPContractsInteractions(
-  address: string,
+  address: Address,
   meta: any,
   points: number,
 ) {
@@ -543,7 +543,7 @@ export async function handleOPContractsInteractions(
 }
 
 export async function handleSafeOwnershipAndActivity(
-  address: string,
+  address: Address,
   meta: any,
   points: number,
 ) {
@@ -567,7 +567,7 @@ export async function handleSafeOwnershipAndActivity(
   return scoreAdded;
 }
 
-export async function handleOPAirdropReceiver(address: string, meta: any) {
+export async function handleOPAirdropReceiver(address: Address, meta: any) {
   try {
     const baseUrl = process.env.VERCEL_URL || 'http://localhost:3000';
 
@@ -619,7 +619,7 @@ export async function handleOPAirdropReceiver(address: string, meta: any) {
   }
 }
 
-export async function handleGitcoinProjectOwner(address: string, meta: any) {
+export async function handleGitcoinProjectOwner(address: Address, meta: any) {
   let scoreAdded = 0;
   const isProjectOwner = await hasAGitcoinProject(address);
   if (isProjectOwner) scoreAdded += 10;
@@ -634,7 +634,7 @@ export async function handleGitcoinProjectOwner(address: string, meta: any) {
 }
 
 export async function handleGitcoinPassport(
-  address: string,
+  address: Address,
   meta: any,
   points: number,
 ) {
@@ -654,7 +654,7 @@ export async function handleGitcoinPassport(
 }
 
 export async function handleRegenPOAPs(
-  address: string,
+  address: Address,
   meta: any,
   points: number,
 ) {
@@ -684,7 +684,7 @@ export async function handleRegenPOAPs(
 }
 
 export async function handleGivethActivity(
-  address: string,
+  address: Address,
   meta: any,
   points: number,
 ) {
@@ -735,7 +735,7 @@ export async function handleGivethActivity(
 }
 
 export async function handleTrustedSeedMember(
-  address: string,
+  address: Address,
   meta: any,
   points: number,
 ) {

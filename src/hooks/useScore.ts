@@ -1,5 +1,4 @@
 import { Hex, getAddress } from 'viem';
-import useSWR from 'swr';
 import { useState, useEffect } from 'react';
 
 type Token = {
@@ -20,6 +19,7 @@ type ResponseData = {
   meta?: {
     [key: string]: Item;
   };
+  version?: number;
 };
 
 /*TODO(mateo): types, fetch from supabase first, if not in supabase, load from our api */
@@ -31,47 +31,60 @@ export function useScore(address: string | Hex | undefined) {
     { category: string; scoreAdded: number }[]
   >([]);
 
-  useEffect(() => {
-    let active = true;
-    const fetchScore = async () => {
-      setLoading(true);
-      if (!address) {
-        setLoading(false);
-        return;
-      }
-      try {
-        const res = await fetch('/api/score', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            address: getAddress(address!),
-            // shouldUpdate: true,
-          }),
-        });
-        if (!active) return;
-        setLoading(false);
-        const jsonData = await res.json();
-        setData(jsonData);
-      } catch (error: any) {
-        if (!active) return;
-        setLoading(false);
-        setError(error);
-        console.log({ error });
-      }
-    };
-    fetchScore();
+  const fetchScore = async () => {
+    if (!address) {
+      setLoading(false);
+      setData(null);
+      setCategories([]);
+      return;
+    }
+    setLoading(true);
+    try {
+      const res = await fetch('/api/score', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          address: getAddress(address!),
+          // shouldUpdate: true,
+        }),
+      });
+      const resData = await res.json();
+      setLoading(false);
+      setData(resData);
+    } catch (error: any) {
+      setData(null);
+      setCategories([]);
+      setError(error);
+      console.log({ error });
+    }
+  };
 
-    return () => {
-      active = false; // Prevents setting state on unmounted component
+  useEffect(() => {
+    const fetchMyData = async () => {
+      if (!address) return;
+      setLoading(true);
+      const res = await fetch('/api/myscore', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          address: getAddress(address!),
+        }),
+      });
+      const resData = await res.json();
+      setLoading(false);
+      setData(resData);
     };
+    fetchMyData();
   }, [address]);
 
   useEffect(() => {
+    setCategories([]);
     const meta = data?.meta;
     if (meta) {
-      console.log({ meta });
       const newCategoryScores: Record<string, number> = {};
       Object.keys(meta)
         .filter((key) => key === 'tokenBalances' || !!meta[key].applies)
@@ -100,11 +113,14 @@ export function useScore(address: string | Hex | undefined) {
         })),
       );
     }
-  }, [data, address]);
+  }, [JSON.stringify(data), address]);
 
   return {
+    fetchScore,
     score: data?.score,
     meta: data?.meta,
+    data,
+    version: data?.version || 0,
     categories,
     loading,
     error,

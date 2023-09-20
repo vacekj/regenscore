@@ -1,12 +1,13 @@
 import { EAS, SchemaEncoder } from '@ethereum-attestation-service/eas-sdk';
+import { Address } from 'viem';
 
 // TODO: MOVE THIS TO ENV VARS FOR KEYCHECK PASS AND REMOVE THE FILE ON KEYCHECKIGNORE
 export const RegenScoreSchemaUID =
   '0xa1285d8c9b3164eb94f22a4084d4d01fc7fb66d27c56ddba32033c63a5ed76cd';
-export const EASContractAddress = '0xC2679fBD37d54388Ce493F1DB75320D236e1815e'; // Sepolia v0.26
+export const EASContractAddress = '0xC2679fBD37d54388Ce493F1DB75320D236e1815e'; // v0.26
 
 export const createAttestation = async (
-  address: string,
+  address: Address,
   score: number,
   meta: any,
   signer: any,
@@ -47,8 +48,16 @@ export const createAttestation = async (
   }
 };
 
-export const getScoreAttestations = async (address: string): Promise<any> => {
+export const getScoreAttestations = async (
+  address: Address,
+  chainId: number,
+): Promise<any> => {
+  // TODO: get network name properly
   try {
+    let easGraphql = 'https://optimism.easscan.org/graphql';
+    if (chainId === 11155111) {
+      easGraphql = 'https://sepolia.easscan.org/graphql';
+    }
     const query = `
     query Attestation($where: AttestationWhereInput, $orderBy: [AttestationOrderByWithRelationInput!]) {
       attestations(where: $where, orderBy: $orderBy) {
@@ -92,7 +101,7 @@ export const getScoreAttestations = async (address: string): Promise<any> => {
       ],
     };
 
-    const response = await fetch('https://sepolia.easscan.org/graphql', {
+    const response = await fetch(easGraphql, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

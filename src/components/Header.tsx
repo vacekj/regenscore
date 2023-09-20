@@ -23,6 +23,7 @@ import {
 import Link from 'next/link';
 
 import { useScore } from '@/hooks';
+import { formatNumber } from '@/utils/strings';
 
 const StyledWeb3NetworkSwitch = styled.div`
   --w3m-accent-color: rgba(0, 0, 0, 0.5); !important;
@@ -80,7 +81,7 @@ const Header: React.FC = () => {
         )}
         {score && !isMobile && (
           <Text variant={'bold'} textTransform={'uppercase'}>
-            Score: {score}
+            Score: {formatNumber(score)}
           </Text>
         )}
       </>
