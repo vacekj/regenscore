@@ -32,11 +32,13 @@ export function useScore(address: string | Hex | undefined) {
   >([]);
 
   const fetchScore = async () => {
-    setLoading(true);
     if (!address) {
       setLoading(false);
+      setData(null);
+      setCategories([]);
       return;
     }
+    setLoading(true);
     try {
       const res = await fetch('/api/score', {
         method: 'POST',
@@ -48,11 +50,12 @@ export function useScore(address: string | Hex | undefined) {
           // shouldUpdate: true,
         }),
       });
-      setLoading(false);
       const resData = await res.json();
+      setLoading(false);
       setData(resData);
     } catch (error: any) {
-      setLoading(false);
+      setData(null);
+      setCategories([]);
       setError(error);
       console.log({ error });
     }
@@ -60,6 +63,8 @@ export function useScore(address: string | Hex | undefined) {
 
   useEffect(() => {
     const fetchMyData = async () => {
+      if (!address) return;
+      setLoading(true);
       const res = await fetch('/api/myscore', {
         method: 'POST',
         headers: {
@@ -69,8 +74,8 @@ export function useScore(address: string | Hex | undefined) {
           address: getAddress(address!),
         }),
       });
-      setLoading(false);
       const resData = await res.json();
+      setLoading(false);
       setData(resData);
     };
     fetchMyData();
@@ -108,7 +113,7 @@ export function useScore(address: string | Hex | undefined) {
         })),
       );
     }
-  }, [data, address]);
+  }, [JSON.stringify(data), address]);
 
   return {
     fetchScore,

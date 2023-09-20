@@ -61,10 +61,10 @@ const Hero: React.FC = () => {
     loading,
     error,
   } = useScore(address);
+  console.log({ score, meta, loading });
   const { mintAttestation, lastAttestation } = useEAS(address);
   // TODO: do this somewhere else
   const network = currentChain === 11155111 ? 'sepolia' : 'optimism';
-
   const { data: percentile } = useSWR<{
     address: Hex;
     percentile_rank_all: number;
@@ -108,6 +108,12 @@ const Hero: React.FC = () => {
     lg: 0.8,
     xl: 0.9,
   });
+
+  useEffect(() => {
+    if (!score) {
+      fetchScore();
+    }
+  }, [score]);
 
   return (
     <Grid
@@ -226,19 +232,9 @@ const Hero: React.FC = () => {
                   fontSize="24px"
                   color="white"
                 >
-                  No data
+                  {score === 0 ? 0 : 'No data'}
                 </Text>
               </Flex>
-              <Button
-                onClick={() => {
-                  fetchScore();
-                }}
-                variant="variant3"
-                mt="22px"
-              >
-                {' '}
-                MINT SCORE
-              </Button>
             </CardBody>
           )}
 
@@ -474,13 +470,13 @@ const Hero: React.FC = () => {
                       ml={['0px', '-5px']}
                       onClick={() => {
                         try {
-                          mintAttestation();
+                          mintAttestation(score, meta);
                         } catch (error) {
                           console.log({ error });
                         }
                       }}
                     >
-                      GET ATTESTATION
+                      MINT ATTESTATION
                     </Button>
                   )}
                   {score && (

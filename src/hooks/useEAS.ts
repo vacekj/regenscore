@@ -91,7 +91,7 @@ function useEAS(address: Address | string | Hex | undefined) {
     fetchAttestations();
   }, [address]);
 
-  const mintAttestation = async () => {
+  const mintAttestation = async (score: number, meta: any) => {
     try {
       console.log({ address, score, meta, walletClient });
       if (!address || !score || !meta || !walletClient) return;
