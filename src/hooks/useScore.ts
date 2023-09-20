@@ -33,6 +33,11 @@ export function useScore(address: string | Hex | undefined) {
   >([]);
 
   useEffect(() => {
+    // Reset state variables when address changes
+    setData(null);
+    setError(null);
+    setLoading(true);
+
     let active = true;
     const fetchScore = async () => {
       setLoading(true);
@@ -70,6 +75,7 @@ export function useScore(address: string | Hex | undefined) {
   }, [address]);
 
   useEffect(() => {
+    setCategories([]);
     const meta = data?.meta;
     if (meta) {
       const newCategoryScores: Record<string, number> = {};

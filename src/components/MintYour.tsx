@@ -17,7 +17,7 @@ import {
   ChakraProps,
   Container,
 } from '@chakra-ui/react';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useAccount, useChainId } from 'wagmi';
 import { CATEGORY_TOOLTIP, CategoryTooltipKeyType } from '@/constants';
 import { formatTimestamp, formatNumber } from '@/utils/strings';
@@ -458,7 +458,11 @@ const Hero: React.FC = () => {
                       marginTop="26.76px"
                       mr="8.25px"
                       onClick={() => {
-                        mintAttestation();
+                        try {
+                          mintAttestation();
+                        } catch (error) {
+                          console.log({ error });
+                        }
                       }}
                     >
                       MINT NOW

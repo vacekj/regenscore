@@ -2,13 +2,13 @@ import { Address, Hex, getAddress } from 'viem';
 import { useState, useEffect } from 'react';
 import { useToast } from '@chakra-ui/react';
 
+import { useWalletClient, useSendTransaction, useChainId } from 'wagmi';
 import {
-  useWalletClient,
-  usePrepareSendTransaction,
-  useSendTransaction,
-  useChainId,
-} from 'wagmi';
-import { Hash, waitForTransaction } from '@wagmi/core';
+  Hash,
+  waitForTransaction,
+  sendTransaction,
+  prepareSendTransaction,
+} from '@wagmi/core';
 import { parseEther } from 'viem';
 
 import { useScore } from './index';
@@ -22,12 +22,6 @@ function useEAS(address: string | Hex | undefined) {
   const chainId = useChainId();
   const { score, meta } = useScore(address);
   const [ethToUsdPrice, setEthToUsdPrice] = useState(0);
-  // Fee setup
-  const { config, error: prepareError } = usePrepareSendTransaction({
-    to: ATTESTER_PUBLIC_KEY,
-    value: parseEther(ethToUsdPrice ? (1 / ethToUsdPrice).toString() : '0'),
-  });
-  const { sendTransactionAsync } = useSendTransaction(config);
 
   // TODO: FIX TYPES
   const [attestations, setAttestations] = useState(null);
@@ -38,10 +32,20 @@ function useEAS(address: string | Hex | undefined) {
         const response = await fetch(
           'https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd',
         );
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
         const data = await response.json();
         setEthToUsdPrice(data.ethereum.usd);
-      } catch (error) {
+      } catch (error: any) {
         console.error('Error fetching ETH price:', error);
+        toast({
+          title: 'Error',
+          description: `Error fetching ETH price: ${error?.message}`,
+          status: 'error',
+          duration: 9000,
+          isClosable: true,
+        });
       }
     }
     fetchETHPrice();
@@ -52,16 +56,29 @@ function useEAS(address: string | Hex | undefined) {
       // Check if user has a pending receipt
       let receipt: any = await checkPendingReceipt(address!);
       if (!receipt) {
-        const tx = await sendTransactionAsync?.();
-        const hash = tx?.hash as Hash;
-        const newReceipt = await waitForTransaction({ hash });
+        const request = await prepareSendTransaction({
+          to: ATTESTER_PUBLIC_KEY,
+          value: parseEther(
+            ethToUsdPrice ? (1 / ethToUsdPrice).toString() : '0',
+          ),
+        });
+        const { hash } = await sendTransaction(request);
+        console.log({ hash });
+        const newReceipt = await waitForTransaction({ chainId, hash });
         if (newReceipt?.status === 'success') {
           receipt = hash;
         }
       }
       return receipt;
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error in transaction:', error);
+      toast({
+        title: 'Error',
+        description: `Error in transaction: ${error?.message}`,
+        status: 'error',
+        duration: 9000,
+        isClosable: true,
+      });
       return false;
     }
   };
@@ -92,7 +109,7 @@ function useEAS(address: string | Hex | undefined) {
       });
       // Charge fee in ETH
       const txReceipt = await chargeUserInETH();
-
+      console.log({ txReceipt });
       if (!txReceipt)
         return toast({
           title: 'Error',
@@ -124,15 +141,8 @@ function useEAS(address: string | Hex | undefined) {
         }),
       });
       const attest = await res.json();
-      if (attest?.error)
-        return toast({
-          title: 'Error',
-          description:
-            'There was an error creating your attestation. Please try again.',
-          status: 'error',
-          duration: 9000,
-          isClosable: true,
-        });
+      if (attest?.error) throw new Error(attest.error);
+
       fetchAttestations();
       console.log('attestationUID', attest);
       toast({
@@ -143,8 +153,15 @@ function useEAS(address: string | Hex | undefined) {
         isClosable: true,
       });
       return attest;
-    } catch (error) {
-      console.log({ error });
+    } catch (error: any) {
+      console.error('Error in mintAttestation:', error);
+      toast({
+        title: 'Error',
+        description: `Error in mintAttestation: ${error.message}`,
+        status: 'error',
+        duration: 9000,
+        isClosable: true,
+      });
       return false;
     }
   };
