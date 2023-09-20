@@ -1,7 +1,11 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { createAttestation } from '@/helpers/eas';
 import { privateKeyToSigner } from '@/utils/eas-wagmi-utils';
-import { updateScoreRecord } from '@/helpers/databaseHelpers';
+import {
+  updateScoreRecord,
+  handleReceipt,
+  markReceiptAsUsed,
+} from '@/helpers/databaseHelpers';
 import pinataSDK from '@pinata/sdk';
 import { ATTESTER_PUBLIC_KEY } from '@/constants';
 
@@ -12,6 +16,14 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       return res.status(400).json({ error: 'No attester set' });
     const body = req.body;
     const { address, score, meta, network, receipt } = body;
+
+    // Check if the receipt has already been used
+    try {
+      await handleReceipt(receipt, address);
+    } catch (error) {
+      return res.status(400).json({ error: error });
+    }
+
     const { signer, provider } = privateKeyToSigner(attesterPvtKey, network);
     // check receipt
     const transaction = await provider.getTransaction(receipt);
@@ -42,6 +54,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         signer,
       );
 
+      // updates score
       await updateScoreRecord({
         address,
         meta,
@@ -50,6 +63,9 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         ipfs_hash: ipfs.IpfsHash,
         receipt,
       });
+
+      // updates receipt
+      await markReceiptAsUsed(receipt);
       return res.status(200).json(result);
     } else {
       return res.status(400).json({ error: 'Receipt not valid' });

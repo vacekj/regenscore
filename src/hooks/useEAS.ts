@@ -14,6 +14,7 @@ import { parseEther } from 'viem';
 import { useScore } from './index';
 import { getScoreAttestations } from '@/helpers/eas';
 import { ATTESTER_PUBLIC_KEY } from '@/constants';
+import { checkPendingReceipt } from '@/helpers/databaseHelpers';
 
 function useEAS(address: string | Hex | undefined) {
   const toast = useToast();
@@ -48,12 +49,17 @@ function useEAS(address: string | Hex | undefined) {
 
   const chargeUserInETH = async () => {
     try {
-      const tx = await sendTransactionAsync?.();
-      const hash = tx?.hash as Hash;
-      const receipt = await waitForTransaction({ hash });
-      if (receipt?.status === 'success') {
-        return hash;
+      // Check if user has a pending receipt
+      let receipt: any = await checkPendingReceipt(address!);
+      if (!receipt) {
+        const tx = await sendTransactionAsync?.();
+        const hash = tx?.hash as Hash;
+        const newReceipt = await waitForTransaction({ hash });
+        if (newReceipt?.status === 'success') {
+          receipt = hash;
+        }
       }
+      return receipt;
     } catch (error) {
       console.error('Error in transaction:', error);
       return false;
