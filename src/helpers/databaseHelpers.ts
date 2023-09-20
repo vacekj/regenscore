@@ -1,9 +1,28 @@
 import supabase from '@/utils/supabase-client';
+import { Address } from 'viem';
+
+// TODO: MOVE THESE TYPES SOMEWHERE ELSE
+type Token = {
+  category: string;
+  scoreAdded: number;
+};
+
+type Item = {
+  category: string;
+  scoreAdded: number;
+  tokens?: Token[];
+  applies?: Boolean;
+  behavior: string;
+};
 
 interface ScoreRecord {
-  address: string;
+  id: number;
+  createdAt?: string;
+  address: Address;
   score?: number;
-  meta?: any;
+  meta?: {
+    [key: string]: Item;
+  };
   version?: number;
   attestation?: string;
   ipfs_hash?: string;
@@ -12,29 +31,32 @@ interface ScoreRecord {
 
 export async function updateScoreRecord(record: ScoreRecord) {
   try {
-    const { address, ...data } = record;
-
-    // Check if a record with the given address already exists
+    const { id, address, receipt, ...data } = record;
+    const updatedData = { ...data, receipt };
+    console.log({ record });
+    // Updates data on record: Needed for changing the used receipt
     const { data: existingData, error: selectError } = await supabase
       .from('scores')
       .select('*')
-      .eq('address', address);
+      .eq('id', id)
+      .single();
 
+    console.log({ existingData });
     if (selectError) throw selectError;
 
-    if (existingData && existingData.length > 0) {
+    if (existingData) {
       // Update the existing record
       const { error: updateError } = await supabase
         .from('scores')
-        .update(data)
-        .eq('address', address);
+        .update(updatedData)
+        .eq('id', id);
 
       if (updateError) throw updateError;
     } else {
       // Insert a new record
       const { error: insertError } = await supabase
         .from('scores')
-        .insert([{ address, ...data }]);
+        .insert([{ address, ...updatedData }]);
 
       if (insertError) throw insertError;
     }
@@ -54,10 +76,10 @@ export async function handleReceipt(receipt: string, payer: string) {
       .maybeSingle();
     if (selectError) throw selectError;
 
-    if (usedReceipt) {
+    if (usedReceipt && !!usedReceipt.used) {
       // If the receipt already exists, throw an error
       throw new Error('Receipt has already been used');
-    } else {
+    } else if (!usedReceipt) {
       // If the receipt does not exist, insert it into the database
       const { error: insertError } = await supabase
         .from('used_receipts')
@@ -65,6 +87,7 @@ export async function handleReceipt(receipt: string, payer: string) {
 
       if (insertError) throw insertError;
     }
+    return true;
   } catch (error) {
     console.error('Error with Supabase operation:', error);
     throw error;

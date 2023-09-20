@@ -1,4 +1,5 @@
 import { EAS, SchemaEncoder } from '@ethereum-attestation-service/eas-sdk';
+import { Address } from 'viem';
 
 // TODO: MOVE THIS TO ENV VARS FOR KEYCHECK PASS AND REMOVE THE FILE ON KEYCHECKIGNORE
 export const RegenScoreSchemaUID =
@@ -6,7 +7,7 @@ export const RegenScoreSchemaUID =
 export const EASContractAddress = '0xC2679fBD37d54388Ce493F1DB75320D236e1815e'; // v0.26
 
 export const createAttestation = async (
-  address: string,
+  address: Address,
   score: number,
   meta: any,
   signer: any,
@@ -48,7 +49,7 @@ export const createAttestation = async (
 };
 
 export const getScoreAttestations = async (
-  address: string,
+  address: Address,
   chainId: number,
 ): Promise<any> => {
   // TODO: get network name properly

@@ -2,9 +2,8 @@ import { Address, Hex, getAddress } from 'viem';
 import { useState, useEffect } from 'react';
 import { useToast } from '@chakra-ui/react';
 
-import { useWalletClient, useSendTransaction, useChainId } from 'wagmi';
+import { useWalletClient, useChainId } from 'wagmi';
 import {
-  Hash,
   waitForTransaction,
   sendTransaction,
   prepareSendTransaction,
@@ -12,31 +11,25 @@ import {
 import { parseEther } from 'viem';
 
 import { useScore } from './index';
+import { fetchCurrentETHPrice } from '@/helpers/ethHelpers';
 import { getScoreAttestations } from '@/helpers/eas';
-import { ATTESTER_PUBLIC_KEY } from '@/constants';
+import { ATTESTER_ADDRESS, ATTESTATION_FEE_USD } from '@/constants';
 import { checkPendingReceipt } from '@/helpers/databaseHelpers';
 
-function useEAS(address: string | Hex | undefined) {
+function useEAS(address: Address | string | Hex | undefined) {
   const toast = useToast();
   const { data: walletClient } = useWalletClient();
   const chainId = useChainId();
-  const { score, meta } = useScore(address);
+  const { score, meta, data } = useScore(address);
   const [ethToUsdPrice, setEthToUsdPrice] = useState(0);
-
   // TODO: FIX TYPES
   const [attestations, setAttestations] = useState(null);
   const [lastAttestation, setLastAttestation] = useState<any>(null);
   useEffect(() => {
     async function fetchETHPrice() {
       try {
-        const response = await fetch(
-          'https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd',
-        );
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const data = await response.json();
-        setEthToUsdPrice(data.ethereum.usd);
+        const currentPrice = await fetchCurrentETHPrice();
+        setEthToUsdPrice(currentPrice);
       } catch (error: any) {
         console.error('Error fetching ETH price:', error);
         toast({
@@ -57,9 +50,11 @@ function useEAS(address: string | Hex | undefined) {
       let receipt: any = await checkPendingReceipt(address!);
       if (!receipt) {
         const request = await prepareSendTransaction({
-          to: ATTESTER_PUBLIC_KEY,
+          to: ATTESTER_ADDRESS,
           value: parseEther(
-            ethToUsdPrice ? (1 / ethToUsdPrice).toString() : '0',
+            ethToUsdPrice
+              ? (ATTESTATION_FEE_USD / ethToUsdPrice).toString()
+              : '0',
           ),
         });
         const { hash } = await sendTransaction(request);
@@ -123,7 +118,6 @@ function useEAS(address: string | Hex | undefined) {
         description:
           "We're creating your attestation. This may take a few seconds.",
         status: 'info',
-        duration: 9000,
         isClosable: true,
       });
 
@@ -133,6 +127,7 @@ function useEAS(address: string | Hex | undefined) {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
+          data: data,
           address: getAddress(address!),
           score: parseInt(score.toString()),
           meta,

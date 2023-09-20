@@ -5,26 +5,34 @@ import { CURRENT_SCORE_VERSION } from '@/constants';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const address = req.body.address || req.query.address;
-  const shouldUpdate = req.body.shouldUpdate;
+  const network = req.body.network || req.query.network;
+  // const shouldUpdate = req.body.shouldUpdate;
   try {
     if (!address) {
       return res.status(400).send({ score: 0, meta: {} });
     }
-    // Check if the record already exists
-    const { data: existingData } = await supabase
+    // Check if the record already exists but only consider records that have not been attested
+    const { data: existingData, error: existingDataError } = await supabase
       .from('scores')
       .select('*')
       .eq('address', address)
-      .single();
+      .is('attestation', null)
+      .order('created_at', { ascending: false })
+      .limit(1);
+
+    let latestRecord = null;
+    if (existingData && existingData.length > 0) {
+      latestRecord = existingData[0];
+    }
+    console.log({ latestRecord });
     if (
-      !existingData ||
-      shouldUpdate === true ||
-      existingData.version === null ||
-      existingData.version < CURRENT_SCORE_VERSION
+      !latestRecord ||
+      // shouldUpdate === true ||
+      latestRecord.version === null ||
+      latestRecord.version < CURRENT_SCORE_VERSION
     ) {
-      // If the record does not exist or shouldUpdate is true
       const result = await createScore(address);
-      if (!existingData) {
+      if (!latestRecord) {
         // Insert a new record if it does not exist
         const { error: insertError } = await supabase.from('scores').insert([
           {
@@ -39,12 +47,13 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
           throw insertError;
         }
       } else {
-        // Update the record if it exists and shouldUpdate is true
+        // Update the record if it exists and has not been attested
         const { error: updateError } = await supabase
           .from('scores')
           .update({
             score: result.score,
             meta: result.meta,
+            network,
             version: CURRENT_SCORE_VERSION,
           })
           .eq('address', address);
@@ -53,11 +62,12 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
           throw updateError;
         }
       }
+      console.log({ result });
       return res
         .status(200)
         .json({ ...result, version: CURRENT_SCORE_VERSION });
     } else {
-      return res.status(200).json(existingData);
+      return res.status(200).json(latestRecord);
     }
   } catch (e) {
     return res.status(400).send({ score: 0, meta: {} });

@@ -53,6 +53,7 @@ const Hero: React.FC = () => {
   const currentChain = useChainId();
   const { address } = useAccount();
   const {
+    fetchScore,
     score,
     meta,
     version: scoreVersion,
@@ -228,9 +229,15 @@ const Hero: React.FC = () => {
                   No data
                 </Text>
               </Flex>
-              <Button variant="variant3" isDisabled mt="22px">
+              <Button
+                onClick={() => {
+                  fetchScore();
+                }}
+                variant="variant3"
+                mt="22px"
+              >
                 {' '}
-                MINT
+                MINT SCORE
               </Button>
             </CardBody>
           )}
@@ -457,6 +464,7 @@ const Hero: React.FC = () => {
                       variant="variant3"
                       marginTop="26.76px"
                       mr="8.25px"
+                      cursor={'pointer'}
                       onClick={() => {
                         try {
                           mintAttestation();
@@ -465,7 +473,7 @@ const Hero: React.FC = () => {
                         }
                       }}
                     >
-                      MINT NOW
+                      GET ATTESTATION
                     </Button>
                   )}
                   {score && (

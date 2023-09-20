@@ -1,6 +1,8 @@
 export const CURRENT_SCORE_VERSION = 1.2; // Increase this every time we add a new source
 
-export const ATTESTER_PUBLIC_KEY = '0xd8dA8766431366E9aD63eA6D16d9199cece2aA08';
+export const ATTESTER_ADDRESS = '0xd8dA8766431366E9aD63eA6D16d9199cece2aA08';
+
+export const ATTESTATION_FEE_USD = 0.01;
 
 type CategoryTooltipType = {
   Contributor: string;

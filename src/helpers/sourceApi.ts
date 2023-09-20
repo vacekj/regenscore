@@ -20,7 +20,7 @@ const ETHERSCAN_API_KEY = process.env.NEXT_PUBLIC_ETHERSCAN_API_KEY;
 const apikey = '&apikey=' + ETHERSCAN_API_KEY;
 
 // fetch ERC20 transactions from Etherscan
-export async function getERC20Transactions(address: string) {
+export async function getERC20Transactions(address: Address) {
   /*
     https://api.etherscan.io/api
      ?module=account
@@ -52,7 +52,7 @@ export async function getERC20Transactions(address: string) {
 }
 
 // fetch normal transactions from Etherscan
-export async function getNormalTransactions(address: string) {
+export async function getNormalTransactions(address: Address) {
   /*
     https://api.etherscan.io/api
      ?module=account
@@ -84,7 +84,7 @@ export async function getNormalTransactions(address: string) {
 }
 
 // fetch ERC721 transactions from Etherscan
-export async function getERC721Transactions(address: string) {
+export async function getERC721Transactions(address: Address) {
   /*
     https://api.etherscan.io/api
      ?module=account
@@ -117,8 +117,8 @@ export async function getERC721Transactions(address: string) {
 
 // experimental: not used so far etherscan fetch
 export async function etherscanGetTokenBalance(
-  contractAddress: string,
-  address: string,
+  contractAddress: Address,
+  address: Address,
   network: 'mainnet' | 'optimism',
 ) {
   let apiUrl: string;
@@ -180,7 +180,7 @@ export async function getTokenBalance(
   }
 }
 
-export async function fetchGRDonations(address: string) {
+export async function fetchGRDonations(address: Address) {
   const addressParts = address.match(/.{1,6}/g) ?? [];
   if (!addressParts) {
     throw new Error('Invalid address');
@@ -230,7 +230,7 @@ async function optimismTxHistoryCheck(txs: any) {
   };
 }
 
-export async function getAddressOPTxHistory(address: string) {
+export async function getAddressOPTxHistory(address: Address) {
   const provider = new ethers.providers.EtherscanProvider(
     'optimism',
     ETHERSCAN_API_KEY,
@@ -247,7 +247,7 @@ export async function getAddressOPTxHistory(address: string) {
   };
 }
 
-async function fetchSafesOwnedByUser(userAddress: string): Promise<string[]> {
+async function fetchSafesOwnedByUser(userAddress: Address): Promise<string[]> {
   const response = await fetch(
     `https://safe-transaction-optimism.safe.global/api/v1/owners/${userAddress}/safes/`,
   );
@@ -255,7 +255,7 @@ async function fetchSafesOwnedByUser(userAddress: string): Promise<string[]> {
   return data.safes || [];
 }
 
-async function fetchSafeInfo(safeAddress: string): Promise<SafeInfo> {
+async function fetchSafeInfo(safeAddress: Address): Promise<SafeInfo> {
   const response = await fetch(
     `https://safe-transaction-optimism.safe.global/api/v1/safes/${safeAddress}/`,
   );
@@ -263,7 +263,7 @@ async function fetchSafeInfo(safeAddress: string): Promise<SafeInfo> {
 }
 
 export async function checkSafeOwnershipAndActivity(
-  userAddress: string,
+  userAddress: Address,
 ): Promise<{
   ownsSafe: boolean;
   hasExecutedTransaction: boolean;
@@ -317,7 +317,7 @@ async function fetchGitcoinProjectsData(
   return await response.json();
 }
 
-export async function hasAGitcoinProject(address: string): Promise<boolean> {
+export async function hasAGitcoinProject(address: Address): Promise<boolean> {
   const networksToCheck = [1, 10, 250, 424];
 
   try {
@@ -335,7 +335,7 @@ export async function hasAGitcoinProject(address: string): Promise<boolean> {
   return false;
 }
 
-export async function fetchGitcoinPassport(address: string) {
+export async function fetchGitcoinPassport(address: Address) {
   const url = `https://api.scorer.gitcoin.co/registry/score/${GICOIN_SCORER_ID}/${address}`;
 
   try {
@@ -355,7 +355,7 @@ export async function fetchGitcoinPassport(address: string) {
   }
 }
 
-export async function fetchPOAPsForAddress(address: string) {
+export async function fetchPOAPsForAddress(address: Address) {
   const url = `https://api.poap.tech/actions/scan/${address}`;
   const response = await fetch(url, {
     method: 'GET',

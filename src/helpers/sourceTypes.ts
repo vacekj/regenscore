@@ -1,3 +1,5 @@
+import { Address } from 'viem';
+
 export type ERC20Transaction = {
   blockNumber: string;
   timeStamp: string;
@@ -5,7 +7,7 @@ export type ERC20Transaction = {
   nonce: string;
   blockHash: string;
   from: string;
-  contractAddress: string;
+  contractAddress: Address;
   to: string;
   value: string;
   tokenName: string;
@@ -43,7 +45,7 @@ export type NormalTransaction = {
   isError: string;
   txreceipt_status: string;
   gasUsed: string;
-  contractAddress: string;
+  contractAddress: Address;
   cumulativeGasUsed: string;
   input: string;
   confirmations: string;
@@ -56,7 +58,7 @@ export type ERC721Transaction = {
   nonce: string;
   blockHash: string;
   from: string;
-  contractAddress: string;
+  contractAddress: Address;
   to: string;
   tokenID: string;
   value: string;
@@ -91,7 +93,7 @@ export type IGRDonation = {
 };
 
 export type SafeInfo = {
-  address: string;
+  address: Address;
   nonce: number;
   threshold: number;
   owners: string[];

@@ -1,5 +1,4 @@
 import { Hex, getAddress } from 'viem';
-import useSWR from 'swr';
 import { useState, useEffect } from 'react';
 
 type Token = {
@@ -32,46 +31,49 @@ export function useScore(address: string | Hex | undefined) {
     { category: string; scoreAdded: number }[]
   >([]);
 
-  useEffect(() => {
-    // Reset state variables when address changes
-    setData(null);
-    setError(null);
+  const fetchScore = async () => {
     setLoading(true);
+    if (!address) {
+      setLoading(false);
+      return;
+    }
+    try {
+      const res = await fetch('/api/score', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          address: getAddress(address!),
+          // shouldUpdate: true,
+        }),
+      });
+      setLoading(false);
+      const resData = await res.json();
+      setData(resData);
+    } catch (error: any) {
+      setLoading(false);
+      setError(error);
+      console.log({ error });
+    }
+  };
 
-    let active = true;
-    const fetchScore = async () => {
-      setLoading(true);
-      if (!address) {
-        setLoading(false);
-        return;
-      }
-      try {
-        const res = await fetch('/api/score', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            address: getAddress(address!),
-            // shouldUpdate: true,
-          }),
-        });
-        if (!active) return;
-        setLoading(false);
-        const resData = await res.json();
-        setData(resData);
-      } catch (error: any) {
-        if (!active) return;
-        setLoading(false);
-        setError(error);
-        console.log({ error });
-      }
+  useEffect(() => {
+    const fetchMyData = async () => {
+      const res = await fetch('/api/myscore', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          address: getAddress(address!),
+        }),
+      });
+      setLoading(false);
+      const resData = await res.json();
+      setData(resData);
     };
-    fetchScore();
-
-    return () => {
-      active = false; // Prevents setting state on unmounted component
-    };
+    fetchMyData();
   }, [address]);
 
   useEffect(() => {
@@ -109,8 +111,10 @@ export function useScore(address: string | Hex | undefined) {
   }, [data, address]);
 
   return {
+    fetchScore,
     score: data?.score,
     meta: data?.meta,
+    data,
     version: data?.version || 0,
     categories,
     loading,
