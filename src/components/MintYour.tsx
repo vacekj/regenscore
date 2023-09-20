@@ -368,13 +368,17 @@ const Hero: React.FC = () => {
 
               {/* Right Column */}
               <Flex flex={['0.7', '1', '1', '1', '1']} flexDirection="column">
-                <CardHeader padding="0px" textAlign={['start']}>
+                <CardHeader
+                  padding="0px"
+                  textAlign={['start']}
+                  ml={['-10px', '-5px']}
+                >
                   {score && score !== 0 && (
                     <Heading
                       as="h3"
                       variant="h3"
                       fontWeight="bold"
-                      fontSize="100px"
+                      fontSize={['80px', '100px']}
                       color="#FFF"
                       marginTop={['55px', '78px', '78px', '78px', '80px']}
                       // marginLeft={{
@@ -401,12 +405,13 @@ const Hero: React.FC = () => {
                   alignItems={'start'}
                   justifyContent={'center'}
                   textAlign={['start']}
+                  ml={['-10px', '-5px']}
                 >
                   <div
                     style={{
                       display: 'flex',
                       alignItems: 'center',
-                      gap: '1.89px',
+                      gap: '6px',
                     }}
                   >
                     <Check status={'WARNING2'} />
@@ -452,6 +457,7 @@ const Hero: React.FC = () => {
                         ml="2px"
                         color="#354728"
                         opacity="0.5"
+                        pl="5px"
                       >
                         {formatTimestamp(new Date(created_at.created_at))}
                       </Text>
@@ -465,6 +471,7 @@ const Hero: React.FC = () => {
                       marginTop="26.76px"
                       mr="8.25px"
                       cursor={'pointer'}
+                      ml={['0px', '-5px']}
                       onClick={() => {
                         try {
                           mintAttestation();

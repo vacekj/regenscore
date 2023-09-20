@@ -149,7 +149,10 @@ export default function Footer() {
                   </Link>
                 </div>
                 <div style={{ marginBottom: '10px' }}>
-                  <Link href="#" _hover={{ textDecoration: 'none' }}>
+                  <Link
+                    href="https://discord.gg/8wDkQtwYbm"
+                    _hover={{ textDecoration: 'none' }}
+                  >
                     Discord
                   </Link>
                 </div>
@@ -289,7 +292,10 @@ export default function Footer() {
                   </Link>
                 </div>
                 <div style={{ marginBottom: '10px' }}>
-                  <Link href="#" _hover={{ textDecoration: 'none' }}>
+                  <Link
+                    href="https://discord.gg/8wDkQtwYbm"
+                    _hover={{ textDecoration: 'none' }}
+                  >
                     Discord
                   </Link>
                 </div>
