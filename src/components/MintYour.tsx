@@ -349,28 +349,29 @@ const Hero: React.FC = () => {
 
               {/* Right Column */}
               <Flex flex={['0.7', '1', '1', '1', '1']} flexDirection="column">
-                <CardHeader padding="0px" textAlign={['start']}>
+                <CardHeader padding="0px" textAlign={['start']} ml={["-10px", "-5px"]}>
                   {score && score !== 0 && (
                     <Heading
                       as="h3"
                       variant="h3"
                       fontWeight="bold"
-                      fontSize="100px"
+                      fontSize={["80px", "100px"]}
                       color="#FFF"
                       marginTop={['55px', '78px', '78px', '78px', '80px']}
-                      // marginLeft={{
-                      //   base: '150px',
-                      //   sm: '230px',
-                      //   md: '230px',
-                      //   lg: '200px',
-                      //   xl: '337px',
-                      // }}
+                    // marginLeft={{
+                    //   base: '150px',
+                    //   sm: '230px',
+                    //   md: '230px',
+                    //   lg: '200px',
+                    //   xl: '337px',
+                    // }}
                     >
-                      {score?.toFixed(1) || ''}
+                      {score?.toFixed() || ''}
                     </Heading>
                   )}
                 </CardHeader>
                 <CardBody
+
                   padding="0px"
                   // marginLeft={{
                   //   base: '150px',
@@ -382,12 +383,13 @@ const Hero: React.FC = () => {
                   alignItems={'start'}
                   justifyContent={'center'}
                   textAlign={['start']}
+                  ml={["-10px", "-5px"]}
                 >
                   <div
                     style={{
                       display: 'flex',
                       alignItems: 'center',
-                      gap: '1.89px',
+                      gap: '6px',
                     }}
                   >
                     <Check status={'WARNING2'} />
@@ -426,6 +428,7 @@ const Hero: React.FC = () => {
                         fontFamily="Inter-Regular"
                         color="#354728"
                         opacity="0.5"
+                        pl="5px"
                       >
                         {formatTimestamp(new Date(created_at.created_at))}
                       </Text>
@@ -438,6 +441,7 @@ const Hero: React.FC = () => {
                       variant="variant3"
                       marginTop="26.76px"
                       mr="8.25px"
+                      ml={["0px", "-5px"]}
                       onClick={() => {
                         if (lastAttestation) {
                           window.open(
@@ -451,8 +455,8 @@ const Hero: React.FC = () => {
                       {lastAttestation
                         ? 'VIEW ATTESTATION'
                         : score
-                        ? 'MINT NOW'
-                        : ''}
+                          ? 'MINT NOW'
+                          : ''}
                     </Button>
                   )}
                   {score && (
@@ -521,7 +525,7 @@ const Hero: React.FC = () => {
                   <Tooltip
                     label={
                       CATEGORY_TOOLTIP[
-                        categoryItem.category as CategoryTooltipKeyType
+                      categoryItem.category as CategoryTooltipKeyType
                       ]
                     }
                     placement="top-end"
