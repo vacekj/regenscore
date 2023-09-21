@@ -55,3 +55,7 @@ export async function getEthPriceAt(timestamp: number) {
     return 0;
   }
 }
+
+export default {
+  getEthPriceAt,
+};

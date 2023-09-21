@@ -127,3 +127,7 @@ export const getScoreAttestations = async (
     throw error;
   }
 };
+
+export default {
+  createAttestation,
+};

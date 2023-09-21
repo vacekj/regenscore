@@ -85,3 +85,7 @@ export function useProvider() {
   }, [publicClient]);
   return provider;
 }
+
+export default {
+  privateKeyToSigner,
+};

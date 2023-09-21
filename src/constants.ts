@@ -59,3 +59,11 @@ export const SOURCES = {
     logo: '/icons/logos/eth.svg',
   },
 };
+
+export default {
+  ATTESTER_ADDRESS,
+  ATTESTATION_FEE_USD,
+  CURRENT_SCORE_VERSION,
+  CATEGORY_TOOLTIP,
+  SOURCES,
+};

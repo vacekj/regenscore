@@ -1,18 +1,16 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { ethers } from 'ethers';
-import { createAttestation } from '@/helpers/eas';
-import { getEthPriceAt } from '@/helpers/ethHelpers';
-import { privateKeyToSigner } from '@/utils/eas-wagmi-utils';
-import {
-  updateScoreRecord,
-  handleReceipt,
-  markReceiptAsUsed,
-} from '@/helpers/databaseHelpers';
-import { ATTESTER_ADDRESS, ATTESTATION_FEE_USD } from '@/constants';
+import eas from '@/helpers/eas';
+import ethHelpers from '@/helpers/ethHelpers';
+import easUtils from '@/utils/eas-wagmi-utils';
+import dbHelpers from '@/helpers/databaseHelpers';
+import constants from '@/constants';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     console.time('Total Execution Time');
+
+    const { ATTESTER_ADDRESS, ATTESTATION_FEE_USD } = constants;
 
     const attesterPvtKey = process.env.ATTESTER_PVT_KEY;
     if (!attesterPvtKey)
@@ -33,14 +31,17 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
     console.time('handleReceipt');
     try {
-      await handleReceipt(receipt, address);
+      await dbHelpers.handleReceipt(receipt, address);
     } catch (error) {
       return res.status(400).json({ error: error });
     }
     console.timeEnd('handleReceipt');
 
     console.time('privateKeyToSigner');
-    const { signer, provider } = privateKeyToSigner(attesterPvtKey, network);
+    const { signer, provider } = easUtils.privateKeyToSigner(
+      attesterPvtKey,
+      network,
+    );
     console.timeEnd('privateKeyToSigner');
 
     console.time('getTransaction');
@@ -55,7 +56,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       console.timeEnd('getBlock');
 
       console.time('getEthPriceAt');
-      const ethPriceAtTime = await getEthPriceAt(transactionTimestamp);
+      const ethPriceAtTime =
+        await ethHelpers.getEthPriceAt(transactionTimestamp);
       console.timeEnd('getEthPriceAt');
 
       const transactionValueUSD =
@@ -70,7 +72,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         Math.abs(transactionValueUSD - requiredUSDValue) <= 0.05
       ) {
         console.time('createAttestation');
-        const result = await createAttestation(
+        const result = await eas.createAttestation(
           address,
           score,
           ipfsHash,
@@ -80,7 +82,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         console.timeEnd('createAttestation');
 
         console.time('updateScoreRecord');
-        await updateScoreRecord({
+        await dbHelpers.updateScoreRecord({
           id: data.id,
           address,
           meta,
@@ -93,7 +95,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         console.timeEnd('updateScoreRecord');
 
         console.time('markReceiptAsUsed');
-        await markReceiptAsUsed(receipt);
+        await dbHelpers.markReceiptAsUsed(receipt);
         console.timeEnd('markReceiptAsUsed');
 
         console.timeEnd('Total Execution Time');

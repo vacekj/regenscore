@@ -131,3 +131,9 @@ export async function markReceiptAsUsed(receipt: string): Promise<boolean> {
     throw error;
   }
 }
+
+export default {
+  updateScoreRecord,
+  handleReceipt,
+  markReceiptAsUsed,
+};
