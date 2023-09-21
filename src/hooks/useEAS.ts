@@ -91,10 +91,10 @@ function useEAS(address: Address | string | Hex | undefined) {
     fetchAttestations();
   }, [address]);
 
-  const mintAttestation = async (score: number, meta: any) => {
+  const mintAttestation = async (score: number, meta: any, scoreData: any) => {
     try {
-      console.log({ address, score, meta, walletClient });
-      if (!address || !score || !meta || !walletClient) return;
+      console.log({ address, score, meta, scoreData });
+      if (!scoreData || !address || !score || !meta || !walletClient) return;
       toast({
         title: 'Payment',
         description: "We're sending a payment transaction",
@@ -127,7 +127,7 @@ function useEAS(address: Address | string | Hex | undefined) {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          data: data,
+          data: scoreData,
           address: getAddress(address!),
           score: parseInt(score.toString()),
           meta,

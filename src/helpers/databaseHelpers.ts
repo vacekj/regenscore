@@ -42,7 +42,6 @@ export async function updateScoreRecord(record: ScoreRecord) {
       .single();
 
     console.log({ existingData });
-    if (selectError) throw selectError;
 
     if (existingData) {
       // Update the existing record

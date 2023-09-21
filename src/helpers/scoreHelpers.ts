@@ -109,20 +109,20 @@ export async function createScore(
     // handleNormalTransactions(address, meta),
     // handleERC20Transactions(address, meta),
     // handleERC721Transactions(address, meta),
-    handleGRDonations(address, meta),
-    handleEthStaker(address, meta, 10),
-    handleOPBridge(address, meta, 10),
+    handleGRDonations(address, meta, 100), // TODO: gotta modify this
+    handleEthStaker(address, meta, 500),
+    handleOPBridge(address, meta, 300),
     handleOPTreasuryPayouts(address, meta, 400),
     handleDelegate(address, meta, 500),
-    handleTxsMadeOnOptimism(address, meta, 10),
-    handleOPContractsInteractions(address, meta, 10),
-    handleSafeOwnershipAndActivity(address, meta, 10),
+    handleTxsMadeOnOptimism(address, meta, 100),
+    handleOPContractsInteractions(address, meta), // 200 for interaction, 500 for deployment
+    handleSafeOwnershipAndActivity(address, meta), // 500 on execution, 400 for owner, 500 for being on OP treasury
     handleOPAirdropReceiver(address, meta),
-    handleGitcoinProjectOwner(address, meta),
-    handleGitcoinPassport(address, meta, 10),
+    handleGitcoinProjectOwner(address, meta, 200),
+    handleGitcoinPassport(address, meta, 300),
     handleRegenPOAPs(address, meta, 20),
-    handleTrustedSeedMember(address, meta, 10),
-    handleGivethActivity(address, meta, 10),
+    handleTrustedSeedMember(address, meta, 200),
+    handleGivethActivity(address, meta),
   ]);
   score += results.reduce((acc, current) => acc + current, 0);
   return { score, meta };

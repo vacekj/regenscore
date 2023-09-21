@@ -58,7 +58,7 @@ const HowItWorks: React.FC = () => {
           content={
             <>
               Join the Regen Score community and{' '}
-              <Text fontWeight="bold" as="span">
+              <Text fontWeight="bold" as="span" color="brand.deepGreen.400">
                 <a href="https://tally.so/r/w4JpDA">
                   share feedback and suggestions
                 </a>
