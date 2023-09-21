@@ -44,8 +44,8 @@ const Header: React.FC = () => {
   });
   const { address, isConnected } = useAccount();
   const { open } = useWeb3Modal();
-  const { score } = useScoreContext(address);
-  console.log('score', score);
+  const { setAddress, score } = useScoreContext();
+
   useEffect(() => {
     const handleScroll = () => {
       const newPos = window.pageYOffset;
@@ -64,6 +64,12 @@ const Header: React.FC = () => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, [currPos]);
+
+  useEffect(() => {
+    if (address) {
+      setAddress(address);
+    }
+  }, [address, setAddress]);
 
   const Web3Content = () => {
     return (

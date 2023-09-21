@@ -63,7 +63,7 @@ const Hero: React.FC = () => {
     categories,
     loading,
     error,
-  } = useScoreContext(address);
+  } = useScoreContext();
 
   const { mintAttestation, lastAttestation } = useEAS(address);
   // TODO: do this somewhere else

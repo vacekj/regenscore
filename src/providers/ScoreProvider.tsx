@@ -1,20 +1,27 @@
-import { ReactNode } from 'react';
 import { ScoreContext } from '@/contexts/scoreContext';
-import { Hex } from 'viem';
 import { useScore } from '@/hooks';
+import { ReactNode, useState } from 'react';
+import { Hex } from 'viem';
 
 interface ScoreProviderProps {
   children: ReactNode;
-  address: string | Hex | undefined;
 }
 
-export const ScoreProvider: React.FC<ScoreProviderProps> = ({
-  children,
-  address,
-}) => {
-  const scoreData = useScore(address);
+export const ScoreProvider: React.FC<ScoreProviderProps> = ({ children }) => {
+  const [currentAddress, setCurrentAddress] = useState<
+    string | Hex | undefined
+  >();
+
+  const scoreData = useScore(currentAddress);
+
+  const contextValue = {
+    ...scoreData,
+    setAddress: setCurrentAddress,
+  };
 
   return (
-    <ScoreContext.Provider value={scoreData}>{children}</ScoreContext.Provider>
+    <ScoreContext.Provider value={contextValue}>
+      {children}
+    </ScoreContext.Provider>
   );
 };

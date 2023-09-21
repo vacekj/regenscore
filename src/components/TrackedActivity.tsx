@@ -70,8 +70,7 @@ const ActivityRow = ({ activity }: any) => {
 };
 
 const TrackedActivity = () => {
-  const { address } = useAccount();
-  const { meta, loading } = useScoreContext(address);
+  const { meta } = useScoreContext();
   return (
     <Flex
       flexDir="column"

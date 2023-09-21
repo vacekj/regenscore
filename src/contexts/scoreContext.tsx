@@ -1,9 +1,9 @@
 import { createContext, useContext } from 'react';
 import { Item, ResponseData } from '@/types';
 import { Hex } from 'viem';
-import { useScore } from '@/hooks';
 
 type ScoreContextType = {
+  setAddress: (address: Hex | string) => void;
   fetchScore: (endpoint: string) => Promise<void>;
   score: number;
   meta?: { [key: string]: Item };
@@ -15,6 +15,7 @@ type ScoreContextType = {
 };
 
 const defaultScoreContext: ScoreContextType = {
+  setAddress: () => {},
   fetchScore: async () => {},
   score: 0,
   meta: {},
@@ -29,12 +30,10 @@ export const ScoreContext = createContext<ScoreContextType | undefined>(
   defaultScoreContext,
 );
 
-export const useScoreContext = (address: string | Hex | undefined) => {
+export const useScoreContext = () => {
   const context = useContext(ScoreContext);
-
   if (!context) {
     throw new Error('useScoreContext must be used within a ScoreProvider');
   }
-
-  return useScore(address);
+  return context;
 };
