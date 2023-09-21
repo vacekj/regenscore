@@ -1,11 +1,13 @@
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
-import TrackedActivity from '@/components/TrackedActivity';
 
 import { Flex } from '@chakra-ui/react';
 
 const Layout = dynamic(() => import('@/components/Layout'), { ssr: false });
 const MintYour = dynamic(() => import('@/components/MintYour'), { ssr: false });
+const TrackedActivity = dynamic(() => import('@/components/TrackedActivity'), {
+  ssr: false,
+});
 
 export default function Mint() {
   return (

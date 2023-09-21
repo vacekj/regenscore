@@ -22,13 +22,13 @@ import {
 import React from 'react';
 
 import { useAccount } from 'wagmi';
-import { useScore } from '@/hooks';
 import {
   EthLogo,
   GitcoinLogo,
   GivethLogo,
   OptimismLogo,
 } from '@/components/Logo';
+import { useScoreContext } from '@/contexts/scoreContext';
 
 // TODO: FIX TYPE
 const ActivityRow = ({ activity }: any) => {
@@ -71,8 +71,7 @@ const ActivityRow = ({ activity }: any) => {
 
 const TrackedActivity = () => {
   const { address } = useAccount();
-  const { meta, loading } = useScore(address);
-
+  const { meta, loading } = useScoreContext(address);
   return (
     <Flex
       flexDir="column"

@@ -15,6 +15,7 @@ import Head from 'next/head';
 import { theme } from '@/chakra';
 import './styles.css';
 import CustomHead from '../components/CustomHead';
+import { ScoreProvider } from '@/providers/ScoreProvider';
 
 // const chains = [optimism, sepolia];
 const chains = [optimism];
@@ -45,7 +46,9 @@ function MyApp({ Component, pageProps }: AppProps) {
       <WagmiConfig config={wagmiConfig}>
         <ChakraProvider theme={theme}>
           <AnimatePresence mode="wait">
-            <Component {...pageProps} />
+            <ScoreProvider>
+              <Component {...pageProps} />
+            </ScoreProvider>
           </AnimatePresence>
         </ChakraProvider>
       </WagmiConfig>

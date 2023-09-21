@@ -1,34 +1,5 @@
 import supabase from '@/utils/supabase-client';
-import { Address } from 'viem';
-
-// TODO: MOVE THESE TYPES SOMEWHERE ELSE
-type Token = {
-  category: string;
-  scoreAdded: number;
-};
-
-type Item = {
-  category: string;
-  scoreAdded: number;
-  tokens?: Token[];
-  applies?: Boolean;
-  behavior: string;
-};
-
-interface ScoreRecord {
-  id: number;
-  createdAt?: string;
-  address: Address;
-  score?: number;
-  meta?: {
-    [key: string]: Item;
-  };
-  version?: number;
-  attestation?: string;
-  eas_hash?: string;
-  ipfs_hash?: string;
-  receipt?: string;
-}
+import { ScoreRecord } from '@/types';
 
 export async function updateScoreRecord(record: ScoreRecord) {
   try {

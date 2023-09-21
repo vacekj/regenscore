@@ -21,13 +21,14 @@ import React, { useEffect } from 'react';
 import { useAccount, useChainId } from 'wagmi';
 import { CATEGORY_TOOLTIP, CategoryTooltipKeyType } from '@/constants';
 import { formatTimestamp, formatNumber } from '@/utils/strings';
-import { useScore, useEAS } from '@/hooks';
+import { useEAS } from '@/hooks';
 import { Arrow } from '@/components/ScoreMeter';
 import { useBreakpointValue } from '@chakra-ui/react';
 import useSWR from 'swr';
 import supabase from '@/utils/supabase-client';
 import { Check } from '@/components/Check';
 import { Hex } from 'viem';
+import { useScoreContext } from '@/contexts/scoreContext';
 
 function InfoIcon(props: ChakraProps) {
   return (
@@ -52,6 +53,7 @@ function InfoIcon(props: ChakraProps) {
 const Hero: React.FC = () => {
   const currentChain = useChainId();
   const { address } = useAccount();
+
   const {
     fetchScore,
     score,
@@ -61,7 +63,8 @@ const Hero: React.FC = () => {
     categories,
     loading,
     error,
-  } = useScore(address);
+  } = useScoreContext(address);
+
   const { mintAttestation, lastAttestation } = useEAS(address);
   // TODO: do this somewhere else
   const network = currentChain === 11155111 ? 'sepolia' : 'optimism';
@@ -110,10 +113,11 @@ const Hero: React.FC = () => {
   });
 
   useEffect(() => {
-    if (!score) {
-      fetchScore();
+    if (!score && !loading) {
+      fetchScore('/api/score');
     }
   }, [score]);
+
   return (
     <Grid
       templateColumns={[

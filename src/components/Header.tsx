@@ -24,6 +24,7 @@ import Link from 'next/link';
 
 import { useScore } from '@/hooks';
 import { formatNumber } from '@/utils/strings';
+import { useScoreContext } from '@/contexts/scoreContext';
 
 const StyledWeb3NetworkSwitch = styled.div`
   --w3m-accent-color: rgba(0, 0, 0, 0.5); !important;
@@ -43,8 +44,8 @@ const Header: React.FC = () => {
   });
   const { address, isConnected } = useAccount();
   const { open } = useWeb3Modal();
-  const { score } = useScore(address);
-
+  const { score } = useScoreContext(address);
+  console.log('score', score);
   useEffect(() => {
     const handleScroll = () => {
       const newPos = window.pageYOffset;

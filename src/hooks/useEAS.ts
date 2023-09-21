@@ -10,7 +10,6 @@ import {
 } from '@wagmi/core';
 import { parseEther } from 'viem';
 
-import { useScore } from './index';
 import { fetchCurrentETHPrice } from '@/helpers/ethHelpers';
 import { getScoreAttestations } from '@/helpers/eas';
 import { ATTESTER_ADDRESS, ATTESTATION_FEE_USD } from '@/constants';
@@ -24,7 +23,6 @@ function useEAS(address: Address | string | Hex | undefined) {
   const toast = useToast();
   const { data: walletClient } = useWalletClient();
   const chainId = useChainId();
-  const { score, meta, data } = useScore(address);
   const [ethToUsdPrice, setEthToUsdPrice] = useState(0);
   // TODO: FIX TYPES
   const [attestations, setAttestations] = useState(null);

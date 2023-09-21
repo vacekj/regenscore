@@ -1,5 +1,5 @@
 import { Hex, getAddress } from 'viem';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 
 type Token = {
   category: string;
@@ -31,88 +31,72 @@ export function useScore(address: string | Hex | undefined) {
     { category: string; scoreAdded: number }[]
   >([]);
 
+  const memoizedAddress = useMemo(() => address, [address]);
+
   const reset = () => {
-    setLoading(false);
     setData(null);
     setCategories([]);
+    setLoading(false);
   };
 
-  const fetchScore = async () => {
+  const fetchScore = async (endpoint: string) => {
     if (!address) {
       reset();
       return;
     }
-    setLoading(true);
+
     try {
-      const res = await fetch('/api/score', {
+      if (loading) return;
+      setLoading(true);
+      const res = await fetch(endpoint, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          address: getAddress(address!),
-          // shouldUpdate: true,
-        }),
+        body: JSON.stringify({ address: getAddress(address!) }),
       });
+
       const resData = await res.json();
-      setLoading(false);
       setData(resData);
+      setLoading(false);
     } catch (error: any) {
-      setData(null);
-      setCategories([]);
+      reset();
       setError(error);
-      console.log({ error });
+    } finally {
+      setLoading(false);
     }
   };
 
   useEffect(() => {
-    const fetchMyData = async () => {
-      if (!address) {
-        reset();
-        return;
-      }
-      setLoading(true);
-      const res = await fetch('/api/myscore', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          address: getAddress(address!),
-        }),
-      });
-      const resData = await res.json();
-      setLoading(false);
-      setData(resData);
-    };
-    fetchMyData();
-  }, [address]);
+    fetchScore('/api/myscore');
+  }, [memoizedAddress]);
 
   useEffect(() => {
     setCategories([]);
     const meta = data?.meta;
+
     if (meta) {
       const newCategoryScores: Record<string, number> = {};
+
       Object.keys(meta)
         .filter((key) => key === 'tokenBalances' || !!meta[key].applies)
         .forEach((key: string) => {
           const item = meta[key] as Item;
-          if (typeof item === 'object' && item !== null) {
-            if (key === 'tokenBalances' && item.tokens) {
-              item.tokens.forEach((token: any) => {
-                if (token.applies) {
-                  newCategoryScores[item.category] =
-                    (newCategoryScores[item.category] || 0) +
-                    (token.scoreAdded || 0);
-                }
-              });
-            } else {
-              newCategoryScores[item.category] =
-                (newCategoryScores[item.category] || 0) +
-                (item.scoreAdded || 0);
-            }
+
+          if (key === 'tokenBalances' && item.tokens) {
+            item.tokens.forEach((token: any) => {
+              if (token.applies) {
+                newCategoryScores[item.category] =
+                  (newCategoryScores[item.category] || 0) +
+                  (token.scoreAdded || 0);
+              }
+            });
+          } else {
+            newCategoryScores[item.category] =
+              (newCategoryScores[item.category] || 0) + (item.scoreAdded || 0);
           }
         });
+
       setCategories(
         Object.entries(newCategoryScores).map(([category, scoreAdded]) => ({
           category,
@@ -120,11 +104,11 @@ export function useScore(address: string | Hex | undefined) {
         })),
       );
     }
-  }, [JSON.stringify(data), address]);
+  }, [JSON.stringify(data)]);
 
   return {
     fetchScore,
-    score: data?.score,
+    score: data?.score || 0,
     meta: data?.meta,
     data,
     version: data?.version || 0,
