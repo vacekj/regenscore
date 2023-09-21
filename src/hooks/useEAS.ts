@@ -130,6 +130,24 @@ function useEAS(address: Address | string | Hex | undefined) {
         isClosable: true,
       });
 
+      // Upload to IPFS
+      const pinataRes = await fetch('/api/pinataUpload', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          meta,
+          address: getAddress(address!),
+        }),
+      });
+      const { ipfsHash } = await pinataRes.json();
+
+      if (!ipfsHash) {
+        console.error('Failed to upload to Pinata');
+        return;
+      }
+
       const res = await fetch('/api/attest', {
         method: 'POST',
         headers: {
@@ -142,6 +160,7 @@ function useEAS(address: Address | string | Hex | undefined) {
           meta,
           network: chainId,
           receipt: txReceipt,
+          ipfsHash,
         }),
       });
       console.log({ res });
