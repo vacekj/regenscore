@@ -18,7 +18,7 @@ import {
   Container,
 } from '@chakra-ui/react';
 import React, { useEffect } from 'react';
-import { useAccount, useChainId } from 'wagmi';
+import { useAccount, useNetwork } from 'wagmi';
 import { CATEGORY_TOOLTIP, CategoryTooltipKeyType } from '@/constants';
 import { formatTimestamp, formatNumber } from '@/utils/strings';
 import { useEAS } from '@/hooks';
@@ -51,7 +51,8 @@ function InfoIcon(props: ChakraProps) {
 }
 
 const Hero: React.FC = () => {
-  const currentChain = useChainId();
+  const { chain } = useNetwork();
+  const currentChain = chain?.id;
   const { address } = useAccount();
 
   const {

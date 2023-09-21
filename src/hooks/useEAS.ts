@@ -2,7 +2,7 @@ import { Address, Hex, getAddress } from 'viem';
 import { useState, useEffect } from 'react';
 import { useToast } from '@chakra-ui/react';
 
-import { useWalletClient, useChainId } from 'wagmi';
+import { useWalletClient, useNetwork } from 'wagmi';
 import {
   waitForTransaction,
   sendTransaction,
@@ -22,7 +22,8 @@ import { formatNumber } from '@/utils/strings';
 function useEAS(address: Address | string | Hex | undefined) {
   const toast = useToast();
   const { data: walletClient } = useWalletClient();
-  const chainId = useChainId();
+  const { chain } = useNetwork();
+  const chainId = chain?.id;
   const [ethToUsdPrice, setEthToUsdPrice] = useState(0);
   // TODO: FIX TYPES
   const [attestations, setAttestations] = useState(null);
@@ -81,7 +82,7 @@ function useEAS(address: Address | string | Hex | undefined) {
   };
 
   const fetchAttestations = async () => {
-    if (address) {
+    if (address && chainId) {
       const fetch = await getScoreAttestations(getAddress(address), chainId);
       const attestations = fetch?.attestations;
       setAttestations(attestations);
@@ -95,6 +96,10 @@ function useEAS(address: Address | string | Hex | undefined) {
 
   const mintAttestation = async (score: number, meta: any, scoreData: any) => {
     try {
+      // check right network
+      if (chainId !== 11155111 && chainId !== 10)
+        throw new Error('Wrong network');
+
       console.log({ address, score, meta, scoreData });
       if (
         !scoreData ||
