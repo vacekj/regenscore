@@ -478,7 +478,7 @@ const Hero: React.FC = () => {
                       MINT ATTESTATION
                     </Button>
                   )}
-                  {score && (
+                  {/* {score && (
                     <Button
                       mb={['63.54px', '40px', '40px', '0', '0']}
                       variant="variant4"
@@ -503,7 +503,7 @@ const Hero: React.FC = () => {
                         />
                       </svg>
                     </Button>
-                  )}
+                  )} */}
                 </CardBody>
               </Flex>
             </Flex>
