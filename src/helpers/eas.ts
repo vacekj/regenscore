@@ -36,7 +36,6 @@ export const createAttestation = async (
 
     // Our current schema UID
     const schemaUID = RegenScoreSchemaUID;
-
     const attestation = await eas.attest({
       schema: schemaUID,
       data: {
@@ -49,9 +48,9 @@ export const createAttestation = async (
     const newAttestationHash = attestation.tx.hash;
     console.log('New attestation Hash:', newAttestationHash);
     return newAttestationHash;
-  } catch (error) {
+  } catch (error: any) {
     console.log({ error });
-    return false;
+    throw error;
   }
 };
 

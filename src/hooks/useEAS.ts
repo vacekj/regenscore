@@ -167,7 +167,7 @@ function useEAS(address: Address | string | Hex | undefined) {
       });
       const attest = await res.json();
       console.log('EAS Hash: ', attest);
-      if (attest?.error) throw new Error(attest.error);
+      if (attest?.error) throw attest.error;
 
       const attestationIDTx = await waitForTransaction({
         chainId,
@@ -200,7 +200,9 @@ function useEAS(address: Address | string | Hex | undefined) {
       console.error('Error in mintAttestation:', error);
       toast({
         title: 'Error',
-        description: `Error in mintAttestation: ${error.message}`,
+        description: `Error in mintAttestation: ${
+          error.message || error.reason
+        }`,
         status: 'error',
         duration: 9000,
         isClosable: true,

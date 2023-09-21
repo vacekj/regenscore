@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { ethers } from 'ethers';
+import { utils } from 'ethers';
 import eas from '@/helpers/eas';
 import ethHelpers from '@/helpers/ethHelpers';
 import easUtils from '@/utils/eas-wagmi-utils';
@@ -28,7 +28,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       !ipfsHash
     )
       return res.status(400).json({ error: 'Missing data' });
-
     console.time('handleReceipt');
     try {
       await dbHelpers.handleReceipt(receipt, address);
@@ -61,8 +60,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       console.timeEnd('getEthPriceAt');
 
       const transactionValueUSD =
-        parseFloat(ethers.utils.formatEther(transaction.value)) *
-        ethPriceAtTime;
+        parseFloat(utils.formatEther(transaction.value)) * ethPriceAtTime;
       const requiredUSDValue = ATTESTATION_FEE_USD;
 
       if (
