@@ -15,6 +15,7 @@ import { fetchCurrentETHPrice } from '@/helpers/ethHelpers';
 import { getScoreAttestations } from '@/helpers/eas';
 import { ATTESTER_ADDRESS, ATTESTATION_FEE_USD } from '@/constants';
 import { checkPendingReceipt } from '@/helpers/databaseHelpers';
+import { formatNumber } from '@/utils/strings';
 
 function useEAS(address: Address | string | Hex | undefined) {
   const toast = useToast();
@@ -94,7 +95,15 @@ function useEAS(address: Address | string | Hex | undefined) {
   const mintAttestation = async (score: number, meta: any, scoreData: any) => {
     try {
       console.log({ address, score, meta, scoreData });
-      if (!scoreData || !address || !score || !meta || !walletClient) return;
+      if (
+        !scoreData ||
+        !chainId ||
+        !address ||
+        !score ||
+        !meta ||
+        !walletClient
+      )
+        return;
       toast({
         title: 'Payment',
         description: "We're sending a payment transaction",
@@ -129,13 +138,15 @@ function useEAS(address: Address | string | Hex | undefined) {
         body: JSON.stringify({
           data: scoreData,
           address: getAddress(address!),
-          score: parseInt(score.toString()),
+          score: formatNumber(score),
           meta,
           network: chainId,
           receipt: txReceipt,
         }),
       });
+      console.log({ res });
       const attest = await res.json();
+      console.log({ attest });
       if (attest?.error) throw new Error(attest.error);
 
       fetchAttestations();
