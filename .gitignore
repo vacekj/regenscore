@@ -119,3 +119,6 @@ dist
 .DS_Store
 .env*.local
 .env.local
+
+# Sentry Auth Token
+.sentryclirc
