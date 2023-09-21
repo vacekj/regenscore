@@ -14,7 +14,10 @@ import { useScore } from './index';
 import { fetchCurrentETHPrice } from '@/helpers/ethHelpers';
 import { getScoreAttestations } from '@/helpers/eas';
 import { ATTESTER_ADDRESS, ATTESTATION_FEE_USD } from '@/constants';
-import { checkPendingReceipt } from '@/helpers/databaseHelpers';
+import {
+  checkPendingReceipt,
+  updateScoreRecord,
+} from '@/helpers/databaseHelpers';
 import { formatNumber } from '@/utils/strings';
 
 function useEAS(address: Address | string | Hex | undefined) {
@@ -59,7 +62,7 @@ function useEAS(address: Address | string | Hex | undefined) {
           ),
         });
         const { hash } = await sendTransaction(request);
-        console.log({ hash });
+        console.log('Fee payment hash: ', hash);
         const newReceipt = await waitForTransaction({ chainId, hash });
         if (newReceipt?.status === 'success') {
           receipt = hash;
@@ -113,7 +116,8 @@ function useEAS(address: Address | string | Hex | undefined) {
       });
       // Charge fee in ETH
       const txReceipt = await chargeUserInETH();
-      console.log({ txReceipt });
+      console.log('Transaction Receipt: ', txReceipt);
+
       if (!txReceipt)
         return toast({
           title: 'Error',
@@ -163,13 +167,29 @@ function useEAS(address: Address | string | Hex | undefined) {
           ipfsHash,
         }),
       });
-      console.log({ res });
       const attest = await res.json();
-      console.log({ attest });
+      console.log('EAS Hash: ', attest);
       if (attest?.error) throw new Error(attest.error);
+
+      const attestationIDTx = await waitForTransaction({
+        chainId,
+        hash: attest,
+      });
+      const attestationID = attestationIDTx.logs[0].data;
+      console.log('Mined attestation UID:', attestationID);
 
       fetchAttestations();
       console.log('attestationUID', attest);
+      await updateScoreRecord({
+        id: scoreData.id,
+        address: getAddress(address!),
+        meta,
+        score,
+        version: scoreData.version,
+        ipfs_hash: ipfsHash,
+        receipt: txReceipt,
+        attestation: attestationID,
+      });
       toast({
         title: 'Done!',
         description: 'We have created your attestation.',

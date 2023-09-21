@@ -13,9 +13,12 @@ import { ATTESTER_ADDRESS, ATTESTATION_FEE_USD } from '@/constants';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   try {
+    console.time('Total Execution Time');
+
     const attesterPvtKey = process.env.ATTESTER_PVT_KEY;
     if (!attesterPvtKey)
       return res.status(400).json({ error: 'No attester set' });
+
     const body = req.body;
     const { data, address, score, meta, network, receipt, ipfsHash } = body;
     if (
@@ -29,35 +32,45 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     )
       return res.status(400).json({ error: 'Missing data' });
 
-    // Check if the receipt has already been used
+    console.time('handleReceipt');
     try {
       await handleReceipt(receipt, address);
     } catch (error) {
       return res.status(400).json({ error: error });
     }
+    console.timeEnd('handleReceipt');
 
+    console.time('privateKeyToSigner');
     const { signer, provider } = privateKeyToSigner(attesterPvtKey, network);
-    // check receipt
+    console.timeEnd('privateKeyToSigner');
+
+    console.time('getTransaction');
     const transaction = await provider.getTransaction(receipt);
+    console.timeEnd('getTransaction');
 
     if (transaction && transaction.blockNumber !== undefined) {
+      console.time('getBlock');
       const transactionTimestamp = (
         await provider.getBlock(transaction.blockNumber)
       ).timestamp;
+      console.timeEnd('getBlock');
+
+      console.time('getEthPriceAt');
       const ethPriceAtTime = await getEthPriceAt(transactionTimestamp);
+      console.timeEnd('getEthPriceAt');
+
       const transactionValueUSD =
         parseFloat(ethers.utils.formatEther(transaction.value)) *
         ethPriceAtTime;
       const requiredUSDValue = ATTESTATION_FEE_USD;
 
-      // Receipt Validation: Correct from and to, enough confirmations and right amount payed
       if (
         transaction.from.toLowerCase() === address.toLowerCase() &&
         transaction.to?.toLowerCase() === ATTESTER_ADDRESS.toLowerCase() &&
         transaction.confirmations > 0 &&
         Math.abs(transactionValueUSD - requiredUSDValue) <= 0.05
       ) {
-        // It's ok to attest
+        console.time('createAttestation');
         const result = await createAttestation(
           address,
           score,
@@ -65,20 +78,26 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
           signer,
           network,
         );
-        // updates score
+        console.timeEnd('createAttestation');
+
+        console.time('updateScoreRecord');
         await updateScoreRecord({
           id: data.id,
           address,
           meta,
           score,
           version: data.version,
-          attestation: result.toString(),
+          eas_hash: result.toString(),
           ipfs_hash: ipfsHash,
           receipt,
         });
+        console.timeEnd('updateScoreRecord');
 
-        // updates receipt
+        console.time('markReceiptAsUsed');
         await markReceiptAsUsed(receipt);
+        console.timeEnd('markReceiptAsUsed');
+
+        console.timeEnd('Total Execution Time');
         return res.status(200).json(result);
       } else {
         return res.status(400).json({ error: 'Receipt not valid' });
@@ -88,6 +107,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     }
   } catch (error) {
     console.log({ error });
-    return res.status(400).send({ error }); // send an empty debug object on error
+    console.timeEnd('Total Execution Time');
+    return res.status(400).send({ error });
   }
 };

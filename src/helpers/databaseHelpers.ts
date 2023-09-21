@@ -25,6 +25,7 @@ interface ScoreRecord {
   };
   version?: number;
   attestation?: string;
+  eas_hash?: string;
   ipfs_hash?: string;
   receipt?: string;
 }
@@ -33,15 +34,12 @@ export async function updateScoreRecord(record: ScoreRecord) {
   try {
     const { id, address, receipt, ...data } = record;
     const updatedData = { ...data, receipt };
-    console.log({ record });
     // Updates data on record: Needed for changing the used receipt
     const { data: existingData, error: selectError } = await supabase
       .from('scores')
       .select('*')
       .eq('id', id)
       .single();
-
-    console.log({ existingData });
 
     if (existingData) {
       // Update the existing record

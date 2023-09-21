@@ -114,7 +114,6 @@ const Hero: React.FC = () => {
       fetchScore();
     }
   }, [score]);
-
   return (
     <Grid
       templateColumns={[
@@ -435,48 +434,72 @@ const Hero: React.FC = () => {
                       <Text
                         fontSize="13px"
                         fontFamily="Inter-Regular"
-                        color="#354728"
-                        opacity="0.5"
-                      >
-                        <Link
-                          color="#354728"
-                          textDecoration={'underline'}
-                          href={`https://${network}.easscan.org/attestation/view/${lastAttestation?.id}`}
-                        >
-                          Last Updated
-                        </Link>
-                      </Text>
-                      <Text
-                        fontSize="13px"
-                        fontFamily="Inter-Regular"
                         ml="2px"
                         color="#354728"
                         opacity="0.5"
                         pl="5px"
                       >
+                        Last Updated{' '}
                         {formatTimestamp(new Date(created_at.created_at))}
                       </Text>
                     </div>
                   )}
 
-                  {score && (
-                    <Button
-                      mb={['63.54px', '40px', '40px', '0', '0']}
-                      variant="variant3"
-                      marginTop="26.76px"
-                      mr="8.25px"
-                      cursor={'pointer'}
-                      ml={['0px', '-5px']}
-                      onClick={() => {
-                        try {
-                          mintAttestation(score, meta, data);
-                        } catch (error) {
-                          console.log({ error });
-                        }
-                      }}
-                    >
-                      MINT ATTESTATION
-                    </Button>
+                  {score && lastAttestation ? (
+                    <Flex w="200px" flexDir="column" textAlign={'center'}>
+                      <Button
+                        mb={['63.54px', '40px', '40px', '0', '0']}
+                        variant="variant3"
+                        marginTop="26.76px"
+                        mr="8.25px"
+                        cursor={'pointer'}
+                        ml={['0px', '-5px']}
+                        onClick={() => {
+                          try {
+                            window.open(
+                              `https://${network}.easscan.org/attestation/view/${lastAttestation?.id}`,
+                            );
+                          } catch (error) {
+                            console.log({ error });
+                          }
+                        }}
+                      >
+                        View Attestation
+                      </Button>
+                      <Link
+                        cursor="pointer"
+                        mt="1"
+                        onClick={() => {
+                          try {
+                            mintAttestation(score, meta, data);
+                          } catch (error) {
+                            console.log({ error });
+                          }
+                        }}
+                      >
+                        Mint again
+                      </Link>
+                    </Flex>
+                  ) : (
+                    !!score && (
+                      <Button
+                        mb={['63.54px', '40px', '40px', '0', '0']}
+                        variant="variant3"
+                        marginTop="26.76px"
+                        mr="8.25px"
+                        cursor={'pointer'}
+                        ml={['0px', '-5px']}
+                        onClick={() => {
+                          try {
+                            mintAttestation(score, meta, data);
+                          } catch (error) {
+                            console.log({ error });
+                          }
+                        }}
+                      >
+                        MINT ATTESTATION
+                      </Button>
+                    )
                   )}
                   {/* {score && (
                     <Button
