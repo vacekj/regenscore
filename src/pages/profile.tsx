@@ -26,6 +26,7 @@ export default function Mint() {
         >
           <MintYour />
         </Flex>
+        {/*DEPLOY TRIGGER*/}
         <TrackedActivity />
       </Layout>
     </>
