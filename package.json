@@ -24,6 +24,7 @@
     "@ethersproject/providers": "^5.7.2",
     "@hotjar/browser": "^1.0.9",
     "@pinata/sdk": "^2.1.0",
+    "@sentry/nextjs": "^7.70.0",
     "@supabase/supabase-js": "^2.33.1",
     "@wagmi/core": "^1.4.2",
     "@web3modal/ethereum": "^2.7.1",
