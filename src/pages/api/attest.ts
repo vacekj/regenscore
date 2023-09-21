@@ -8,7 +8,6 @@ import {
   handleReceipt,
   markReceiptAsUsed,
 } from '@/helpers/databaseHelpers';
-import pinataSDK from '@pinata/sdk';
 import { ATTESTER_ADDRESS, ATTESTATION_FEE_USD } from '@/constants';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {

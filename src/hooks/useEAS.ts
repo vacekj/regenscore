@@ -151,7 +151,7 @@ function useEAS(address: Address | string | Hex | undefined) {
         console.error('Failed to upload to Pinata');
         return;
       }
-
+      console.log('IPFS Hash: ', ipfsHash);
       const res = await fetch('/api/attest', {
         method: 'POST',
         headers: {
