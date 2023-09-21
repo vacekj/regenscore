@@ -56,12 +56,12 @@ const Hero: React.FC = () => {
     fetchScore,
     score,
     meta,
+    data,
     version: scoreVersion,
     categories,
     loading,
     error,
   } = useScore(address);
-  console.log({ score, meta, loading });
   const { mintAttestation, lastAttestation } = useEAS(address);
   // TODO: do this somewhere else
   const network = currentChain === 11155111 ? 'sepolia' : 'optimism';
@@ -469,7 +469,7 @@ const Hero: React.FC = () => {
                       ml={['0px', '-5px']}
                       onClick={() => {
                         try {
-                          mintAttestation(score, meta);
+                          mintAttestation(score, meta, data);
                         } catch (error) {
                           console.log({ error });
                         }

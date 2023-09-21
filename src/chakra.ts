@@ -56,7 +56,7 @@ export const theme = extendTheme({
         variant1: {
           // Metamask
           width: '249px',
-          height: '64px',
+          height: '64px !important',
           minWidth: '192px',
           color: 'brand.deepGreen.400',
           px: '2rem',

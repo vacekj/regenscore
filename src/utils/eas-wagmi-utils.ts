@@ -11,7 +11,7 @@ export function privateKeyToSigner(privateKey: string, chainId: number) {
     chainId,
     name: chainId === 11155111 ? 'Sepolia' : 'Optimism',
     url: `https://${
-      chainId === 11155111 ? 'sepolia' : 'optimism'
+      chainId === 11155111 ? 'sepolia' : 'optimism-mainnet'
     }.infura.io/v3/${process.env.NEXT_PUBLIC_INFURA_PROJECT_ID}`,
   };
   const wallet = new Wallet(privateKey);

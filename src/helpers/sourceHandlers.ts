@@ -301,12 +301,14 @@ export async function handleTokenBalances(
 export async function handleGRDonations(
   address: Address,
   meta: any,
+  points: number,
 ): Promise<number> {
   let scoreAdded = 0;
   try {
     const grDonations = await fetchGRDonations(address);
+    console.log({ grDonations });
     if (grDonations.length > 0) {
-      scoreAdded += 10;
+      scoreAdded += points; // TODO: check on project and give it 10 each project donated
       meta.grDonations = {
         ...meta.grDonations,
         scoreAdded,
@@ -522,13 +524,12 @@ export async function handleTxsMadeOnOptimism(
 export async function handleOPContractsInteractions(
   address: Address,
   meta: any,
-  points: number,
 ) {
   const { interactedWithContracts, deployedContracts, createdGnosisSafe } =
     await getAddressOPTxHistory(address);
   let scoreAdded = 0;
-  if (interactedWithContracts) scoreAdded += points;
-  if (deployedContracts) scoreAdded += points;
+  if (interactedWithContracts) scoreAdded += 200;
+  if (deployedContracts) scoreAdded += 500;
   // if (createdGnosisSafe) scoreAdded += 10; // Commented as it's being checked in handleSafeOwnershipAndActivity
   meta.optimismTxHistory = {
     ...meta.optimismTxHistory,
@@ -545,15 +546,14 @@ export async function handleOPContractsInteractions(
 export async function handleSafeOwnershipAndActivity(
   address: Address,
   meta: any,
-  points: number,
 ) {
   let scoreAdded = 0;
   const { ownsSafe, hasExecutedTransaction, belongsToTreasury } =
     await checkSafeOwnershipAndActivity(address);
 
-  if (hasExecutedTransaction) scoreAdded += points;
-  if (belongsToTreasury) scoreAdded += points;
-  if (ownsSafe) scoreAdded += points;
+  if (hasExecutedTransaction) scoreAdded += 500;
+  if (belongsToTreasury) scoreAdded += 500;
+  if (ownsSafe) scoreAdded += 400;
 
   meta.safeOwnerActivity = {
     ...meta.safeOwnerActivity,
@@ -619,10 +619,14 @@ export async function handleOPAirdropReceiver(address: Address, meta: any) {
   }
 }
 
-export async function handleGitcoinProjectOwner(address: Address, meta: any) {
+export async function handleGitcoinProjectOwner(
+  address: Address,
+  meta: any,
+  points: number,
+) {
   let scoreAdded = 0;
   const isProjectOwner = await hasAGitcoinProject(address);
-  if (isProjectOwner) scoreAdded += 10;
+  if (isProjectOwner) scoreAdded += points;
   meta.gitcoinProjectOwner = {
     ...meta.gitcoinProjectOwner,
     isProjectOwner,
@@ -683,11 +687,7 @@ export async function handleRegenPOAPs(
   }
 }
 
-export async function handleGivethActivity(
-  address: Address,
-  meta: any,
-  points: number,
-) {
+export async function handleGivethActivity(address: Address, meta: any) {
   let scoreAdded = 0;
   const query = `
   query {
@@ -714,10 +714,10 @@ export async function handleGivethActivity(
     const givethActivity = result?.data?.walletAddressUsed;
     const { hasRelatedProject, hasDonated } = givethActivity;
     if (hasRelatedProject) {
-      scoreAdded += points;
+      scoreAdded += 200;
     }
     if (hasDonated) {
-      scoreAdded += points;
+      scoreAdded += 100;
     }
     meta.givethActivity = {
       ...meta.givethActivity,

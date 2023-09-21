@@ -18,7 +18,9 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       return res.status(400).json({ error: 'No attester set' });
     const body = req.body;
     const { data, address, score, meta, network, receipt } = body;
-    console.log({ body });
+    if (!data || !address || !score || !meta || !network || !receipt)
+      return res.status(400).json({ error: 'Missing data' });
+
     // Check if the receipt has already been used
     try {
       await handleReceipt(receipt, address);
@@ -59,21 +61,22 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
           },
         };
         const ipfs = await pinata.pinJSONToIPFS(meta, options);
-        console.log({ ipfs, receipt });
+        console.log({ ipfs, receipt, data });
         if (!ipfs) return res.status(400).json({ error: 'IPFS upload failed' });
         const result = await createAttestation(
           address,
           score,
           ipfs.IpfsHash,
           signer,
+          network,
         );
-
         // updates score
         await updateScoreRecord({
           id: data.id,
           address,
           meta,
           score,
+          version: data.version,
           attestation: result.toString(),
           ipfs_hash: ipfs.IpfsHash,
           receipt,

@@ -29,7 +29,7 @@ const MyCard = () => {
         margin="0 auto"
         padding="32px 24px"
       >
-        <CardHeader padding="0px">
+        {/* <CardHeader padding="0px">
           <Flex alignItems="center">
             <Share />
             <Heading
@@ -44,7 +44,7 @@ const MyCard = () => {
             <Spacer />
             <CrossTT />
           </Flex>
-        </CardHeader>
+        </CardHeader> */}
         <CardBody padding="0px">
           <Flex
             justifyContent={['center']}

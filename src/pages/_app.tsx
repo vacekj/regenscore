@@ -6,7 +6,7 @@ import {
 import { Web3Modal } from '@web3modal/react';
 import { infuraProvider } from 'wagmi/providers/infura';
 import { configureChains, createConfig, WagmiConfig } from 'wagmi';
-import { sepolia } from 'wagmi/chains';
+import { optimism } from 'wagmi/chains';
 
 import { AnimatePresence } from 'framer-motion';
 import { ChakraProvider } from '@chakra-ui/react';
@@ -17,7 +17,7 @@ import './styles.css';
 import CustomHead from '../components/CustomHead';
 
 // const chains = [optimism, sepolia];
-const chains = [sepolia];
+const chains = [optimism];
 const projectId = 'df4f5f1b03670ef123bd5ee18401d0de';
 
 const { publicClient } = configureChains(chains, [
