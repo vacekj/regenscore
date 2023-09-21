@@ -110,7 +110,7 @@ export async function checkPendingReceipt(payer: string) {
     return data?.receipt;
   } catch (error) {
     console.error('Error checking for pending receipt:', error);
-    throw error;
+    return false;
   }
 }
 
