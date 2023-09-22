@@ -14,7 +14,7 @@ export type Item = {
 };
 
 export interface ScoreRecord {
-  id: number;
+  id?: number;
   createdAt?: string;
   address: Address;
   score?: number;

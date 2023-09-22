@@ -1,30 +1,43 @@
 import supabase from '@/utils/supabase-client';
 import { ScoreRecord } from '@/types';
 
-export async function updateScoreRecord(record: ScoreRecord) {
+export async function updateScoreRecord(record: ScoreRecord, id?: number) {
   try {
-    const { id, address, receipt, ...data } = record;
-    const updatedData = { ...data, receipt };
+    const { receipt } = record;
+    const updatedData = { ...record };
     // Updates data on record: Needed for changing the used receipt
-    const { data: existingData, error: selectError } = await supabase
-      .from('scores')
-      .select('*')
-      .eq('id', id)
-      .single();
+    let existingData = null;
+    if (!!id) {
+      const { data: fetch } = await supabase
+        .from('scores')
+        .select('*')
+        .eq('id', id)
+        .single();
+      existingData = fetch;
+    } else {
+      // searches by receipt
+      const { data: fetch } = await supabase
+        .from('scores')
+        .select('*')
+        .eq('receipt', receipt)
+        .single();
+      existingData = fetch;
+    }
+    console.log({ record, existingData });
 
     if (existingData) {
       // Update the existing record
       const { error: updateError } = await supabase
         .from('scores')
-        .update(updatedData)
-        .eq('id', id);
+        .update({ ...updatedData })
+        .eq('id', existingData.id);
 
       if (updateError) throw updateError;
     } else {
       // Insert a new record
       const { error: insertError } = await supabase
         .from('scores')
-        .insert([{ address, ...updatedData }]);
+        .insert([{ ...updatedData }]);
 
       if (insertError) throw insertError;
     }

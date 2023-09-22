@@ -76,16 +76,18 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
         console.time('updateScoreRecord and markReceiptAsUsed');
         const [_, __] = await Promise.all([
-          dbHelpers.updateScoreRecord({
-            id: data.id,
-            address,
-            meta,
-            score,
-            version: data.version,
-            eas_hash: result.toString(),
-            ipfs_hash: ipfsHash,
-            receipt,
-          }),
+          dbHelpers.updateScoreRecord(
+            {
+              address,
+              meta,
+              score,
+              version: data.version,
+              eas_hash: result.toString(),
+              ipfs_hash: ipfsHash,
+              receipt,
+            },
+            data.id,
+          ),
           dbHelpers.markReceiptAsUsed(receipt),
         ]);
         console.timeEnd('updateScoreRecord and markReceiptAsUsed');

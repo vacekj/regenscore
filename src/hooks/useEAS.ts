@@ -13,10 +13,7 @@ import { parseEther } from 'viem';
 import { fetchCurrentETHPrice } from '@/helpers/ethHelpers';
 import { getScoreAttestations } from '@/helpers/eas';
 import { ATTESTER_ADDRESS, ATTESTATION_FEE_USD } from '@/constants';
-import {
-  checkPendingReceipt,
-  updateScoreRecord,
-} from '@/helpers/databaseHelpers';
+import { checkPendingReceipt } from '@/helpers/databaseHelpers';
 import { formatNumber } from '@/utils/strings';
 
 function useEAS(address: Address | string | Hex | undefined) {
@@ -180,19 +177,26 @@ function useEAS(address: Address | string | Hex | undefined) {
       });
       const attestationID = attestationIDTx.logs[0].data;
       console.log('Mined attestation UID:', attestationID);
-
       fetchAttestations();
-      console.log('attestationUID', attest);
-      await updateScoreRecord({
-        id: scoreData.id,
-        address: getAddress(address!),
-        meta,
-        score,
-        version: scoreData.version,
-        ipfs_hash: ipfsHash,
-        receipt: txReceipt,
-        attestation: attestationID,
+      const updateRecord = await fetch('/api/updateRecord', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          record: {
+            address: getAddress(address!),
+            meta,
+            score,
+            version: scoreData.version,
+            ipfs_hash: ipfsHash,
+            receipt: txReceipt,
+            attestation: attestationID,
+          },
+          id: scoreData.id,
+        }),
       });
+      const udpatedRecordData = await updateRecord.json();
       toast({
         title: 'Done!',
         description: 'We have created your attestation.',
