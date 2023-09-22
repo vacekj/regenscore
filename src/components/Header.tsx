@@ -86,9 +86,9 @@ const Header: React.FC = () => {
             Connect Wallet
           </Button>
         )}
-        {score && !isMobile && (
+        {score > 0 && !isMobile && (
           <Text variant={'bold'} textTransform={'uppercase'}>
-            Score: {formatNumber(score)}
+            {formatNumber(score)}
           </Text>
         )}
       </>
