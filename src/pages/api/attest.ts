@@ -28,13 +28,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       !ipfsHash
     )
       return res.status(400).json({ error: 'Missing data' });
-    console.time('handleReceipt');
-    try {
-      await dbHelpers.handleReceipt(receipt, address);
-    } catch (error) {
-      return res.status(400).json({ error: error });
-    }
-    console.timeEnd('handleReceipt');
 
     console.time('privateKeyToSigner');
     const { signer, provider } = easUtils.privateKeyToSigner(
@@ -43,9 +36,12 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     );
     console.timeEnd('privateKeyToSigner');
 
-    console.time('getTransaction');
-    const transaction = await provider.getTransaction(receipt);
-    console.timeEnd('getTransaction');
+    console.time('handleReceipt and getTransaction');
+    const [_, transaction] = await Promise.all([
+      dbHelpers.handleReceipt(receipt, address),
+      provider.getTransaction(receipt),
+    ]);
+    console.timeEnd('handleReceipt and getTransaction');
 
     if (transaction && transaction.blockNumber !== undefined) {
       console.time('getBlock');
@@ -62,7 +58,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       const transactionValueUSD =
         parseFloat(utils.formatEther(transaction.value)) * ethPriceAtTime;
       const requiredUSDValue = ATTESTATION_FEE_USD;
-
       if (
         transaction.from.toLowerCase() === address.toLowerCase() &&
         transaction.to?.toLowerCase() === ATTESTER_ADDRESS.toLowerCase() &&
@@ -79,22 +74,21 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         );
         console.timeEnd('createAttestation');
 
-        console.time('updateScoreRecord');
-        await dbHelpers.updateScoreRecord({
-          id: data.id,
-          address,
-          meta,
-          score,
-          version: data.version,
-          eas_hash: result.toString(),
-          ipfs_hash: ipfsHash,
-          receipt,
-        });
-        console.timeEnd('updateScoreRecord');
-
-        console.time('markReceiptAsUsed');
-        await dbHelpers.markReceiptAsUsed(receipt);
-        console.timeEnd('markReceiptAsUsed');
+        console.time('updateScoreRecord and markReceiptAsUsed');
+        const [_, __] = await Promise.all([
+          dbHelpers.updateScoreRecord({
+            id: data.id,
+            address,
+            meta,
+            score,
+            version: data.version,
+            eas_hash: result.toString(),
+            ipfs_hash: ipfsHash,
+            receipt,
+          }),
+          dbHelpers.markReceiptAsUsed(receipt),
+        ]);
+        console.timeEnd('updateScoreRecord and markReceiptAsUsed');
 
         console.timeEnd('Total Execution Time');
         return res.status(200).json(result);
