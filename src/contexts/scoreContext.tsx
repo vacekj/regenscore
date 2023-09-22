@@ -19,7 +19,7 @@ const defaultScoreContext: ScoreContextType = {
   fetchScore: async () => {},
   score: 0,
   meta: {},
-  data: null, // Here's the change
+  data: null,
   version: 0,
   categories: [],
   loading: false,
