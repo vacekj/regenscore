@@ -40,7 +40,7 @@ export function useScore(address: string | Hex | undefined) {
   };
 
   const fetchScore = async (endpoint: string) => {
-    if (!address) {
+    if (!memoizedAddress) {
       reset();
       return;
     }
@@ -53,7 +53,7 @@ export function useScore(address: string | Hex | undefined) {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ address: getAddress(address!) }),
+        body: JSON.stringify({ address: getAddress(memoizedAddress!) }),
       });
 
       const resData = await res.json();
