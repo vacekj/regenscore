@@ -15,6 +15,7 @@ const processFile = async () => {
       'opAirdropScore',
       'TokenBalanceGIV',
       'TokenBalanceOP',
+      'GRDonations',
       'EthDeposits',
       'OptimismBridges',
       'OpTreasuryPayouts',
@@ -28,13 +29,13 @@ const processFile = async () => {
       'GitcoinPassportScore',
       'RegenPOAPs',
       'OptimismTxCount',
+      'TrustedSeedMember',
+      'GivethActivity',
       'TotalScore',
     ],
   ];
   const parser = fs
-    .createReadStream(
-      `${__dirname}/../public/data/trusted_seed_active_members.csv`,
-    )
+    .createReadStream(`${__dirname}/../public/data/op_sample_population.csv`)
     .pipe(parse({}));
 
   for await (const record of parser) {
@@ -52,6 +53,7 @@ const processFile = async () => {
         'false',
       meta.tokenBalances.tokens.find((tb: any) => tb.name === 'OP')?.value ||
         'false',
+      meta.grDonations?.value || 0,
       meta.ethDeposits?.value || 'false',
       meta.optimismBridges?.value || 0,
       meta.opTreasuryPayouts?.value || 0,
@@ -65,6 +67,8 @@ const processFile = async () => {
       meta.gitcoinPassport?.value || 'false',
       meta.regenPOAPs?.value || 'false',
       meta.txsMadeOnOptimism?.value || 'false',
+      meta.trustedSeedMember?.value || 'false',
+      meta.givethActivity?.value || 'false',
       score,
     ];
     records.push(row);
@@ -75,5 +79,5 @@ const processFile = async () => {
 (async () => {
   const records = await processFile();
   const csvText = stringify(records);
-  fs.writeFileSync('./trusted_seed_with_score.csv', csvText);
+  fs.writeFileSync('./op_population.csv', csvText);
 })();

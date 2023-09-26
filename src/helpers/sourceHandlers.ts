@@ -259,6 +259,7 @@ export async function handleTokenBalances(
       }
     } catch (error) {
       console.error(`Error fetching token balance for contract ${key}:`, error);
+      return 0;
     }
   }
   for (let key in list_of_balance_contract_optimism) {
@@ -292,6 +293,7 @@ export async function handleTokenBalances(
       }
     } catch (error) {
       console.error(`Error fetching token balance for contract ${key}:`, error);
+      return 0;
     }
   }
 
@@ -306,7 +308,6 @@ export async function handleGRDonations(
   let scoreAdded = 0;
   try {
     const grDonations = await fetchGRDonations(address);
-    console.log({ grDonations });
     if (grDonations.length > 0) {
       scoreAdded += points; // TODO: check on project and give it 10 each project donated
       meta.grDonations = {
@@ -614,7 +615,6 @@ export async function handleOPAirdropReceiver(address: Address, meta: any) {
 
     return score;
   } catch (error) {
-    console.log({ error });
     return 0;
   }
 }
@@ -682,7 +682,7 @@ export async function handleRegenPOAPs(
 
     return scoreAdded;
   } catch (error) {
-    console.log({ error });
+    // console.log({ error });
     return scoreAdded;
   }
 }
