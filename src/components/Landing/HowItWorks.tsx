@@ -44,7 +44,7 @@ const HowItWorks: React.FC = () => {
         />
         <BoxContent
           step={2}
-          title="Your profile"
+          title="Check out your profile"
           content={`See your Regen Score and learn more about how it is calculated. Check out attestations earned and how they impacted your score.`}
         />
         <BoxContent

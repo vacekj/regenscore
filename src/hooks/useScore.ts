@@ -1,5 +1,6 @@
 import { Hex, getAddress } from 'viem';
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, ReactNode } from 'react';
+import useSWR from 'swr';
 
 type Token = {
   category: string;
@@ -7,11 +8,11 @@ type Token = {
 };
 
 type Item = {
+  behavior: ReactNode;
   category: string;
   scoreAdded: number;
   tokens?: Token[];
   applies?: Boolean;
-  behavior: string;
 };
 
 type ResponseData = {

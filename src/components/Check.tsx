@@ -125,11 +125,7 @@ type Status =
   | 'SUCCESS'
   | 'WARNING'
   | 'ERROR'
-  | 'WARNING2'
-  | 'GTCLOGO'
-  | 'GIVETHLOGO'
-  | 'OPLOGO'
-  | 'ETHLOGO';
+  | 'WARNING2';
 
 type CheckProps = {
   status: Status;

@@ -17,6 +17,7 @@ import {
   Container,
   Show,
   Hide,
+  Skeleton,
 } from '@chakra-ui/react';
 
 import React from 'react';
@@ -28,6 +29,8 @@ import {
   GivethLogo,
   OptimismLogo,
 } from '@/components/Logo';
+import score from '@/pages/api/score';
+import error from 'next/error';
 import { useScoreContext } from '@/contexts/scoreContext';
 
 // TODO: FIX TYPE
@@ -70,7 +73,10 @@ const ActivityRow = ({ activity }: any) => {
 };
 
 const TrackedActivity = () => {
+  const { address } = useAccount();
+  const { meta, loading, error } = useScore(address);
   const { meta } = useScoreContext();
+
   return (
     <Flex
       flexDir="column"
