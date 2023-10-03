@@ -74,7 +74,6 @@ const ActivityRow = ({ activity }: any) => {
 
 const TrackedActivity = () => {
   const { address } = useAccount();
-  const { meta, loading, error } = useScore(address);
   const { meta } = useScoreContext();
 
   return (

@@ -1,4 +1,5 @@
 import { Address } from 'viem';
+import { ReactNode } from 'react';
 
 export type Token = {
   category: string;
@@ -10,7 +11,7 @@ export type Item = {
   scoreAdded: number;
   tokens?: Token[];
   applies?: Boolean;
-  behavior: string;
+  behavior: ReactNode;
 };
 
 export interface ScoreRecord {
