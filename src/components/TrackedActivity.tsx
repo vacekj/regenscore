@@ -11,13 +11,10 @@ import {
   Flex,
   Text,
   Tooltip,
-  Box,
   Grid,
   GridItem,
   Container,
   Show,
-  Hide,
-  Skeleton,
 } from '@chakra-ui/react';
 
 import React from 'react';
@@ -27,10 +24,10 @@ import {
   EthLogo,
   GitcoinLogo,
   GivethLogo,
+  GnosisSafeLogo,
   OptimismLogo,
+  TrustedSeedLogo,
 } from '@/components/Logo';
-import score from '@/pages/api/score';
-import error from 'next/error';
 import { useScoreContext } from '@/contexts/scoreContext';
 
 // TODO: FIX TYPE
@@ -59,6 +56,8 @@ const ActivityRow = ({ activity }: any) => {
         {source === 'Gitcoin' && <GitcoinLogo />}
         {source === 'Giveth' && <GivethLogo />}
         {source === 'Mainnet' && <EthLogo />}
+        {source === 'Trusted Seed' && <TrustedSeedLogo />}
+        {source === 'Gnosis Safe' && <GnosisSafeLogo />}
         {source}
       </Td>
       <Td>{activity.behavior}</Td>
@@ -73,7 +72,6 @@ const ActivityRow = ({ activity }: any) => {
 };
 
 const TrackedActivity = () => {
-  const { address } = useAccount();
   const { meta } = useScoreContext();
 
   return (
