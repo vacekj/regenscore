@@ -17,7 +17,7 @@ import {
   ChakraProps,
   Container,
 } from '@chakra-ui/react';
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAccount, useNetwork } from 'wagmi';
 import { CATEGORY_TOOLTIP, CategoryTooltipKeyType } from '@/constants';
 import { formatTimestamp, formatNumber } from '@/utils/strings';
@@ -27,6 +27,7 @@ import { useBreakpointValue } from '@chakra-ui/react';
 import useSWR from 'swr';
 import supabase from '@/utils/supabase-client';
 import { Check } from '@/components/Check';
+import ShareModal from '@/components/Modals/ShareModal';
 import { Hex } from 'viem';
 import { useScoreContext } from '@/contexts/scoreContext';
 
@@ -104,7 +105,7 @@ const Hero: React.FC = () => {
       throw error;
     }
   });
-
+  const [showShareModal, setShowShareModal] = useState(true);
   const scale = useBreakpointValue({
     base: 0.5,
     sm: 0.8,
@@ -154,6 +155,7 @@ const Hero: React.FC = () => {
       maxWidth="1386px"
       marginX="auto"
     >
+      {showShareModal && <ShareModal setShowModal={setShowShareModal} />}
       <Box
         position="absolute"
         top="0"

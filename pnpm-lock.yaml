@@ -68,6 +68,9 @@ dependencies:
   react:
     specifier: ^18.2.0
     version: 18.2.0
+  react-custom-scrollbars:
+    specifier: ^4.2.1
+    version: 4.2.1(react-dom@18.2.0)(react@18.2.0)
   react-dom:
     specifier: ^18.2.0
     version: 18.2.0(react@18.2.0)
@@ -77,6 +80,9 @@ dependencies:
   react-icons:
     specifier: ^4.10.1
     version: 4.11.0(react@18.2.0)
+  react-share:
+    specifier: ^4.4.1
+    version: 4.4.1(react@18.2.0)
   swr:
     specifier: ^2.2.1
     version: 2.2.4(react@18.2.0)
@@ -106,6 +112,12 @@ devDependencies:
   '@types/react':
     specifier: ^18.2.23
     version: 18.2.23
+  '@types/react-custom-scrollbars':
+    specifier: ^4.0.10
+    version: 4.0.10
+  '@types/react-dom':
+    specifier: ^18.2.8
+    version: 18.2.8
   '@types/react-sound':
     specifier: ^1.2.4
     version: 1.2.4
@@ -3812,6 +3824,12 @@ packages:
   /@types/prop-types@15.7.7:
     resolution: {integrity: sha512-FbtmBWCcSa2J4zL781Zf1p5YUBXQomPEcep9QZCfRfQgTxz3pJWiDFLebohZ9fFntX5ibzOkSsrJ0TEew8cAog==}
 
+  /@types/react-custom-scrollbars@4.0.10:
+    resolution: {integrity: sha512-1T430E+usndUjymkXB8k/zGpWehggircq/QaQMuFLMJceccAcD9vcmbUXF1LjeVP/+P4wI/bad6BF1E+7IGlqA==}
+    dependencies:
+      '@types/react': 18.2.23
+    dev: true
+
   /@types/react-dom@18.2.8:
     resolution: {integrity: sha512-bAIvO5lN/U8sPGvs1Xm61rlRHHaq5rp5N3kp9C+NJ/Q41P8iqjkXSu0+/qu8POsjH9pNWb0OYabFez7taP7omw==}
     dependencies:
@@ -4624,6 +4642,10 @@ packages:
     engines: {node: '>=0.4.0'}
     hasBin: true
 
+  /add-px-to-style@1.0.0:
+    resolution: {integrity: sha512-YMyxSlXpPjD8uWekCQGuN40lV4bnZagUwqa2m/uFv1z/tNImSk9fnXVMUI5qwME/zzI3MMQRvjZ+69zyfSSyew==}
+    dev: false
+
   /adm-zip@0.4.16:
     resolution: {integrity: sha512-TFi4HBKSGfIKsK5YCkKaaFG2m4PEDyViZmEwof3MTIgzimHLto6muaHVpbrljdIvIrFZzEq/p4nafOeLcYegrg==}
     engines: {node: '>=0.3.0'}
@@ -5248,6 +5270,10 @@ packages:
       node-gyp-build: 4.6.1
     dev: false
 
+  /classnames@2.3.2:
+    resolution: {integrity: sha512-CSbhY4cFEJRe6/GQzIk5qXZ4Jeg5pcsP7b5peFSDpffpe1cqjASH/n9UTjBwOp6XpMSTwQ8Za2K5V02ueA7Tmw==}
+    dev: false
+
   /clean-stack@2.2.0:
     resolution: {integrity: sha512-4diC9HaTE+KRAMWhDhrGOECgWZxoevMc5TlkObMqNSsVU62PYzXZ/SMTjzyGAFF1YusgxGcSWTEXBhp0CPwQ1A==}
     engines: {node: '>=6'}
@@ -5727,6 +5753,14 @@ packages:
   /dom-accessibility-api@0.5.16:
     resolution: {integrity: sha512-X7BJ2yElsnOJ30pZF4uIIDfBEVgF4XEBxL9Bxhy6dnrm5hkzqmsWHGTiHqRiITNhMyFLyAiWndIJP7Z1NTteDg==}
     dev: true
+
+  /dom-css@2.1.0:
+    resolution: {integrity: sha512-w9kU7FAbaSh3QKijL6n59ofAhkkmMJ31GclJIz/vyQdjogfyxcB6Zf8CZyibOERI5o0Hxz30VmJS7+7r5fEj2Q==}
+    dependencies:
+      add-px-to-style: 1.0.0
+      prefix-style: 2.0.1
+      to-camel-case: 1.0.0
+    dev: false
 
   /dot-prop@5.3.0:
     resolution: {integrity: sha512-QM8q3zDe58hqUqjraQOmzZ1LIH9SWQJTlEKCH4kJ2oQvLZk7RbQXvtDM2XEq3fwkV9CCvvH4LA0AV+ogFsBM2Q==}
@@ -7641,6 +7675,14 @@ packages:
     optionalDependencies:
       graceful-fs: 4.2.11
 
+  /jsonp@0.2.1:
+    resolution: {integrity: sha512-pfog5gdDxPdV4eP7Kg87M8/bHgshlZ5pybl+yKxAnCZ5O7lCIn7Ixydj03wOlnDQesky2BPyA91SQ+5Y/mNwzw==}
+    dependencies:
+      debug: 2.6.9
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
+
   /jsonparse@1.3.1:
     resolution: {integrity: sha512-POQXvpdL69+CluYsillJ7SUhKvytYjW9vG/GKpnf+xP8UWgYEM/RaMzHHofbALDiKbbP1W8UEYmgGl39WkPZsg==}
     engines: {'0': node >= 0.2.0}
@@ -8631,6 +8673,10 @@ packages:
       sha.js: 2.4.11
     dev: false
 
+  /performance-now@2.1.0:
+    resolution: {integrity: sha512-7EAHlyLHI56VEIdK57uwHdHKIaAGbnXPiw0yWbarQZOKaKpvUIgW0jWRVLiatnM+XXlSwsanIBH/hzGMJulMow==}
+    dev: false
+
   /picocolors@1.0.0:
     resolution: {integrity: sha512-1fygroTLlHu66zi26VoTDv8yRgm0Fccecssto+MhsZ0D/DGW2sm8E8AjW7NU5VVTRt5GxbeZ5qBuJr+HyLYkjQ==}
     dev: false
@@ -8710,6 +8756,10 @@ packages:
 
   /preact@10.18.0:
     resolution: {integrity: sha512-O4dGFmErPd3RNVDvXmCbOW6hetnve6vYtjx5qf51mCUmBS96s66MrNQkEII5UThDGoNF7953ptA+aNupiDxVeg==}
+    dev: false
+
+  /prefix-style@2.0.1:
+    resolution: {integrity: sha512-gdr1MBNVT0drzTq95CbSNdsrBDoHGlb2aDJP/FoY+1e+jSDPOb1Cv554gH2MGiSr2WTcXi/zu+NaFzfcHQkfBQ==}
     dev: false
 
   /prelude-ls@1.2.1:
@@ -8830,6 +8880,12 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
+  /raf@3.4.1:
+    resolution: {integrity: sha512-Sq4CW4QhwOHE8ucn6J34MqtZCeWFP2aQSmrlroYgqAV1PjStIhJXxYuTgUIfkEk7zTLjmIjLmU5q+fbD1NnOJA==}
+    dependencies:
+      performance-now: 2.1.0
+    dev: false
+
   /randombytes@2.1.0:
     resolution: {integrity: sha512-vYl3iOX+4CKUWuxGi9Ukhie6fsqXqS9FE2Zaic4tNFD2N2QQaXOMFbuKK4QmDHC0JO6B1Zp41J0LpT0oR68amQ==}
     dependencies:
@@ -8853,6 +8909,19 @@ packages:
     dependencies:
       '@babel/runtime': 7.23.1
       react: 18.2.0
+    dev: false
+
+  /react-custom-scrollbars@4.2.1(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-VtJTUvZ7kPh/auZWIbBRceGPkE30XBYe+HktFxuMWBR2eVQQ+Ur6yFJMoaYcNpyGq22uYJ9Wx4UAEcC0K+LNPQ==}
+    peerDependencies:
+      react: ^0.14.0 || ^15.0.0 || ^16.0.0
+      react-dom: ^0.14.0 || ^15.0.0 || ^16.0.0
+    dependencies:
+      dom-css: 2.1.0
+      prop-types: 15.8.1
+      raf: 3.4.1
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
     dev: false
 
   /react-dom@18.2.0(react@18.2.0):
@@ -8959,6 +9028,19 @@ packages:
       react: 18.2.0
       react-is: 18.2.0
     dev: true
+
+  /react-share@4.4.1(react@18.2.0):
+    resolution: {integrity: sha512-AJ9m9RiJssqvYg7MoJUc9J0D7b/liWrsfQ99ndKc5vJ4oVHHd4Fy87jBlKEQPibT40oYA3AQ/a9/oQY6/yaigw==}
+    engines: {node: '>=6.9.0', npm: '>=5.0.0'}
+    peerDependencies:
+      react: ^16.3.0 || ^17 || ^18
+    dependencies:
+      classnames: 2.3.2
+      jsonp: 0.2.1
+      react: 18.2.0
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
 
   /react-style-singleton@2.2.1(@types/react@18.2.23)(react@18.2.0):
     resolution: {integrity: sha512-ZWj0fHEMyWkHzKYUr2Bs/4zU6XLmq9HsgBURm7g5pAVfyn49DgUiNgY2d4lXRlYSiCif9YBGpQleewkcqddc7g==}
@@ -9714,9 +9796,19 @@ packages:
       os-tmpdir: 1.0.2
     dev: false
 
+  /to-camel-case@1.0.0:
+    resolution: {integrity: sha512-nD8pQi5H34kyu1QDMFjzEIYqk0xa9Alt6ZfrdEMuHCFOfTLhDG5pgTu/aAM9Wt9lXILwlXmWP43b8sav0GNE8Q==}
+    dependencies:
+      to-space-case: 1.0.0
+    dev: false
+
   /to-fast-properties@2.0.0:
     resolution: {integrity: sha512-/OaKK0xYrs3DmxRYqL/yDc+FxFUVYhDlXMhRmv3z915w2HF1tnN1omB354j8VUGO/hbRzyD6Y3sA7v7GS/ceog==}
     engines: {node: '>=4'}
+    dev: false
+
+  /to-no-case@1.0.2:
+    resolution: {integrity: sha512-Z3g735FxuZY8rodxV4gH7LxClE4H0hTIyHNIHdk+vpQxjLm0cwnKXq/OFVZ76SOQmto7txVcwSCwkU5kqp+FKg==}
     dev: false
 
   /to-regex-range@5.0.1:
@@ -9724,6 +9816,12 @@ packages:
     engines: {node: '>=8.0'}
     dependencies:
       is-number: 7.0.0
+
+  /to-space-case@1.0.0:
+    resolution: {integrity: sha512-rLdvwXZ39VOn1IxGL3V6ZstoTbwLRckQmn/U8ZDLuWwIXNpuZDhQ3AiRUlhTbOXFVE9C+dR51wM0CBDhk31VcA==}
+    dependencies:
+      to-no-case: 1.0.2
+    dev: false
 
   /toggle-selection@1.0.6:
     resolution: {integrity: sha512-BiZS+C1OS8g/q2RRbJmy59xpyghNBqrr6k5L/uKBGRsTfxmu3ffiRnd8mlGPUVayg8pvfi5urfnu8TU7DVOkLQ==}
