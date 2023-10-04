@@ -14,7 +14,7 @@ import { AppProps } from 'next/app';
 import Head from 'next/head';
 import { theme } from '@/chakra';
 import './styles.css';
-import CustomHead from '../components/CustomHead';
+import CustomHead from '../src/components/CustomHead';
 import { ScoreProvider } from '@/providers/ScoreProvider';
 
 // const chains = [optimism, sepolia];

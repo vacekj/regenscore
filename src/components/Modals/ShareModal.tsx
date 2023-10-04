@@ -1,10 +1,11 @@
 import { Box, Flex, Button, Text } from '@chakra-ui/react';
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { TwitterShareButton } from 'react-share';
 import Image from 'next/image';
 import { Modal } from './Modal';
 import CopyLink from '@/components/CopyLink';
 import { useModalAnimation } from '@/hooks/useModalAnimation';
+import { useAccount } from 'wagmi';
 
 interface IShareModal {
   setShowModal: (value: boolean) => void;
@@ -12,8 +13,16 @@ interface IShareModal {
 
 const ShareModal: FC<IShareModal> = (props) => {
   const { setShowModal } = props;
-  const url = 'path';
+  const [url, setUrl] = useState('');
+  const { address } = useAccount();
   const { isAnimating, closeModal } = useModalAnimation(setShowModal);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const newUrl = `${window.location.origin}/share/${address}`;
+      setUrl(newUrl);
+    }
+  }, [address]);
 
   return (
     <Modal

@@ -33,7 +33,7 @@
     "csv-stringify": "^6.4.2",
     "ethers": "^5.7.2",
     "framer-motion": "^10.16.4",
-    "next": "^13.5.3",
+    "next": "^13.5.4",
     "node-fetch": "^3.3.2",
     "react": "^18.2.0",
     "react-custom-scrollbars": "^4.2.1",

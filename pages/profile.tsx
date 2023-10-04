@@ -9,7 +9,7 @@ const TrackedActivity = dynamic(() => import('@/components/TrackedActivity'), {
   ssr: false,
 });
 
-export default function Mint() {
+export default function Profile() {
   return (
     <>
       <Head>
