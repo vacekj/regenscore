@@ -4,6 +4,8 @@ import dynamic from 'next/dynamic';
 import Head from 'next/head';
 
 import { Flex } from '@chakra-ui/react';
+import { fetchScoreData } from '@/helpers/apiHelper';
+import { Hex, getAddress } from 'viem';
 
 const Layout = dynamic(() => import('@/components/Layout'), { ssr: false });
 const YourScore = dynamic(() => import('@/components/YourScore'), {
@@ -13,8 +15,13 @@ const TrackedActivity = dynamic(() => import('@/components/TrackedActivity'), {
   ssr: false,
 });
 
-export default function ShareProfile(props: any) {
-  const { address } = props;
+export default async function ShareProfile({
+  params,
+}: {
+  params: { address: string };
+}) {
+  const props = await getProps(params.address);
+  const { address, score, meta, categories } = props;
   return (
     <>
       <Head>
@@ -31,11 +38,29 @@ export default function ShareProfile(props: any) {
           pt="96px"
           pl={{ base: '0px', sm: '0px', md: '40px', lg: '54px', xl: '54px' }}
         >
-          <YourScore _address={address} />
+          <YourScore _address={address as Hex} />
         </Flex>
         {/*DEPLOY TRIGGER*/}
-        <TrackedActivity />
+        <TrackedActivity address={address as Hex} />
       </Layout>
     </>
   );
+}
+
+export async function getProps(address: string) {
+  try {
+    // TODO: MAKE THIS WORK, RIGHT NOW THE API IS NOT ACCESSIBLE FROM HERE
+    // if (address) {
+    //   const res = await fetchScoreData(getAddress(address));
+    //   console.log({ res });
+    //   const { score, meta, categories } = res;
+    //   return { address, score, meta, categories };
+    // }
+    return { address, score: 0, meta: {}, categories: [] };
+  } catch (error: any) {
+    console.log({ error });
+    console.error('Error fetching score data:', error.message);
+    // Handle error appropriately for your use case
+    return { address, score: 0, meta: {}, categories: [] };
+  }
 }

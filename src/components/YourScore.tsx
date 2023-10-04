@@ -9,19 +9,15 @@ import {
   CardBody,
   CardHeader,
   Text,
-  Link,
   Button,
   Tooltip,
-  Image,
   Icon,
   ChakraProps,
   Container,
 } from '@chakra-ui/react';
-import React, { useState, useEffect } from 'react';
-import { useAccount, useNetwork } from 'wagmi';
+import React, { useState } from 'react';
 import { CATEGORY_TOOLTIP, CategoryTooltipKeyType } from '@/constants';
-import { formatTimestamp, formatNumber } from '@/utils/strings';
-import { useEAS, useScore } from '@/hooks';
+import { useScore } from '@/hooks';
 import { Arrow } from '@/components/ScoreMeter';
 import { useBreakpointValue } from '@chakra-ui/react';
 import useSWR from 'swr';
@@ -29,7 +25,7 @@ import supabase from '@/utils/supabase-client';
 import { Check } from '@/components/Check';
 import ShareModal from '@/components/Modals/ShareModal';
 import { Hex } from 'viem';
-import { useScoreContext } from '@/contexts/scoreContext';
+import { formatNumber } from '@/utils/strings';
 
 interface IMintYour {
   _address: Hex;
@@ -56,15 +52,7 @@ function InfoIcon(props: ChakraProps) {
 }
 
 export const Hero = ({ _address }: IMintYour) => {
-  const { chain } = useNetwork();
-  const currentChain = chain?.id;
   const [address, setAddress] = useState<Hex>(_address);
-
-  useEffect(() => {
-    if (_address) {
-      setAddress(_address);
-    }
-  }, [_address]);
 
   const {
     fetchScore,
@@ -75,7 +63,7 @@ export const Hero = ({ _address }: IMintYour) => {
     categories,
     loading,
     error,
-  } = useScore(address);
+  } = useScore(_address);
 
   const { data: percentile } = useSWR<{
     address: Hex;
@@ -120,12 +108,6 @@ export const Hero = ({ _address }: IMintYour) => {
     lg: 0.8,
     xl: 0.9,
   });
-
-  useEffect(() => {
-    if (!score && !loading) {
-      fetchScore('/api/score');
-    }
-  }, [score]);
 
   return (
     <Grid

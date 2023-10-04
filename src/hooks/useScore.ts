@@ -56,8 +56,8 @@ export function useScore(address: string | Hex | undefined) {
         },
         body: JSON.stringify({ address: getAddress(memoizedAddress!) }),
       });
-
       const resData = await res.json();
+
       setData(resData);
       setLoading(false);
     } catch (error: any) {
