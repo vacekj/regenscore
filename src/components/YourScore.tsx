@@ -23,7 +23,6 @@ import { useBreakpointValue } from '@chakra-ui/react';
 import useSWR from 'swr';
 import supabase from '@/utils/supabase-client';
 import { Check } from '@/components/Check';
-import ShareModal from '@/components/Modals/ShareModal';
 import { Hex } from 'viem';
 import { formatNumber } from '@/utils/strings';
 
@@ -144,7 +143,6 @@ export const Hero = ({ _address }: IMintYour) => {
       maxWidth="1386px"
       marginX="auto"
     >
-      {showShareModal && <ShareModal setShowModal={setShowShareModal} />}
       <Box
         position="absolute"
         top="0"

@@ -51,7 +51,7 @@ const ShareModal: FC<IShareModal> = (props) => {
           >
             <TwitterShareButton
               hashtags={['giveth']}
-              title={'Title here'}
+              title={'Check out my Giveth Score!'}
               url={url}
             >
               <Image
