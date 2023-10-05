@@ -6,8 +6,8 @@ export const runtime = 'edge';
 // Image metadata
 export const alt = 'My RegenScore';
 export const size = {
-  width: 1200,
-  height: 1200,
+  width: 1100,
+  height: 500,
 };
 
 const truncateEthAddress = (address: string) => {
@@ -59,12 +59,16 @@ export default async function Image({
           fontSize: 48,
           fontFamily: 'Inter',
           background: '#F9DD94',
-          width: '100%',
-          height: '100%',
+          width: '1100px',
+          height: '500px',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
+          backgroundImage: 'url(https://i.imgur.com/JnQ95Ak.png)',
+          backgroundSize: 'contain',
+          backgroundPosition: 'bottom right',
+          backgroundRepeat: 'no-repeat',
         }}
       >
         <h1
@@ -99,15 +103,6 @@ export default async function Image({
         >
           {truncateEthAddress(address)}
         </div>
-        <img
-          src={'https://i.imgur.com/MdJMpka.png'}
-          style={{
-            position: 'absolute',
-            left: '150px',
-            width: '300px',
-            height: '300px',
-          }}
-        />
       </div>
     ),
     // ImageResponse options
