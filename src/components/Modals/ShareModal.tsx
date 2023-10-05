@@ -50,8 +50,8 @@ const ShareModal: FC<IShareModal> = (props) => {
             justifyContent="center"
           >
             <TwitterShareButton
-              hashtags={['giveth']}
-              title={'Check out my Giveth Score!'}
+              hashtags={['regenscore']}
+              title={'Check out my Regen Score!'}
               url={url}
             >
               <Image
