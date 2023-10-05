@@ -1,4 +1,5 @@
 import { ImageResponse } from 'next/server';
+import ScoreMeter from '../../../public/icons/scoremeter.svg';
 // Route segment config
 export const runtime = 'edge';
 
@@ -48,6 +49,7 @@ export default async function Image({
     (
       <div
         style={{
+          position: 'relative',
           fontSize: 48,
           fontFamily: 'Inter',
           background: '#F9DD94',
@@ -62,14 +64,31 @@ export default async function Image({
         <h1
           style={{
             color: 'white',
-            fontSize: '100px',
+            fontSize: '200px',
             fontWeight: '700',
             lineHeight: '86.045px',
+            margin: '0 -250px 0 0',
           }}
         >
           {score}
         </h1>
-        <div>{truncateEthAddress(address)}</div>
+
+        <div
+          style={{
+            margin: '80px -250px 0 0',
+          }}
+        >
+          {truncateEthAddress(address)}
+        </div>
+        <img
+          src={'https://i.imgur.com/MdJMpka.png'}
+          style={{
+            position: 'absolute',
+            left: '150px',
+            width: '300px',
+            height: '300px',
+          }}
+        />
       </div>
     ),
     // ImageResponse options
