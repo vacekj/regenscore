@@ -528,6 +528,7 @@ export const Hero = ({ _address }: IMintYour) => {
                         variant="variant4"
                         marginTop="26.76px"
                         as={'a'}
+                        cursor={'pointer'}
                         onClick={() => setShowShareModal(true)}
                       >
                         <svg
