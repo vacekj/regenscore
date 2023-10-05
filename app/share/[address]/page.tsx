@@ -4,8 +4,7 @@ import dynamic from 'next/dynamic';
 import Head from 'next/head';
 
 import { Flex } from '@chakra-ui/react';
-import { fetchScoreData } from '@/helpers/apiHelper';
-import { Hex, getAddress } from 'viem';
+import { Hex } from 'viem';
 
 const Layout = dynamic(() => import('@/components/Layout'), { ssr: false });
 const YourScore = dynamic(() => import('@/components/YourScore'), {

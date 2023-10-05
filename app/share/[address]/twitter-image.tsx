@@ -1,5 +1,5 @@
 import { ImageResponse } from 'next/server';
-import ScoreMeter from '../../../public/icons/scoremeter.svg';
+import supabase from '@/utils/supabase-client';
 // Route segment config
 export const runtime = 'edge';
 
@@ -33,7 +33,7 @@ export default async function Image({
 
   if (!address) return new ImageResponse(<div>nothing</div>);
 
-  //TODO: GRAB SCORE FROM DB
+  //Only from database, it won't calculate if it doesn't exist
   const res = await fetch('https://regenscore.vercel.app/api/myscore', {
     method: 'POST',
     headers: {
@@ -44,6 +44,12 @@ export default async function Image({
 
   const resData = await res.json();
   const score = resData?.score;
+
+  const { data: percentile, error } = await supabase
+    .from('percentiles')
+    .select('*')
+    .eq('address', address)
+    .single();
 
   return new ImageResponse(
     (
@@ -73,9 +79,22 @@ export default async function Image({
           {score}
         </h1>
 
+        <p
+          style={{
+            fontSize: '48px',
+            margin: '60px -250px 0 0',
+            color: '#354728',
+          }}
+        >
+          Top {(100 - (percentile?.percentile_rank_all ?? 0) * 100).toFixed(0)}%
+          of users
+        </p>
+
         <div
           style={{
-            margin: '80px -250px 0 0',
+            color: 'white',
+            fontSize: '36px',
+            margin: '10px -250px 0 0',
           }}
         >
           {truncateEthAddress(address)}
