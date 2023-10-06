@@ -32,7 +32,7 @@ import { Hex } from 'viem';
 import { useScoreContext } from '@/contexts/scoreContext';
 
 interface IMintYour {
-  _address: Hex;
+  _address?: Hex;
 }
 
 function InfoIcon(props: ChakraProps) {
@@ -58,7 +58,7 @@ function InfoIcon(props: ChakraProps) {
 export const Hero = ({ _address }: IMintYour) => {
   const { chain } = useNetwork();
   const currentChain = chain?.id;
-  const [address, setAddress] = useState<Hex>(_address);
+  const [address, setAddress] = useState<Hex>(_address as Hex);
   const { address: connectedAddress } = useAccount();
 
   useEffect(() => {

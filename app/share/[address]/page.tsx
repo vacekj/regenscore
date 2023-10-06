@@ -14,13 +14,31 @@ const TrackedActivity = dynamic(() => import('@/components/TrackedActivity'), {
   ssr: false,
 });
 
+async function getProps(address: string) {
+  try {
+    // TODO: MAKE THIS WORK, RIGHT NOW THE API IS NOT ACCESSIBLE FROM HERE
+    // if (address) {
+    //   const res = await fetchScoreData(getAddress(address));
+    //   console.log({ res });
+    //   const { score, meta, categories } = res;
+    //   return { address, score, meta, categories };
+    // }
+    return { address, score: 0, meta: {}, categories: [] };
+  } catch (error: any) {
+    console.log({ error });
+    console.error('Error fetching score data:', error.message);
+    // Handle error appropriately for your use case
+    return { address, score: 0, meta: {}, categories: [] };
+  }
+}
+
 export default async function ShareProfile({
   params,
 }: {
   params: { address: string };
 }) {
-  const props = await getProps(params.address);
-  const { address, score, meta, categories } = props;
+  // const props = await getProps(params.address);
+  const { address } = params;
   return (
     <>
       <Head>
@@ -44,22 +62,4 @@ export default async function ShareProfile({
       </Layout>
     </>
   );
-}
-
-export async function getProps(address: string) {
-  try {
-    // TODO: MAKE THIS WORK, RIGHT NOW THE API IS NOT ACCESSIBLE FROM HERE
-    // if (address) {
-    //   const res = await fetchScoreData(getAddress(address));
-    //   console.log({ res });
-    //   const { score, meta, categories } = res;
-    //   return { address, score, meta, categories };
-    // }
-    return { address, score: 0, meta: {}, categories: [] };
-  } catch (error: any) {
-    console.log({ error });
-    console.error('Error fetching score data:', error.message);
-    // Handle error appropriately for your use case
-    return { address, score: 0, meta: {}, categories: [] };
-  }
 }
