@@ -68,7 +68,7 @@ const Slide1 = () => {
         lg: '32px',
         xl: '32px',
       }}
-      bg={`url(/images/leaf-bg.png)`}
+      bg={`url(/images/leaf-bg.webp)`}
       bgRepeat="no-repeat"
       bgSize="cover"
       pl={{ base: '30px', sm: '41px', md: '61px', lg: '75px', xl: '88px' }}
