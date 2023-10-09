@@ -108,6 +108,11 @@ export const theme = extendTheme({
             backgroundColor: '#FFF',
           },
         },
+        outline: {
+          _hover: {
+            background: 'transparent',
+          },
+        },
       },
 
       defaultProps: {

@@ -17,9 +17,8 @@ import {
   Show,
 } from '@chakra-ui/react';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
-import { useAccount } from 'wagmi';
 import {
   EthLogo,
   GitcoinLogo,
@@ -29,6 +28,7 @@ import {
   TrustedSeedLogo,
 } from '@/components/Logo';
 import { useScoreContext } from '@/contexts/scoreContext';
+import { useScore } from '@/hooks';
 
 // TODO: FIX TYPE
 const ActivityRow = ({ activity }: any) => {
@@ -71,8 +71,19 @@ const ActivityRow = ({ activity }: any) => {
   );
 };
 
-const TrackedActivity = () => {
-  const { meta } = useScoreContext();
+const TrackedActivity = ({ address }: any) => {
+  // TODO: FIX TYPES
+  const [meta, setMeta] = useState<any>({});
+  const { meta: contextMeta } = useScoreContext();
+  const { meta: scoreMeta } = useScore(address);
+
+  useEffect(() => {
+    if (scoreMeta) {
+      setMeta(scoreMeta);
+    } else {
+      setMeta(contextMeta);
+    }
+  }, [address, scoreMeta, contextMeta]);
 
   return (
     <Flex
@@ -234,8 +245,8 @@ const TrackedActivity = () => {
               borderRadius="8px"
             >
               {Object.values(meta)
-                .filter((key) => !!key.applies)
-                .map((activity, index) => (
+                .filter((key: any) => !!key?.applies)
+                .map((activity: any, index) => (
                   <Grid
                     key={index}
                     width="100%"

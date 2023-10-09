@@ -1,4 +1,4 @@
-import { server } from '@/pages/api/claim';
+import { server } from 'pages/api/claim';
 
 export async function createSvg(
   score: number | '????????',
