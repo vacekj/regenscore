@@ -78,12 +78,13 @@ const TrackedActivity = ({ address }: any) => {
   const { meta: scoreMeta } = useScore(address);
 
   useEffect(() => {
+    console.log({ scoreMeta, contextMeta });
     if (scoreMeta) {
       setMeta(scoreMeta);
     } else {
       setMeta(contextMeta);
     }
-  }, [address, scoreMeta]);
+  }, [address, scoreMeta, contextMeta]);
 
   return (
     <Flex
