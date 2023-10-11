@@ -30,6 +30,10 @@ const StyledWeb3NetworkSwitch = styled.div`
   --w3m-accent-color: rgba(0, 0, 0, 0.5); !important;
 `;
 
+const CustomWeb3Button = styled(Web3Button)`
+  --w3m-font-family: 'Inter-Bold', sans-serif;
+`;
+
 const Header: React.FC = () => {
   const [currPos, setCurrPos] = useState(0);
   const [visible, setVisible] = useState(true);
@@ -80,7 +84,7 @@ const Header: React.FC = () => {
           </StyledWeb3NetworkSwitch>
         )}
         {isConnected ? (
-          <Web3Button />
+          <CustomWeb3Button />
         ) : (
           <Button size={['md', 'lg']} onClick={() => open()} variant="variant1">
             Connect Wallet
