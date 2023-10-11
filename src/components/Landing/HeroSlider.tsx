@@ -9,6 +9,7 @@ import {
 } from '@chakra-ui/react';
 import { useState } from 'react';
 
+
 const Slide1 = () => {
   const [currentDrop, setCurrentDrop] = useState<number | null>(null);
   const levitationStyles = ['levitation1', 'levitation2', 'levitation3'];
@@ -68,7 +69,7 @@ const Slide1 = () => {
         lg: '32px',
         xl: '32px',
       }}
-      bg={`url(/images/leaf-bg.png)`}
+      bg={`url(/images/leaf-bg.webp)`}
       bgRepeat="no-repeat"
       bgSize="cover"
       pl={{ base: '30px', sm: '41px', md: '61px', lg: '75px', xl: '88px' }}
@@ -87,6 +88,14 @@ const Slide1 = () => {
       marginX="auto"
       maxWidth="1386px"
     >
+      
+      {/* <Image
+        src="/images/leaf-bg.webp"
+        alt="Leaf Background"
+        layout="fill"
+        objectFit="cover"
+      /> */}
+
       {dropsImages.map((image, index) => (
         <Flex
           key={index}
@@ -111,9 +120,8 @@ const Slide1 = () => {
             alignItems="center"
             width={image.dropSize}
             height={image.dropSize}
-            animation={`${
-              levitationStyles[index % levitationStyles.length]
-            } 5s infinite`}
+            animation={`${levitationStyles[index % levitationStyles.length]
+              } 5s infinite`}
           >
             <Image
               src={image.src}
