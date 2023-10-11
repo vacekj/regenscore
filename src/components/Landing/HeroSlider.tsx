@@ -9,7 +9,6 @@ import {
 } from '@chakra-ui/react';
 import { useState } from 'react';
 
-
 const Slide1 = () => {
   const [currentDrop, setCurrentDrop] = useState<number | null>(null);
   const levitationStyles = ['levitation1', 'levitation2', 'levitation3'];
@@ -88,7 +87,6 @@ const Slide1 = () => {
       marginX="auto"
       maxWidth="1386px"
     >
-
       {dropsImages.map((image, index) => (
         <Flex
           key={index}
@@ -113,8 +111,9 @@ const Slide1 = () => {
             alignItems="center"
             width={image.dropSize}
             height={image.dropSize}
-            animation={`${levitationStyles[index % levitationStyles.length]
-              } 5s infinite`}
+            animation={`${
+              levitationStyles[index % levitationStyles.length]
+            } 5s infinite`}
           >
             <Image
               src={image.src}
