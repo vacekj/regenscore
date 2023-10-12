@@ -1,6 +1,5 @@
 import { Hex, getAddress } from 'viem';
 import { useState, useEffect, useMemo, ReactNode } from 'react';
-import useSWR from 'swr';
 
 type Token = {
   category: string;
@@ -80,7 +79,7 @@ export function useScore(address: string | Hex | undefined) {
       const newCategoryScores: Record<string, number> = {};
 
       Object.keys(meta)
-        .filter((key) => key === 'tokenBalances' || !!meta[key].applies)
+        // .filter((key) => key === 'tokenBalances' || !!meta[key].applies)
         .forEach((key: string) => {
           const item = meta[key] as Item;
 
