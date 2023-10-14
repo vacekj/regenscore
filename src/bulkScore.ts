@@ -8,6 +8,8 @@ import { fileURLToPath } from 'url';
 import { isAddress, getAddress } from 'viem';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
+const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
+
 const processFile = async () => {
   const records = [
     [
@@ -72,6 +74,7 @@ const processFile = async () => {
       score,
     ];
     records.push(row);
+    await delay(2000);
   }
   return records;
 };
