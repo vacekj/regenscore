@@ -9,6 +9,7 @@ type Token = {
 type Item = {
   behavior: ReactNode;
   category: string;
+  source: string;
   scoreAdded: number;
   tokens?: Token[];
   applies?: Boolean;
@@ -85,15 +86,16 @@ export function useScore(address: string | Hex | undefined) {
 
           if (key === 'tokenBalances' && item.tokens) {
             item.tokens.forEach((token: any) => {
+              console.log({ token });
               if (token.applies) {
-                newCategoryScores[item.category] =
-                  (newCategoryScores[item.category] || 0) +
+                newCategoryScores[token.network] =
+                  (newCategoryScores[token.network] || 0) +
                   (token.scoreAdded || 0);
               }
             });
           } else {
-            newCategoryScores[item.category] =
-              (newCategoryScores[item.category] || 0) + (item.scoreAdded || 0);
+            newCategoryScores[item.source] =
+              (newCategoryScores[item.source] || 0) + (item.scoreAdded || 0);
           }
         });
 

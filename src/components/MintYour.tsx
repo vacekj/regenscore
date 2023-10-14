@@ -4,22 +4,18 @@ import {
   Grid,
   GridItem,
   Heading,
-  VStack,
   Card,
   CardBody,
   CardHeader,
   Text,
   Link,
   Button,
-  Tooltip,
-  Image,
   Icon,
   ChakraProps,
   Container,
 } from '@chakra-ui/react';
 import React, { useState, useEffect } from 'react';
 import { useAccount, useNetwork } from 'wagmi';
-import { CATEGORY_TOOLTIP, CategoryTooltipKeyType } from '@/constants';
 import { formatTimestamp, formatNumber } from '@/utils/strings';
 import { useEAS } from '@/hooks';
 import { Arrow } from '@/components/ScoreMeter';
@@ -30,6 +26,7 @@ import { Check } from '@/components/Check';
 import ShareModal from '@/components/Modals/ShareModal';
 import { Hex } from 'viem';
 import { useScoreContext } from '@/contexts/scoreContext';
+import CategoriesSection from './CategorySection';
 
 interface IMintYour {
   _address?: Hex;
@@ -79,7 +76,6 @@ export const Hero = ({ _address }: IMintYour) => {
     loading,
     error,
   } = useScoreContext();
-
   const { mintAttestation, lastAttestation } = useEAS(address);
   // TODO: do this somewhere else
   const network = currentChain === 11155111 ? 'sepolia' : 'optimism';
@@ -181,7 +177,6 @@ export const Hero = ({ _address }: IMintYour) => {
         marginX="auto"
         maxWidth="1386px"
       />
-
       <Heading
         as="h2"
         variant="h2"
@@ -204,7 +199,6 @@ export const Hero = ({ _address }: IMintYour) => {
       >
         Mint your attestations to <br /> access opportunities
       </Heading>
-
       {/* Orange Card with score */}
       <GridItem
         rowSpan={[1, 2]}
@@ -552,454 +546,8 @@ export const Hero = ({ _address }: IMintYour) => {
           )}
         </Card>
       </GridItem>
-
       {/* Categories */}
-      <Grid
-        backgroundColor={['brand.backgroundOrange.400', 'transparent']}
-        templateRows={`repeat(${categories.length},1fr)`}
-        templateColumns={'max-content 1fr'}
-        gap={['36px', 8]}
-        color={['brand.deepGreen.400', 'white']}
-        alignItems={'center'}
-        pb={[79, 0]}
-        pt={['70px', 0]}
-        mt={['-50px', '20px', '20px', '20px', '0']}
-        px={['20px', '30px']}
-        zIndex={2}
-        alignContent="center"
-        maxWidth={['', '500px', '500px', 'auto', 'auto']}
-        minWidth={['', '500px', '500px', '0', '0']}
-        marginX={['', 'auto', 'auto', '0', '0']}
-      >
-        {
-          // TODO: FIX TYPE
-          categories.map(
-            (
-              categoryItem: {
-                category: string;
-                scoreAdded: number;
-              },
-              index: number,
-            ) => (
-              <>
-                <Flex gap="8px" alignItems="center" key={index}>
-                  <Tooltip
-                    label={
-                      CATEGORY_TOOLTIP[
-                        categoryItem.category as CategoryTooltipKeyType
-                      ]
-                    }
-                    placement="top-end"
-                  >
-                    <InfoIcon
-                      color={['brand.deepGreen.400', 'white']}
-                      w={'16px'}
-                      h={'16px'}
-                    />
-                  </Tooltip>
-                  <span
-                    style={{
-                      fontFamily: 'Inter-Medium',
-                      fontWeight: '500',
-                      fontSize: '16px',
-                    }}
-                  >
-                    {categoryItem.category}
-                  </span>
-                </Flex>
-                <Flex alignItems={'center'} gap={18}>
-                  <Box
-                    bg={['brand.deepGreen.400', 'white']}
-                    flexBasis={`${categoryItem.scoreAdded}%`}
-                    borderRadius="100px"
-                    h="10px"
-                  />
-                  <Box
-                    w={'100%'}
-                    display={'flex'}
-                    gap={'16px'}
-                    alignItems={'center'}
-                    justifyContent={'flex-start'}
-                  >
-                    <span
-                      style={{
-                        fontFamily: 'Inter-Medium',
-                        fontWeight: '500',
-                        fontSize: '16px',
-                      }}
-                    >
-                      {formatNumber(categoryItem.scoreAdded)}
-                    </span>
-                  </Box>
-                </Flex>
-              </>
-            ),
-          )
-        }
-
-        {/* Loading State */}
-        {loading && (
-          <Flex
-            alignItems={'center'}
-            mx="auto"
-            gap={'25px'}
-            ml={['0', '100px', '100px', '0', '0']}
-          >
-            <Box
-              gap={['34px', '34px', '34px', '28px', '34px']}
-              display={['none', 'flex']}
-              alignItems="center"
-              flexDir={'column'}
-            >
-              <Rectangle />
-              <Rectangle />
-              <Rectangle />
-              <Rectangle />
-              <Rectangle />
-            </Box>
-            <Box
-              gap={['34px', '34px', '34px', '28px', '34px']}
-              display={['flex', 'none']}
-              alignItems="center"
-              flexDir={'column'}
-            >
-              <RectangleGreen />
-              <RectangleGreen />
-              <RectangleGreen />
-              <RectangleGreen />
-              <RectangleGreen />
-            </Box>
-            <Box
-              bg={['brand.deepGreen.400', 'white']}
-              display={'flex'}
-              flexDir={'row'}
-            />
-            <Box
-              w={'5px'}
-              gap={['34px', '34px', '34px', '28px', '34px']}
-              alignItems={'start'}
-              justifyContent={'flex-start'}
-              flexDir={'column'}
-              display={['none', 'flex']}
-            >
-              <Bar />
-              <Bar />
-              <Bar />
-              <Bar />
-              <Bar />
-            </Box>
-            <Box
-              w={'5px'}
-              gap={['34px', '34px', '34px', '28px', '34px']}
-              alignItems={'start'}
-              justifyContent={'flex-start'}
-              flexDir={'column'}
-              display={['flex', 'none']}
-            >
-              <BarGreen />
-              <BarGreen />
-              <BarGreen />
-              <BarGreen />
-              <BarGreen />
-            </Box>
-            <Box
-              display={'flex'}
-              gap={['30px', '30px', '30px', '24px', '30px']}
-              alignItems={'start'}
-              justifyContent={'flex-start'}
-              flexDir={'column'}
-            >
-              <span
-                style={{
-                  fontFamily: 'Inter-Medium',
-                  fontWeight: '500',
-                  fontSize: '16px',
-                }}
-              >
-                Loading...
-              </span>
-              <span
-                style={{
-                  fontFamily: 'Inter-Medium',
-                  fontWeight: '500',
-                  fontSize: '16px',
-                }}
-              >
-                Loading...
-              </span>
-              <span
-                style={{
-                  fontFamily: 'Inter-Medium',
-                  fontWeight: '500',
-                  fontSize: '16px',
-                }}
-              >
-                Loading...
-              </span>
-              <span
-                style={{
-                  fontFamily: 'Inter-Medium',
-                  fontWeight: '500',
-                  fontSize: '16px',
-                }}
-              >
-                Loading...
-              </span>
-              <span
-                style={{
-                  fontFamily: 'Inter-Medium',
-                  fontWeight: '500',
-                  fontSize: '16px',
-                }}
-              >
-                Loading...
-              </span>
-            </Box>
-          </Flex>
-        )}
-
-        {/* Error State */}
-        {!!error && (
-          <Flex
-            alignItems={'center'}
-            mx="auto"
-            gap={'25px'}
-            ml={['0', '100px', '100px', '0', '0']}
-          >
-            <Box
-              gap={['34px', '34px', '34px', '28px', '34px']}
-              display={['none', 'flex']}
-              alignItems="center"
-              flexDir={'column'}
-            >
-              <Rectangle />
-              <Rectangle />
-              <Rectangle />
-              <Rectangle />
-              <Rectangle />
-            </Box>
-            <Box
-              gap={['34px', '34px', '34px', '28px', '34px']}
-              display={['flex', 'none']}
-              alignItems="center"
-              flexDir={'column'}
-            >
-              <RectangleGreen />
-              <RectangleGreen />
-              <RectangleGreen />
-              <RectangleGreen />
-              <RectangleGreen />
-            </Box>
-            <Box
-              bg={['brand.deepGreen.400', 'white']}
-              display={'flex'}
-              flexDir={'row'}
-            />
-            <Box
-              w={'5px'}
-              gap={['34px', '34px', '34px', '28px', '34px']}
-              alignItems={'start'}
-              justifyContent={'flex-start'}
-              flexDir={'column'}
-              display={['none', 'flex']}
-            >
-              <Bar />
-              <Bar />
-              <Bar />
-              <Bar />
-              <Bar />
-            </Box>
-            <Box
-              w={'5px'}
-              gap={['34px', '34px', '34px', '28px', '34px']}
-              alignItems={'start'}
-              justifyContent={'flex-start'}
-              flexDir={'column'}
-              display={['flex', 'none']}
-            >
-              <BarGreen />
-              <BarGreen />
-              <BarGreen />
-              <BarGreen />
-              <BarGreen />
-            </Box>
-            <Box
-              display={'flex'}
-              gap={['30px', '30px', '30px', '24px', '30px']}
-              alignItems={'start'}
-              justifyContent={'flex-start'}
-              flexDir={'column'}
-            >
-              <span
-                style={{
-                  fontFamily: 'Inter-Medium',
-                  fontWeight: '500',
-                  fontSize: '16px',
-                }}
-              >
-                Loading...
-              </span>
-              <span
-                style={{
-                  fontFamily: 'Inter-Medium',
-                  fontWeight: '500',
-                  fontSize: '16px',
-                }}
-              >
-                Loading...
-              </span>
-              <span
-                style={{
-                  fontFamily: 'Inter-Medium',
-                  fontWeight: '500',
-                  fontSize: '16px',
-                }}
-              >
-                Loading...
-              </span>
-              <span
-                style={{
-                  fontFamily: 'Inter-Medium',
-                  fontWeight: '500',
-                  fontSize: '16px',
-                }}
-              >
-                Loading...
-              </span>
-              <span
-                style={{
-                  fontFamily: 'Inter-Medium',
-                  fontWeight: '500',
-                  fontSize: '16px',
-                }}
-              >
-                Loading...
-              </span>
-            </Box>
-          </Flex>
-        )}
-
-        {/* Empty State */}
-        {!score && !error && !loading && (
-          <Flex
-            alignItems={'center'}
-            mx="auto"
-            gap={'25px'}
-            ml={['0', '100px', '100px', '0', '0']}
-          >
-            <Box
-              gap={['34px', '34px', '34px', '28px', '34px']}
-              display={['none', 'flex']}
-              alignItems="center"
-              flexDir={'column'}
-            >
-              <Rectangle />
-              <Rectangle />
-              <Rectangle />
-              <Rectangle />
-              <Rectangle />
-            </Box>
-            <Box
-              gap={['34px', '34px', '34px', '28px', '34px']}
-              display={['flex', 'none']}
-              alignItems="center"
-              flexDir={'column'}
-            >
-              <RectangleGreen />
-              <RectangleGreen />
-              <RectangleGreen />
-              <RectangleGreen />
-              <RectangleGreen />
-            </Box>
-            <Box
-              bg={['brand.deepGreen.400', 'white']}
-              display={'flex'}
-              flexDir={'row'}
-            />
-            <Box
-              w={'5px'}
-              gap={['34px', '34px', '34px', '28px', '34px']}
-              alignItems={'start'}
-              justifyContent={'flex-start'}
-              flexDir={'column'}
-              display={['none', 'flex']}
-            >
-              <Bar />
-              <Bar />
-              <Bar />
-              <Bar />
-              <Bar />
-            </Box>
-            <Box
-              w={'5px'}
-              gap={['34px', '34px', '34px', '28px', '34px']}
-              alignItems={'start'}
-              justifyContent={'flex-start'}
-              flexDir={'column'}
-              display={['flex', 'none']}
-            >
-              <BarGreen />
-              <BarGreen />
-              <BarGreen />
-              <BarGreen />
-              <BarGreen />
-            </Box>
-            <Box
-              display={'flex'}
-              gap={['30px', '30px', '30px', '24px', '30px']}
-              alignItems={'start'}
-              justifyContent={'flex-start'}
-              flexDir={'column'}
-            >
-              <span
-                style={{
-                  fontFamily: 'Inter-Medium',
-                  fontWeight: '500',
-                  fontSize: '16px',
-                }}
-              >
-                No Data
-              </span>
-              <span
-                style={{
-                  fontFamily: 'Inter-Medium',
-                  fontWeight: '500',
-                  fontSize: '16px',
-                }}
-              >
-                No Data
-              </span>
-              <span
-                style={{
-                  fontFamily: 'Inter-Medium',
-                  fontWeight: '500',
-                  fontSize: '16px',
-                }}
-              >
-                No Data
-              </span>
-              <span
-                style={{
-                  fontFamily: 'Inter-Medium',
-                  fontWeight: '500',
-                  fontSize: '16px',
-                }}
-              >
-                No Data
-              </span>
-              <span
-                style={{
-                  fontFamily: 'Inter-Medium',
-                  fontWeight: '500',
-                  fontSize: '16px',
-                }}
-              >
-                No Data
-              </span>
-            </Box>
-          </Flex>
-        )}
-      </Grid>
+      <CategoriesSection />
     </Grid>
   );
 };
@@ -1022,85 +570,6 @@ const MintYour = ({ _address }: IMintYour) => {
 
 export default MintYour;
 
-const Exclamation = () => (
-  <svg
-    width="16"
-    height="17"
-    viewBox="0 0 16 17"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <g id="Group 1000004440">
-      <path
-        id="Vector"
-        fillRule="evenodd"
-        clipRule="evenodd"
-        d="M16 8.5C16 12.9183 12.4183 16.5 8 16.5C3.58172 16.5 0 12.9183 0 8.5C0 4.08172 3.58172 0.5 8 0.5C12.4183 0.5 16 4.08172 16 8.5ZM15 8.5C15 12.366 11.866 15.5 8 15.5C4.13401 15.5 1 12.366 1 8.5C1 4.63401 4.13401 1.5 8 1.5C11.866 1.5 15 4.63401 15 8.5Z"
-        fill="white"
-      />
-      <path
-        id="Line 27 (Stroke)"
-        fillRule="evenodd"
-        clipRule="evenodd"
-        d="M8 13.5C7.72386 13.5 7.5 13.2761 7.5 13L7.5 7C7.5 6.72386 7.72386 6.5 8 6.5C8.27614 6.5 8.5 6.72386 8.5 7L8.5 13C8.5 13.2761 8.27614 13.5 8 13.5Z"
-        fill="white"
-      />
-      <circle id="Ellipse 36" cx="8" cy="4.5" r="1" fill="white" />
-    </g>
-  </svg>
-);
-
-const Scoremeter = () => (
-  <svg
-    width="213"
-    height="418"
-    viewBox="0 0 213 418"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <g
-      style={{
-        mixBlendMode: 'overlay',
-      }}
-    >
-      <path
-        fillRule="evenodd"
-        clipRule="evenodd"
-        d="M212.093 20.0429C209.894 6.96064 197.507 -1.86248 184.425 0.335915C62.9624 20.7469 0.339778 115.902 0.00114755 210.465C-0.338291 305.255 61.9335 399.596 184.909 417.69C198.033 419.621 210.238 410.547 212.169 397.423C214.1 384.299 205.026 372.094 191.902 370.163C94.4967 355.83 47.7791 283.535 48.0402 210.637C48.302 137.513 95.8696 63.93 192.386 47.711C205.468 45.5126 214.291 33.1252 212.093 20.0429Z"
-        fill="url(#paint0_linear_668_1462)"
-      />
-    </g>
-    <defs>
-      <linearGradient
-        id="paint0_linear_668_1462"
-        x1="77.3146"
-        y1="76.266"
-        x2="180.599"
-        y2="383.718"
-        gradientUnits="userSpaceOnUse"
-      >
-        <stop offset="0.0429313" />
-        <stop offset="1" stopOpacity="0" />
-      </linearGradient>
-    </defs>
-  </svg>
-);
-
-const WarningSharp = () => (
-  <svg
-    width="32"
-    height="32"
-    viewBox="0 0 32 32"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <path
-      d="M29.9374 27.9861L16.7768 3.54044C16.734 3.46091 16.6704 3.39445 16.5929 3.34813C16.5154 3.3018 16.4268 3.27734 16.3365 3.27734C16.2461 3.27734 16.1575 3.3018 16.08 3.34813C16.0025 3.39445 15.9389 3.46091 15.8961 3.54044L2.73301 27.9861C2.69202 28.0623 2.67151 28.1478 2.67347 28.2343C2.67543 28.3208 2.69981 28.4053 2.74421 28.4795C2.78861 28.5538 2.85152 28.6153 2.92679 28.6579C3.00206 28.7006 3.08712 28.723 3.17364 28.7229H29.4999C29.5861 28.7224 29.6708 28.6997 29.7456 28.6568C29.8205 28.6139 29.883 28.5524 29.927 28.4782C29.971 28.404 29.9951 28.3197 29.997 28.2335C29.9988 28.1473 29.9783 28.062 29.9374 27.9861ZM17.5861 25.7179H15.0861V23.2179H17.5861V25.7179ZM17.3361 21.7229H15.3361L14.9611 11.7229H17.7111L17.3361 21.7229Z"
-      fill="white"
-    />
-  </svg>
-);
-
 const AttestationFailed = () => (
   <svg
     width="52"
@@ -1113,79 +582,5 @@ const AttestationFailed = () => (
       d="M26 0C11.6637 0 0 11.6637 0 26C0 40.3363 11.6637 52 26 52C40.3363 52 52 40.3363 52 26C52 11.6637 40.3363 0 26 0ZM28.5 39.9888H23.5V34.9888H28.5V39.9888ZM28 32H24L23.25 12H28.75L28 32Z"
       fill="#E43126"
     />
-  </svg>
-);
-
-const Rectangle = () => (
-  <svg
-    width="80"
-    height="19"
-    viewBox="0 0 80 19"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <rect width="80" height="19" fill="url(#paint0_linear_847_5847)" />
-    <defs>
-      <linearGradient
-        id="paint0_linear_847_5847"
-        x1="76.8542"
-        y1="-2.00987e-06"
-        x2="39.0971"
-        y2="50.4459"
-        gradientUnits="userSpaceOnUse"
-      >
-        <stop stopColor="#F2EFE5" />
-        <stop offset="1" stopColor="#F3FFDA" />
-      </linearGradient>
-    </defs>
-  </svg>
-);
-
-const Bar = () => (
-  <svg
-    width="5"
-    height="19"
-    viewBox="0 0 5 19"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <rect width="5" height="19" fill="url(#paint0_linear_847_5845)" />
-    <defs>
-      <linearGradient
-        id="paint0_linear_847_5845"
-        x1="4.80338"
-        y1="-2.00987e-06"
-        x2="-1.72336"
-        y2="0.545007"
-        gradientUnits="userSpaceOnUse"
-      >
-        <stop stopColor="#F2EFE5" />
-        <stop offset="1" stopColor="#F3FFDA" />
-      </linearGradient>
-    </defs>
-  </svg>
-);
-
-const RectangleGreen = () => (
-  <svg
-    width="80"
-    height="19"
-    viewBox="0 0 80 19"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <rect width="80" height="19" fill="#354728" />
-  </svg>
-);
-
-const BarGreen = () => (
-  <svg
-    width="5"
-    height="19"
-    viewBox="0 0 5 19"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <rect width="5" height="19" fill="#354728" />
   </svg>
 );
