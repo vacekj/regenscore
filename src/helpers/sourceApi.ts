@@ -166,7 +166,7 @@ export async function getTokenBalance(
     const isMainnet = network === 'mainnet';
     const abi = ERC20;
     const client = await getClient(isMainnet ? 'mainnet' : 'optimism');
-    const balance: any = await client.readContract({
+    const balance = await client.readContract({
       address: contractAddress,
       abi,
       functionName: 'balanceOf',

@@ -12,7 +12,11 @@ import { parseEther } from 'viem';
 
 import { fetchCurrentETHPrice } from '@/helpers/ethHelpers';
 import { getScoreAttestations } from '@/helpers/eas';
-import { ATTESTER_ADDRESS, ATTESTATION_FEE_USD } from '@/constants';
+import {
+  ATTESTER_ADDRESS,
+  ATTESTATION_FEE_USD,
+  CURRENT_SCORE_VERSION,
+} from '@/constants';
 import { checkPendingReceipt } from '@/helpers/databaseHelpers';
 import { formatNumber } from '@/utils/strings';
 
@@ -24,7 +28,7 @@ function useEAS(address: Address | string | Hex | undefined) {
   const [ethToUsdPrice, setEthToUsdPrice] = useState(0);
   // TODO: FIX TYPES
   const [attestations, setAttestations] = useState(null);
-  const [lastAttestation, setLastAttestation] = useState<any>(null);
+  const [lastAttestation, setLastAttestation] = useState(null);
   useEffect(() => {
     async function fetchETHPrice() {
       try {
@@ -47,7 +51,7 @@ function useEAS(address: Address | string | Hex | undefined) {
   const chargeUserInETH = async () => {
     try {
       // Check if user has a pending receipt
-      let receipt: any = await checkPendingReceipt(address!);
+      let receipt = await checkPendingReceipt(address!);
       if (!receipt) {
         const request = await prepareSendTransaction({
           to: ATTESTER_ADDRESS,
@@ -142,6 +146,8 @@ function useEAS(address: Address | string | Hex | undefined) {
         },
         body: JSON.stringify({
           meta,
+          score,
+          version: CURRENT_SCORE_VERSION,
           address: getAddress(address!),
         }),
       });
