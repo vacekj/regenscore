@@ -1,5 +1,156 @@
 import { Address } from 'viem';
 
+export type MetaType = {
+  tokenBalances: {
+    category: string;
+    tokens:
+      | []
+      | {
+          contract?: string;
+          network?: string;
+          behavior: string;
+          name?: string;
+          scoreAdded: number;
+          category: string;
+          source: string;
+          value?: string;
+          applies?: boolean;
+        }[];
+  };
+  grDonations: {
+    scoreAdded: number;
+    value?: number;
+    applies?: boolean;
+    source: string;
+    category: string;
+    behavior: string;
+  };
+  ethDeposits: {
+    ethDeposits?: any[];
+    scoreAdded: number;
+    applies?: boolean;
+    value?: number;
+    source: string;
+    category: string;
+    behavior: string;
+  };
+  optimismBridges: {
+    opBridges?: any[];
+    scoreAdded: number;
+    applies?: boolean;
+    value?: number;
+    source: string;
+    category: string;
+    behavior: string;
+  };
+  opTreasuryPayouts: {
+    transfers?: any[];
+    scoreAdded: number;
+    applies?: boolean;
+    value?: number;
+    source: string;
+    category: string;
+    behavior: string;
+  };
+  optimismDelegate: {
+    isDelegate?: boolean;
+    scoreAdded: number;
+    value?: boolean;
+    source: string;
+    category: string;
+    behavior: string;
+  };
+  txsMadeOnOptimism: {
+    scoreAdded: number;
+    transactionCount?: number;
+    applies?: boolean;
+    value?: number;
+    source: string;
+    category: string;
+    behavior: string;
+  };
+  optimismTxHistory: {
+    interactedWithContracts?: boolean;
+    deployedContracts?: boolean;
+    createdGnosisSafe?: boolean;
+    scoreAdded: number;
+    applies?: boolean;
+    value?: boolean;
+    source: string;
+    category: string;
+    behavior: string;
+  };
+  safeOwnerActivity: {
+    ownsSafe?: boolean;
+    hasExecutedTransaction?: boolean;
+    belongsToTreasury?: boolean;
+    scoreAdded: number;
+    applies?: boolean;
+    value?: boolean;
+    source: string;
+    category: string;
+    behavior: string;
+  };
+  opAirdrop: {
+    scoreAdded: number;
+    currentOP?: number;
+    applies?: boolean;
+    value?: number;
+    source: string;
+    category: string;
+    behavior: string;
+  };
+  gitcoinProjectOwner: {
+    isProjectOwner?: boolean;
+    scoreAdded: number;
+    applies?: boolean;
+    value?: boolean;
+    source: string;
+    category: string;
+    behavior: string;
+  };
+  gitcoinPassport: {
+    passport?: any;
+    scoreAdded: number;
+    applies?: boolean;
+    value?: string;
+    source: string;
+    category: string;
+    behavior: string;
+  };
+  regenPOAPs: {
+    poaps?: any[];
+    hasRegenPOAP?: boolean;
+    scoreAdded: number;
+    applies?: boolean;
+    value?: number;
+    source: string;
+    category: string;
+    behavior: string;
+  };
+  givethActivity: {
+    hasRelatedProject?: boolean;
+    hasDonated?: boolean;
+    scoreAdded: number;
+    applies?: boolean;
+    value?: boolean;
+    source: string;
+    category: string;
+    behavior: string;
+  };
+  trustedSeedMember: {
+    address?: string;
+    onChainScore?: string;
+    offChainScore?: number | string;
+    applies?: boolean;
+    value: number | string;
+    scoreAdded: number;
+    source: string;
+    category: string;
+    behavior: string;
+  };
+};
+
 export type ERC20Transaction = {
   blockNumber: string;
   timeStamp: string;
@@ -151,4 +302,10 @@ export type POAP = {
   owner: string;
   chain: string;
   created: string;
+};
+
+export type ITransaction = {
+  contract: string;
+  name: string;
+  scoreAdded: number;
 };

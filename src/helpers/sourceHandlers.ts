@@ -18,6 +18,8 @@ import {
   GetERC20TransactionsResponse,
   GetERC721TransactionsResponse,
   POAP,
+  MetaType,
+  ITransaction,
 } from './sourceTypes';
 import { CATEGORIES } from '@/constants';
 import { getClient } from '@/utils';
@@ -28,12 +30,6 @@ type ContractDetails = {
   name: string;
   weight: number;
   decimals?: number;
-};
-
-type ITransaction = {
-  contract: string;
-  name: string;
-  scoreAdded: number;
 };
 
 const REGENSCORE_SQUID_OP =
@@ -160,71 +156,9 @@ const handleTransaction = (
   return 0;
 };
 
-export async function handleNormalTransactions(
-  address: Address,
-  meta: any,
-): Promise<number> {
-  let score = 0;
-  try {
-    const normalTransactions = (await getNormalTransactions(
-      address,
-    )) as GetNormalTransactionsResponse;
-    normalTransactions.result.forEach((tx: NormalTransaction) => {
-      score += handleTransaction(
-        tx,
-        meta.normalTransactions,
-        list_of_contracts,
-      );
-    });
-  } catch (error) {
-    console.error('Error fetching normal transactions:', error);
-  }
-  return score;
-}
-
-export async function handleERC20Transactions(
-  address: Address,
-  meta: any,
-): Promise<number> {
-  let score = 0;
-  try {
-    const erc20Transactions = (await getERC20Transactions(
-      address,
-    )) as GetERC20TransactionsResponse;
-    erc20Transactions.result.forEach((tx: ERC20Transaction) => {
-      score += handleTransaction(tx, meta.erc20Transactions, list_of_contracts);
-    });
-  } catch (error) {
-    console.error('Error fetching ERC20 transactions:', error);
-  }
-  return score;
-}
-
-export async function handleERC721Transactions(
-  address: Address,
-  meta: any,
-): Promise<number> {
-  let score = 0;
-  try {
-    const erc721Transactions = (await getERC721Transactions(
-      address,
-    )) as GetERC721TransactionsResponse;
-    erc721Transactions.result.forEach((tx) => {
-      score += handleTransaction(
-        tx,
-        meta.erc721Transactions,
-        list_of_contracts,
-      );
-    });
-  } catch (error) {
-    console.error('Error fetching ERC721 transactions:', error);
-  }
-  return score;
-}
-
 export async function handleTokenBalances(
   address: Address,
-  meta: any,
+  meta: MetaType,
 ): Promise<number> {
   let score = 0;
 
@@ -304,7 +238,7 @@ export async function handleTokenBalances(
 
 export async function handleGRDonations(
   address: Address,
-  meta: any,
+  meta: MetaType,
   points: number,
 ): Promise<number> {
   let scoreAdded = 0;
@@ -330,7 +264,7 @@ export async function handleIsGTCHolder() {}
 
 export async function handleEthStaker(
   address: Address,
-  meta: any,
+  meta: MetaType,
   points: number,
 ) {
   const url = REGENSCORE_SQUID_ETH;
@@ -372,7 +306,7 @@ export async function handleEthStaker(
 
 export async function handleOPBridge(
   address: Address,
-  meta: any,
+  meta: MetaType,
   points: number,
 ) {
   const url = REGENSCORE_SQUID_ETH;
@@ -418,7 +352,7 @@ export async function handleOPBridge(
 
 export async function handleOPTreasuryPayouts(
   address: Address,
-  meta: any,
+  meta: MetaType,
   points: number,
 ): Promise<number> {
   const url = REGENSCORE_SQUID_OP;
@@ -466,7 +400,7 @@ export async function handleOPTreasuryPayouts(
 
 export async function handleDelegate(
   address: Address,
-  meta: any,
+  meta: MetaType,
   points: number,
 ) {
   const url = REGENSCORE_SQUID_OP;
@@ -506,7 +440,7 @@ export async function handleDelegate(
 
 export async function handleTxsMadeOnOptimism(
   address: Address,
-  meta: any,
+  meta: MetaType,
   points: number,
 ) {
   const client = await getClient('optimism');
@@ -526,7 +460,7 @@ export async function handleTxsMadeOnOptimism(
 
 export async function handleOPContractsInteractions(
   address: Address,
-  meta: any,
+  meta: MetaType,
 ) {
   const { interactedWithContracts, deployedContracts, createdGnosisSafe } =
     await getAddressOPTxHistory(address);
@@ -548,7 +482,7 @@ export async function handleOPContractsInteractions(
 
 export async function handleSafeOwnershipAndActivity(
   address: Address,
-  meta: any,
+  meta: MetaType,
 ) {
   let scoreAdded = 0;
   const { ownsSafe, hasExecutedTransaction, belongsToTreasury } =
@@ -570,7 +504,10 @@ export async function handleSafeOwnershipAndActivity(
   return scoreAdded;
 }
 
-export async function handleOPAirdropReceiver(address: Address, meta: any) {
+export async function handleOPAirdropReceiver(
+  address: Address,
+  meta: MetaType,
+) {
   try {
     const baseUrl = process.env.VERCEL_URL || 'http://localhost:3000';
 
@@ -623,7 +560,7 @@ export async function handleOPAirdropReceiver(address: Address, meta: any) {
 
 export async function handleGitcoinProjectOwner(
   address: Address,
-  meta: any,
+  meta: MetaType,
   points: number,
 ) {
   let scoreAdded = 0;
@@ -641,7 +578,7 @@ export async function handleGitcoinProjectOwner(
 
 export async function handleGitcoinPassport(
   address: Address,
-  meta: any,
+  meta: MetaType,
   points: number,
 ) {
   let scoreAdded = 0;
@@ -661,7 +598,7 @@ export async function handleGitcoinPassport(
 
 export async function handleRegenPOAPs(
   address: Address,
-  meta: any,
+  meta: MetaType,
   points: number,
 ) {
   let scoreAdded = 0;
@@ -689,7 +626,7 @@ export async function handleRegenPOAPs(
   }
 }
 
-export async function handleGivethActivity(address: Address, meta: any) {
+export async function handleGivethActivity(address: Address, meta: MetaType) {
   let scoreAdded = 0;
   const query = `
   query {
@@ -738,7 +675,7 @@ export async function handleGivethActivity(address: Address, meta: any) {
 
 export async function handleTrustedSeedMember(
   address: Address,
-  meta: any,
+  meta: MetaType,
   points: number,
 ) {
   let scoreAdded = 0;
@@ -755,7 +692,7 @@ export async function handleTrustedSeedMember(
       ...addressInfo,
       scoreAdded,
       applies: !!scoreAdded,
-      value: addressInfo.onChainScore || addressInfo.offChainScore,
+      value: addressInfo.onChainScore || addressInfo.offChainScore || 0,
     };
   }
   return scoreAdded;

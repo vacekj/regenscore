@@ -27,6 +27,7 @@ import ShareModal from '@/components/Modals/ShareModal';
 import { Hex } from 'viem';
 import { useScoreContext } from '@/contexts/scoreContext';
 import CategoriesSection from './CategorySection';
+import { CURRENT_SCORE_VERSION } from '@/constants';
 
 interface IMintYour {
   _address?: Hex;
@@ -114,6 +115,21 @@ export const Hero = ({ _address }: IMintYour) => {
       throw error;
     }
   });
+
+  const _mint = async () => {
+    try {
+      const metadata = {
+        score,
+        categories,
+        sources: meta,
+        version: CURRENT_SCORE_VERSION,
+      };
+      await mintAttestation(score, metadata, data);
+    } catch (error) {
+      console.log({ error });
+    }
+  };
+
   const [showShareModal, setShowShareModal] = useState(false);
   const scale = useBreakpointValue({
     base: 0.5,
@@ -484,12 +500,8 @@ export const Hero = ({ _address }: IMintYour) => {
                         <Link
                           cursor="pointer"
                           mt="1"
-                          onClick={() => {
-                            try {
-                              mintAttestation(score, meta, data);
-                            } catch (error) {
-                              console.log({ error });
-                            }
+                          onClick={async () => {
+                            await _mint();
                           }}
                         >
                           Mint again
@@ -504,12 +516,8 @@ export const Hero = ({ _address }: IMintYour) => {
                           mr="8.25px"
                           cursor={'pointer'}
                           ml={['0px', '-5px']}
-                          onClick={() => {
-                            try {
-                              mintAttestation(score, meta, data);
-                            } catch (error) {
-                              console.log({ error });
-                            }
+                          onClick={async () => {
+                            await _mint();
                           }}
                         >
                           MINT ATTESTATION
