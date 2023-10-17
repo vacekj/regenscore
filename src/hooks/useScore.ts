@@ -86,7 +86,6 @@ export function useScore(address: string | Hex | undefined) {
 
           if (key === 'tokenBalances' && item.tokens) {
             item.tokens.forEach((token: any) => {
-              console.log({ token });
               if (token.applies) {
                 newCategoryScores[token.network] =
                   (newCategoryScores[token.network] || 0) +

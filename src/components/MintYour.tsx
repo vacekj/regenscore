@@ -77,6 +77,10 @@ export const Hero = ({ _address }: IMintYour) => {
     loading,
     error,
   } = useScoreContext();
+  const opScore: number =
+    categories?.length > 0
+      ? categories?.find((i) => i.category === 'Optimism')?.scoreAdded ?? 0
+      : 0;
   const { mintAttestation, lastAttestation } = useEAS(address);
   // TODO: do this somewhere else
   const network = currentChain === 11155111 ? 'sepolia' : 'optimism';
@@ -124,7 +128,7 @@ export const Hero = ({ _address }: IMintYour) => {
         sources: meta,
         version: CURRENT_SCORE_VERSION,
       };
-      await mintAttestation(score, metadata, data);
+      await mintAttestation(score, opScore, metadata, data);
     } catch (error) {
       console.log({ error });
     }

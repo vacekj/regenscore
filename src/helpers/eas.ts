@@ -1,5 +1,5 @@
 import { EAS, SchemaEncoder } from '@ethereum-attestation-service/eas-sdk';
-import { Address } from 'viem';
+import { Address, decodeAbiParameters, encodeAbiParameters } from 'viem';
 
 // TODO: MOVE THIS TO ENV VARS FOR KEYCHECK PASS AND REMOVE THE FILE ON KEYCHECKIGNORE
 export const RegenScoreSchemaUID =
@@ -9,10 +9,34 @@ export const EASContractAddressSepolia =
 export const EASContractAddressOptimismMainnet =
   '0x4200000000000000000000000000000000000021'; // v1.0.1
 
+interface IABIEncodeMetadata {
+  ipfs: string;
+  opScore: number;
+}
+
+export const abiEncodeMetadata = ({ ipfs, opScore }: IABIEncodeMetadata) => {
+  const abiencoded = encodeAbiParameters(
+    [
+      { name: 'ipfshash', type: 'string' },
+      { name: 'opScore', type: 'uint64' },
+    ],
+    [ipfs, BigInt(opScore)],
+  );
+  // const decoded = decodeAbiParameters(
+  //   [
+  //     { name: 'ipfshash', type: 'string' },
+  //     { name: 'opScore', type: 'uint64' },
+  //   ],
+  //   abiencoded,
+  // );
+  return abiencoded;
+};
+
 export const createAttestation = async (
   address: Address,
   score: number,
-  meta: any,
+  opScore: number,
+  ipfsHash: any,
   signer: any,
   network: number,
 ) => {
@@ -28,10 +52,14 @@ export const createAttestation = async (
     const schemaEncoder = new SchemaEncoder(
       'address address,uint256 score,string meta',
     );
+    const encodedMeta = await abiEncodeMetadata({
+      ipfs: ipfsHash,
+      opScore,
+    });
     const encodedData = schemaEncoder.encodeData([
       { name: 'address', value: address, type: 'address' },
       { name: 'score', value: score, type: 'uint256' },
-      { name: 'meta', value: JSON.stringify(meta), type: 'string' },
+      { name: 'meta', value: encodedMeta, type: 'string' },
     ]);
 
     // Our current schema UID
