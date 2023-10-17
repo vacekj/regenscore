@@ -1,4 +1,4 @@
-import { Address, Hex, getAddress } from 'viem';
+import { Address, Hex, decodeAbiParameters, getAddress } from 'viem';
 import { useState, useEffect } from 'react';
 import { useToast } from '@chakra-ui/react';
 
@@ -28,7 +28,7 @@ function useEAS(address: Address | string | Hex | undefined) {
   const [ethToUsdPrice, setEthToUsdPrice] = useState(0);
   // TODO: FIX TYPES
   const [attestations, setAttestations] = useState(null);
-  const [lastAttestation, setLastAttestation] = useState(null);
+  const [lastAttestation, setLastAttestation] = useState<any>(null);
   useEffect(() => {
     async function fetchETHPrice() {
       try {
@@ -95,7 +95,12 @@ function useEAS(address: Address | string | Hex | undefined) {
     fetchAttestations();
   }, [address]);
 
-  const mintAttestation = async (score: number, meta: any, scoreData: any) => {
+  const mintAttestation = async (
+    score: number,
+    opScore: number,
+    meta: any,
+    scoreData: any,
+  ) => {
     try {
       // check right network
       if (chainId !== 11155111 && chainId !== 10)
@@ -167,6 +172,7 @@ function useEAS(address: Address | string | Hex | undefined) {
           data: scoreData,
           address: getAddress(address!),
           score: formatNumber(score),
+          opScore: opScore,
           meta,
           network: chainId,
           receipt: txReceipt,

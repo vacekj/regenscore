@@ -48,7 +48,7 @@ const processFile = async () => {
 
     const { score, meta } = await createScore(getAddress(address));
     console.log(address, score);
-    const row = [
+    const row: any = [
       address,
       meta.opAirdrop?.value || 'false',
       meta.tokenBalances.tokens.find((tb: any) => tb.name === 'GIV')?.value ||

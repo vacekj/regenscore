@@ -17,7 +17,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       return res.status(400).json({ error: 'No attester set' });
 
     const body = req.body;
-    const { data, address, score, meta, network, receipt, ipfsHash } = body;
+    const { data, address, score, opScore, meta, network, receipt, ipfsHash } =
+      body;
     if (
       !data ||
       !address ||
@@ -25,6 +26,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       !meta ||
       !network ||
       !receipt ||
+      !opScore ||
       !ipfsHash
     )
       return res.status(400).json({ error: 'Missing data' });
@@ -68,6 +70,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         const result = await eas.createAttestation(
           address,
           score,
+          parseInt(opScore),
           ipfsHash,
           signer,
           network,

@@ -11,16 +11,7 @@ import {
   fetchGitcoinPassport,
   fetchPOAPsForAddress,
 } from './sourceApi';
-import {
-  NormalTransaction,
-  ERC20Transaction,
-  GetNormalTransactionsResponse,
-  GetERC20TransactionsResponse,
-  GetERC721TransactionsResponse,
-  POAP,
-  MetaType,
-  ITransaction,
-} from './sourceTypes';
+import { POAP, MetaType, ITransaction } from './sourceTypes';
 import { CATEGORIES } from '@/constants';
 import { getClient } from '@/utils';
 
