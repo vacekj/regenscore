@@ -10,10 +10,9 @@ import {
 } from '@chakra-ui/react';
 import Link from 'next/link';
 import { useState } from 'react';
-import { useAccount } from "wagmi";
+import { useAccount } from 'wagmi';
 
 const { address } = useAccount();
-
 
 const Slide1 = () => {
   const [currentDrop, setCurrentDrop] = useState<number | null>(null);
@@ -124,8 +123,9 @@ const Slide1 = () => {
             alignItems="center"
             width={image.dropSize}
             height={image.dropSize}
-            animation={`${levitationStyles[index % levitationStyles.length]
-              } 5s infinite`}
+            animation={`${
+              levitationStyles[index % levitationStyles.length]
+            } 5s infinite`}
           >
             <Image
               src={image.src}
@@ -173,7 +173,13 @@ const Slide1 = () => {
         color="white"
         width={{ base: '100%', xl: '1221px' }}
         maxWidth={{ base: '100%', sm: '800px' }}
-        minHeight={{ base: '0px', sm: '115px', md: '115px', lg: '115px', xl: '115px' }}
+        minHeight={{
+          base: '0px',
+          sm: '115px',
+          md: '115px',
+          lg: '115px',
+          xl: '115px',
+        }}
         lineHeight={{ base: '32px', sm: '57px' }}
         textAlign="initial"
         zIndex={2}
@@ -186,16 +192,18 @@ const Slide1 = () => {
       </Text>
 
       {address && (
-      <Flex mt={{ base: '0px', sm: '25px', md: '48px', lg: '48px', xl: '48px' }}>
-        <Link href="/profile">
-          <Button size={['md', 'lg']} variant="variant5">
-            CHECK YOUR SCORE
+        <Flex
+          mt={{ base: '0px', sm: '25px', md: '48px', lg: '48px', xl: '48px' }}
+        >
+          <Link href="/profile">
+            <Button size={['md', 'lg']} variant="variant5">
+              CHECK YOUR SCORE
+            </Button>
+          </Link>
+          <Button size={['md', 'lg']} variant="variant6" ml="32px">
+            LEARN MORE
           </Button>
-        </Link>
-        <Button size={['md', 'lg']} variant="variant6" ml="32px">
-          LEARN MORE
-        </Button>
-      </Flex>
+        </Flex>
       )}
     </Flex>
   );
