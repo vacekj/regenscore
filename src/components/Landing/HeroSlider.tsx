@@ -12,9 +12,9 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { useAccount } from 'wagmi';
 
-const { address } = useAccount();
 
 const Slide1 = () => {
+  const { address } = useAccount();
   const [currentDrop, setCurrentDrop] = useState<number | null>(null);
   const levitationStyles = ['levitation1', 'levitation2', 'levitation3'];
 
