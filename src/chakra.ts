@@ -117,7 +117,6 @@ export const theme = extendTheme({
           color: 'brand.deepGreen.400',
           px: '2rem',
           borderRadius: '6.25rem', // border radius 100px
-
         },
         variant6: {
           // Learn more
@@ -128,7 +127,7 @@ export const theme = extendTheme({
           color: 'brand.primaryOrange.200',
           px: '2rem',
           borderRadius: '6.25rem', // border radius 100px
-          border: "1px solid var(--primary-orange-200, #F5B333)",
+          border: '1px solid var(--primary-orange-200, #F5B333)',
           _hover: {
             backgroundColor: 'none',
           },
