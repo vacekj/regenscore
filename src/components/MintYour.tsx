@@ -461,7 +461,11 @@ export const Hero = ({ _address }: IMintYour) => {
                   )}
                   <Flex flexDir={'row'} gap="8.25px">
                     {score && lastAttestation ? (
-                      <Flex w={["180px", "196px"]} flexDir="column" textAlign={'center'}>
+                      <Flex
+                        w={['180px', '196px']}
+                        flexDir="column"
+                        textAlign={'center'}
+                      >
                         <Button
                           mb={['8px']}
                           variant="variant3"
