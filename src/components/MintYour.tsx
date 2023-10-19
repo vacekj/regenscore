@@ -459,14 +459,13 @@ export const Hero = ({ _address }: IMintYour) => {
                       </Text>
                     </div>
                   )}
-                  <Flex flexDir={'row'}>
+                  <Flex flexDir={'row'} gap="8.25px">
                     {score && lastAttestation ? (
-                      <Flex w="200px" flexDir="column" textAlign={'center'}>
+                      <Flex w={["180px", "196px"]} flexDir="column" textAlign={'center'}>
                         <Button
-                          mb={['63.54px', '40px', '40px', '0', '0']}
+                          mb={['8px']}
                           variant="variant3"
                           marginTop="26.76px"
-                          mr="8.25px"
                           cursor={'pointer'}
                           ml={['0px', '-5px']}
                           onClick={() => {

@@ -122,9 +122,8 @@ const Slide1 = () => {
             alignItems="center"
             width={image.dropSize}
             height={image.dropSize}
-            animation={`${
-              levitationStyles[index % levitationStyles.length]
-            } 5s infinite`}
+            animation={`${levitationStyles[index % levitationStyles.length]
+              } 5s infinite`}
           >
             <Image
               src={image.src}
@@ -184,6 +183,7 @@ const Slide1 = () => {
         zIndex={2}
         fontSize={{ base: '18px', sm: '32px', lg: '44px' }}
         fontFamily="Inter-Light"
+        mb="20px"
       >
         {currentDrop !== null
           ? dropsImages[currentDrop].content
@@ -193,13 +193,18 @@ const Slide1 = () => {
       {address && (
         <Flex
           mt={{ base: '0px', sm: '25px', md: '48px', lg: '48px', xl: '48px' }}
+          mb="5px"
+        // ml="-20px"
         >
           <Link href="/profile">
-            <Button size={['md', 'lg']} variant="variant5">
+            <Button size={['md', 'lg']} variant="variant5"
+              width={{ base: '190px', sm: '232px', md: '232px', lg: '232px', xl: '232px' }}>
               CHECK YOUR SCORE
             </Button>
           </Link>
-          <Button size={['md', 'lg']} variant="variant6" ml="32px">
+          <Button size={['md', 'lg']} variant="variant6"
+            ml={{ base: '10px', sm: '32px', md: '32px', lg: '32px', xl: '32px' }}
+            width={{ base: '130px', sm: '154px', md: '154px', lg: '154px', xl: '154px' }}>
             LEARN MORE
           </Button>
         </Flex>
