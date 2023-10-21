@@ -48,30 +48,33 @@ const processFile = async () => {
 
     const { score, meta } = await createScore(getAddress(address));
     console.log(address, score);
-    const row: any = [
+    const row = [
       address,
-      meta.opAirdrop?.value || 'false',
-      meta.tokenBalances.tokens.find((tb: any) => tb.name === 'GIV')?.value ||
-        'false',
-      meta.tokenBalances.tokens.find((tb: any) => tb.name === 'OP')?.value ||
-        'false',
-      meta.grDonations?.value || 0,
-      meta.ethDeposits?.value || 'false',
-      meta.optimismBridges?.value || 0,
-      meta.opTreasuryPayouts?.value || 0,
-      meta.optimismDelegate?.value || 0,
-      meta.optimismTxHistory?.interactedWithContracts || 'false',
-      meta.optimismTxHistory?.createdGnosisSafe || 'false',
-      meta.safeOwnerActivity?.ownsSafe || 'false',
-      meta.safeOwnerActivity?.hasExecutedTransaction || 'false',
-      meta.safeOwnerActivity?.belongsToTreasury || 'false',
-      meta.gitcoinProjectOwner?.isProjectOwner || 'false',
-      meta.gitcoinPassport?.value || 'false',
-      meta.regenPOAPs?.value || 'false',
-      meta.txsMadeOnOptimism?.value || 'false',
-      meta.trustedSeedMember?.value || 'false',
-      meta.givethActivity?.value || 'false',
-      score,
+      String(meta.opAirdrop?.value || 'false'),
+      String(
+        meta.tokenBalances.tokens.find((tb: any) => tb.name === 'GIV')?.value ||
+          'false',
+      ),
+      String(
+        meta.tokenBalances.tokens.find((tb: any) => tb.name === 'OP')?.value ||
+          'false',
+      ),
+      String(meta.grDonations?.value || 0),
+      String(meta.ethDeposits?.value || 'false'),
+      String(meta.optimismBridges?.value || 0),
+      String(meta.opTreasuryPayouts?.value || 0),
+      String(meta.optimismDelegate?.value || 0),
+      String(meta.optimismTxHistory?.interactedWithContracts || 'false'),
+      String(meta.optimismTxHistory?.createdGnosisSafe || 'false'),
+      String(meta.safeOwnerActivity?.ownsSafe || 'false'),
+      String(meta.safeOwnerActivity?.hasExecutedTransaction || 'false'),
+      String(meta.safeOwnerActivity?.belongsToTreasury || 'false'),
+      String(meta.gitcoinProjectOwner?.isProjectOwner || 'false'),
+      String(meta.regenPOAPs?.value || 'false'),
+      String(meta.txsMadeOnOptimism?.value || 'false'),
+      String(meta.trustedSeedMember?.value || 'false'),
+      String(meta.givethActivity?.value || 'false'),
+      String(score),
     ];
     records.push(row);
     await delay(2000);

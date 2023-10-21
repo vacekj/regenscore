@@ -28,6 +28,7 @@ import { Hex } from 'viem';
 import { useScoreContext } from '@/contexts/scoreContext';
 import CategoriesSection from './CategorySection';
 import { CURRENT_SCORE_VERSION } from '@/constants';
+import { IDatabaseMeta } from '@/helpers/sourceTypes';
 
 interface IMintYour {
   _address?: Hex;
@@ -128,7 +129,7 @@ export const Hero = ({ _address }: IMintYour) => {
         sources: meta,
         version: CURRENT_SCORE_VERSION,
       };
-      await mintAttestation(score, opScore, metadata, data);
+      await mintAttestation(score, opScore, metadata, data as IDatabaseMeta);
     } catch (error) {
       console.log({ error });
     }

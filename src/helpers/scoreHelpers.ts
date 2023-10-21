@@ -24,9 +24,6 @@ export async function createScore(
 ): Promise<{ score: number; meta: MetaType }> {
   let score = 0;
   const meta: MetaType = {
-    // normalTransactions: null,
-    // erc20Transactions: null,
-    // erc721Transactions:null,
     opAirdrop: {
       source: 'Optimism',
       scoreAdded: 0,
