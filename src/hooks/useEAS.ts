@@ -19,6 +19,7 @@ import {
 } from '@/constants';
 import { checkPendingReceipt } from '@/helpers/databaseHelpers';
 import { formatNumber } from '@/utils/strings';
+import { IDatabaseMeta } from '@/helpers/sourceTypes';
 
 function useEAS(address: Address | string | Hex | undefined) {
   const toast = useToast();
@@ -98,8 +99,8 @@ function useEAS(address: Address | string | Hex | undefined) {
   const mintAttestation = async (
     score: number,
     opScore: number,
-    meta: any,
-    scoreData: any,
+    meta: IDatabaseMeta,
+    scoreData: IDatabaseMeta,
   ) => {
     try {
       // check right network

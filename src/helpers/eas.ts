@@ -22,13 +22,6 @@ export const abiEncodeMetadata = ({ ipfs, opScore }: IABIEncodeMetadata) => {
     ],
     [ipfs, BigInt(opScore)],
   );
-  // const decoded = decodeAbiParameters(
-  //   [
-  //     { name: 'ipfshash', type: 'string' },
-  //     { name: 'opScore', type: 'uint64' },
-  //   ],
-  //   abiencoded,
-  // );
   return abiencoded;
 };
 
@@ -36,7 +29,7 @@ export const createAttestation = async (
   address: Address,
   score: number,
   opScore: number,
-  ipfsHash: any,
+  ipfsHash: string,
   signer: any,
   network: number,
 ) => {

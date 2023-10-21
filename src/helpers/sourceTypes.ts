@@ -1,5 +1,13 @@
 import { Address } from 'viem';
 
+export type IDatabaseMeta = {
+  id?: number;
+  score: number;
+  categories: any[]; // TODO: will fix this later as it's complex
+  sources: any; // TODO: will fix this later as it's complex
+  version: number | string;
+};
+
 export type MetaType = {
   tokenBalances: {
     category: string;
@@ -26,7 +34,7 @@ export type MetaType = {
     behavior: string;
   };
   ethDeposits: {
-    ethDeposits?: any[];
+    ethDeposits?: (string | number | BigInt)[];
     scoreAdded: number;
     applies?: boolean;
     value?: number;
@@ -35,7 +43,7 @@ export type MetaType = {
     behavior: string;
   };
   optimismBridges: {
-    opBridges?: any[];
+    opBridges?: (string | number | BigInt)[];
     scoreAdded: number;
     applies?: boolean;
     value?: number;
@@ -44,7 +52,7 @@ export type MetaType = {
     behavior: string;
   };
   opTreasuryPayouts: {
-    transfers?: any[];
+    transfers?: (string | number | BigInt)[];
     scoreAdded: number;
     applies?: boolean;
     value?: number;
@@ -110,7 +118,7 @@ export type MetaType = {
     behavior: string;
   };
   gitcoinPassport: {
-    passport?: any;
+    passport?: number | string;
     scoreAdded: number;
     applies?: boolean;
     value?: string;
@@ -119,7 +127,7 @@ export type MetaType = {
     behavior: string;
   };
   regenPOAPs: {
-    poaps?: any[];
+    poaps?: (string | number | BigInt)[];
     hasRegenPOAP?: boolean;
     scoreAdded: number;
     applies?: boolean;
