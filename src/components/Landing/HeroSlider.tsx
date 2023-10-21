@@ -212,26 +212,6 @@ const Slide1 = () => {
               CHECK YOUR SCORE
             </Button>
           </Link>
-          <Button
-            size={['md', 'lg']}
-            variant="variant6"
-            ml={{
-              base: '10px',
-              sm: '32px',
-              md: '32px',
-              lg: '32px',
-              xl: '32px',
-            }}
-            width={{
-              base: '130px',
-              sm: '154px',
-              md: '154px',
-              lg: '154px',
-              xl: '154px',
-            }}
-          >
-            LEARN MORE
-          </Button>
         </Flex>
       )}
     </Flex>
