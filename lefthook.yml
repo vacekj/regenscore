@@ -2,7 +2,8 @@ pre-commit:
   parallel: true
   commands:
     prettier:
-      glob: '*.{js,ts,jsx,tsx}'
+      glob: "**/*.{js,ts,jsx,tsx}"
       run: pnpm prettier --write {staged_files}
+      stage_fixed: true
     keycheck:
       run: keycheck
