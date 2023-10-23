@@ -122,3 +122,5 @@ dist
 
 # Sentry Auth Token
 .sentryclirc
+
+settings.json
