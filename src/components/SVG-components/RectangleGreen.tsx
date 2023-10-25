@@ -1,0 +1,13 @@
+const RectangleGreen = () => (
+  <svg
+    width="80"
+    height="19"
+    viewBox="0 0 80 19"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <rect width="80" height="19" fill="#354728" />
+  </svg>
+);
+
+export default RectangleGreen;
