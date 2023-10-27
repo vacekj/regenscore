@@ -8,7 +8,7 @@ export default function Index() {
   return (
     <>
       <Head>
-        <link rel="icon" href="icons/favicon.ico" />
+        <link rel="icon" href="/icons/favicon.ico" />
       </Head>
       <Layout>
         <Landing />
