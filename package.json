@@ -12,6 +12,7 @@
     "typecheck": "tsc --noEmit --incremental false",
     "test": "vitest",
     "score": "tsx ./src/bulkScore.ts",
+    "snapshot": "tsx ./src/fetchSnapshot.ts",
     "format": "prettier . --write"
   },
   "dependencies": {
@@ -44,7 +45,8 @@
     "swr": "^2.2.1",
     "viem": "^1.10.14",
     "vitest": "^0.34.1",
-    "wagmi": "^1.4.2"
+    "wagmi": "^1.4.2",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.7.2",
