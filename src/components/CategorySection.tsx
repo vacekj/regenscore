@@ -37,6 +37,10 @@ const IconBySource = ({ source }: { source: string }) => {
 const CategoriesSection = () => {
   const { score, categories, loading, error } = useScoreContext();
 
+  if (loading) {
+    return null;
+  }
+
   return (
     <Grid
       backgroundColor={['brand.backgroundOrange.400', 'transparent']}
