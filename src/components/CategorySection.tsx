@@ -238,12 +238,12 @@ const CategoriesSection = () => {
               <Flex alignItems={'center'} gap={18}>
                 <Box
                   bg={['brand.deepGreen.400', 'white']}
-                  flexBasis={`${categoryItem.scoreAdded}%`}
+                  flexBasis={`${(categoryItem.scoreAdded / 1500) * 100}%`}
                   borderRadius="100px"
                   h="10px"
                 />
                 <Box
-                  w={'100%'}
+                  w={'auto'}
                   display={'flex'}
                   gap={'16px'}
                   alignItems={'center'}
