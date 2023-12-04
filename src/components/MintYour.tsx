@@ -520,9 +520,10 @@ export const Hero = ({ _address }: IMintYour) => {
                       !!score && (
                         <Button
                           mb={['63.54px', '40px', '40px', '0', '0']}
+                          maxW={{ base: '166px', lg: 'max' }}
                           variant="variant3"
                           marginTop="26.76px"
-                          mr="8.25px"
+                          mr={['0', '8.25px']}
                           cursor={'pointer'}
                           ml={['0px', '-5px']}
                           onClick={async () => {
