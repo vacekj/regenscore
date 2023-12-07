@@ -97,44 +97,45 @@ const Slide1 = () => {
         layout="fill"
         objectFit="cover"
       /> */}
-
-      {dropsImages.map((image, index) => (
-        <Flex
-          key={index}
-          position="absolute"
-          zIndex={{ base: 1, sm: 4 }}
-          {...image}
-          width={image.dropSize}
-          height={image.dropSize}
-          transition={'all 0.4s ease'}
-          //onMouseEnter={() => setCurrentDrop(index)}
-          //onMouseLeave={() => setCurrentDrop(null)}
-          _hover={{ transform: 'scale(1.1)' }}
-          filter={{ base: 'brightness(70%)', sm: 'none' }}
-        >
+      <Box width="100%" maxWidth="1300px" position="absolute">
+        {dropsImages.map((image, index) => (
           <Flex
-            justifyContent="center"
-            bg="rgba(255, 255, 255, 0.1)"
-            boxShadow={'0 4px 30px rgba(0, 0, 0, 0.1)'}
-            border="1px solid rgba(255, 255, 255, 0.3)"
-            borderRadius="50%"
-            backdropFilter={'blur(5px)'}
-            alignItems="center"
+            key={index}
+            position="absolute"
+            zIndex={{ base: 1, sm: 4 }}
+            {...image}
             width={image.dropSize}
             height={image.dropSize}
-            animation={`${
-              levitationStyles[index % levitationStyles.length]
-            } 5s infinite`}
+            transition={'all 0.4s ease'}
+            //onMouseEnter={() => setCurrentDrop(index)}
+            //onMouseLeave={() => setCurrentDrop(null)}
+            _hover={{ transform: 'scale(1.1)' }}
+            filter={{ base: 'brightness(70%)', sm: 'none' }}
           >
-            <Image
-              src={image.src}
-              alt={image.alt}
-              width={image.width}
-              height={image.height}
-            />
+            <Flex
+              justifyContent="center"
+              bg="rgba(255, 255, 255, 0.1)"
+              boxShadow={'0 4px 30px rgba(0, 0, 0, 0.1)'}
+              border="1px solid rgba(255, 255, 255, 0.3)"
+              borderRadius="50%"
+              backdropFilter={'blur(5px)'}
+              alignItems="center"
+              width={image.dropSize}
+              height={image.dropSize}
+              animation={`${
+                levitationStyles[index % levitationStyles.length]
+              } 5s infinite`}
+            >
+              <Image
+                src={image.src}
+                alt={image.alt}
+                width={image.width}
+                height={image.height}
+              />
+            </Flex>
           </Flex>
-        </Flex>
-      ))}
+        ))}
+      </Box>
 
       <Box
         position="absolute"
