@@ -7,6 +7,7 @@ import {
   Text,
   VStack,
   Button,
+  Container,
 } from '@chakra-ui/react';
 import Link from 'next/link';
 import { useState } from 'react';
@@ -21,8 +22,8 @@ const Slide1 = () => {
     {
       src: '/images/trusted-seed-logo.svg',
       alt: 'trustedseed',
-      top: { base: '5%', sm: '13%' },
-      left: { base: '15%', sm: '24%' },
+      top: { base: '5%', sm: '3%' },
+      left: { base: '15%', sm: '25%' },
       width: { base: 16.5, sm: 33 },
       height: { base: 16.5, sm: 33 },
       dropSize: { base: 46.5, sm: 93 },
@@ -31,8 +32,8 @@ const Slide1 = () => {
     {
       src: '/images/giveth-logo.svg',
       alt: 'giveth',
-      top: { base: '70%', sm: '10%' },
-      right: { base: '70%', sm: '5%' },
+      top: { base: '70%', sm: '1%' },
+      right: { base: '70%', sm: '15%' },
       width: { base: 31.5, sm: 42, lg: 67 },
       height: { base: 31.5, sm: 42, lg: 67 },
       dropSize: { base: 75, sm: 100, lg: 141 },
@@ -41,8 +42,8 @@ const Slide1 = () => {
     {
       src: '/images/optimism-logo.svg',
       alt: 'optimism',
-      right: { base: '2%', xl: '15%' },
-      bottom: { base: '20%', sm: 0, xl: '10%' },
+      right: { base: '2%', xl: '10%' },
+      bottom: { base: '20%', sm: 0, xl: '20%' },
       width: { base: 62, xl: 115 },
       height: { base: 62, xl: 115 },
       dropSize: { base: 32, xl: 217 },
@@ -52,7 +53,7 @@ const Slide1 = () => {
       src: '/images/gitcoin-logo.svg',
       alt: 'gitcoin',
       bottom: { base: '80% ', sm: '-6' },
-      right: { base: '10%', sm: '50%' },
+      right: { base: '10%', sm: '42%' },
       width: { base: 40.5, sm: 54, lg: 62 },
       height: { base: 40.5, sm: 54, lg: 62 },
       dropSize: { base: 75, sm: 100, lg: 120 },
@@ -97,7 +98,7 @@ const Slide1 = () => {
         layout="fill"
         objectFit="cover"
       /> */}
-      <Box width="100%" maxWidth="1300px" position="absolute">
+      <Container maxW="1350px" position="absolute" width="93%" height="100%">
         {dropsImages.map((image, index) => (
           <Flex
             key={index}
@@ -114,14 +115,16 @@ const Slide1 = () => {
           >
             <Flex
               justifyContent="center"
-              bg="rgba(255, 255, 255, 0.1)"
-              boxShadow={'0 4px 30px rgba(0, 0, 0, 0.1)'}
+              background="linear-gradient(180deg, rgba(255, 255, 255, 0.20) 0%, rgba(255, 255, 255, 0.00) 100%)"
+              boxShadow={'0px 4px 3px 0px rgba(0, 0, 0, 0.10)'}
               border="1px solid rgba(255, 255, 255, 0.3)"
               borderRadius="50%"
-              backdropFilter={'blur(5px)'}
+              backdropFilter="blur(5px)"
               alignItems="center"
               width={image.dropSize}
               height={image.dropSize}
+              position="relative"
+              overflow="hidden"
               animation={`${
                 levitationStyles[index % levitationStyles.length]
               } 5s infinite`}
@@ -135,7 +138,7 @@ const Slide1 = () => {
             </Flex>
           </Flex>
         ))}
-      </Box>
+      </Container>
 
       <Box
         position="absolute"
