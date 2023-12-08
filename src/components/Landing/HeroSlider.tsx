@@ -33,30 +33,30 @@ const Slide1 = () => {
       src: '/images/giveth-logo.svg',
       alt: 'giveth',
       top: { base: '70%', sm: '1%' },
-      right: { base: '70%', sm: '15%' },
-      width: { base: 31.5, sm: 42, lg: 67 },
-      height: { base: 31.5, sm: 42, lg: 67 },
-      dropSize: { base: 75, sm: 100, lg: 141 },
+      right: { base: '70%', sm: '25%' },
+      width: { base: 31.5, sm: 42, lg: 57 },
+      height: { base: 31.5, sm: 42, lg: 57 },
+      dropSize: { base: 75, sm: 100, lg: 121 },
       content: 'Some more content for Giveth',
     },
     {
       src: '/images/optimism-logo.svg',
       alt: 'optimism',
-      right: { base: '2%', xl: '10%' },
-      bottom: { base: '20%', sm: 0, xl: '20%' },
-      width: { base: 62, xl: 115 },
-      height: { base: 62, xl: 115 },
-      dropSize: { base: 32, xl: 217 },
+      right: { base: '2%', sm: '10%', md: '9%', xl: '15%' },
+      bottom: { base: '20%', sm: '5%', md: '5%', xl: '20%' },
+      width: { base: 62, sm: 75, md: 105, xl: 115 },
+      height: { base: 62, sm: 75, md: 105, xl: 115 },
+      dropSize: { base: 32, sm: 145, md: 205, xl: 217 },
       content: 'Some more content for Optimism',
     },
     {
       src: '/images/gitcoin-logo.svg',
       alt: 'gitcoin',
-      bottom: { base: '80% ', sm: '-6' },
-      right: { base: '10%', sm: '42%' },
-      width: { base: 40.5, sm: 54, lg: 62 },
-      height: { base: 40.5, sm: 54, lg: 62 },
-      dropSize: { base: 75, sm: 100, lg: 120 },
+      bottom: { base: '80% ', sm: '-4' },
+      right: { base: '10%', sm: '48%' },
+      width: { base: 40.5, sm: 54, lg: '72px' },
+      height: { base: 40.5, sm: 54, lg: '72px' },
+      dropSize: { base: 75, sm: 100, lg: 150 },
       content: 'Some more content for Gitcoin',
     },
   ];
@@ -98,7 +98,12 @@ const Slide1 = () => {
         layout="fill"
         objectFit="cover"
       /> */}
-      <Container maxW="1350px" position="absolute" width="93%" height="100%">
+      <Container
+        maxW="1440px"
+        position="absolute"
+        width={{ base: '100%', sm: '100%', md: '100%', lg: '100%', xl: '100%' }}
+        height="100%"
+      >
         {dropsImages.map((image, index) => (
           <Flex
             key={index}
