@@ -187,6 +187,7 @@ export const Hero = ({ _address }: IMintYour) => {
       marginX="auto"
     >
       {showShareModal && <ShareModal setShowModal={setShowShareModal} />}
+
       <Box
         position="absolute"
         top="0"
