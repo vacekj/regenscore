@@ -59,9 +59,13 @@ const HowItWorks: React.FC = () => {
             <>
               Join the Regen Score community and{' '}
               <Text fontWeight="bold" as="span" color="brand.deepGreen.400">
-                <a href="https://tally.so/r/w4JpDA">
-                  share feedback and suggestions
+                <a href="https://github.com/vacekj/regenscore/issues">
+                  share feedback
                 </a>
+              </Text>{' '}
+              and{' '}
+              <Text fontWeight="bold" as="span" color="brand.deepGreen.400">
+                <a href="https://tally.so/r/w4JpDA">suggestions</a>
               </Text>{' '}
               on how we can make it even better.
             </>
