@@ -174,7 +174,7 @@ export const Hero = ({ _address }: IMintYour) => {
       gap={4}
       w="full"
       h={{ base: 'max-content', lg: '616px' }}
-      bg={`url(/images/leaf-bg.png)`}
+      bg={`url(/images/leaf-bg.webp)`}
       bgRepeat="no-repeat"
       bgSize={['240%', 'cover']}
       borderRadius={{ base: '0', md: '32px 0 0 0' }}
@@ -187,6 +187,7 @@ export const Hero = ({ _address }: IMintYour) => {
       marginX="auto"
     >
       {showShareModal && <ShareModal setShowModal={setShowShareModal} />}
+
       <Box
         position="absolute"
         top="0"
