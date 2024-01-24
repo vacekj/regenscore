@@ -37,7 +37,7 @@ const processFile = async () => {
     ],
   ];
   const parser = fs
-    .createReadStream(`${__dirname}/../public/data/op_sample_population.csv`)
+    .createReadStream(`${__dirname}/data/members.csv`)
     .pipe(parse({}));
 
   for await (const record of parser) {

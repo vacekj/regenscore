@@ -23,9 +23,7 @@ type ContractDetails = {
   decimals?: number;
 };
 
-const REGENSCORE_SQUID_OP =
-  'https://squid.subsquid.io/regen-score-squid/v/v3/graphql';
-const REGENSCORE_SQUID_ETH =
+const REGENSCORE_SQUID =
   'https://squid.subsquid.io/regen-score-squid-eth/v/v3/graphql';
 
 const list_of_contracts: { [key: string]: ContractDetails } = {
@@ -258,7 +256,7 @@ export async function handleEthStaker(
   meta: MetaType,
   points: number,
 ) {
-  const url = REGENSCORE_SQUID_ETH;
+  const url = REGENSCORE_SQUID;
   const query = `
     query MyQuery {
       ethDeposits(limit: 10, where: {from_eq: "${address}"}) {
@@ -276,6 +274,7 @@ export async function handleEthStaker(
   try {
     const response = await fetch(url, options);
     if (!response.ok) {
+      console.log(await response.json());
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
     const result = await response.json();
@@ -300,7 +299,7 @@ export async function handleOPBridge(
   meta: MetaType,
   points: number,
 ) {
-  const url = REGENSCORE_SQUID_ETH;
+  const url = REGENSCORE_SQUID;
   const query = `
     query MyQuery {
       bridges(limit: 10, where: {from_eq: "${address}"}) {
@@ -346,7 +345,7 @@ export async function handleOPTreasuryPayouts(
   meta: MetaType,
   points: number,
 ): Promise<number> {
-  const url = REGENSCORE_SQUID_OP;
+  const url = REGENSCORE_SQUID;
   const query = `
       query MyQuery {
           transfers(where: {to_eq: "${address}"}) {
@@ -394,7 +393,7 @@ export async function handleDelegate(
   meta: MetaType,
   points: number,
 ) {
-  const url = REGENSCORE_SQUID_OP;
+  const url = REGENSCORE_SQUID;
   const query = `
       query MyQuery {
           delegates(where: {address_eq: "${address}"}) {

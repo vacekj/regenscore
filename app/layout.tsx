@@ -13,10 +13,10 @@ import { optimism } from 'wagmi/chains';
 import { AnimatePresence } from 'framer-motion';
 import { ChakraProvider } from '@chakra-ui/react';
 import Head from 'next/head';
-import { theme } from '../src/chakra';
+import { theme } from '@/chakra';
 import './styles.css';
 import CustomHead from '../src/components/CustomHead';
-import { ScoreProvider } from '../src/providers/ScoreProvider';
+import { ScoreProvider } from '@/providers/ScoreProvider';
 
 // const chains = [optimism, sepolia];
 const chains = [optimism];
