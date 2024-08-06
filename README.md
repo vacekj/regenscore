@@ -1,5 +1,9 @@
 # RegenScore
 
+# Maintenance mode
+
+This project is under maintenance mode until further notice - hosted services are paused and minting will not work. The code is open-source to fork and deploy. We will share more information in the near future.
+
 [docs](https://docs.regenscore.io) - [x](https://x.com/regenscoreio)
 
 ## To grab the scores
